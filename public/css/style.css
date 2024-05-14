@@ -1,0 +1,142 @@
+/* Header */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    /* background-color: black; */
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+a {
+    text-decoration: none;
+}
+#bg-asli {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    /* background-color: red; */
+}
+#bg-gambar {
+    background-image: url("/img/bg.png");
+    /* position: fixed; */
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* HEADER */
+#bg-header {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    position: sticky;
+    display: inline;
+}
+#bo-header {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+#kiri-header {
+    width: 50%;
+    margin: 0 auto;
+    padding: 0;
+    float: left;
+}
+#kiri-header h1 {
+    width: 100%;
+    padding: 24px 10px;
+    color: #fff;
+}
+#kanan-header {
+    width: 50%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: right;
+    float: left;
+}
+#kanan-header ul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    color: #fff;
+    float: left;
+}
+#kanan-header ul li {
+    margin: 0 auto;
+    padding: 34px 21px;
+    display: inline-block;
+}
+#kanan-header ul .kuning {
+    background-color: yellow;
+    color: black;
+    margin: 0 auto;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+#kanan-header ul li a {
+    color: #fff;
+}
+
+#kontol {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+/* JUDUL */
+
+#bg-judul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: inline-block;
+}
+#bo-judul {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bungkusjudul {
+    width: 50%;
+    margin: 15% auto 25% auto;
+    padding: 0 10px;
+    float: left;
+    /* position: absolute; */
+}
+#atas-judul {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+#atas-judul h1 {
+    color: #fff;
+    font-size: 46px;
+    font-family: Times;
+}
+#bawah-judul {
+    width: 100%;
+    margin: 10px auto;
+    padding: 0;
+}
+#bawah-judul h3 {
+    font-weight: normal;
+    color: #fff;
+}
+
+/* MOTTO */
+
+#bg-motto {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bo-motto {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
