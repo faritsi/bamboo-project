@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LayoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Route::controller(LayoutController::class)->group(function({
+//     Route::get('dashboard',  {
+        
+//     });
+// }));
+Route::controller(LayoutController::class)->group(function(){
+    Route::get('dashboard', 'index');
 });
