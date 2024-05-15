@@ -43,14 +43,33 @@ a {
     padding: 0;
 }
 #kiri-header {
-    width: 50%;
+    width: 45%;
     margin: 0 auto;
-    padding: 0;
+    padding: 20px 5px;
     float: left;
 }
-#kiri-header h1 {
+#atas-header {
     width: 100%;
-    padding: 24px 10px;
+    padding: 0;
+    margin: 0 auto;
+}
+#atas-header h1 {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    font-size: 24px;
+    color: #fff;
+}
+#bawah-header {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bawah-header h1 {
+    width: 100%;
+    padding: 0 70px;
+    margin: 0 auto;
+    font-size: 24px;
     color: #fff;
 }
 #kanan-header {
@@ -58,7 +77,7 @@ a {
     margin: 0 auto;
     padding: 0;
     text-align: right;
-    float: left;
+    float: right;
 }
 #kanan-header ul {
     width: 100%;
@@ -134,9 +153,468 @@ a {
     width: 100%;
     margin: 0 auto;
     padding: 0;
+    background-color: #00572d;
+    /* border-radius: 20% 20% 0 ; */
 }
 #bo-motto {
     width: 80%;
     margin: 0 auto;
     padding: 0;
+}
+#bungkusmotto {
+    width: 70%;
+    margin: 0 auto;
+    padding: 0 0 100px 0;
+    text-align: center;
+}
+#logomotto {
+    padding: 50px;
+}
+#logomotto img {
+    height: 70px;
+    border-radius: 50%;
+}
+#motto h2 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 0 20px 0;
+    font-size: 36px;
+    line-height: 46px;
+    font-family: "Courier New", Courier, monospace;
+    color: #ffff33;
+}
+#motto h3 {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0 0 20px 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-family: "Courier New", Courier, monospace;
+    color: #ffff33;
+}
+
+/* ABOUT */
+
+#about-color {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #00572d;
+    /* border-radius: 20% 20% 0 ; */
+}
+#bg-about {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background-color: #fffbe5;
+    border-radius: 55px 55px 0 0;
+}
+#bo-about {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bungkus-about {
+    width: 100%;
+    margin: 0 auto;
+    padding: 70px 0 70px 0;
+}
+#img-about {
+    width: 47%;
+    margin: 0 auto;
+    padding: 0;
+    display: inline-flex;
+}
+#img-about img {
+    height: 612px;
+    width: 439px;
+    border-radius: 20px;
+}
+#about {
+    width: 50%;
+    margin: 200px auto;
+    padding: 0;
+    display: inline-block;
+    float: inline-end;
+}
+#about h2 {
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+    font-size: 16px;
+    border-radius: 20px;
+    background-color: #fffbe5;
+    color: #999900;
+    font-family: "Courier New", Courier, monospace;
+}
+#about h1 {
+    width: 100%;
+    padding: 10px 0 10px 0;
+    margin: 0 auto;
+    font-size: 42px;
+    font-family: "Courier New", Courier, monospace;
+}
+#about h3 {
+    width: 100%;
+    padding: 5px 0 30px 0;
+    margin: 0 auto;
+    font-weight: lighter;
+    font-size: 16px;
+}
+
+/* VISI MISI */
+
+#bg-visi {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    background-color: #00572d;
+}
+#bo-visi {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bungkus-visi {
+    width: 100%;
+    padding: 100px 0;
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+}
+#visi {
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+    float: left;
+    text-align: center;
+}
+#visi img {
+    padding: 24px 0;
+    margin: 0 auto;
+}
+#visi h1 {
+    width: 100%;
+    padding: 20px 0;
+    margin: 0 auto;
+    font-family: "Courier New", Courier, monospace;
+    color: #ffff33;
+}
+#visi h3 {
+    width: 80%;
+    padding: 0;
+    line-height: 28px;
+    color: #ffff33;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    display: inline-block;
+}
+#misi {
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+    float: left;
+}
+#misi img {
+    padding: 24px 0;
+    margin: 0 auto;
+}
+#misi h1 {
+    width: 100%;
+    padding: 20px 0;
+    margin: 0 auto;
+    font-family: "Courier New", Courier, monospace;
+    color: #ffff33;
+}
+#misi h3 {
+    width: 80%;
+    padding: 0;
+    line-height: 28px;
+    color: #ffff33;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* OUR SERPIS */
+
+#bg-ourserpis {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+}
+#bo-ourserpis {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bungkus-ourserpis {
+    width: 50%;
+    float: left;
+    padding: 100px 0 50px 0;
+    margin: 0 auto;
+}
+#bungkus-ourserpis h1 {
+    width: 100%;
+    padding: 20px 0;
+    margin: 0 auto;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 24px;
+    color: #999900;
+}
+#bungkus-ourserpis h3 {
+    width: 100%;
+    padding: 10px 0 20px 0;
+    margin: 0 auto;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    color: #000;
+    font-weight: lighter;
+    line-height: 24px;
+}
+
+/* FITUR SERPIS */
+#bg-fiturserpis {
+    width: 100%;
+    padding: 0 0 100px 0;
+    margin: 0 auto;
+}
+#bo-fiturserpis {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bungkus-serpis {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+#cover-serpis {
+    width: 20%;
+    padding: 20px;
+    margin: 0 5px;
+    float: left;
+    background-color: #ffffcc;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#cover-serpis img {
+    padding: 20px 0;
+    margin: 0 auto;
+}
+#cover-serpis h1 {
+    color: #000;
+    font-size: 24px;
+    padding: 10px 0 20px 0;
+    font-family: "Courier New", Courier, monospace;
+}
+#cover-serpis h3 {
+    color: #000;
+    font-size: 16px;
+    padding: 10px 0 20px 0;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: lighter;
+}
+#cover-serpis1 {
+    width: 20%;
+    padding: 20px;
+    margin: 0 5px;
+    float: left;
+    background-color: #f0f0f0;
+    border: 1px #ffdf33 solid;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#cover-serpis1 img {
+    padding: 20px 0;
+    margin: 0 auto;
+}
+#cover-serpis1 h1 {
+    color: #000;
+    font-size: 24px;
+    padding: 10px 0 20px 0;
+    font-family: "Courier New", Courier, monospace;
+}
+#cover-serpis1 h3 {
+    color: #000;
+    font-size: 16px;
+    padding: 10px 0 20px 0;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: lighter;
+}
+
+/* Catalog */
+
+#bg-catalog {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bo-catalog {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bungkus-catalog {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+}
+#kiri-catalog {
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+    float: left;
+}
+#kiri-catalog h3 {
+    background-color: #ffffe5;
+    color: #999900;
+    display: inline-block;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: lighter;
+    font-family: "Courier New", Courier, monospace;
+    border-radius: 10px;
+}
+#kiri-catalog h1 {
+    width: 100%;
+    padding: 20px 0;
+    margin: 0 auto;
+    font-size: 42px;
+    font-family: "Courier New", Courier, monospace;
+}
+#kanan-catalog {
+    width: 50%;
+    padding: 0;
+    margin: 0 auto;
+    float: left;
+}
+#kanan-catalog h3 {
+    width: 100%;
+    padding: 65px 0 20px 0;
+    margin: 0 auto;
+    font-size: 16px;
+    font-weight: lighter;
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* PRODUK */
+#bg-produk {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bo-produk {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+#bungkus-produk {
+    width: 28%;
+    float: left;
+    padding: 30px;
+    margin: 0 auto;
+    background-color: #00572d;
+    border-radius: 20px;
+}
+#bungkus-produk img {
+    width: 304px;
+    height: 304px;
+}
+#bungkus-produk h1 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0 10px 0;
+    text-align: center;
+    font-size: 28px;
+    font-family: "Courier New", Courier, monospace;
+    color: #fff;
+}
+#bungkus-produk h3 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px 0 20px 0;
+    /* text-align: center; */
+    font-size: 16px;
+    font-family: "Courier New", Courier, monospace;
+    color: #fff;
+}
+#bungkus-produk2 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bungkus-produk2 h3 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px 20px;
+}
+#tokped {
+    width: 45%;
+    margin: 0 auto;
+    padding: 10px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 20px;
+}
+#img-tokped {
+    width: 30%;
+    float: inline-start;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+#img-tokped img {
+    width: 30px;
+    height: 30px;
+}
+#judul-tokped {
+    width: 50%;
+    float: inline-start;
+    margin: 0 auto;
+    padding: 6px;
+    text-align: center;
+}
+#judul-tokped h1 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 16px;
+    color: #00572d;
+}
+#shopee {
+    width: 40%;
+    margin: 0 auto;
+    padding: 10px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 20px;
+}
+#img-shopee {
+    width: 30%;
+    float: inline-start;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+#img-shopee img {
+    width: 29px;
+    height: 18px;
+    padding-top: 6px;
+}
+#judul-shopee {
+    width: 50%;
+    float: inline-start;
+    margin: 0 auto;
+    padding: 8px;
+    text-align: center;
+}
+#judul-shopee h1 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    font-size: 16px;
+    color: #00572d;
 }
