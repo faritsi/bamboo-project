@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
     <link rel="stylesheet" href="/css/style.css">
+    {{-- <script src="/js/script.js"></script> --}}
 </head>
 <body>
     <div id="bg-asli">
@@ -268,6 +269,58 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="bg-client">
+            <bg id="bo-client">
+                <div id="client-header">
+                    <h1>Our Client</h1>
+                </div>
+                <div class="clearfix" id="bg-xxx">
+                    <div class="bungkus-client">
+                        <div class="client active">
+                            <img src="/img/logo/1.png" alt="">
+                        </div>
+                        <div class="client">
+                            <img src="/img/logo/2.png" alt="">
+                        </div>
+                        <div class="client">
+                            <img src="/img/logo/3.png" alt="">
+                        </div>
+                        <div class="client">
+                            <img src="/img/logo/4.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </bg>
+        </div>
+        <div class="container">
+            <div class="activity activity1">
+                <img src="/img/1.png" alt="Activity 1">
+            </div>
+            <div class="activity activity2">
+                <img src="/img/4.png" alt="Activity 2">
+            </div>
+            <div class="activity activity3">
+                <img src="/img/5.png" alt="Activity 3">
+            </div>
+            <div class="activity activity4">
+                <img src="/img/9.png" alt="Activity 4">
+            </div>
+            <div class="activity activity5">
+                <img src="/img/7.png" alt="Activity 5">
+            </div>
+            <div class="activity activity6">
+                <img src="/img/8.png" alt="Activity 6">
+            </div>
+            <div class="activity activity7">
+                <img src="/img/9.png" alt="Activity 7">
+            </div>
+            <div class="activity activity8">
+                <img src="/img/2.png" alt="Activity 8">
+            </div>
+            <div class="activity activity9">
+                <img src="/img/3.png" alt="Activity 9">
             </div>
         </div>
     </div>
