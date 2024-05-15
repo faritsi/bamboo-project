@@ -504,31 +504,34 @@ a {
 #bg-produk {
     width: 100%;
     padding: 0;
-    margin: 0 auto;
+    margin: 0 auto 50px 0;
+    align-items: center;
+    display: flex;
 }
 #bo-produk {
     width: 80%;
     padding: 0;
+    align-items: center;
     margin: 0 auto;
 }
 #bungkus-produk {
-    width: 28%;
+    width: 26%;
     float: left;
     padding: 30px;
-    margin: 0 auto;
+    margin: 0 5px;
     background-color: #00572d;
     border-radius: 20px;
 }
 #bungkus-produk img {
-    width: 304px;
-    height: 304px;
+    width: 100%;
+    height: 100%;
 }
 #bungkus-produk h1 {
     width: 100%;
     margin: 0 auto;
     padding: 20px 0 10px 0;
     text-align: center;
-    font-size: 28px;
+    font-size: 24px;
     font-family: "Courier New", Courier, monospace;
     color: #fff;
 }
@@ -537,8 +540,9 @@ a {
     margin: 0 auto;
     padding: 10px 0 20px 0;
     /* text-align: center; */
-    font-size: 16px;
+    font-size: 14px;
     font-family: "Courier New", Courier, monospace;
+    font-weight: lighter;
     color: #fff;
 }
 #bungkus-produk2 {
@@ -552,69 +556,192 @@ a {
     padding: 10px 20px;
 }
 #tokped {
-    width: 45%;
-    margin: 0 auto;
-    padding: 10px;
-    display: inline-block;
+    float: left;
+    width: 47%;
+    margin: 0 5px 0 0;
+    padding: 0;
     background-color: #fff;
     border-radius: 20px;
 }
-#img-tokped {
-    width: 30%;
-    float: inline-start;
-    margin: 0 auto;
+#shopee {
+    float: left;
+    width: 47%;
+    margin: 0 0 0 5px;
+    border-radius: 20px;
     padding: 0;
-    text-align: center;
+    background-color: #fff;
+}
+#img-tokped {
+    width: 25%;
+    margin: 0 auto;
+    padding: 5px 7px;
+    float: left;
 }
 #img-tokped img {
     width: 30px;
     height: 30px;
+    margin: 0 auto;
+    padding: 8px 0 5px 0;
 }
 #judul-tokped {
-    width: 50%;
-    float: inline-start;
+    width: 60%;
     margin: 0 auto;
-    padding: 6px;
-    text-align: center;
+    padding: 0;
+    float: left;
+    padding-bottom: 10px;
 }
 #judul-tokped h1 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    font-size: 16px;
-    color: #00572d;
-}
-#shopee {
-    width: 40%;
-    margin: 0 auto;
-    padding: 10px;
-    display: inline-block;
-    background-color: #fff;
-    border-radius: 20px;
+    color: #139003;
+    font-size: 12px;
 }
 #img-shopee {
-    width: 30%;
-    float: inline-start;
+    width: 25%;
     margin: 0 auto;
-    padding: 0;
-    text-align: center;
+    padding: 5px 7px;
+    float: left;
 }
 #img-shopee img {
-    width: 29px;
-    height: 18px;
-    padding-top: 6px;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    padding: 8px 0 5px 0;
 }
 #judul-shopee {
-    width: 50%;
-    float: inline-start;
+    width: 60%;
     margin: 0 auto;
-    padding: 8px;
-    text-align: center;
+    /* padding: 0; */
+    float: left;
+    padding-bottom: 10px;
 }
 #judul-shopee h1 {
+    color: #139003;
+    font-size: 12px;
+}
+
+/* CLIENT */
+#bg-client {
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    font-size: 16px;
-    color: #00572d;
+    text-align: center;
+}
+#bo-client {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0 0 100px 0;
+    background-color: #f0f0f0;
+    display: inline-block;
+    border-radius: 20px;
+}
+#client-header {
+    width: 100%;
+    margin: 0 auto;
+    padding: 50px 0 20px 0;
+}
+#bg-xxx {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+.bungkus-client {
+    width: 100%;
+    margin: 5px auto;
+    padding: 0;
+    display: inline-flex;
+    float: left;
+    align-items: center;
+}
+.client {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* foto */
+.container {
+    width: 1186px;
+    height: 926px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.activity {
+    position: absolute;
+    background: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Specific activity positioning */
+.activity1 {
+    width: 401px;
+    height: 260px;
+    left: 36px;
+    top: 27px;
+}
+
+.activity2 {
+    width: 241px;
+    height: 316px;
+    left: 36px;
+    top: 318px;
+}
+
+.activity3 {
+    width: 559px;
+    height: 316px;
+    left: 301px;
+    top: 318px;
+}
+
+.activity4 {
+    width: 269px;
+    height: 235px;
+    left: 880px;
+    top: 399px;
+}
+
+.activity5 {
+    width: 241px;
+    height: 235px;
+    left: 36px;
+    top: 665px;
+}
+
+.activity6 {
+    width: 241px;
+    height: 235px;
+    left: 301px;
+    top: 665px;
+}
+
+.activity7 {
+    width: 583px;
+    height: 235px;
+    left: 566px;
+    top: 665px;
+}
+
+.activity8 {
+    width: 401px;
+    height: 260px;
+    left: 459px;
+    top: 27px;
+}
+
+.activity9 {
+    width: 269px;
+    height: 347px;
+    left: 880px;
+    top: 27px;
 }
