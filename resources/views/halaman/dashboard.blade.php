@@ -294,34 +294,117 @@
                 </div>
             </bg>
         </div>
-        <div class="container">
-            <div class="activity activity1">
-                <img src="/img/1.png" alt="Activity 1">
+        
+        <div id="bg-activity-header">
+            <div id="bo-activity-header">
+                <div class="activity-header">
+                    <h1>Our Activity</h1>
+                </div>
+                <div class="container">
+                    <div class="activity activity1">
+                        <img src="/img/1.png" alt="Activity 1">
+                    </div>
+                    <div class="activity activity2">
+                        <img src="/img/4.png" alt="Activity 2">
+                    </div>
+                    <div class="activity activity3">
+                        <img src="/img/5.png" alt="Activity 3">
+                    </div>
+                    <div class="activity activity4">
+                        <img src="/img/9.png" alt="Activity 4">
+                    </div>
+                    <div class="activity activity5">
+                        <img src="/img/7.png" alt="Activity 5">
+                    </div>
+                    <div class="activity activity6">
+                        <img src="/img/8.png" alt="Activity 6">
+                    </div>
+                    <div class="activity activity7">
+                        <img src="/img/9.png" alt="Activity 7">
+                    </div>
+                    <div class="activity activity8">
+                        <img src="/img/2.png" alt="Activity 8">
+                    </div>
+                    <div class="activity activity9">
+                        <img src="/img/3.png" alt="Activity 9">
+                    </div>
+                </div>
             </div>
-            <div class="activity activity2">
-                <img src="/img/4.png" alt="Activity 2">
+        </div>
+        
+    </div>
+
+    <!-- Profil Pimpinan Perusahaan -->
+    <div class="title-container">
+        <h1 class="title">Pimpinan Perusahaan</h1>
+    </div>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+            <h1 class="profile-name">John Doe</h1>
+            <h2 class="profile-title">CEO</h2>
+            <p class="profile-description">
+                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+            </p>
+        </div>
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+            <h1 class="profile-name">John Doe</h1>
+            <h2 class="profile-title">CEO</h2>
+            <p class="profile-description">
+                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+            </p>
+        </div>
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+            <h1 class="profile-name">John Doe</h1>
+            <h2 class="profile-title">CEO</h2>
+            <p class="profile-description">
+                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+            </p>
+        </div>
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+            <h1 class="profile-name">John Doe</h1>
+            <h2 class="profile-title">CEO</h2>
+            <p class="profile-description">
+                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+            </p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container-footer">
+        <div class="background-footer"></div>
+        <div class="company-info-footer">
+            <div class="logo"></div>
+            <div class="company-details">
+                <div class="company-name">PT. Bintang Mitra Kencana</div>
+                <div class="company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboret dolore magna aliqua</div>
             </div>
-            <div class="activity activity3">
-                <img src="/img/5.png" alt="Activity 3">
+        </div>
+        <div class="site-links">
+            <div class="site-links-title">Site Links</div>
+            <div class="links">
+                <div>Home</div>
+                <div>About Us</div>
+                <div>Service</div>
+                <div>Catalog</div>
+                <div>Contact Us</div>
             </div>
-            <div class="activity activity4">
-                <img src="/img/9.png" alt="Activity 4">
-            </div>
-            <div class="activity activity5">
-                <img src="/img/7.png" alt="Activity 5">
-            </div>
-            <div class="activity activity6">
-                <img src="/img/8.png" alt="Activity 6">
-            </div>
-            <div class="activity activity7">
-                <img src="/img/9.png" alt="Activity 7">
-            </div>
-            <div class="activity activity8">
-                <img src="/img/2.png" alt="Activity 8">
-            </div>
-            <div class="activity activity9">
-                <img src="/img/3.png" alt="Activity 9">
-            </div>
+        </div>
+        <div class="contact-info">
+            <div class="contact-title">Contact Us</div>
+            <div class="contact-email">Email @gmail.com</div>
+            <div class="contact-phone">08xx-xxxx-xxxx</div>
+            <div class="email-icon"></div>
+            <div class="phone-icon"></div>
+        </div>
+        <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
+        <div class="whatsapp-button">
+            <img src="https://via.placeholder.com/29x29" alt="WhatsApp">
+            <div>Whatsapp</div>
         </div>
     </div>
 </body>
