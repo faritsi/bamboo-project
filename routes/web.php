@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\ProdukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +19,10 @@ use App\Http\Controllers\LayoutController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/login', function () {
-    return view('halaman/login');
+Route::controller(AuthController::class)->group(function(){
+    Route::get('login', 'index')->name('login');
+    Route::post('login/proses', 'proses');
+    Route::get('logout', 'logout');
 });
 
 // Route::controller(LayoutController::class)->group(function({
@@ -27,5 +31,17 @@ Route::get('/login', function () {
 //     });
 // }));
 Route::controller(LayoutController::class)->group(function(){
-    Route::get('dashboard', 'index');
+    Route::get('dashboard', 'halu');
+    Route::get('dashboard-admin', 'hamin');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['CekAuth:1']], function () {
+        Route::resource('produk', ProdukController::class);      
+    });
+    Route::group(['middleware' => ['CekAuth:2']], function () {
+        // Route::resource('balita', balitaUserController::class);
+        // Route::resource('ibu', IbuUserController::class);
+        // Route::resource('pemeriksaan', PemeriksaanController::class);
+    });
 });
