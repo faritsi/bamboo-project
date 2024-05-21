@@ -206,7 +206,7 @@ a {
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    background-color: #fffbe5;
+    background-color: #eefdec;
     border-radius: 55px 55px 0 0;
 }
 #bo-about {
@@ -658,6 +658,12 @@ a {
 }
 
 /* foto */
+.activity-header {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 0 20px 0;
+}
 .container {
     width: 1186px;
     height: 926px;
@@ -679,7 +685,7 @@ a {
 .activity img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 /* Specific activity positioning */
@@ -744,4 +750,321 @@ a {
     height: 347px;
     left: 880px;
     top: 27px;
+}
+
+/* Profil Pimpinan Perusahaan */
+
+.title-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+.profile-card {
+    background: #f0f0f0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-name {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+.profile-title {
+    font-size: 20px;
+    color: #777;
+    margin: 0;
+}
+
+.profile-description {
+    font-size: 16px;
+    color: #555;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* FOOTER */
+
+.container-footer {
+    width: 100%;
+    height: 311px;
+    position: relative;
+    background: #d9d9d9;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    overflow: hidden;
+}
+
+.background-footer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: #d9d9d9;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.company-info-footer {
+    width: 402px;
+    height: 116px;
+    position: absolute;
+    left: 53px;
+    top: 37px;
+}
+
+.logo {
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    background: #00572d;
+    top: 20px;
+}
+
+.company-details {
+    position: absolute;
+    left: 107px;
+    /* top: 0; */
+    top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.company-name {
+    width: 298px;
+    height: 26px;
+    color: #454545;
+    font-size: 24px;
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    line-height: 32px;
+    word-wrap: break-word;
+}
+
+.company-description {
+    width: 295px;
+    top: 52px;
+    position: absolute;
+    color: #454545;
+    font-size: 16px;
+    font-family: PT Sans, sans-serif;
+    font-weight: 400;
+    line-height: 20px;
+    word-wrap: break-word;
+}
+
+.site-links {
+    height: 200px;
+    position: absolute;
+    left: 663px;
+    top: 51px;
+}
+
+.site-links-title {
+    width: 114px;
+    height: 26px;
+    position: absolute;
+    color: #454545;
+    font-size: 24px;
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    line-height: 32px;
+    word-wrap: break-word;
+}
+
+.links {
+    width: 88px;
+    height: 158px;
+    position: absolute;
+    top: 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 7px;
+}
+
+.links div {
+    color: #454545;
+    font-size: 16px;
+    font-family: Lora, serif;
+    font-weight: 400;
+    line-height: 24px;
+    word-wrap: break-word;
+}
+
+.contact-info {
+    width: 177px;
+    height: 107px;
+    position: absolute;
+    left: 1117px;
+    top: 51px;
+}
+
+.contact-title {
+    width: 132px;
+    height: 26px;
+    position: absolute;
+    color: #141414;
+    font-size: 24px;
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    line-height: 32px;
+    word-wrap: break-word;
+}
+
+.contact-email {
+    width: 145px;
+    height: 26px;
+    position: absolute;
+    left: 32px;
+    top: 48px;
+    color: #141414;
+    font-size: 16px;
+    font-family: Lora, serif;
+    font-weight: 400;
+    line-height: 24px;
+    word-wrap: break-word;
+}
+
+.contact-phone {
+    width: 132px;
+    height: 26px;
+    position: absolute;
+    left: 32px;
+    top: 81px;
+    color: #141414;
+    font-size: 16px;
+    font-family: Lora, serif;
+    font-weight: 400;
+    line-height: 24px;
+    word-wrap: break-word;
+}
+
+.email-icon,
+.phone-icon {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background: #838383;
+    border-radius: 9999px;
+}
+
+.email-icon {
+    left: 0px;
+    top: 49px;
+}
+
+.phone-icon {
+    left: 0px;
+    top: 82px;
+}
+
+.footer {
+    width: 100%;
+    height: 26px;
+    position: absolute;
+    /* left: 510px; */
+    text-align: center;
+    top: 275px;
+    color: #bfbfbf;
+    font-size: 20px;
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    line-height: 28px;
+    word-wrap: break-word;
+}
+
+.whatsapp-button {
+    padding: 8px 12px;
+    position: absolute;
+    left: 1117px;
+    top: 171px;
+    background: #1ac004;
+    border-radius: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+}
+
+.whatsapp-button img {
+    width: 29px;
+    height: 29px;
+}
+
+.whatsapp-button div {
+    color: white;
+    font-size: 20px;
+    font-family: Quattrocento, serif;
+    font-weight: 700;
+    line-height: 28px;
+    word-wrap: break-word;
+}
+
+/* Login Admin */
+
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.left-section {
+    flex: 1;
+    position: relative;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.logo {
+    width: 100px; /* Sesuaikan lebar logo sesuai kebutuhan */
+    height: auto;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
