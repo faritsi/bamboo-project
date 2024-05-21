@@ -50,6 +50,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Motto -->
         <div id="bg-motto">
             <div id="bo-motto">
                 <div id="bungkusmotto" class="clearfix">
@@ -68,6 +70,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- About Us -->
+
         <div id="about-color">
             <div id="bg-about">
                 <div id="bo-about">
@@ -88,6 +93,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- Visi Misi -->
+
         <div id="bg-visi">
             <div id="bo-visi">
                 <div id="bungkus-visi" class="clearfix">
@@ -112,6 +120,9 @@
                 </div>
             </div>
         </div>
+
+        <!-- Our Service -->
+
         <div id="bg-ourserpis">
             <div id="bo-ourserpis">
                 <div id="bungkus-ourserpis">
@@ -166,6 +177,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Produk List -->
         <div id="bg-catalog">
             <div id="bo-catalog">
                 <div id="bungkus-catalog" class="clearfix">
@@ -183,94 +196,117 @@
                 </div>
             </div>
         </div>
-        <div id="bg-produk">
-            <div id="bo-produk">
-                <div id="bungkus-produk" class="clearfix">
-                    <img src="/img/pd.png" alt="">
-                    <h1>Lorem ipsum</h1>
-                    <h3>Lorem ipsum dolor sit amet consectetur 
-                        adipisicing elit. Commodi labore illum quo 
-                        ipsam nisi pariatur unde dolores laboriosam 
-                        qui quasi impedit ipsum numquam, provident 
-                        facilis quis veniam quaerat beatae aliquid.</h3>
-                    <div id="bungkus-produk2" class="clearfix">
-                        <h3>Pesan di :</h3>
-                        <div id="tokped" class="clearfix">
-                            <div id="img-tokped">
-                                <img src="/img/logo/tokped.png" alt="">
-                            </div>
-                            <div id="judul-tokped">
-                                <h1>Tokopedia</h1>
-                            </div>
-                        </div>
-                        <div id="shopee" class="clearfix">
-                            <div id="img-shopee">
-                                <img src="/img/logo/shopee.png" alt="">
-                            </div>
-                            <div id="judul-shopee">
-                                <h1>Shopee</h1>
-                            </div>
-                        </div>
+
+        <div class="container-product">
+            <div class="card-product">
+                <img
+                    class="product-image"
+                    src="img/pd.png"
+                    alt="Product Image"
+                />
+                <div class="product-info">
+                    <div class="product-title">Lorem Ipsum</div>
+                    <div class="product-description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt ut laboret dolore
+                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                        aliquip.
                     </div>
                 </div>
-                <div id="bungkus-produk" class="clearfix">
-                    <img src="/img/pd.png" alt="">
-                    <h1>Lorem ipsum</h1>
-                    <h3>Lorem ipsum dolor sit amet consectetur 
-                        adipisicing elit. Commodi labore illum quo 
-                        ipsam nisi pariatur unde dolores laboriosam 
-                        qui quasi impedit ipsum numquam, provident 
-                        facilis quis veniam quaerat beatae aliquid.</h3>
-                    <div id="bungkus-produk2" class="clearfix">
-                        <h3>Pesan di :</h3>
-                        <div id="tokped" class="clearfix">
-                            <div id="img-tokped">
-                                <img src="/img/logo/tokped.png" alt="">
-                            </div>
-                            <div id="judul-tokped">
-                                <h1>Tokopedia</h1>
-                            </div>
-                        </div>
-                        <div id="shopee" class="clearfix">
-                            <div id="img-shopee">
-                                <img src="/img/logo/shopee.png" alt="">
-                            </div>
-                            <div id="judul-shopee">
-                                <h1>Shopee</h1>
-                            </div>
-                        </div>
+                <div class="order-text">Pesan di :</div>
+                <div class="order-options">
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Tokopedia Icon"
+                        />
+                        <div class="order-label">Tokopedia</div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">Shopee</div>
                     </div>
                 </div>
-                <div id="bungkus-produk" class="clearfix">
-                    <img src="/img/pd.png" alt="">
-                    <h1>Lorem ipsum</h1>
-                    <h3>Lorem ipsum dolor sit amet consectetur 
-                        adipisicing elit. Commodi labore illum quo 
-                        ipsam nisi pariatur unde dolores laboriosam 
-                        qui quasi impedit ipsum numquam, provident 
-                        facilis quis veniam quaerat beatae aliquid.</h3>
-                    <div id="bungkus-produk2" class="clearfix">
-                        <h3>Pesan di :</h3>
-                        <div id="tokped" class="clearfix">
-                            <div id="img-tokped">
-                                <img src="/img/logo/tokped.png" alt="">
-                            </div>
-                            <div id="judul-tokped">
-                                <h1>Tokopedia</h1>
-                            </div>
-                        </div>
-                        <div id="shopee" class="clearfix">
-                            <div id="img-shopee">
-                                <img src="/img/logo/shopee.png" alt="">
-                            </div>
-                            <div id="judul-shopee">
-                                <h1>Shopee</h1>
-                            </div>
-                        </div>
+            </div>
+            <div class="card-product">
+                <img
+                    class="product-image"
+                    src="img/pd.png"
+                    alt="Product Image"
+                />
+                <div class="product-info">
+                    <div class="product-title">Lorem Ipsum</div>
+                    <div class="product-description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt ut laboret dolore
+                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                        aliquip.
+                    </div>
+                </div>
+                <div class="order-text">Pesan di :</div>
+                <div class="order-options">
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Tokopedia Icon"
+                        />
+                        <div class="order-label">Tokopedia</div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">Shopee</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-product">
+                <img
+                    class="product-image"
+                    src="img/pd.png"
+                    alt="Product Image"
+                />
+                <div class="product-info">
+                    <div class="product-title">Lorem Ipsum</div>
+                    <div class="product-description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit, sed do eiusmod tempor incididunt ut laboret dolore
+                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                        aliquip.
+                    </div>
+                </div>
+                <div class="order-text">Pesan di :</div>
+                <div class="order-options">
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Tokopedia Icon"
+                        />
+                        <div class="order-label">Tokopedia</div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">Shopee</div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Client -->
+
         <div id="bg-client">
             <bg id="bo-client">
                 <div id="client-header">
@@ -294,118 +330,154 @@
                 </div>
             </bg>
         </div>
-        
-        <div id="bg-activity-header">
-            <div id="bo-activity-header">
-                <div class="activity-header">
-                    <h1>Our Activity</h1>
-                </div>
-                <div class="container">
-                    <div class="activity activity1">
-                        <img src="/img/1.png" alt="Activity 1">
+
+        <!-- Aktivity -->
+        <div class="title-container">
+            <h1 class="title">Our Activity</h1>
+        </div>
+
+        <div class="container-grid">
+            <div class="photo-grid">
+                <div class="row">
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 1"
+                        />
                     </div>
-                    <div class="activity activity2">
-                        <img src="/img/4.png" alt="Activity 2">
-                    </div>
-                    <div class="activity activity3">
-                        <img src="/img/5.png" alt="Activity 3">
-                    </div>
-                    <div class="activity activity4">
-                        <img src="/img/9.png" alt="Activity 4">
-                    </div>
-                    <div class="activity activity5">
-                        <img src="/img/7.png" alt="Activity 5">
-                    </div>
-                    <div class="activity activity6">
-                        <img src="/img/8.png" alt="Activity 6">
-                    </div>
-                    <div class="activity activity7">
-                        <img src="/img/9.png" alt="Activity 7">
-                    </div>
-                    <div class="activity activity8">
-                        <img src="/img/2.png" alt="Activity 8">
-                    </div>
-                    <div class="activity activity9">
-                        <img src="/img/3.png" alt="Activity 9">
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 2"
+                        />
                     </div>
                 </div>
+                <div class="row">
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 3"
+                        />
+                    </div>
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 4"
+                        />
+                    </div>
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 5"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 6"
+                        />
+                    </div>
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 7"
+                        />
+                    </div>
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 8"
+                        />
+                    </div>
+                    <div class="photo">
+                        <img
+                            src="https://via.placeholder.com/150x150"
+                            alt="Photo 9"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Profil Pimpinan Perusahaan -->
+        <div class="title-container">
+            <h1 class="title">Pimpinan Perusahaan</h1>
+        </div>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">John Doe</h1>
+                <h2 class="profile-title">CEO</h2>
+                <p class="profile-description">
+                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+                </p>
+            </div>
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">John Doe</h1>
+                <h2 class="profile-title">CEO</h2>
+                <p class="profile-description">
+                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+                </p>
+            </div>
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">John Doe</h1>
+                <h2 class="profile-title">CEO</h2>
+                <p class="profile-description">
+                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+                </p>
+            </div>
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">John Doe</h1>
+                <h2 class="profile-title">CEO</h2>
+                <p class="profile-description">
+                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
+                </p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="container-footer">
+            <div class="background-footer"></div>
+            <div class="company-info-footer">
+                <div class="logo"></div>
+                <div class="company-details">
+                    <div class="company-name">PT. Bintang Mitra Kencana</div>
+                    <div class="company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboret dolore magna aliqua</div>
+                </div>
+            </div>
+            <div class="site-links">
+                <div class="site-links-title">Site Links</div>
+                <div class="links">
+                    <div>Home</div>
+                    <div>About Us</div>
+                    <div>Service</div>
+                    <div>Catalog</div>
+                    <div>Contact Us</div>
+                </div>
+            </div>
+            <div class="contact-info">
+                <div class="contact-title">Contact Us</div>
+                <div class="contact-email">Email @gmail.com</div>
+                <div class="contact-phone">08xx-xxxx-xxxx</div>
+                <div class="email-icon"></div>
+                <div class="phone-icon"></div>
+            </div>
+            <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
+            <div class="whatsapp-button">
+                <img src="https://via.placeholder.com/29x29" alt="WhatsApp">
+                <div>Whatsapp</div>
             </div>
         </div>
         
     </div>
 
-    <!-- Profil Pimpinan Perusahaan -->
-    <div class="title-container">
-        <h1 class="title">Pimpinan Perusahaan</h1>
-    </div>
-
-    <div class="profile-container">
-        <div class="profile-card">
-            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-            <h1 class="profile-name">John Doe</h1>
-            <h2 class="profile-title">CEO</h2>
-            <p class="profile-description">
-                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-            </p>
-        </div>
-        <div class="profile-card">
-            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-            <h1 class="profile-name">John Doe</h1>
-            <h2 class="profile-title">CEO</h2>
-            <p class="profile-description">
-                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-            </p>
-        </div>
-        <div class="profile-card">
-            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-            <h1 class="profile-name">John Doe</h1>
-            <h2 class="profile-title">CEO</h2>
-            <p class="profile-description">
-                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-            </p>
-        </div>
-        <div class="profile-card">
-            <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-            <h1 class="profile-name">John Doe</h1>
-            <h2 class="profile-title">CEO</h2>
-            <p class="profile-description">
-                John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-            </p>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="container-footer">
-        <div class="background-footer"></div>
-        <div class="company-info-footer">
-            <div class="logo"></div>
-            <div class="company-details">
-                <div class="company-name">PT. Bintang Mitra Kencana</div>
-                <div class="company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboret dolore magna aliqua</div>
-            </div>
-        </div>
-        <div class="site-links">
-            <div class="site-links-title">Site Links</div>
-            <div class="links">
-                <div>Home</div>
-                <div>About Us</div>
-                <div>Service</div>
-                <div>Catalog</div>
-                <div>Contact Us</div>
-            </div>
-        </div>
-        <div class="contact-info">
-            <div class="contact-title">Contact Us</div>
-            <div class="contact-email">Email @gmail.com</div>
-            <div class="contact-phone">08xx-xxxx-xxxx</div>
-            <div class="email-icon"></div>
-            <div class="phone-icon"></div>
-        </div>
-        <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
-        <div class="whatsapp-button">
-            <img src="https://via.placeholder.com/29x29" alt="WhatsApp">
-            <div>Whatsapp</div>
-        </div>
-    </div>
+    
 </body>
 </html>
