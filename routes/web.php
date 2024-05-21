@@ -17,6 +17,9 @@ use App\Http\Controllers\LayoutController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/login', function () {
+    return view('halaman/login');
+});
 
 // Route::controller(LayoutController::class)->group(function({
 //     Route::get('dashboard',  {
