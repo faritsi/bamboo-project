@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('halaman/login');
 });
+Route::get('/admin', function () {
+    return view('halaman/dashboard-admin');
+});
 
 // Route::controller(LayoutController::class)->group(function({
 //     Route::get('dashboard',  {
