@@ -198,7 +198,45 @@
         </div>
 
         <div class="container-product">
+            @foreach ($produk as $p)
             <div class="card-product">
+                <img
+                    class="product-image"
+                    src="img/pd.png"
+                    alt="Product Image"
+                />
+                <div class="product-info">
+                    <div class="product-title">{{ $p->judul }}</div>
+                    <div class="product-description">
+                        {{ $p->deskripsi }}
+                    </div>
+                </div>
+                <div class="order-text">Pesan di :</div>
+                <div class="order-options">
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Tokopedia Icon"
+                        />
+                        <div class="order-label">
+                            <a href="{{ $p->tokped }}">Tokopedia</a>
+                        </div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">
+                            <a href="{{ $p->shopee }}">Shopee</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            {{-- <div class="card-product">
                 <img
                     class="product-image"
                     src="img/pd.png"
@@ -267,42 +305,7 @@
                         <div class="order-label">Shopee</div>
                     </div>
                 </div>
-            </div>
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">Tokopedia</div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Client -->
