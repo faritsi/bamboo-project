@@ -21,6 +21,7 @@ a {
     padding: 0;
     /* background-color: red; */
 }
+
 #bg-gambar {
     background-image: url("/img/bg.png");
     /* position: fixed; */
@@ -102,11 +103,6 @@ a {
     color: #fff;
 }
 
-#kontol {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-}
 /* JUDUL */
 
 #bg-judul {
@@ -501,121 +497,115 @@ a {
 }
 
 /* PRODUK */
-#bg-produk {
-    width: 100%;
-    padding: 0;
-    margin: 0 auto 50px 0;
-    align-items: center;
-    display: flex;
-}
-#bo-produk {
+
+.container-product {
     width: 80%;
-    padding: 0;
+    height: 709px;
+    padding: 23px 5px;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    gap: 16px;
     margin: 0 auto;
 }
-#bungkus-produk {
-    width: 26%;
-    float: left;
-    padding: 30px;
-    margin: 0 5px;
-    background-color: #00572d;
+
+.card-product {
+    width: 378px;
+    height: 80%;
+    padding: 25px 0;
+    background: #00572d;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 19px;
+}
+
+.product-image {
+    width: 200px;
+    height: 200px;
     border-radius: 20px;
 }
-#bungkus-produk img {
-    width: 100%;
-    height: 100%;
+
+.product-info {
+    width: 310px;
+    height: 162px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
 }
-#bungkus-produk h1 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px 0 10px 0;
+
+.product-title {
+    align-self: stretch;
     text-align: center;
-    font-size: 24px;
-    font-family: "Courier New", Courier, monospace;
-    color: #fff;
+    color: #fcfcfc;
+    font-size: 28px;
+    font-family: "Lora", serif;
+    font-weight: 700;
+    line-height: 38px;
+    word-wrap: break-word;
 }
-#bungkus-produk h3 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px 0 20px 0;
-    /* text-align: center; */
-    font-size: 14px;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: lighter;
-    color: #fff;
+
+.product-description {
+    align-self: stretch;
+    color: #fcfcfc;
+    font-size: 16px;
+    font-family: "Quattrocento", serif;
+    font-weight: 400;
+    line-height: 24px;
+    word-wrap: break-word;
 }
-#bungkus-produk2 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
+
+.order-text {
+    width: 278px;
+    height: 33px;
+    color: #fcfcfc;
+    font-size: 18px;
+    font-family: "Lora", serif;
+    font-weight: 700;
+    line-height: 27px;
+    word-wrap: break-word;
 }
-#bungkus-produk2 h3 {
-    width: 100%;
-    margin: 0 auto;
-    padding: 10px 20px;
+
+.order-options {
+    padding: 0 6px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
 }
-#tokped {
-    float: left;
-    width: 47%;
-    margin: 0 5px 0 0;
-    padding: 0;
-    background-color: #fff;
+
+.order-option {
+    padding: 8px 10px;
+    background: #f5f5f5;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 }
-#shopee {
-    float: left;
-    width: 47%;
-    margin: 0 0 0 5px;
-    border-radius: 20px;
-    padding: 0;
-    background-color: #fff;
+
+.order-option img {
+    width: 29px;
+    border-radius: 50%;
 }
-#img-tokped {
-    width: 25%;
-    margin: 0 auto;
-    padding: 5px 7px;
-    float: left;
+
+.order-label {
+    font-size: 20px;
+    font-family: "Quattrocento", serif;
+    font-weight: 700;
+    line-height: 28px;
+    word-wrap: break-word;
 }
-#img-tokped img {
-    width: 30px;
-    height: 30px;
-    margin: 0 auto;
-    padding: 8px 0 5px 0;
-}
-#judul-tokped {
-    width: 60%;
-    margin: 0 auto;
-    padding: 0;
-    float: left;
-    padding-bottom: 10px;
-}
-#judul-tokped h1 {
+
+.order-option:first-child .order-label {
     color: #139003;
-    font-size: 12px;
 }
-#img-shopee {
-    width: 25%;
-    margin: 0 auto;
-    padding: 5px 7px;
-    float: left;
-}
-#img-shopee img {
-    width: 30px;
-    height: 30px;
-    margin: 0 auto;
-    padding: 8px 0 5px 0;
-}
-#judul-shopee {
-    width: 60%;
-    margin: 0 auto;
-    /* padding: 0; */
-    float: left;
-    padding-bottom: 10px;
-}
-#judul-shopee h1 {
-    color: #139003;
-    font-size: 12px;
+
+.order-option:last-child .order-label {
+    color: #999900;
 }
 
 /* CLIENT */
@@ -657,99 +647,41 @@ a {
     padding: 0;
 }
 
-/* foto */
-.activity-header {
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 50px 0 20px 0;
-}
-.container {
-    width: 1186px;
-    height: 926px;
-    position: relative;
-    margin: 0 auto;
-}
+/* Activity */
 
-.activity {
-    position: absolute;
-    background: white;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
-    overflow: hidden;
+.container-grid {
+    margin: 0 auto;
+    padding: 20px;
+    width: 80%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-content: center;
+    box-sizing: border-box;
+    /* background-color: #f0f0f0; */
 }
 
-.activity img {
+.photo-grid {
+    width: 80%;
+    max-width: 1200px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.photo {
+    flex: 1;
+    margin: 5px;
+}
+
+.photo img {
     width: 100%;
-    height: 100%;
-    /* object-fit: cover; */
-}
-
-/* Specific activity positioning */
-.activity1 {
-    width: 401px;
-    height: 260px;
-    left: 36px;
-    top: 27px;
-}
-
-.activity2 {
-    width: 241px;
-    height: 316px;
-    left: 36px;
-    top: 318px;
-}
-
-.activity3 {
-    width: 559px;
-    height: 316px;
-    left: 301px;
-    top: 318px;
-}
-
-.activity4 {
-    width: 269px;
-    height: 235px;
-    left: 880px;
-    top: 399px;
-}
-
-.activity5 {
-    width: 241px;
-    height: 235px;
-    left: 36px;
-    top: 665px;
-}
-
-.activity6 {
-    width: 241px;
-    height: 235px;
-    left: 301px;
-    top: 665px;
-}
-
-.activity7 {
-    width: 583px;
-    height: 235px;
-    left: 566px;
-    top: 665px;
-}
-
-.activity8 {
-    width: 401px;
-    height: 260px;
-    left: 459px;
-    top: 27px;
-}
-
-.activity9 {
-    width: 269px;
-    height: 347px;
-    left: 880px;
-    top: 27px;
+    height: auto;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 /* Profil Pimpinan Perusahaan */
