@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <!-- Content -->
+            <!-- Header Content -->
             <div id="bg-content">
                 <div id="bo-content">
                     <!-- Header -->
@@ -55,6 +55,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Isi Content -->
                     <div id="isi-content">
                         <div id="text-welcome">
@@ -66,30 +67,29 @@
 
                         <!-- info data -->
                         <div id="info-data1" class="clearfix">
-                            <div id="container-admin">
-                                <div id="icon-admin">
+                            <div id="container-info">
+                                <div id="info-img">
                                     <img src="https://via.placeholder.com/50x50" alt="icon-admin">
                                 </div>
-                                <div id="info-admin">
-                                    <div id="count-admin">
+                                <div id="info-text">
+                                    <div id="text-admin">
                                         <h3>Admin</h3>
                                     </div>
-                                    <div id="text-admin">
+                                    <div id="count-admin">
                                         <p>2</p>
                                     </div>
                                 </div>
-                                
                             </div>
                             
-                            <div id="container-produk">
-                                <div id="icon-produk">
+                            <div id="container-info">
+                                <div id="info-img">
                                     <img src="https://via.placeholder.com/50x50" alt="icon-produk">
                                 </div>
-                                <div id="info-produk">
-                                    <div id="count-produk">
+                                <div id="info-text">
+                                    <div id="text-produk">
                                         <h3>Produk</h3>
                                     </div>
-                                    <div id="text-produk">
+                                    <div id="count-admin">
                                         <p>3</p>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                         </div>
 
                         <div id="info-data2" class="clearfix">
-                            <div id="container-kegiatan">
+                            <div id="container-info">
                                 <div id="icon-kegiatan">
                                     <img src="https://via.placeholder.com/50x50" alt="icon-kegiatan">
                                 </div>
@@ -113,7 +113,7 @@
                                 
                             </div>
                             
-                            <div id="container-pimpinan">
+                            <div id="container-info">
                                 <div id="icon-pimpinan">
                                     <img src="https://via.placeholder.com/50x50" alt="icon-pimpinan">
                                 </div>
