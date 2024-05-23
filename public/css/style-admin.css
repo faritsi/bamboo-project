@@ -1,0 +1,282 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    /* background-color: black; */
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/* Login Admin */
+
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.left-section {
+    flex: 1;
+    position: relative;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.logo {
+    width: 100px; /* Sesuaikan lebar logo sesuai kebutuhan */
+    height: auto;
+}
+
+.right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Side Bar */
+#bg-container {
+    background-color: #d9d9d9;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#bo-container {
+    display: flex;
+    /* flex-direction: column; */
+    width: 92%;
+    flex-direction: row;
+    padding: 50px;
+}
+
+#container-sidebar {
+    background-color: #fff;
+    width: 300px;
+    height: 400px;
+    color: #000;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+#container-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#container-sidebar ul li {
+    margin: 20px 0;
+}
+
+#container-sidebar #container-logout {
+    background-color: #ff0000;
+    border-radius: 20px;
+    margin: 40px 15px 10px 15px;
+    /* padding: 10px; */
+}
+
+#container-sidebar #container-sidebar-menu ul li a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+#container-sidebar #container-logout ul li a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    /* transition: background-color 0.3s; */
+}
+
+#container-sidebar #container-sidebar-menu ul li a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Header Dasboard */
+
+#bg-content {
+    width: 100%;
+    padding-left: 20px;
+}
+
+#bo-content {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#header-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+}
+
+#left-admin h3 {
+    margin: 0;
+}
+
+#right-admin {
+    display: flex;
+    align-items: center;
+    /* width: 100%; */
+    /* text-align: center; */
+    margin-left: auto;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+#right-admin #poto-admin img {
+    border-radius: 50%;
+    /* width: 50%;
+    height: 50%; */
+}
+
+#nama-admin h4 {
+    margin: 0 0 0 10px;
+}
+
+/* Isi Content */
+
+#isi-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#text-welcome {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#narasi-welcome {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#info-data1 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#info-data1 #container-admin {
+    width: 40%;
+    margin: 20px 0px 20px 0px;
+    padding: 0;
+    float: left;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+#info-data1 #container-produk {
+    width: 40%;
+    margin: 20px 0px 20px 0px;
+    padding: 0;
+    float: right;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+#info-admin {
+    float: right;
+}
+
+#info-produk {
+    float: right;
+}
+
+#info-data2 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#container-kegiatan {
+    width: 40%;
+    margin: 20px 0px 20px 0px;
+    padding: 0;
+    float: left;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+#info-kegiatan {
+    float: right;
+}
+
+#container-pimpinan {
+    width: 40%;
+    margin: 20px 0px 20px 0px;
+    padding: 0;
+    float: right;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+#info-pimpinan {
+    float: right;
+}
+/* Responsiveness */
+/* @media (min-width: 768px) {
+    #bo-container {
+        flex-direction: row;
+    }
+
+    #container-sidebar {
+        width: 250px;
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+
+    #bg-content {
+        flex-grow: 1;
+        padding: 20px;
+    }
+
+    #bo-content {
+        width: 100%;
+    }
+
+    #header-admin {
+        padding-left: 100px;
+    }
+
+    #left-admin,
+    #right-admin {
+        width: auto;
+        flex: 1;
+    }
+} */

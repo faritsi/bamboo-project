@@ -24,6 +24,9 @@ Route::controller(AuthController::class)->group(function(){
     Route::post('login/proses', 'proses');
     Route::get('logout', 'logout');
 });
+Route::get('/admin', function () {
+    return view('halaman/dashboard-admin');
+});
 
 // Route::controller(LayoutController::class)->group(function({
 //     Route::get('dashboard',  {
