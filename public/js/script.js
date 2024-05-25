@@ -24,3 +24,23 @@ document.addEventListener("DOMContentLoaded", () => {
     showSlide(currentSlide);
     setInterval(nextSlide, 3000); // Change slide every 3 seconds
 });
+
+function triggerTable(number, element) {
+    // Hide all extra-info rows first
+    var rows = document.querySelectorAll(".extra-info-1, .extra-info-2");
+    rows.forEach(function (row) {
+        row.style.display = "none";
+    });
+
+    // Determine which row to show based on the number
+    var rowClass = ".extra-info-" + number;
+    var row = element.closest("tr").nextElementSibling;
+
+    while (row && !row.classList.contains(rowClass.substring(1))) {
+        row = row.nextElementSibling;
+    }
+
+    if (row) {
+        row.style.display = "table-row";
+    }
+}

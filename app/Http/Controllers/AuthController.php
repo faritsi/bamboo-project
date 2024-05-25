@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function index(){
         if (Auth::user()) {
-            return redirect()->intended('/dashboard-admin');
+            return redirect()->intended('/home');
         }
         return view('auth.login', [
             'title' => 'Login'
@@ -30,7 +30,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
             if($user){
-                return redirect()->intended('/dashboard-admin');
+                return redirect()->intended('/home');
             }
             
             return redirect()->intended('/');

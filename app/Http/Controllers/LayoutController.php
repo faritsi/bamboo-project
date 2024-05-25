@@ -18,13 +18,13 @@ class LayoutController extends Controller
             'produk' => produk::orderBy('created_at')->take(3)->get()
         ]);
     }
-    public function hamin()
+    public function index()
     {
         $user1 = User::count();
         // return view('halaman.dashboard-admin')->with([
         //     'title' => 'Dashboard'
         // ]);
-        return view('halaman.dashboard-admin')->with([
+        return view('admin.beranda')->with([
             'user' => Auth::user(),
             'role' => role::all(),
             'title' => 'Dashboard'

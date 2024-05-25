@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,11 @@ class ProdukController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $produk = Produk::all();
-        return view('form.produk',[
+        return view('admin.produk',[
             'title' => 'Produk'
-        ],compact('produk'));
+        ],compact('produk', 'user'));
     }
 
     /**
