@@ -20,9 +20,31 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('halaman/login');
 });
-Route::get('/admin', function () {
+
+// Dashboard Admin
+Route::get('/dashboard-home', function () {
+    return view('halaman/dashboard-home');
+})->name('home');
+
+Route::get('/dashboard-admin', function () {
     return view('halaman/dashboard-admin');
-});
+})->name('admin');
+
+Route::get('/dashboard-produk', function () {
+    return view('halaman/dashboard-produk');
+})->name('produk');
+
+Route::get('/dashboard-kegiatan', function () {
+    return view('halaman/dashboard-kegiatan');
+})->name('kegiatan');
+
+Route::get('/dashboard-pimpinan', function () {
+    return view('halaman/dashboard-pimpinan');
+})->name('pimpinan');
+
+Route::get('/dashboard-lainnya', function () {
+    return view('halaman/dashboard-info-lainnya');
+})->name('info-lainnya');
 
 // Route::controller(LayoutController::class)->group(function({
 //     Route::get('dashboard',  {
