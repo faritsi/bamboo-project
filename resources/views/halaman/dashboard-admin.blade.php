@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="stylesheet" href="/css/style-ds-admin.css" />
+    <link rel="stylesheet" href="{{ asset('css/style-tabel-admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style-tabel-produk.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style-tabel-pimpinan.css') }}">
+    <!-- <link rel="stylesheet" href="/css/style-ds-produk.css" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -137,73 +141,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
-                                            <td>2</td>
-                                            <td>Hafizh</td>
-                                            <td>admin@gmail.com</td>
-                                            <td>aktif</td>
-                                            <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td>
-                                        </tr>
-                                        <tr class="details-row">
-                                            <td colspan="6">
-                                                <div><strong>Nama Admin: </strong> Hafizh</div>
-                                                <div><strong>Username: </strong> admin@gmail.com</div>
-                                                <div><strong>Password: </strong> 12345678</div>
-                                                <div><strong>Status : </strong> Aktif</div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
-                                            <td>3</td>
-                                            <td>Faisal</td>
-                                            <td>admin@gmail.com</td>
-                                            <td>aktif</td>
-                                            <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td>
-                                        </tr>
-                                        <tr class="details-row">
-                                            <td colspan="6">
-                                                <div><strong>Nama Admin: </strong> Faisal</div>
-                                                <div><strong>Username: </strong> admin@gmail.com</div>
-                                                <div><strong>Password: </strong> 12345678</div>
-                                                <div><strong>Status : </strong> Aktif</div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
-                                            <td>4</td>
-                                            <td>Sarah</td>
-                                            <td>admin@gmail.com</td>
-                                            <td>aktif</td>
-                                            <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td>
-                                        </tr>
-                                        <tr class="details-row">
-                                            <td colspan="6">
-                                                <div><strong>Nama Admin: </strong> Sarah</div>
-                                                <div><strong>Username: </strong> admin@gmail.com</div>
-                                                <div><strong>Password: </strong> 12345678</div>
-                                                <div><strong>Status : </strong> Aktif</div>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
-                                            <td>5</td>
-                                            <td>Yogi</td>
-                                            <td>admin@gmail.com</td>
-                                            <td>aktif</td>
-                                            <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td>
-                                        </tr>
-                                        <tr class="details-row">
-                                            <td colspan="6">
-                                                <div><strong>Nama Admin: </strong> Yogi</div>
-                                                <div><strong>Username: </strong> admin@gmail.com</div>
-                                                <div><strong>Password: </strong> 12345678</div>
-                                                <div><strong>Status : </strong> Aktif</div>
-                                            </td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
 

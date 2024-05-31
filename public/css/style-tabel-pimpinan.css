@@ -1,0 +1,133 @@
+#table-pimpinan {
+    width: 95%;
+    padding-bottom: 20px;
+    margin: 0 auto;
+}
+
+#table-pimpinan table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-pimpinan th,
+#table-pimpinan td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#table-pimpinan th:last-child,
+#table-pimpinan td:last-child {
+    border-right: none;
+}
+
+#table-pimpinan thead th {
+    background-color: #d9d9d9;
+    border-right: 1px solid #ccc;
+    text-align: center;
+    /* border-bottom: 2px solid #ccc; */
+}
+
+/* Detali tabel */
+#table-pimpinan th:nth-child(1),
+#table-pimpinan td:nth-child(1) {
+    width: 20px;
+}
+
+/* No Tabel */
+#table-pimpinan th:nth-child(2),
+#table-pimpinan td:nth-child(2) {
+    width: 25px;
+}
+
+#table-pimpinan th:nth-child(3),
+#table-pimpinan td:nth-child(3) {
+    width: 150px;
+}
+
+#table-pimpinan th:nth-child(4),
+#table-pimpinan td:nth-child(4) {
+    width: 100px;
+}
+
+#table-pimpinan th:nth-child(5),
+#table-pimpinan td:nth-child(5) {
+    width: 250px;
+}
+
+#table-pimpinan th:nth-child(6),
+#table-pimpinan td:nth-child(6) {
+    width: 100px;
+}
+
+#table-pimpinan .details-row {
+    display: none;
+}
+
+#table-pimpinan .details-row div {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    white-space: normal;
+    word-wrap: break-word;
+}
+#table-pimpinan .details-row div:last-child {
+    border-bottom: none;
+}
+
+#table-pimpinan .btn-toggle {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    /* font-size: 20px; */
+    width: 90%;
+    /* height: ; */
+    text-align: center;
+    /* line-height: 30px; */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#table-pimpinan .icon-plus {
+    color: white;
+    background-color: green;
+}
+#table-pimpinan .icon-minus {
+    color: white;
+    background-color: red;
+    /* border: 2px solid red; */
+}
+
+#table-pimpinan #btn-edit i {
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+#table-pimpinan #btn-edit i:last-child {
+    margin-right: 0;
+}
+
+#table-pimpinan #btn-edit i.fa-pen-to-square {
+    color: blue;
+}
+
+#table-pimpinan #btn-edit i.fa-trash {
+    color: red;
+}
+
+#table-pimpinan .btn-toggle .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#table-pimpinan td span.btn-toggle,
+#table-pimpinan td span#btn-edit {
+    display: flex;
+    align-items: center;
+}
