@@ -1,0 +1,128 @@
+/* Tabel Admin */
+#table-admin {
+    width: 95%;
+    padding-bottom: 20px;
+    margin: 0 auto;
+}
+
+#table-admin table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-admin th,
+#table-admin td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#table-admin th:last-child,
+#table-admin td:last-child {
+    border-right: none;
+}
+
+#table-admin thead th {
+    background-color: #d9d9d9;
+    border-right: 1px solid #ccc;
+    text-align: center;
+}
+
+#table-admin th:nth-child(1),
+#table-admin td:nth-child(1) {
+    width: 18px;
+}
+
+#table-admin th:nth-child(2),
+#table-admin td:nth-child(2) {
+    width: 25px;
+}
+
+#table-admin th:nth-child(3),
+#table-admin td:nth-child(3) {
+    width: 150px;
+}
+
+#table-admin th:nth-child(4),
+#table-admin td:nth-child(4) {
+    width: 300px;
+}
+
+#table-admin th:nth-child(5),
+#table-admin td:nth-child(5) {
+    width: 100px;
+}
+
+#table-admin th:nth-child(6),
+#table-admin td:nth-child(6) {
+    width: 100px;
+}
+
+#table-admin .details-row {
+    display: none;
+}
+
+#table-admin .details-row div {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#table-admin .details-row div:last-child {
+    border-bottom: none;
+}
+
+#table-admin .btn-toggle {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#table-admin .icon-plus {
+    color: white;
+    background-color: green;
+}
+
+#table-admin .icon-minus {
+    color: white;
+    background-color: red;
+}
+
+#table-admin #btn-edit i {
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#table-admin #btn-edit i:last-child {
+    margin-right: 0;
+}
+
+#table-admin #btn-edit i.fa-pen-to-square {
+    color: blue;
+}
+
+#table-admin #btn-edit i.fa-trash {
+    color: red;
+}
+
+#table-admin .btn-toggle .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#table-admin td span.btn-toggle,
+#table-admin td span#btn-edit {
+    display: flex;
+    align-items: center;
+}

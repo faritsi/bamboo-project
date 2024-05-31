@@ -1,0 +1,132 @@
+/* Tabel Produk */
+#table-produk {
+    width: 95%;
+    padding-bottom: 20px;
+    margin: 0 auto;
+}
+
+#table-produk table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-produk th,
+#table-produk td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#table-produk th:last-child,
+#table-produk td:last-child {
+    border-right: none;
+}
+
+#table-produk thead th {
+    background-color: #d9d9d9;
+    border-right: 1px solid #ccc;
+    text-align: center;
+}
+
+#table-produk thead th:nth-child(2) {
+    border-right: 1px solid #ccc;
+}
+
+#table-produk th:nth-child(1),
+#table-produk td:nth-child(1) {
+    width: 20px;
+}
+
+#table-produk th:nth-child(2),
+#table-produk td:nth-child(2) {
+    width: 25px;
+}
+
+#table-produk th:nth-child(3),
+#table-produk td:nth-child(3) {
+    width: 150px;
+}
+
+#table-produk th:nth-child(5),
+#table-produk td:nth-child(5) {
+    width: 50px;
+}
+
+#table-produk th:nth-child(6),
+#table-produk td:nth-child(6) {
+    width: 350px;
+}
+
+#table-produk th:nth-child(7),
+#table-produk td:nth-child(7) {
+    width: 350px;
+}
+
+#table-produk .details-row {
+    display: none;
+}
+
+#table-produk .details-row div {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#table-produk .details-row div:last-child {
+    border-bottom: none;
+}
+
+#table-produk .btn-toggle {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#table-produk .icon-plus {
+    color: white;
+    background-color: green;
+}
+
+#table-produk .icon-minus {
+    color: white;
+    background-color: red;
+}
+
+#table-produk #btn-edit i {
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#table-produk #btn-edit i:last-child {
+    margin-right: 0;
+}
+
+#table-produk #btn-edit i.fa-pen-to-square {
+    color: blue;
+}
+
+#table-produk #btn-edit i.fa-trash {
+    color: red;
+}
+
+#table-produk .btn-toggle .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#table-produk td span.btn-toggle,
+#table-produk td span#btn-edit {
+    display: flex;
+    align-items: center;
+}
