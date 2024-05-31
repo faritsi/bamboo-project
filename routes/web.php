@@ -26,11 +26,12 @@ Route::get('/admin', function () {
     return view('halaman/dashboard-admin');
 });
 
-// Route::controller(LayoutController::class)->group(function({
-//     Route::get('dashboard',  {
-        
-//     });
-// }));
+Route::controller(AuthController::class)->group(function(){
+    Route::get('login', 'index')->name('login');
+    Route::post('login/proses', 'proses');
+    Route::get('logout', 'logout');
+});
+
 Route::controller(LayoutController::class)->group(function(){
     Route::get('dashboard', 'halu');
 });

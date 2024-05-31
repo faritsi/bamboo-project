@@ -38,27 +38,40 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // Validasi input, pastikan 'image' adalah file dengan format yang benar
+        $validated = $request->validate([
             'judul' => 'required|string',
             'slug' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
             'deskripsi' => 'required|string',
             'tokped' => 'required|string',
             'shopee' => 'required|string',
         ]);
-        // balita::create($request->all());
-        $produk = new produk([
-            'judul' => $request->judul,
-            'slug' => $request->slug,
-            'image' => $request->image,
-            'deskripsi' => $request->deskripsi,
-            'tokped' => $request->tokped,
-            'shopee' => $request->shopee,
+
+        // Cek apakah ada file gambar dalam request
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->move(public_path('images'), $imageName); // Pindahkan gambar ke folder public/images
+            $validated['image'] = $imageName; // Simpan nama file gambar ke dalam array validated
+        } else {
+            return back()->withErrors(['image' => 'Image upload failed']);
+        }
+
+        // Buat objek model produk dengan data yang sudah divalidasi
+        $produk = new Produk([
+            'judul' => $validated['judul'],
+            'slug' => $validated['slug'],
+            'image' => $validated['image'],
+            'deskripsi' => $validated['deskripsi'],
+            'tokped' => $validated['tokped'],
+            'shopee' => $validated['shopee'],
         ]);
-        // $balita = new balita($request->all());
-        // dd($produk);
+
+        // Simpan objek model ke database
         $produk->save();
 
+        // Redirect ke route produk.index dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Data Berhasil ditambah');
     }
 
@@ -81,16 +94,39 @@ class ProdukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Produk $produk)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'judul' => 'required|string',
+            'slug' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'deskripsi' => 'required|string',
+            'tokped' => 'required|string',
+            'shopee' => 'required|string',
+        ]);
+
+        $produk = Produk::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $validated['image'] = $imageName;
+        }
+
+        $produk->update($validated);
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        //
+        $produk = Produk::findOrFail($id);
+        $produk->delete();
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

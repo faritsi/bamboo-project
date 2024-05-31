@@ -1,8 +1,7 @@
 @extends('halaman.admin')
 @section('content')
-    <!-- Header -->
-<!-- Isi Content -->
 <div id="isi-content">
+                        
     <div id="text-welcome">
         <h2>Selamat Datang !</h2>
     </div>
@@ -14,9 +13,9 @@
     <div id="container-data">
         <div id="cc-data">
             <div id="info-data1" class="clearfix">
-                <div id="container-info">
-                    <div id="info-img">
-                        <img src="https://via.placeholder.com/50x50" alt="icon-admin">
+                <div id="container-info-admin">
+                    <div id="info-icon">
+                        <i class="fa-solid fa-user-gear" alt="icon-admin"></i>
                     </div>
                     <div id="info-text">
                         <div id="text-admin">
@@ -28,9 +27,9 @@
                     </div>
                 </div>
                 
-                <div id="container-info">
-                    <div id="info-img">
-                        <img src="https://via.placeholder.com/50x50" alt="icon-produk">
+                <div id="container-info-produk">
+                    <div id="info-icon">
+                        <i class="fa-solid fa-boxes-stacked" alt="icon-produk"></i>
                     </div>
                     <div id="info-text">
                         <div id="text-produk">
@@ -45,9 +44,9 @@
             </div>
 
             <div id="info-data2" class="clearfix">
-                <div id="container-info">
-                    <div id="info-img">
-                        <img src="https://via.placeholder.com/50x50" alt="icon-kegiatan">
+                <!-- <div id="container-info">
+                    <div id="info-icon">
+                        <i class="fa-solid fa-briefcase" alt="icon-kegiatan"></i>
                     </div>
                     <div id="info-text">
                         <div id="text-kegiatan">
@@ -58,11 +57,11 @@
                         </div>
                     </div>
                     
-                </div>
+                </div> -->
                 
-                <div id="container-info">
-                    <div id="info-img">
-                        <img src="https://via.placeholder.com/50x50" alt="icon-pimpinan">
+                <div id="container-info-pimpinan">
+                    <div id="info-icon">
+                        <i class="fa-solid fa-user-tie" alt="icon-pimpinan"></i>
                     </div>
                     <div id="info-text">
                         <div id="text-pimpinan">
@@ -72,12 +71,9 @@
                             <p>5</p>
                         </div>
                     </div>
-                    
                 </div>
-                
             </div>
         </div>
     </div>
-
 </div>
 @endsection

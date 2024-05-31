@@ -266,14 +266,15 @@
     padding-bottom: 20px;
     margin: 0 auto;
 }
-table {
+
+#table-produk table {
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
 }
 
-th,
-td {
+#table-produk th,
+#table-produk td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ccc;
@@ -283,130 +284,111 @@ td {
     text-overflow: ellipsis;
 }
 
-th:last-child,
-td:last-child {
+#table-produk th:last-child,
+#table-produk td:last-child {
     border-right: none;
 }
 
-thead th {
+#table-produk thead th {
     background-color: #d9d9d9;
     border-right: 1px solid #ccc;
     text-align: center;
-    /* border-bottom: 2px solid #ccc; */
 }
 
-thead th:nth-child(2) {
+#table-produk thead th:nth-child(2) {
     border-right: 1px solid #ccc;
 }
 
-/* Detali tabel */
-th:nth-child(1),
-td:nth-child(1) {
+#table-produk th:nth-child(1),
+#table-produk td:nth-child(1) {
     width: 20px;
 }
 
-/* No Tabel */
-th:nth-child(2),
-td:nth-child(2) {
+#table-produk th:nth-child(2),
+#table-produk td:nth-child(2) {
     width: 25px;
 }
 
-th:nth-child(3),
-td:nth-child(3) {
+#table-produk th:nth-child(3),
+#table-produk td:nth-child(3) {
     width: 150px;
 }
 
-/* th:nth-child(4),
-td:nth-child(4) {
-    width: 600px;
-} */
-
-th:nth-child(5),
-td:nth-child(5) {
+#table-produk th:nth-child(5),
+#table-produk td:nth-child(5) {
     width: 50px;
 }
 
-th:nth-child(6),
-td:nth-child(6) {
+#table-produk th:nth-child(6),
+#table-produk td:nth-child(6) {
     width: 350px;
 }
 
-th:nth-child(7),
-td:nth-child(7) {
+#table-produk th:nth-child(7),
+#table-produk td:nth-child(7) {
     width: 350px;
-    /* border-right: 1px solid #ccc; */
 }
 
-/* th:nth-child(6),
-td:nth-child(6) {
-    width: 100px;
-} */
-
-.details-row {
+#table-produk .details-row {
     display: none;
 }
 
-.details-row div {
+#table-produk .details-row div {
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
 }
-.details-row div:last-child {
+
+#table-produk .details-row div:last-child {
     border-bottom: none;
 }
 
-.btn-toggle {
+#table-produk .btn-toggle {
     cursor: pointer;
     margin: 0;
     padding: 0;
-    /* font-size: 20px; */
     width: 90%;
-    /* height: ; */
     text-align: center;
-    /* line-height: 30px; */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.btn-toggle .fa {
-    margin: 0;
-    padding: 0;
-}
-
-.icon-plus {
+#table-produk .icon-plus {
     color: white;
     background-color: green;
 }
-.icon-minus {
+
+#table-produk .icon-minus {
     color: white;
     background-color: red;
-    /* border: 2px solid red; */
 }
 
-#btn-edit i {
+#table-produk #btn-edit i {
     font-size: 18px;
     margin-right: 20px;
     cursor: pointer;
 }
-#btn-edit i:last-child {
+
+#table-produk #btn-edit i:last-child {
     margin-right: 0;
 }
 
-#btn-edit i.fa-pen-to-square {
+#table-produk #btn-edit i.fa-pen-to-square {
     color: blue;
 }
-#btn-edit i.fa-trash {
+
+#table-produk #btn-edit i.fa-trash {
     color: red;
 }
 
-.btn-toggle .fa {
+#table-produk .btn-toggle .fa {
     margin: 0;
     padding: 0;
 }
 
-td span.btn-toggle,
-td span#btn-edit {
+#table-produk td span.btn-toggle,
+#table-produk td span#btn-edit {
     display: flex;
     align-items: center;
 }
@@ -449,4 +431,72 @@ td span#btn-edit {
 }
 #next-btn {
     margin-left: 15px;
+}
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-content form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.modal-content form input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content form button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content form button:hover {
+    background-color: #45a049;
 }
