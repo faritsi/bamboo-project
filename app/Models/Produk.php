@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
+    protected $fillable = [ 
+        'pid',
+        'judul',
+        'slug',
+        'image',
+        'deskripsi',
+        'tokped',
+        'shopee',
+    ]; 
+    // protected $primaryKey = ['pid'];
 }

@@ -38,8 +38,10 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        $pid = $this->generateRandomString1(25);
         // Validasi input, pastikan 'image' adalah file dengan format yang benar
         $validated = $request->validate([
+            // 'pid' => 'required|string',
             'judul' => 'required|string',
             'slug' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
@@ -60,6 +62,7 @@ class ProdukController extends Controller
 
         // Buat objek model produk dengan data yang sudah divalidasi
         $produk = new Produk([
+            'pid' => $pid,
             'judul' => $validated['judul'],
             'slug' => $validated['slug'],
             'image' => $validated['image'],
@@ -67,14 +70,22 @@ class ProdukController extends Controller
             'tokped' => $validated['tokped'],
             'shopee' => $validated['shopee'],
         ]);
-
+        // dd($produk);
         // Simpan objek model ke database
         $produk->save();
 
         // Redirect ke route produk.index dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Data Berhasil ditambah');
     }
-
+    private function generateRandomString1($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
     /**
      * Display the specified resource.
      */
@@ -94,38 +105,76 @@ class ProdukController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $pid)
     {
-        $validated = $request->validate([
-            'judul' => 'required|string',
-            'slug' => 'required|string',
+        // $validated = $request->validate([
+        //     'pid' => 'required|string',
+        //     'judul' => 'required|string|max:255',
+        //     'slug' => 'required|string|max:255',
+        //     'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'deskripsi' => 'required|string|max:1000',
+        //     'tokped' => 'required|string|max:255',
+        //     'shopee' => 'required|string|max:255',
+        // ]);
+    
+        // // Cari produk berdasarkan pid
+        // $produk = Produk::findOrFail($pid);
+    
+        // // Cek apakah ada file gambar dalam request dan proses file tersebut
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $imageName = time() . '.' . $image->getClientOriginalExtension();
+        //     $image->move(public_path('images'), $imageName);
+        //     $validated['image'] = $imageName; // Simpan nama file baru
+        // } else {
+        //     $validated = array_except($validated, ['image']); // Hapus image dari array validated jika tidak ada file baru
+        // }
+    
+        // // Update produk dengan data yang sudah divalidasi
+        // $produk->update($validated);
+    
+        // // Redirect dengan pesan sukses
+        // return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
+        $request->validate([
+            'pid' => 'required|string',
+            'judul' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'deskripsi' => 'required|string',
-            'tokped' => 'required|string',
-            'shopee' => 'required|string',
+            'deskripsi' => 'required|string|max:1000',
+            'tokped' => 'required|string|max:255',
+            'shopee' => 'required|string|max:255',
         ]);
-
-        $produk = Produk::findOrFail($id);
-
+        $produk = DB::table('produks')->where('pid', $request->pid)->get();
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-            $validated['image'] = $imageName;
+            $reuest['image'] = $imageName; // Simpan nama file baru
+        } else {
+            $reuest = array_except($reuest, ['image']); // Hapus image dari array validated jika tidak ada file baru
         }
-
-        $produk->update($validated);
-
+        $produk =   DB::table('produks')->where('pid',$request->pid)->update([
+            'judul' => $request->judul,
+            'slug' => $request->slug,
+            'image' => $reuest['image'],
+            'deskripsi' => $request->deskripsi,
+            'tokped' => $request->tokped,
+            'shopee' => $request->shopee,
+        ]);
+        // $produk->update($request->all());
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($pid)
     {
-        $produk = Produk::findOrFail($id);
-        $produk->delete();
+        // $produk = Produk::findOrFail($id);
+        $produk = DB::table('produks')->where('pid',$pid)->delete();
+        // $produk = Produk::where('pid', $pid)->firstOrFail();
+        // $produk->delete();
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }

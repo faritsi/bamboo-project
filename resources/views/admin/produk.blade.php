@@ -69,15 +69,15 @@
                         <td><a href="{{$p->shopee}}">{{$p->shopee}}</a></td>
                         {{-- <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td> --}}
                         <td><span id="btn-edit">
-                            <button type="button" class="cek" data-id="{{ $p->id }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="delete-btn" data-id="{{ $p->id }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="cek" data-id="{{ $p->pid }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="delete-btn" data-id="{{ $p->pid }}"><i class="fa-solid fa-trash"></i></button>
                         </span></td>
                     </tr>
                     <tr class="details-row">
                         <td colspan="6">
                             <div><strong>Nama Produk: </strong> {{$p->judul}}</div>
                             <div><strong>Deskripsi Produk: </strong> {{$p->deskripsi}}</div>
-                            <div><strong>Gmabr: </strong><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>                          
+                            <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>                          
                             {{-- <div><strong>Link Shoppe: </strong> shoppe.com</div> --}}
                             <!-- <div><strong>Status : </strong> Aktif</div> -->
                         </td>
@@ -111,6 +111,8 @@
         <h2>Tambah Admin</h2>
         <form id="add-admin-form" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <label for="judul">ID:</label>
+            <input type="text" id="pid" name="pid"  >
             <label for="judul">Judul:</label>
             <input type="text" id="judul" name="judul" >
             <label for="slug">Slug:</label>
@@ -131,4 +133,5 @@
 {{-- @yield('modal-edit') --}}
 @include('modal.modal-edit')
 @include('modal.modal-delet')
+
 @endsection
