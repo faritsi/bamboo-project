@@ -6,6 +6,7 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PimpinanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,18 +39,26 @@ Route::controller(LayoutController::class)->group(function(){
     Route::get('dashboard', 'halu');
 });
 
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::group(['middleware' => ['CekAuth:1,2']], function () {
+//     Route::resource('home', LayoutController::class);
+//     Route::resource('produk', ProdukController::class);      
+//     Route::resource('kegiatan', KegiatanController::class);      
+//     Route::resource('admin', AdminController::class);      
+//     });
+//     Route::group(['middleware' => ['CekAuth:2']], function () {
+//     Route::resource('home', LayoutController::class);
+//     Route::resource('produk', ProdukController::class);      
+//     Route::resource('kegiatan', KegiatanController::class);      
+//     });
+// });
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => ['CekAuth:1']], function () {
-    Route::resource('home', LayoutController::class);
-    Route::resource('produk', ProdukController::class);      
-    Route::resource('kegiatan', KegiatanController::class);      
-    Route::resource('admin', AdminController::class);      
-    });
-    Route::group(['middleware' => ['CekAuth:2']], function () {
-    // Route::resource('home', LayoutController::class);
-    // Route::resource('produk', ProdukController::class);      
-        // Route::resource('balita', balitaUserController::class);
-        // Route::resource('ibu', IbuUserController::class);
-        // Route::resource('pemeriksaan', PemeriksaanController::class);
+    Route::group(['middleware' => ['CekAuth:1,2']], function () {
+        Route::resource('home', LayoutController::class);
+        Route::resource('produk', ProdukController::class);
+        Route::resource('kegiatan', KegiatanController::class);
+        Route::resource('admin', AdminController::class);
+        Route::resource('pimpinan', PimpinanController::class);
     });
 });
+

@@ -53,38 +53,30 @@
                         <th></th>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Username</th>
-                        <th>Status</th>
+                        <th>Jabatan</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $u)   
-                    {{-- @if ($u->role_id != 1)                  --}}
+                    @foreach ($pimpinan as $p)                       
                     <tr>
                         <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
                         <td>1</td>
-                        <td>{{$u->name}}</td>
-                        <td>{{$u->username}}</td>
-                        <td>aktif</td>
-                        {{-- @if ($u->role_id != 2) --}}
+                        <td>{{$p->name}}</td>
+                        <td>{{$p->jabatan}}</td>
                         <td><span id="btn-edit">
-                            <button type="button" class="cek" data-id="{{ $u->id }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="delete-btn" data-id="{{ $u->id }}"><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="cek" data-id=""><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="delete-btn" data-id=""><i class="fa-solid fa-trash"></i></button>
                         </span></td>
-                        {{-- @endif --}}
                     </tr>
                     <tr class="details-row">
-                        <td colspan="6">
-                            <div><strong>Nama Admin: </strong> {{$u->role->name}}</div>
-                            <div><strong>Username: </strong> {{$u->username}}</div>
-                            <div><strong>Status : </strong> Aktif</div>
+                        <td colspan="5">
+                            <div><strong>Nama Pimpinan: </strong> {{$p->name}}</div>
+                            <div><strong>Deskripsi: </strong> {{$p->deskripsi}}</div>
+                            <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>    
                         </td>
                     </tr>
-                    {{-- @endif   --}}
                     @endforeach
-
-                    
                 </tbody>
             </table>
 
@@ -110,25 +102,23 @@
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <h2>Tambah Admin</h2>
-        <form id="add-admin-form" action="{{ route('admin.store') }}" method="POST">
+        <h2>Tambah {{$title}}</h2>
+        <form id="add-admin-form" action="{{ route('pimpinan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <label for="name">Nama:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <label for="password">Konfirmasi Password:</label>
-            <input type="password" name="password_confirm" placeholder="Konfirmasi Password" required>
-            {{-- <label for="role">Role:</label> --}}
-            <input type="text" id="role" name="role_id" required value="2" hidden>
-            {{-- <label for="status">Status:</label> --}}
-            <input type="text" id="status" name="status" value="aktif" hidden>
+            {{-- <label for="judul">ID:</label> --}}
+            <input type="text" id="ppid" name="ppid"  hidden>
+            <label for="judul">Nama:</label>
+            <input type="text" id="name" name="name" >
+            <label for="jabatan">Jabatan:</label>
+            <input type="text" id="jabatan" name="jabatan" >
+            <label for="deskripsi">Deskripsi:</label>
+            <input type="text" id="deskripsi" name="deskripsi" >
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" >
             <button type="submit">Submit</button>
         </form>
     </div>
 </div>
-@include('modal-admin.admin-edit')
-@include('modal-admin.admin-delete')
+{{-- @include('modal-admin.admin-edit') --}}
+{{-- @include('modal-admin.admin-delete') --}}
 @endsection

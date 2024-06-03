@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Produk;
+use App\Models\Pimpinan;
 
 class LayoutController extends Controller
 {
@@ -15,7 +16,8 @@ class LayoutController extends Controller
     {
         return view('halaman.dashboard')->with([
             'title' => 'Halaman Utama',
-            'produk' => produk::orderBy('created_at')->take(3)->get()
+            'produk' => produk::orderBy('created_at')->take(3)->get(),
+            'pimpinan' => Pimpinan::take(4)->get(),
         ]);
     }
     public function index()

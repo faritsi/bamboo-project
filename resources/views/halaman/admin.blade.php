@@ -42,14 +42,14 @@
                             <a href="/kegiatan">Kegiatan</a>
                         </li>
                         <li>
-                            <a href="#">Pimpinan Perusahaan</a>
+                            <a href="/pimpinan">Pimpinan Perusahaan</a>
                         </li>
                     </ul>
                 </div>
                 <div id="container-logout">
                     <ul>
                         <li>
-                            <a href="#">Logout</a>
+                            <a href="/logout">Logout</a>
                         </li>
                     </ul>
                 </div>

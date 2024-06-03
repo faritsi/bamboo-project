@@ -14,15 +14,30 @@ class CekAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $rules): Response
+    // public function handle(Request $request, Closure $next, $rules): Response
+    // {
+    //     if (!Auth::check()) {
+    //         return redirect('login');
+    //     }
+    //     $user = Auth::user();
+    //     if ($user->role_id == $rules) {
+    //         return $next($request);
+    //     }
+    //     return redirect('login')->with('error',"kamu gak punya akses");
+    // }
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!Auth::check()) {
             return redirect('login');
         }
+
         $user = Auth::user();
-        if ($user->role_id == $rules) {
+
+        // Cek jika role_id user ada di dalam array roles yang diizinkan
+        if (in_array($user->role_id, $roles)) {
             return $next($request);
         }
-        return redirect('login')->with('error',"kamu gak punya akses");
+
+        return redirect('login')->with('error', "Kamu tidak memiliki akses.");
     }
 }

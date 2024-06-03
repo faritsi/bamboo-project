@@ -108,11 +108,11 @@
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <h2>Tambah Admin</h2>
+        <h2>Tambah Produk</h2>
         <form id="add-admin-form" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <label for="judul">ID:</label>
-            <input type="text" id="pid" name="pid"  >
+            {{-- <label for="judul">ID:</label> --}}
+            <input type="text" id="pid" name="pid"  hidden>
             <label for="judul">Judul:</label>
             <input type="text" id="judul" name="judul" >
             <label for="slug">Slug:</label>
@@ -131,7 +131,7 @@
 </div>
 {{-- edit --}}
 {{-- @yield('modal-edit') --}}
-@include('modal.modal-edit')
-@include('modal.modal-delet')
+@include('modal-produk.modal-edit')
+@include('modal-produk.modal-delet')
 
 @endsection

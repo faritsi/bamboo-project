@@ -84,16 +84,34 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string',
+            'username' => 'required|string',
+            'password' => 'required|min:8',
+            'password_confirm' => 'required|same:password',
+            'role_id' => 'required|string',
+        ]);
+        $admin = User::find($id);
+        $admin->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            // 'password_confirm' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+        ]);
+        // dd($admin);
+        return redirect()->route('admin.index')->with('success', 'Data Berhasil ditambah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        //
+        $admin = User::find($id);
+        $admin->delete();
+        return redirect()->route('admin.index')->with('success', 'Data Berhasil ditambah');
     }
 }

@@ -409,41 +409,35 @@
         <div class="title-container">
             <h1 class="title">Pimpinan Perusahaan</h1>
         </div>
-
+        @foreach ($pimpinan as $p)            
         <div class="profile-container">
             <div class="profile-card">
+                <img src="{{ asset('images/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">{{$p->name}}</h1>
+                <h2 class="profile-title">{{$p->jabatan}}</h2>
+                <p class="profile-description">
+                    {{$p->deskripsi}}
+                </p>
+            </div>
+            {{-- <div class="profile-card">
+                <img src="{{ asset('images/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">{{$p->name}}</h1>
+                <h2 class="profile-title">{{$p->jabatan}}</h2>
+                <p class="profile-description">
+                    {{$p->deskripsi}}
+                </p>
+            </div> --}}
+            {{-- <div class="profile-card">
                 <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
                 <h1 class="profile-name">John Doe</h1>
                 <h2 class="profile-title">CEO</h2>
                 <p class="profile-description">
                     John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
                 </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
+            </div> --}}
+            
         </div>
+        @endforeach
 
         <!-- FOOTER -->
         <div class="container-footer">
