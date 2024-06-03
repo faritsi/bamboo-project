@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CekAuth:1']], function () {
     Route::resource('home', LayoutController::class);
     Route::resource('produk', ProdukController::class);      
+    Route::resource('kegiatan', KegiatanController::class);      
+    Route::resource('admin', AdminController::class);      
     });
     Route::group(['middleware' => ['CekAuth:2']], function () {
     // Route::resource('home', LayoutController::class);

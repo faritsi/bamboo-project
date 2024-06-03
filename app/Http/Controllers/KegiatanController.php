@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
@@ -12,7 +15,11 @@ class KegiatanController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $kegiatan = Kegiatan::all();
+        return view('admin.kegiatan',[
+            'title' => 'Kegiatan'
+        ],compact('kegiatan', 'user'));
     }
 
     /**

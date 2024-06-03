@@ -42,7 +42,6 @@
 
         oFReader.onload = function (oFREvent) {
             imgPreview.src = oFREvent.target.result;
-    };
-}
-
+        };
+    }
 </script>

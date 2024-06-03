@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/css/style-ds-info-halaman.css" />
     {{-- <link rel="stylesheet" href="/css/style-ds-pimpinan.css" /> --}}
     <link rel="stylesheet" href="/css/style-ds-produk.css" />
+    <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
+    <link rel="stylesheet" href="/css/style-ds-admin.css" />
 </head>
 <body>
     <!-- Sidebar -->
@@ -30,14 +32,14 @@
                         </li>
                         @if ($user->role_id == 1)
                         <li>
-                            <a href="#">Tambah Admin</a>
+                            <a href="/admin">Tambah Admin</a>
                         </li>
                         @endif
                         <li>
                             <a href="/produk">Produk</a>
                         </li>
                         <li>
-                            <a href="#">Kegiatan</a>
+                            <a href="/kegiatan">Kegiatan</a>
                         </li>
                         <li>
                             <a href="#">Pimpinan Perusahaan</a>
@@ -65,7 +67,7 @@
                                 <img src="https://via.placeholder.com/50x50" alt="Poto Admin">
                             </div>
                             <div id="nama-admin">
-                                <h4>{{$user->role->name}}</h4>
+                                <h4>{{$user->name}}</h4>
                             </div>
                         </div>
                     </div>

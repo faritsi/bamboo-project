@@ -21,11 +21,11 @@ class AuthController extends Controller
     {
         request()->validate(
             [
-                'email' => 'required',
+                'username' => 'required',
                 'password' => 'required',
             ]);
         
-        $kredensial = $request->only('email', 'password');
+        $kredensial = $request->only('username', 'password');
         if(Auth::attempt($kredensial)) {
             $request->session()->regenerate();
             $user = Auth::user();
@@ -37,8 +37,8 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email salah',
-        ])->onlyInput('email');
+            'username' => 'username salah',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
