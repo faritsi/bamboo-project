@@ -101,16 +101,40 @@ class PimpinanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pimpinan $pimpinan)
+    public function update(Request $request, $ppid)
     {
-        //
+        $request->validate([
+            'ppid' => 'required|string',
+            'name' => 'required|string',
+            'jabatan' => 'required|string',
+            'deskripsi' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $pimpinan = DB::table('pimpinans')->where('ppid', $request->ppid)->get();
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $reuest['image'] = $imageName; // Simpan nama file baru
+        } else {
+            $reuest = array_except($reuest, ['image']); // Hapus image dari array validated jika tidak ada file baru
+        }
+        $pimpinan =   DB::table('pimpinans')->where('ppid',$request->ppid)->update([
+            'name' => $request->name,
+            'jabatan' => $request->jabatan,
+            'deskripsi' => $request->deskripsi,
+            'image' => $reuest['image'],
+        ]);
+        // $produk->update($request->all());
+        return redirect()->route('pimpinan.index')->with('success', 'Proful berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pimpinan $pimpinan)
+    public function destroy($ppid)
     {
-        //
+        $pimpinan = DB::table('pimpinans')->where('ppid',$ppid)->delete();
+        return redirect()->route('pimpinan.index')->with('success', 'Profil berhasil dihapus!');
     }
 }

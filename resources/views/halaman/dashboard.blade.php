@@ -452,24 +452,26 @@
             <div class="site-links">
                 <div class="site-links-title">Site Links</div>
                 <div class="links">
-                    <div>Home</div>
-                    <div>About Us</div>
-                    <div>Service</div>
-                    <div>Catalog</div>
-                    <div>Contact Us</div>
+                    <div><a href="#bg-header">Home</a></div>
+                    <div><a href="#bg-about">About Us</a></div>
+                    <div><a href="#bg-ourserpis">Service</a></div>
+                    <div><a href="#bg-catalog">Service</a></div>
+                    <div><a href="#container-footer">Contact Us</a></div>
                 </div>
             </div>
+            @foreach ($ingpo as $i)      
             <div class="contact-info">
                 <div class="contact-title">Contact Us</div>
-                <div class="contact-email">Email @gmail.com</div>
-                <div class="contact-phone">08xx-xxxx-xxxx</div>
+                <div class="contact-email">{{$i->email}}</div>
+                <div class="contact-phone">{{$i->nowa}}</div>
                 <div class="email-icon"></div>
                 <div class="phone-icon"></div>
             </div>
+            @endforeach
             <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
             <div class="whatsapp-button">
-                <img src="https://via.placeholder.com/29x29" alt="WhatsApp">
-                <div>Whatsapp</div>
+                <a href="https://wa.me/{{$i->nowa}}?text=Saya%20ingin%20memesan%20produk%20bambu"><img src="https://via.placeholder.com/29x29" alt="WhatsApp">
+                <div>Whatsapp</div></a>
             </div>
         </div>
         

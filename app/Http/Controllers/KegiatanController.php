@@ -35,7 +35,32 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'image1' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image2' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image3' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image4' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image5' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image6' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image7' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image8' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'image9' => 'nullable|mimes:png,jpg,jpeg,webp',
+        ]);
+        
+        if ($request->hasFile('image1')) {
+            $image = $request->file('image1');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $path = $image->move(public_path('images'), $imageName); // Pindahkan gambar ke folder public/images
+            $validated['image1'] = $imageName; // Simpan nama file gambar ke dalam array validated
+        } else {
+            return back()->withErrors(['image1' => 'Image upload failed']);
+        }
+
+        Kegiatan::create([
+            'image1' => $validated['image1'],
+        ]);
+
+        return redirect()->route('kegiatan.index')->with('success', 'Data Berhasil ditambah');
     }
 
     /**

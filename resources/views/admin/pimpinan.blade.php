@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- Tabel Admin -->
         <div id="table-admin">
             <table>
@@ -65,8 +65,8 @@
                         <td>{{$p->name}}</td>
                         <td>{{$p->jabatan}}</td>
                         <td><span id="btn-edit">
-                            <button type="button" class="cek" data-id=""><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="delete-btn" data-id=""><i class="fa-solid fa-trash"></i></button>
+                            <button type="button" class="cek" data-id="{{ $p->ppid }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="delete-btn" data-id="{{ $p->ppid }}"><i class="fa-solid fa-trash"></i></button>
                         </span></td>
                     </tr>
                     <tr class="details-row">
@@ -105,6 +105,11 @@
         <h2>Tambah {{$title}}</h2>
         <form id="add-admin-form" action="{{ route('pimpinan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @if ($errors->any())
+            @foreach ($errors->all() as $err)
+                <p class="hayo">{{ $err }}</p>
+            @endforeach
+            @endif
             {{-- <label for="judul">ID:</label> --}}
             <input type="text" id="ppid" name="ppid"  hidden>
             <label for="judul">Nama:</label>
@@ -119,6 +124,6 @@
         </form>
     </div>
 </div>
-{{-- @include('modal-admin.admin-edit') --}}
-{{-- @include('modal-admin.admin-delete') --}}
+@include('modal-pimpinan.pimpinan-edit')
+@include('modal-pimpinan.pimpinan-delet')
 @endsection

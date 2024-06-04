@@ -7,6 +7,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PimpinanController;
+use App\Http\Controllers\IngpoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('admin', AdminController::class);
         Route::resource('pimpinan', PimpinanController::class);
+        Route::resource('info', IngpoController::class);
     });
 });
 

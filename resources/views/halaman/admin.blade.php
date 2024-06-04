@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/css/style-ds-produk.css" />
     <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
     <link rel="stylesheet" href="/css/style-ds-admin.css" />
+    <link rel="stylesheet" href="/css/style-ds-info-lainnya.css" />
+    <link rel="stylesheet" href="/css/style-err-suc.css" />
 </head>
 <body>
     <!-- Sidebar -->
@@ -43,6 +45,9 @@
                         </li>
                         <li>
                             <a href="/pimpinan">Pimpinan Perusahaan</a>
+                        </li>
+                        <li>
+                            <a href="/info">Info Lainnya</a>
                         </li>
                     </ul>
                 </div>

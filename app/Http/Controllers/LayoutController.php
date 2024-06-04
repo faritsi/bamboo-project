@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Produk;
 use App\Models\Pimpinan;
+use App\Models\Ingpo;
 
 class LayoutController extends Controller
 {
@@ -18,6 +19,7 @@ class LayoutController extends Controller
             'title' => 'Halaman Utama',
             'produk' => produk::orderBy('created_at')->take(3)->get(),
             'pimpinan' => Pimpinan::take(4)->get(),
+            'ingpo' => Ingpo::all(),
         ]);
     }
     public function index()
