@@ -19,6 +19,7 @@ return new class extends Migration
             $table->String('deskripsi')->nullable();
             $table->String('tokped')->nullable();
             $table->String('shopee')->nullable();
+            $table->Integer('harga')->nullable();
             $table->timestamps();
         });
     }

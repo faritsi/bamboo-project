@@ -46,6 +46,7 @@ class ProdukController extends Controller
             'slug' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
             'deskripsi' => 'required|string',
+            'harga' => 'required|integer',
             'tokped' => 'required|string',
             'shopee' => 'required|string',
         ]);
@@ -65,6 +66,7 @@ class ProdukController extends Controller
             'pid' => $pid,
             'judul' => $validated['judul'],
             'slug' => $validated['slug'],
+            'harga' => $validated['harga'],
             'image' => $validated['image'],
             'deskripsi' => $validated['deskripsi'],
             'tokped' => $validated['tokped'],
@@ -89,9 +91,10 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Produk $produk)
+    public function show($pid)
     {
-        //
+        $barang = DB::table('produks')->where('pid', $pid)->get();
+        return view ('produk_show.index', compact('barang'));
     }
 
     /**
@@ -141,6 +144,7 @@ class ProdukController extends Controller
             'slug' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'required|string|max:1000',
+            'harga' => 'required|integer',
             'tokped' => 'required|string|max:255',
             'shopee' => 'required|string|max:255',
         ]);
@@ -158,6 +162,7 @@ class ProdukController extends Controller
             'slug' => $request->slug,
             'image' => $reuest['image'],
             'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
             'tokped' => $request->tokped,
             'shopee' => $request->shopee,
         ]);

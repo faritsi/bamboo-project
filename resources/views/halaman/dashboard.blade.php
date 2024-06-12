@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {{-- <script src="/js/script.js"></script> --}}
 </head>
 <body>
@@ -231,6 +231,16 @@
                         />
                         <div class="order-label">
                             <a href="{{ $p->shopee }}">Shopee</a>
+                        </div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">
+                            <a href="/produk/{{$p->pid}}">pesan langsung</a>
                         </div>
                     </div>
                 </div>

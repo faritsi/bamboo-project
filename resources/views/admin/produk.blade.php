@@ -77,7 +77,8 @@
                         <td colspan="6">
                             <div><strong>Nama Produk: </strong> {{$p->judul}}</div>
                             <div><strong>Deskripsi Produk: </strong> {{$p->deskripsi}}</div>
-                            <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>                          
+                            <div><strong>Harga: </strong> {{$p->harga}}</div>
+                            {{-- <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>                           --}}
                             {{-- <div><strong>Link Shoppe: </strong> shoppe.com</div> --}}
                             <!-- <div><strong>Status : </strong> Aktif</div> -->
                         </td>
@@ -117,6 +118,8 @@
             <input type="text" id="judul" name="judul" >
             <label for="slug">Slug:</label>
             <input type="text" id="slug" name="slug" >
+            <label for="harga">Harga:</label>
+            <input type="text" id="harga" name="harga" >
             <label for="image">Image:</label>
             <input type="file" id="image" name="image" >
             <label for="deskripsi">Deskripsi:</label>

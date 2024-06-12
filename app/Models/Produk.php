@@ -14,6 +14,7 @@ class Produk extends Model
         'judul',
         'slug',
         'image',
+        'harga',
         'deskripsi',
         'tokped',
         'shopee',

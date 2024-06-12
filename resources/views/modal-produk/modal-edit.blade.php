@@ -19,6 +19,8 @@
             @endif
             <label for="image">Image:</label>
             <input type="file" id="image" name="image" onchange="previewImage()">
+            <label for="harga">Harga:</label>
+            <input type="text" id="harga" name="harga" value="{{ $p->harga }}" required>
             <label for="deskripsi">Deskripsi:</label>
             <input type="text" id="deskripsi" name="deskripsi" value="{{ $p->deskripsi }}" required>
             <label for="tokped">Tokopedia:</label>
