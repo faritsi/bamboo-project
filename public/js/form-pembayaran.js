@@ -43,20 +43,11 @@ checkoutButton.addEventListener("click", async function (e) {
             method: "POST",
             body: data,
         });
-
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-
         const token = await response.text();
-        if (token.startsWith("Error:")) {
-            throw new Error(token);
-        }
-        console.log(token);
-        // window.snap.pay(token);
+        window.snap.pay(token);
+        // console.log(token);
     } catch (err) {
-        console.error(err.message);
-        alert("Error: " + err.message);
+        console.log(err.message);
     }
 });
 

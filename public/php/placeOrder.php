@@ -26,14 +26,14 @@ $params = array(
         'order_id' => rand(),
         'gross_amount' => $_POST['total'],
     ),
-    // 'item_details' => array(
-    //     array(
-    //         'id' => rand(), // you might want to include an ID or name for each item
-    //         'name' => $_POST['produk'], // uncomment and provide product name if needed
-    //         'quantity' => $_POST['qty'],
-    //         'price' => $_POST['harga'],
-    //     )
-    // ),
+    'item_details' => array(
+        array(
+            'id' => rand(), // you might want to include an ID or name for each item
+            'name' => $_POST['produk'], // uncomment and provide product name if needed
+            'quantity' => $_POST['qty'],
+            'price' => $_POST['harga'],
+        )
+    ),
     'customer_details' => array(
         'first_name' => $_POST['name'],
         'address' => $_POST['alamat'],

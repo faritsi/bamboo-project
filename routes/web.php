@@ -8,6 +8,7 @@ use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\IngpoController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +57,7 @@ Route::controller(LayoutController::class)->group(function(){
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CekAuth:1,2']], function () {
         Route::resource('home', LayoutController::class);
+        Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::resource('produk', ProdukController::class);
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('admin', AdminController::class);

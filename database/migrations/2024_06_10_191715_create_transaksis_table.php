@@ -12,16 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksis', function (Blueprint $table) {
-            $table->string('pmb');
-            $table->string('nama');
-            $table->string('produk');
-            $table->string('alamat');
-            $table->string('metode');
-            $table->integer('harga');
-            $table->integer('qty');
-            $table->integer('tot_harga');
+            $table->id();
+            $table->string('order_id');
             $table->string('status');
-            $table->dateTime('tgl_pmb', $precision = 0);
+            $table->integer('gross_amount');
+            $table->timestamp('transaction_time');
             $table->timestamps();
         });
     }
