@@ -1,0 +1,353 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* body {
+    background: #d2d2d2;
+    min-height: 100vh;
+} */
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+#container {
+    margin: 0 auto;
+    padding: 0;
+    background: #fefefe;
+    width: 100%;
+    min-height: 100vh;
+}
+
+#bg-sidebar {
+    margin: 0 auto;
+    padding: 0;
+    /* background: #d2d2d2; */
+    width: 100%;
+    /* min-height: 100vh; */
+}
+
+#bo-sidebar {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #004c50;
+    padding: 25px 20px;
+    transition: all 0.4s ease;
+}
+
+#sidebar:hover {
+    width: 260px;
+}
+
+#sidebar-header {
+    display: flex;
+    align-items: center;
+}
+
+#sidebar-header img {
+    width: 38px;
+    /* height: auto; */
+    border-radius: 50%;
+}
+
+#sidebar-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 23px;
+}
+
+#sidebar-links {
+    list-style: none;
+    margin-top: 20px;
+    height: 80%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    /* scrollbar-width: none; */
+}
+
+#sidebar:hover #sidebar-links {
+    overflow-y: auto;
+    /* transition: all 1s ease; */
+}
+
+#sidebar-links::-webkit-scrollbar {
+    width: 12px; /* Lebar scrollbar */
+}
+
+#sidebar-links::-webkit-scrollbar-track {
+    /* background: #f1f1f1; Warna background track scrollbar */
+}
+
+#sidebar-links::-webkit-scrollbar-thumb {
+    background-color: #dbd4d4e3; /* Warna scrollbar */
+    border-radius: 10px; /* Membuat scrollbar berbentuk bulat */
+    border: 3px solid #f1f1f1; /* Membuat jarak antara scrollbar dan track */
+}
+
+#sidebar-links h4 {
+    color: #fff;
+    font-weight: 500;
+    margin: 10px 0;
+    white-space: nowrap;
+    position: relative;
+}
+
+#sidebar-links h4 span {
+    opacity: 0;
+}
+
+#sidebar:hover #sidebar-links h4 span {
+    opacity: 1;
+    transition-duration: 0.2s;
+}
+
+#sidebar-links li a {
+    color: #dbd4d4e3;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    font-weight: 500;
+    padding: 15px 5px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#sidebar-links li a:hover {
+    background: #ffffff2d;
+    color: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#logout a {
+    color: #dbd4d4e3;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    font-weight: 500;
+    padding: 15px 5px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#logout {
+    margin-top: 20px;
+}
+
+#logout a:hover {
+    background: #e94040da;
+    color: #fff;
+    border-radius: 4px;
+}
+
+#sidebar-links #menu-seperate {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(1);
+    transform: translateY(-50%);
+    background-color: #fff;
+    transform-origin: right;
+    transition-duration: 0.2s;
+}
+
+#sidebar:hover #sidebar-links #menu-seperate {
+    transform: scaleX(0);
+    transition-delay: 0s;
+}
+
+/* Header */
+#bg-header {
+    /* position: relative; */
+    /* z-index: 2; */
+    width: 100%;
+    /* background: #fff; */
+    padding: 15px 0px 20px 90px;
+    background: #004c50;
+}
+
+#bo-header {
+    margin: 0 auto;
+    width: 100%;
+}
+
+#header {
+    /* position: relative; */
+    /* text-align: center; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#judul-header {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+#user-account {
+    margin-top: auto;
+    padding: 12px 10px;
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    background: #94df07;
+    border-radius: 50px;
+}
+
+#user-account #user-profile {
+    /* color: #e5dede; */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+#user-profile img {
+    width: 62px;
+    border-radius: 50%;
+}
+
+#user-detail {
+    margin-left: 23px;
+    white-space: nowrap;
+}
+
+#user-profile h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#user-profile span {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Content */
+#bg-content {
+    /* position: relative; */
+    /* z-index: 2; */
+    /* background: #d2d2d2; */
+    width: 100%;
+    /* min-height: 83vh; */
+    padding: 30px 0px 20px 90px;
+}
+
+#bo-content {
+    margin: 0 auto;
+    width: 100%;
+}
+
+#content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#bg-isi-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bo-isi-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#bg-isi-content {
+    margin-top: auto;
+    padding: 50px 10px;
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* border-radius: 50px; */
+    /* justify-content: space-between; */
+}
+#bg-isi-content #cc-content-admin {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background: #94df07;
+    border-radius: 20px;
+}
+
+#bg-isi-content #cc-content-pimpinan {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background: #d23130;
+    border-radius: 20px;
+}
+
+#bg-isi-content #cc-content-produk {
+    display: flex;
+    align-items: center;
+    padding: 40px;
+    background: #fad40a;
+    border-radius: 20px;
+}
+
+#cc-content-admin .material-symbols-outlined {
+    font-size: 70px;
+    color: #000;
+}
+
+#cc-content-pimpinan .material-symbols-outlined {
+    font-size: 70px;
+    color: #000;
+}
+
+#cc-content-produk .material-symbols-outlined {
+    font-size: 70px;
+    color: #000;
+}
+
+#cc-detail-admin,
+#cc-detail-pimpinan,
+#cc-detail-produk {
+    margin-left: 23px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#cc-detail-admin h3,
+#cc-detail-pimpinan h3,
+#cc-detail-produk h3 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+#cc-detail-admin span,
+#cc-detail-pimpinan span,
+#cc-detail-produk span {
+    font-size: 20px;
+    font-weight: 600;
+}

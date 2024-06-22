@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
     <link rel="stylesheet" href="/css/style.css">
-    {{-- <script src="/js/script.js"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- {{-- <script src="/js/script.js"></script> --}} -->
 </head>
 <body>
     <div id="bg-asli">
@@ -34,7 +35,7 @@
             </div>
             <div id="bg-judul">
                 <div id="bo-judul">
-                    <div id="bungkusjudul"">
+                    <div id="bungkusjudul">
                         <div id="atas-judul">
                             <h1>Welcome to</h1>
                             <h1>PT. Bintang Mitra Kencana</h1>
@@ -197,110 +198,119 @@
             </div>
         </div>
 
-        <div class="container-product">
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
+        <div id="bg-container-product">
+            <div id="bo-container-product">
+                <div class="container-product">
+                    <div class="prev-btn"><i class="fa-solid fa-chevron-left"></i></div>
+                    <div class="card-product">
                         <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
+                            class="product-image"
+                            src="img/pd.png"
+                            alt="Product Image"
                         />
-                        <div class="order-label">Tokopedia</div>
+                        <div class="product-info">
+                            <div class="product-title">Lorem Ipsum</div>
+                            <div class="product-description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit, sed do eiusmod tempor incididunt ut laboret dolore
+                                magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                                aliquip.
+                            </div>
+                        </div>
+                        <div class="order-text">Pesan di :</div>
+                        <div class="order-options">
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Tokopedia Icon"
+                                />
+                                <div class="order-label">Tokopedia</div>
+                            </div>
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Shopee Icon"
+                                />
+                                <div class="order-label">Shopee</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="order-option">
+                    
+                    <div class="card-product">
                         <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
+                            class="product-image"
+                            src="img/pd.png"
+                            alt="Product Image"
                         />
-                        <div class="order-label">Shopee</div>
+                        <div class="product-info">
+                            <div class="product-title">Lorem Ipsum</div>
+                            <div class="product-description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit, sed do eiusmod tempor incididunt ut laboret dolore
+                                magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                                aliquip.
+                            </div>
+                        </div>
+                        <div class="order-text">Pesan di :</div>
+                        <div class="order-options">
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Tokopedia Icon"
+                                />
+                                <div class="order-label">Tokopedia</div>
+                            </div>
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Shopee Icon"
+                                />
+                                <div class="order-label">Shopee</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
+                    
+                    
+                    <div class="card-product">
                         <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
+                            class="product-image"
+                            src="img/pd.png"
+                            alt="Product Image"
                         />
-                        <div class="order-label">Tokopedia</div>
+                        <div class="product-info">
+                            <div class="product-title">Lorem Ipsum</div>
+                            <div class="product-description">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit, sed do eiusmod tempor incididunt ut laboret dolore
+                                magna aliqua. Ut en ad minim ullamco laboris nisi ut
+                                aliquip.
+                            </div>
+                        </div>
+                        <div class="order-text">Pesan di :</div>
+                        <div class="order-options">
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Tokopedia Icon"
+                                />
+                                <div class="order-label">Tokopedia</div>
+                            </div>
+                            <div class="order-option">
+                                <img
+                                    class="order-icon"
+                                    src="https://via.placeholder.com/29x29"
+                                    alt="Shopee Icon"
+                                />
+                                <div class="order-label">Shopee</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">Tokopedia</div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
+                    <div class="next-btn"><i class="fa-solid fa-chevron-right"></i></div>
                 </div>
             </div>
         </div>
@@ -478,6 +488,30 @@
         
     </div>
 
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.querySelector('.container-product');
+            const cards = document.querySelectorAll('.card-product');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const cardWidth = cards[0].offsetWidth + 30; // width + margin
+            let currentIndex = 0;
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    container.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < cards.length - 1) {
+                    currentIndex++;
+                    container.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
