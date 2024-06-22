@@ -1,7 +1,8 @@
 /* Tabel Admin */
 #table-admin {
-    width: 95%;
+    /* width: 95%; */
     padding-bottom: 20px;
+    padding-right: 25px;
     margin: 0 auto;
 }
 
@@ -13,7 +14,7 @@
 
 #table-admin th,
 #table-admin td {
-    padding: 10px;
+    padding: 10px 0px 10px 5px;
     text-align: left;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
@@ -35,7 +36,7 @@
 
 #table-admin th:nth-child(1),
 #table-admin td:nth-child(1) {
-    width: 18px;
+    width: 22px;
 }
 
 #table-admin th:nth-child(2),
@@ -76,26 +77,57 @@
     border-bottom: none;
 }
 
-#table-admin .btn-toggle {
+#table-admin .btn-details {
     cursor: pointer;
     margin: 0;
     padding: 0;
-    width: 90%;
+    width: 25px;
     text-align: center;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#table-admin .icon-plus {
-    color: white;
     background-color: green;
 }
 
-#table-admin .icon-minus {
-    color: white;
+#table-admin .btn-details.red {
     background-color: red;
+}
+
+#table-admin .btn-details .material-symbols-outlined {
+    color: white;
+}
+
+#btn-cfg {
+    margin-top: auto;
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* background: #94df07; */
+    border-radius: 50px;
+}
+
+#btn-cfg .btn-edit {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+#btn-cfg .btn-delete {
+    padding-left: 20px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+#table-admin .btn-edit .material-symbols-outlined {
+    color: blue;
+}
+
+#table-admin .btn-delete .material-symbols-outlined {
+    color: red;
 }
 
 #table-admin #btn-edit i {

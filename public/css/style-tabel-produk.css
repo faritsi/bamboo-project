@@ -1,7 +1,8 @@
-/* Tabel Produk */
+/* Tabel Pimpinan */
 #table-produk {
-    width: 95%;
+    /* width: 95%; */
     padding-bottom: 20px;
+    padding-right: 25px;
     margin: 0 auto;
 }
 
@@ -13,7 +14,7 @@
 
 #table-produk th,
 #table-produk td {
-    padding: 10px;
+    padding: 10px 0px 10px 5px;
     text-align: left;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
@@ -33,18 +34,15 @@
     text-align: center;
 }
 
-#table-produk thead th:nth-child(2) {
-    border-right: 1px solid #ccc;
-}
-
 #table-produk th:nth-child(1),
 #table-produk td:nth-child(1) {
-    width: 20px;
+    width: 22px;
 }
 
 #table-produk th:nth-child(2),
 #table-produk td:nth-child(2) {
-    width: 25px;
+    width: 35px;
+    border-right: 1px solid #ccc;
 }
 
 #table-produk th:nth-child(3),
@@ -52,20 +50,20 @@
     width: 150px;
 }
 
+#table-produk th:nth-child(4),
+#table-produk td:nth-child(4) {
+    width: 350px;
+}
+
 #table-produk th:nth-child(5),
 #table-produk td:nth-child(5) {
-    width: 50px;
+    width: 100px;
 }
 
-#table-produk th:nth-child(6),
+/* #table-produk th:nth-child(6),
 #table-produk td:nth-child(6) {
-    width: 350px;
-}
-
-#table-produk th:nth-child(7),
-#table-produk td:nth-child(7) {
-    width: 350px;
-}
+    width: 100px;
+} */
 
 #table-produk .details-row {
     display: none;
@@ -80,26 +78,57 @@
     border-bottom: none;
 }
 
-#table-produk .btn-toggle {
+#table-produk .btn-details {
     cursor: pointer;
     margin: 0;
     padding: 0;
-    width: 90%;
+    width: 25px;
     text-align: center;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-#table-produk .icon-plus {
-    color: white;
     background-color: green;
 }
 
-#table-produk .icon-minus {
-    color: white;
+#table-produk .btn-details.red {
     background-color: red;
+}
+
+#table-produk .btn-details .material-symbols-outlined {
+    color: white;
+}
+
+#btn-cfg {
+    margin-top: auto;
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* background: #94df07; */
+    border-radius: 50px;
+}
+
+#btn-cfg .btn-edit {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+#btn-cfg .btn-delete {
+    padding-left: 20px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+#table-produk .btn-edit .material-symbols-outlined {
+    color: blue;
+}
+
+#table-produk .btn-delete .material-symbols-outlined {
+    color: red;
 }
 
 #table-produk #btn-edit i {
