@@ -10,13 +10,13 @@
     <div class="square-container">
         <div class="left-section">
             <img
-                src="https://via.placeholder.com/800x600"
+                src="{{ url('img/login-village.jpg') }}"
                 alt="Background Placeholder Image"
                 class="background-image"
             />
-            <div class="logo-container">
+            {{-- <div class="logo-container">
                 <img src="logo.png" alt="Logo" class="logo" />
-            </div>
+            </div> --}}
         </div>
         <div class="right-section">
             <div class="login-form">
