@@ -1,48 +1,8 @@
 @extends('halaman.admin')
 @section('content')
-<div id="bg-header-content">
-    <div id="bo-header-content">
-        <div id="header-content" class="clearfix">
-            <div id="judul-content">
-                <h3>PRODUK</h3>
-            </div>
-            <div id="tambah-content" class="clearfix">
-                <div id="add-admin-btn" >
-                    <div id="icon-tambah">
-                        <h4>+</h4>
-                    </div>
-                </div>
-                <div id="text-content">
-                    <h4>Produk</h4>
-                </div>
-            </div>
-        </div>
-        <!-- Search Box -->
-        <div id="bg-show-search">
-            <div id="bo-show-search">
-                <div id="show-search" class="clearfix">
-                    <div id="container-show" class="clearfix">
-                        <div id="text-show">
-                            <h3>Show</h3>
-                        </div>
-                        <div id="show-entries">
-                            10
-                        </div>
-                        <div id="text-entries">
-                            <h3>Entries</h3>
-                        </div>
-                    </div>
-                    <div id="container-search" class="clearfix">
-                        <div id="text-search">
-                            <h3>Search: </h3>
-                        </div>
-                        <input type="text" class="search-input" placeholder="Enter Name">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabel Admin -->
+<div id="bg-isi-content" class="clearfix">
+    <div id="bo-isi-content">
+        {{-- Table --}}
         <div id="table-produk">
             <table>
                 <thead>
@@ -59,61 +19,74 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $i = 1; ?>
-                    @foreach ($produk as $p)
                     <tr>
-                        <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
-                        <td><?= $i++ ?></td>
-                        <td>{{$p->judul}}</td>
-                        <td><a href="{{$p->tokped}}">{{$p->tokped}}</a></td>
-                        <td><a href="{{$p->shopee}}">{{$p->shopee}}</a></td>
-                        {{-- <td><span id="btn-edit"><i class="fa-solid fa-pen-to-square"></i><i class="fa-solid fa-trash"></i></span></td> --}}
-                        <td><span id="btn-edit">
-                            <button type="button" class="cek" data-id="{{ $p->pid }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="delete-btn" data-id="{{ $p->pid }}"><i class="fa-solid fa-trash"></i></button>
-                        </span></td>
+                        <td>
+                            <div class="btn-details">
+                                <span class="material-symbols-outlined">
+                                add
+                                </span>                                                  
+                            </div>
+                        </td>
+                        <td>1</td>
+                        <td>Tumbler Bambu</td>
+                        <td>Link TokPed</td>
+                        <td>Link Shopee</td>
+                        <td>
+                            <div id="btn-cfg">
+                                <div class="btn-edit">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>                                                       
+                                </div>
+                                <div class="btn-delete">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>                                                       
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <tr class="details-row">
                         <td colspan="6">
-                            <div><strong>Nama Produk: </strong> {{$p->judul}}</div>
-                            <div><strong>Deskripsi Produk: </strong> {{$p->deskripsi}}</div>
-                            <div><strong>Harga: </strong> {{$p->harga}}</div>
-                            {{-- <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>                           --}}
-                            {{-- <div><strong>Link Shoppe: </strong> shoppe.com</div> --}}
+                            <div><strong>Poto Produk: </strong> Poto Tumbler Bambu</div>
+                            <div><strong>Nama Produk: </strong> Tumbler Bambu</div>
+                            <div><strong>Link Tokopedia: </strong> Tokopedia.com</div>
+                            <div><strong>Link Shoppe: </strong> shoppe.com</div>
                             <!-- <div><strong>Status : </strong> Aktif</div> -->
                         </td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
-            <!-- Next Btn -->
-            <div id="bg-btn">
-                    <div id="bo-btn">
-                        <div id="btn" class="clearfix">
-                            <div id="prev-btn">
-                                <i class="fa-solid fa-circle-chevron-left"></i>
-                            </div>
-                            <div id="count-page-tabel">1, 2 ,3</div>
-                            <div id="next-btn">
-                                <i class="fa-solid fa-circle-chevron-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </div>
 </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btn-details").on("click", function () {
+            var row = $(this).closest("tr").next(".details-row");
+            row.toggle();
+            var icon = $(this).find(".material-symbols-outlined");
+            if (row.is(":visible")) {
+                icon.text("remove");
+                $(this).addClass("red");
+            } else {
+                icon.text("add");
+                $(this).removeClass("red");
+            }
+        });
+    });
+</script>
 <!-- Modal -->
-<div id="modal" class="modal">
+{{-- <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2>Tambah Produk</h2>
         <form id="add-admin-form" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            @csrf --}}
             {{-- <label for="judul">ID:</label> --}}
-            <input type="text" id="pid" name="pid"  hidden>
+            {{-- <input type="text" id="pid" name="pid"  hidden>
             <label for="judul">Judul:</label>
             <input type="text" id="judul" name="judul" >
             <label for="slug">Slug:</label>
@@ -131,10 +104,10 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-</div>
+</div> --}}
 {{-- edit --}}
 {{-- @yield('modal-edit') --}}
-@include('modal-produk.modal-edit')
-@include('modal-produk.modal-delet')
+{{-- @include('modal-produk.modal-edit') --}}
+{{-- @include('modal-produk.modal-delet') --}}
 
 @endsection

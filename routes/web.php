@@ -56,7 +56,11 @@ Route::controller(LayoutController::class)->group(function(){
 // });
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CekAuth:1,2']], function () {
-        Route::resource('home', LayoutController::class);
+        // Route::resource('home', LayoutController::class);
+        Route::controller(LayoutController::class)->group(function(){
+            Route::get('home', 'index');
+            Route::get('sidebar', 'sidebar');
+        });
         Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::resource('produk', ProdukController::class);
         Route::resource('kegiatan', KegiatanController::class);

@@ -41,7 +41,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'username' => 'required|string',
+            'username' => 'required|string|unique:users,username',
             'password' => 'required|min:8',
             'password_confirm' => 'required|same:password',
             'role_id' => 'required|string',
@@ -59,10 +59,11 @@ class AdminController extends Controller
         $user->save();
 
         // Redirect to the admin index route with a success message
-        return redirect()->route('admin.index')->with('success', 'Data Berhasil ditambah');
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
         return back()->withErrors([
-            'Email' => 'Email telah terdaftar!',
-        ])->onlyInput('Email');
+            'username' => 'Username telah terdaftar!',
+            'password' => 'Password tidak cocok',
+        ]);
     }
 
     /**
@@ -102,7 +103,7 @@ class AdminController extends Controller
             'role_id' => $request->role_id,
         ]);
         // dd($admin);
-        return redirect()->route('admin.index')->with('success', 'Data Berhasil ditambah');
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Diubah');
     }
 
     /**
@@ -112,6 +113,6 @@ class AdminController extends Controller
     {
         $admin = User::find($id);
         $admin->delete();
-        return redirect()->route('admin.index')->with('success', 'Data Berhasil ditambah');
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Dihapus');
     }
 }

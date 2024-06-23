@@ -477,12 +477,12 @@
                 <div class="email-icon"></div>
                 <div class="phone-icon"></div>
             </div>
-            @endforeach
             <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
             <div class="whatsapp-button">
                 <a href="https://wa.me/{{$i->nowa}}?text=Saya%20ingin%20memesan%20produk%20bambu"><img src="https://via.placeholder.com/29x29" alt="WhatsApp">
                 <div>Whatsapp</div></a>
             </div>
+            @endforeach
         </div>
         
     </div>

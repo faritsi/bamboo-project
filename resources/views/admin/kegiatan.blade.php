@@ -1,78 +1,155 @@
 @extends('halaman.admin')
 @section('content')
-<form action="" method="post" enctype="multipart/form-data">
-    @csrf
-        <div id="bg-kegiatan">
-            <div id="bo-kegiatan">
-                <div id="container-kegiatan" class="clearfix">
-                    <!-- Bagian Atas -->
-                    <div id="info-kegiatan">
-                        <div id="letak-foto">
-                            <h3>Foto Bagian Atas</h3>
-                        </div>
-                        <!-- <form action="your-upload-url" method="POST" enctype="multipart/form-data"> -->
-                            
-                            <div id="foto">
-                                <label for="foto1">Foto 1</label>
-                                <input type="file" id="foto1" name="foto1" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 2</label>
-                                <input type="file" id="foto2" name="foto2" class="upload-button">
-                            </div>
-                        <!-- </form> -->
+<div id="btn-modal">
+    <button type="button" id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activityModal">
+        Tambah Gambar Kegiatan
+    </button>
+</div>
+<div id="modal">
+    <div id="modal-dialog">
+        <div id="modal-content">
+            <div id="modal-header">
+                <h5 class="modal-title" id="activityModalLabel">Upload Gambar Kegiatan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="activityForm">
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Pilih Gambar (Max 9)</label>
+                        <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple required>
+                        <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
                     </div>
-
-                    <!-- Bagian Tengah -->
-                    <div id="info-kegiatan">
-                        <div id="letak-foto">
-                            <h3>Foto Bagian Atas</h3>
-                        </div>
-                        <!-- <form action="your-upload-url" method="POST" enctype="multipart/form-data"> -->
-                            
-                            <div id="foto">
-                                <label for="foto1">Foto 3</label>
-                                <input type="file" id="foto3" name="foto3" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 4</label>
-                                <input type="file" id="foto4" name="foto4" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 5</label>
-                                <input type="file" id="foto5" name="foto5" class="upload-button">
-                            </div>
-                        <!-- </form> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
-
-                    <!-- Bagian Bawah -->
-                    <div id="info-kegiatan">
-                        <div id="letak-foto">
-                            <h3>Foto Bagian Bawah</h3>
-                        </div>
-                        <!-- <form action="your-upload-url" method="POST" enctype="multipart/form-data"> -->
-                            
-                            <div id="foto">
-                                <label for="foto1">Foto 6</label>
-                                <input type="file" id="foto6" name="foto6" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 74</label>
-                                <input type="file" id="foto7" name="foto7" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 8</label>
-                                <input type="file" id="foto8" name="foto8" class="upload-button">
-                            </div>
-                            <div id="foto">
-                                <label for="foto2">Foto 9</label>
-                                <input type="file" id="foto8" name="foto9" class="upload-button">
-                            </div>
-                        <!-- </form> -->
-                    </div>
-                <button type="submit">Submit</button>    
-                </div>
+                </form>
             </div>
         </div>
-    </form>
+    </div>
+</div>
+<div id="container-img-preview">
+    <h2>Gambar Kegiatan</h2>
+    <div id="uploadedImages" class="flex-container">
+        <div class="flex-row" id="row1"></div>
+        <div class="flex-row" id="row2"></div>
+        <div class="flex-row" id="row3"></div>
+    </div>
+</div>
+</div>
+<script>
+    document.getElementById('images').addEventListener('change', function(event) {
+        const imagePreview = document.getElementById('imagePreview');
+        imagePreview.innerHTML = '';
+        const files = event.target.files;
+
+        if (files.length > 9) {
+            alert('Maksimal 9 gambar.');
+            this.value = ''; // Clear the input if more than 9 files are selected
+            return;
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-img';
+                imagePreview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('activityForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+
+        const uploadedImages = document.getElementById('uploadedImages');
+        const addButton = document.getElementById('addButton');
+
+        // Add images to the appropriate rows in the uploadedImages div
+        const files = document.getElementById('images').files;
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'image-container';
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'preview-img';
+                imgContainer.appendChild(img);
+
+                // Add edit and delete buttons
+                const btnEdit = document.createElement('button');
+                btnEdit.className = 'btn btn-warning btn-sm btn-edit';
+                btnEdit.innerText = 'Edit';
+                btnEdit.onclick = function() {
+                    // Handle edit image
+                    const newFileInput = document.createElement('input');
+                    newFileInput.type = 'file';
+                    newFileInput.accept = 'image/*';
+                    newFileInput.onchange = function(event) {
+                        const newFile = event.target.files[0];
+                        const newReader = new FileReader();
+                        newReader.onload = function(e) {
+                            img.src = e.target.result;
+                        };
+                        newReader.readAsDataURL(newFile);
+                    };
+                    newFileInput.click();
+                };
+
+                const btnDelete = document.createElement('button');
+                btnDelete.className = 'btn btn-danger btn-sm btn-delete';
+                btnDelete.innerText = 'Delete';
+                btnDelete.onclick = function() {
+                    imgContainer.remove();
+                    checkImageCount();
+                };
+
+                imgContainer.appendChild(btnEdit);
+                imgContainer.appendChild(btnDelete);
+
+                // Append to the correct row
+                if (document.getElementById('row1').childElementCount < 2) {
+                    document.getElementById('row1').appendChild(imgContainer);
+                } else if (document.getElementById('row2').childElementCount < 3) {
+                    document.getElementById('row2').appendChild(imgContainer);
+                } else if (document.getElementById('row3').childElementCount < 4) {
+                    document.getElementById('row3').appendChild(imgContainer);
+                }
+
+                // Check image count to disable add button if needed
+                checkImageCount();
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        // Close the modal
+        document.querySelector('.btn-close').click();
+
+        // Clear the form
+        document.getElementById('activityForm').reset();
+        document.getElementById('imagePreview').innerHTML = '';
+    });
+
+    function checkImageCount() {
+        const uploadedImages = document.getElementById('uploadedImages');
+        const addButton = document.getElementById('addButton');
+        const imageCount = uploadedImages.getElementsByClassName('image-container').length;
+
+        if (imageCount >= 9) {
+            addButton.disabled = true;
+        } else {
+            addButton.disabled = false;
+        }
+    }
+</script>
 @endsection

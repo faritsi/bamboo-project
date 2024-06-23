@@ -1,52 +1,21 @@
 @extends('halaman.admin')
 @section('content')
-<div id="bg-header-content">
-    <div id="bo-header-content">
-        <div id="header-content" class="clearfix">
-            <div id="judul-content">
-                <h3>{{$title}}</h3>
-            </div>
-            @if ($user->role_id == 1)                    
-            <div id="tambah-content" class="clearfix">
-                    <div id="container-icon-tambah">
-                        <div id="icon-tambah">
-                            <h4>+</h4>
-                        </div>
-                    </div>
-                    <div id="text-content">
-                        <h4>Tambah</h4>
-                    </div>
-                </div>
-            @endif
+<div id="bg-tambah-data">
+    <div id="bo-tambah-data">
+        <div class="icon-tambah-data">
+            <span class="material-symbols-outlined">
+            add
+            </span></td>                                                        
         </div>
-
-        <!-- Search Box -->
-        <div id="bg-show-search">
-            <div id="bo-show-search">
-                <div id="show-search" class="clearfix">
-                    <div id="container-show" class="clearfix">
-                        <div id="text-show">
-                            <h3>Show</h3>
-                        </div>
-                        <div id="show-entries">
-                            10
-                        </div>
-                        <div id="text-entries">
-                            <h3>Entries</h3>
-                        </div>
-                    </div>
-                    <div id="container-search" class="clearfix">
-                        <div id="text-search">
-                            <h3>Search: </h3>
-                        </div>
-                        <input type="text" class="search-input" placeholder="Enter Name">
-                    </div>
-                </div>
-            </div>
+        <div id="text">
+            <strong>Pimpinan</strong>
         </div>
-        
-        <!-- Tabel Admin -->
-        <div id="table-admin">
+    </div>
+</div>
+<div id="bg-isi-content" class="clearfix">
+    <div id="bo-isi-content">
+        {{-- Table --}}
+        <div id="table-pimpinan">
             <table>
                 <thead>
                     <tr>
@@ -54,52 +23,72 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>Jabatan</th>
+                        <th>Pengalaman</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pimpinan as $p)                       
+                    @foreach ($pimpinan as $p) 
                     <tr>
-                        <td><span class="btn-toggle icon-plus"><i class="fa-solid fa-plus"></i></span></td>
+                        <td>
+                            <div class="btn-details">
+                                <span class="material-symbols-outlined">
+                                add
+                                </span></td>                                                        
+                            </div>
                         <td>1</td>
                         <td>{{$p->name}}</td>
                         <td>{{$p->jabatan}}</td>
-                        <td><span id="btn-edit">
-                            <button type="button" class="cek" data-id="{{ $p->ppid }}"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button type="button" class="delete-btn" data-id="{{ $p->ppid }}"><i class="fa-solid fa-trash"></i></button>
-                        </span></td>
+                        <td>{{$p->deskripsi}}</td>
+                        <td>
+                            <div id="btn-cfg">
+                                <div class="btn-edit">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>                                                       
+                                </div>
+                                <div class="btn-delete">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>                                                       
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <tr class="details-row">
-                        <td colspan="5">
-                            <div><strong>Nama Pimpinan: </strong> {{$p->name}}</div>
-                            <div><strong>Deskripsi: </strong> {{$p->deskripsi}}</div>
-                            <div><img src="{{ asset('images/' . $p->image) }}" alt="{{ $p->judul }}"></div>    
+                        <td colspan="6">
+                            <div><strong>Poto: </strong> Poto</div>
+                            <div><strong>Nama Lengkap: </strong> {{$p->name}}</div>
+                            <div><strong>Jabatan: </strong> {{$p->jabatan}}</div>
+                            <div><strong>Pengalaman: </strong> {{$p->deskripsi}}</div>
+                            {{-- <div><strong>Status : </strong> Aktif</div> --}}
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
-
-            <!-- Next Btn -->
-            <div id="bg-btn">
-                <div id="bo-btn">
-                    <div id="btn" class="clearfix">
-                        <div id="prev-btn">
-                            <i class="fa-solid fa-circle-chevron-left"></i>
-                        </div>
-                        <div id="count-page-tabel">1, 2 ,3</div>
-                        <div id="next-btn">
-                            <i class="fa-solid fa-circle-chevron-right"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
-
+</div>
+<script>
+    $(document).ready(function () {
+        $(".btn-details").on("click", function () {
+            var row = $(this).closest("tr").next(".details-row");
+            row.toggle();
+            var icon = $(this).find(".material-symbols-outlined");
+            if (row.is(":visible")) {
+                icon.text("remove");
+                $(this).addClass("red");
+            } else {
+                icon.text("add");
+                $(this).removeClass("red");
+            }
+        });
+    });
+</script>
 <!-- Modal -->
-<div id="modal" class="modal">
+{{-- <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2>Tambah {{$title}}</h2>
@@ -109,9 +98,9 @@
             @foreach ($errors->all() as $err)
                 <p class="hayo">{{ $err }}</p>
             @endforeach
-            @endif
+            @endif --}}
             {{-- <label for="judul">ID:</label> --}}
-            <input type="text" id="ppid" name="ppid"  hidden>
+            {{-- <input type="text" id="ppid" name="ppid"  hidden>
             <label for="judul">Nama:</label>
             <input type="text" id="name" name="name" >
             <label for="jabatan">Jabatan:</label>
@@ -125,5 +114,5 @@
     </div>
 </div>
 @include('modal-pimpinan.pimpinan-edit')
-@include('modal-pimpinan.pimpinan-delet')
+@include('modal-pimpinan.pimpinan-delet') --}}
 @endsection
