@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Role;
 
@@ -40,36 +41,30 @@ class PimpinanController extends Controller
     {
         $ppid = $this->generateRandomString1(25);
         // Validasi input, pastikan 'image' adalah file dengan format yang benar
-        $validated = $request->validate([
-            // 'pid' => 'required|string',
-            'name' => 'required|string',
-            'jabatan' => 'required|string',
-            'deskripsi' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        $request->validate([
+            // 'ppid' => $ppid,
+            'name' => 'required',
+            'jabatan' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'image|max:2048'
         ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->move(public_path('images'), $imageName); // Pindahkan gambar ke folder public/images
-            $validated['image'] = $imageName; // Simpan nama file gambar ke dalam array validated
-        } else {
-            return back()->withErrors(['image' => 'Image upload failed']);
+        $imagePath = null;
+        if($request->file('image')) {
+            $imagePath = $request->file('image')->store('pimpinan-images');
         }
 
         $pimpinan = new Pimpinan([
             'ppid' => $ppid,
-            'name' => $validated['name'],
-            'jabatan' => $validated['jabatan'],
-            'deskripsi' => $validated['deskripsi'],
-            'image' => $validated['image'],
+            'name' => $request->name,
+            'jabatan' => $request->jabatan,
+            'deskripsi' => $request->deskripsi,
+            'image' => $imagePath
         ]);
         // dd($pimpinan);
-        // Simpan objek model ke database
         $pimpinan->save();
 
-        // Redirect ke route produk.index dengan pesan sukses
-        return redirect()->route('pimpinan.index')->with('success', 'Data Berhasil ditambah');
+        return redirect()->route('pimpinan.index')->with('success', 'Pimpinan added successfully.');
     }
 
     private function generateRandomString1($length = 10) {
@@ -104,37 +99,49 @@ class PimpinanController extends Controller
     public function update(Request $request, $ppid)
     {
         $request->validate([
-            'ppid' => 'required|string',
             'name' => 'required|string',
             'jabatan' => 'required|string',
             'deskripsi' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        $pimpinan = DB::table('pimpinans')->where('ppid', $request->ppid)->get();
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $reuest['image'] = $imageName; // Simpan nama file baru
-        } else {
-            $reuest = array_except($reuest, ['image']); // Hapus image dari array validated jika tidak ada file baru
+
+        $image = $request->oldImage;
+
+        if ($request->file('image')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $image = $request->file('image')->store('pimpinan-images');
         }
-        $pimpinan =   DB::table('pimpinans')->where('ppid',$request->ppid)->update([
+
+        DB::table('pimpinans')->where('ppid', $ppid)->update([
             'name' => $request->name,
             'jabatan' => $request->jabatan,
             'deskripsi' => $request->deskripsi,
-            'image' => $reuest['image'],
+            'image' => $image,
         ]);
-        // $produk->update($request->all());
-        return redirect()->route('pimpinan.index')->with('success', 'Proful berhasil diperbarui!');
+
+        return redirect()->route('pimpinan.index')->with('success', 'Pimpinan updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($ppid)
     {
-        $pimpinan = DB::table('pimpinans')->where('ppid',$ppid)->delete();
-        return redirect()->route('pimpinan.index')->with('success', 'Profil berhasil dihapus!');
+        // Retrieve the record
+        $pimpinan = DB::table('pimpinans')->where('ppid', $ppid)->first();
+
+        // Check if the record exists
+        if ($pimpinan) {
+            // Delete the image from storage if it exists
+            if ($pimpinan->image) {
+                Storage::delete($pimpinan->image);
+            }
+
+            // Delete the record from the database
+            DB::table('pimpinans')->where('ppid', $ppid)->delete();
+        }
+
+        return redirect()->route('pimpinan.index')->with('success', 'Pimpinan deleted successfully.');
     }
+
 }

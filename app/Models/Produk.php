@@ -11,8 +11,10 @@ class Produk extends Model
     // protected $guarded = ['id'];
     protected $fillable = [ 
         'pid',
-        'judul',
-        'slug',
+        'kode_produk',
+        'nama_produk',
+        'jenis_produk',
+        'jumlah_produk',
         'image',
         'harga',
         'deskripsi',

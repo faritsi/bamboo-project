@@ -1,5 +1,30 @@
 @extends('halaman.admin')
 @section('content')
+<div id="myBtn" class="bg-tambah-data">
+    <div id="bo-tambah-data">
+        <div class="icon-tambah-data">
+            <span class="material-symbols-outlined">add</span>                                                        
+        </div>
+        <div id="text">
+            <strong>Produk</strong>
+        </div>
+    </div>
+</div>
+
+@if ($errors->any())
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("myModal").style.display = "block";
+    });
+</script>
+@endif
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 <div id="bg-isi-content" class="clearfix">
     <div id="bo-isi-content">
         {{-- Table --}}
@@ -19,49 +44,255 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($produk as $index => $p)
                     <tr>
                         <td>
                             <div class="btn-details">
-                                <span class="material-symbols-outlined">
-                                add
-                                </span>                                                  
+                                <span class="material-symbols-outlined">add</span>                                                  
                             </div>
                         </td>
-                        <td>1</td>
-                        <td>Tumbler Bambu</td>
-                        <td>Link TokPed</td>
-                        <td>Link Shopee</td>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $p->nama_produk }}</td>
+                        <td>{{ $p->tokped }}</td>
+                        <td>{{ $p->shopee }}</td>
                         <td>
                             <div id="btn-cfg">
-                                <div class="btn-edit">
-                                    <span class="material-symbols-outlined">
-                                    edit
-                                    </span>                                                       
+                                <div class="btn-edit" data-id="{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">edit</span>                                                       
                                 </div>
-                                <div class="btn-delete">
-                                    <span class="material-symbols-outlined">
-                                    delete
-                                    </span>                                                       
+                                <div class="btn-delete" data-id="{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">delete</span>                                                       
                                 </div>
                             </div>
                         </td>
                     </tr>
-                    <tr class="details-row">
+                    <tr class="details-row" style="display: none;">
                         <td colspan="6">
-                            <div><strong>Poto Produk: </strong> Poto Tumbler Bambu</div>
-                            <div><strong>Nama Produk: </strong> Tumbler Bambu</div>
-                            <div><strong>Link Tokopedia: </strong> Tokopedia.com</div>
-                            <div><strong>Link Shoppe: </strong> shoppe.com</div>
-                            <!-- <div><strong>Status : </strong> Aktif</div> -->
+                            @if ($p->image)
+                                <img src="{{ asset('/storage/' . $p->image) }}" alt="">
+                            @else
+                                <img src="/img/default-img/default.png" alt="">
+                            @endif
+                            <div><strong>Kode Produk: </strong> {{ $p->kode_produk }}</div>
+                            <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
+                            <div><strong>Jenis Produk: </strong> {{ $p->jenis_produk }}</div>
+                            <div><strong>Jumlah Produk: </strong>{{ $p->jumlah_produk }}</div>
+                            <div><strong>Harga: </strong> {{ $p->harga }}</div>
+                            <div><strong>Deskripsi: </strong> {{ $p->deskripsi }}</div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
+
+{{-- ADD --}}
+<div id="myModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div id="head-modul">
+                <h1>Tambah Produk</h1>
+            </div>
+            <div class="thumbnail">
+                <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
+                <input type="file" id="thumbnail" name="image">
+                @if ($errors->has('image'))
+                    <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="kode_produk">Kode Produk <span class="required">*</span></label>
+                <input type="text" id="kode_produk" name="kode_produk" placeholder="EXP-021" value="{{ old('kode_produk') }}">
+                @if ($errors->has('kode_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('kode_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="nama_produk">Nama Produk <span class="required">*</span></label>
+                <input type="text" id="nama_produk" name="nama_produk" placeholder="Masukan Nama Produk" value="{{ old('nama_produk') }}">
+                @if ($errors->has('nama_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="kategori">Kategori <span class="required">*</span></label>
+                <div class="dropdown">
+                    <button class="dropbtn" type="button">Pilih Kategori</button>
+                    <div class="dropdown-content">
+                        <a href="#" data-value="Kategori 1">Kategori 1</a>
+                        <a href="#" data-value="Kategori 2">Kategori 2</a>
+                        <a href="#" data-value="Kategori 3">Kategori 3</a>
+                    </div>
+                </div>
+                <input type="text" id="jenis_produk" name="jenis_produk" value="">
+                <div id="selected-category" style="display:none;">
+                    <strong>Kategori yang dipilih:</strong> <span id="selected-category-text"></span>
+                </div>
+                @if ($errors->has('jenis_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="jumlah_produk">Jumalh Produk <span class="required">*</span></label>
+                <input type="text" id="jumlah_produk" name="jumlah_produk" placeholder="Masukan jumlah produk" value="{{ old('jumlah_produk') }}">
+                @if ($errors->has('jumlah_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi Produk <span class="required">*</span></label>
+                <input type="text" id="deskripsi" name="deskripsi" placeholder="Masukan deskripsi produk" value="{{ old('deskripsi') }}">
+                @if ($errors->has('deskripsi'))
+                <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="tokped">Link Tokopedia <span class="required">*</span></label>
+                <input type="text" id="tokped" name="tokped" placeholder="Masukan link tokped" value="{{ old('tokped') }}">
+                @if ($errors->has('tokped'))
+                    <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="shopee">Link Shopee <span class="required">*</span></label>
+                <input type="text" id="shopee" name="shopee" placeholder="Masukan link shopee" value="{{ old('shopee') }}">
+                @if ($errors->has('shopee'))
+                    <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga Produk <span class="required">*</span></label>
+                <input type="number" id="harga" name="harga" placeholder="Rp. 9000" value="{{ old('harga') }}">
+                @if ($errors->has('harga'))
+                    <p class="alert alert-danger">{{ $errors->first('harga') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+{{-- EDIT --}}
+<!-- Edit Modals -->
+@foreach ($produk as $p)
+<div id="editModal-{{ $p->pid }}" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="{{ route('produk.update', $p->pid) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div id="head-modul">
+                <h1>Edit Produk</h1>
+            </div>
+            <div class="thumbnail">
+                <input type="hidden" name="oldImage" value="{{ $p->image }}">
+                <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail">
+                <input type="file" id="thumbnail-{{ $p->pid }}" name="image">
+                @if ($errors->has('image'))
+                    <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="kode_produk-{{ $p->pid }}">Kode Produk <span class="required">*</span></label>
+                <input type="text" id="kode_produk-{{ $p->pid }}" name="kode_produk" placeholder="Masukan Nama" value="{{ old('kode_produk', $p->kode_produk) }}">
+                @if ($errors->has('kode_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('kode_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="nama_produk-{{ $p->pid }}">Nama Produk <span class="required">*</span></label>
+                <input type="text" id="nama_produk-{{ $p->pid }}" name="nama_produk" placeholder="Masukan Nama" value="{{ old('nama_produk', $p->nama_produk) }}">
+                @if ($errors->has('nama_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="kategori">Kategori <span class="required">*</span></label>
+                <div class="dropdown">
+                    <button class="dropbtn" type="button">Pilih Kategori</button>
+                    <div class="dropdown-content">
+                        <a href="#" data-value="Kategori 1">Kategori 1</a>
+                        <a href="#" data-value="Kategori 2">Kategori 2</a>
+                        <a href="#" data-value="Kategori 3">Kategori 3</a>
+                    </div>
+                </div>
+                <input type="text" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">
+                <div id="selected-category" style="display:none;">
+                    <strong>Kategori yang dipilih:</strong> <span id="selected-category-text"></span>
+                </div>
+                @if ($errors->has('jenis_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="jumlah_produk-{{ $p->pid }}">Jumlah Produk <span class="required">*</span></label>
+                <input type="text" id="jumlah_produk-{{ $p->pid }}" name="jumlah_produk" placeholder="Masukan jumlah_produk" value="{{ old('jumlah_produk', $p->jumlah_produk) }}">
+                @if ($errors->has('jumlah_produk'))
+                    <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="deskripsi-{{ $p->pid }}">Deskripsi Produk <span class="required">*</span></label>
+                <input type="text" id="deskripsi-{{ $p->pid }}" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi', $p->deskripsi) }}">
+                @if ($errors->has('deskripsi'))
+                <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="tokped-{{ $p->pid }}">Link Tokopedia <span class="required">*</span></label>
+                <input type="text" id="tokped-{{ $p->pid }}" name="tokped" placeholder="Masukan tokped" value="{{ old('tokped', $p->tokped) }}">
+                @if ($errors->has('tokped'))
+                    <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="shopee-{{ $p->pid }}">Link Shopee <span class="required">*</span></label>
+                <input type="text" id="shopee-{{ $p->pid }}" name="shopee" placeholder="Masukan shopee" value="{{ old('shopee', $p->shopee) }}">
+                @if ($errors->has('shopee'))
+                    <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="harga-{{ $p->pid }}">Harga Produk <span class="required">*</span></label>
+                <input type="text" id="harga-{{ $p->pid }}" name="harga" placeholder="Masukan harga" value="{{ old('harga', $p->harga) }}">
+                @if ($errors->has('harga'))
+                    <p class="alert alert-danger">{{ $errors->first('harga') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endforeach
+
+<!-- Delete Modal -->
+@foreach ($produk as $p)
+<div id="deleteModal-{{ $p->pid }}" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="{{ route('produk.destroy', $p->pid) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <div id="head-modul">
+                <h1>Delete Produk</h1>
+            </div>
+            <p>Are you sure you want to delete {{ $p->nama_produk }}?</p>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endforeach
+
 <script>
     $(document).ready(function () {
         $(".btn-details").on("click", function () {
@@ -76,38 +307,72 @@
                 $(this).removeClass("red");
             }
         });
+
+        function showModal(modalId) {
+            $(modalId).show();
+        }
+
+        function hideModals() {
+            $(".modal").hide();
+        }
+
+        $("#myBtn").on("click", function () {
+            showModal("#myModal");
+        });
+
+        $(".close").on("click", function () {
+            hideModals();
+        });
+
+        $(window).on("click", function (event) {
+            if ($(event.target).hasClass("modal")) {
+                hideModals();
+            }
+        });
+
+        $('.thumbnail').on('click', function() {
+            $(this).find('input[type="file"]').click();
+        });
+
+        $('input[type="file"]').on('change', function(event) {
+            var reader = new FileReader();
+            var preview = $(this).siblings('img');
+            reader.onload = function() {
+                preview.attr('src', reader.result);
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        $(".btn-edit").on("click", function () {
+            var ppid = $(this).data('id');
+            showModal("#editModal-" + ppid);
+        });
+
+        $(".btn-delete").on("click", function () {
+            var ppid = $(this).data('id');
+            showModal("#deleteModal-" + ppid);
+        });
+        
+        $(".dropdown").on("click", function() {
+            $(this).find(".dropdown-content").toggle();
+        });
+
+        $(window).on("click", function(event) {
+            if (!$(event.target).closest(".dropdown").length) {
+                $(".dropdown-content").hide();
+            }
+        });
+
+        // Display selected category below dropdown
+        $(".dropdown-content a").on("click", function (event) {
+            event.preventDefault();
+            var selectedCategory = $(this).data('value');
+            $("#selected-category-text").text(selectedCategory);
+            $("#selected-category").show();
+            $(".dropdown-content").hide();
+            $("input[name='jenis_produk']").val(selectedCategory);
+            $("input[name='jenis_produk-" + ppid + "']").val(selectedCategory);
+        });
     });
 </script>
-<!-- Modal -->
-{{-- <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Tambah Produk</h2>
-        <form id="add-admin-form" action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf --}}
-            {{-- <label for="judul">ID:</label> --}}
-            {{-- <input type="text" id="pid" name="pid"  hidden>
-            <label for="judul">Judul:</label>
-            <input type="text" id="judul" name="judul" >
-            <label for="slug">Slug:</label>
-            <input type="text" id="slug" name="slug" >
-            <label for="harga">Harga:</label>
-            <input type="text" id="harga" name="harga" >
-            <label for="image">Image:</label>
-            <input type="file" id="image" name="image" >
-            <label for="deskripsi">Deskripsi:</label>
-            <input type="text" id="deskripsi" name="deskripsi" >
-            <label for="tokped">Tokopedia:</label>
-            <input type="text" id="tokped" name="tokped" >
-            <label for="shopee">Shopee:</label>
-            <input type="text" id="shopee" name="shopee" >
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-</div> --}}
-{{-- edit --}}
-{{-- @yield('modal-edit') --}}
-{{-- @include('modal-produk.modal-edit') --}}
-{{-- @include('modal-produk.modal-delet') --}}
-
 @endsection

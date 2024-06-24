@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->string('pid');
-            $table->String('judul')->nullable();
-            $table->String('slug')->nullable();
+            $table->string('kode_produk')->unique();
+            $table->String('nama_produk');
+            $table->String('jenis_produk');
+            $table->Integer('jumlah_produk');
             $table->String('image')->nullable();
             $table->String('deskripsi')->nullable();
-            $table->String('tokped')->nullable();
-            $table->String('shopee')->nullable();
-            $table->Integer('harga')->nullable();
+            $table->String('tokped');
+            $table->String('shopee');
+            $table->Integer('harga');
             $table->timestamps();
         });
     }
