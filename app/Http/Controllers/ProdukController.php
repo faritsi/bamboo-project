@@ -92,8 +92,8 @@ class ProdukController extends Controller
      */
     public function show($pid)
     {
-        $barang = DB::table('produks')->where('pid', $pid)->get();
-        return view ('produk_show.index', compact('barang'));
+        $produk = DB::table('produks')->where('pid', $pid)->get();
+        return view ('produk_show.index', compact('produk'));
     }
 
     /**

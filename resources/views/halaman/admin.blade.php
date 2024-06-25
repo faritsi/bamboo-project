@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/css/style-tabel-produk.css" />
         <link rel="stylesheet" href="/css/style-ds-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-tabel-pimpinan.css" />
-        {{-- <link rel="stylesheet" href="/css/style-ds-kegiatan.css" /> --}}
+        <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
 
         {{-- JS --}}
         <script src="/js/script-modal.js"></script>
@@ -25,6 +25,7 @@
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
         />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        {{-- <script src="/js/form-pembayaran.js"></script> --}}
     </head>
     <body>
         <div id="container">

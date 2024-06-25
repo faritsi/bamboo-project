@@ -1,19 +1,24 @@
 @extends('halaman.admin')
+
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <div id="btn-modal">
     <button type="button" id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activityModal">
         Tambah Gambar Kegiatan
     </button>
 </div>
-<div id="modal">
-    <div id="modal-dialog">
-        <div id="modal-content">
-            <div id="modal-header">
+
+<!-- Modal Structure -->
+<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="activityModalLabel">Upload Gambar Kegiatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="activityForm">
+                <form id="activityForm" action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="mb-3">
                         <label for="images" class="form-label">Pilih Gambar (Max 9)</label>
                         <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple required>
@@ -28,15 +33,26 @@
         </div>
     </div>
 </div>
+
 <div id="container-img-preview">
     <h2>Gambar Kegiatan</h2>
     <div id="uploadedImages" class="flex-container">
-        <div class="flex-row" id="row1"></div>
-        <div class="flex-row" id="row2"></div>
-        <div class="flex-row" id="row3"></div>
+        <div class="flex-row" id="row1">
+            @foreach ($kegiatan as $i)
+                <div class="image-container" data-id="{{ $i->id }}">
+                    <img src="{{ asset('storage/' . $i->image_path) }}" class="preview-img">
+                    <button class="btn btn-warning btn-sm btn-edit" onclick="editImage({{ $i->id }})">Edit</button>
+                    <form action="{{ route('kegiatan.destroy', $i->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm btn-delete">Delete</button>
+                    </form>
+                </div>
+            @endforeach
+        </div>
     </div>
 </div>
-</div>
+
 <script>
     document.getElementById('images').addEventListener('change', function(event) {
         const imagePreview = document.getElementById('imagePreview');
@@ -64,92 +80,37 @@
         }
     });
 
-    document.getElementById('activityForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
+    function editImage(imageId) {
+        const newFileInput = document.createElement('input');
+        newFileInput.type = 'file';
+        newFileInput.accept = 'image/*';
+        newFileInput.onchange = function(event) {
+            const newFile = event.target.files[0];
+            const formData = new FormData();
+            formData.append('image', newFile);
+            formData.append('_method', 'PUT'); // Add this line for Laravel PUT method
 
-        const uploadedImages = document.getElementById('uploadedImages');
-        const addButton = document.getElementById('addButton');
-
-        // Add images to the appropriate rows in the uploadedImages div
-        const files = document.getElementById('images').files;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const imgContainer = document.createElement('div');
-                imgContainer.className = 'image-container';
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'preview-img';
-                imgContainer.appendChild(img);
-
-                // Add edit and delete buttons
-                const btnEdit = document.createElement('button');
-                btnEdit.className = 'btn btn-warning btn-sm btn-edit';
-                btnEdit.innerText = 'Edit';
-                btnEdit.onclick = function() {
-                    // Handle edit image
-                    const newFileInput = document.createElement('input');
-                    newFileInput.type = 'file';
-                    newFileInput.accept = 'image/*';
-                    newFileInput.onchange = function(event) {
-                        const newFile = event.target.files[0];
-                        const newReader = new FileReader();
-                        newReader.onload = function(e) {
-                            img.src = e.target.result;
-                        };
-                        newReader.readAsDataURL(newFile);
-                    };
-                    newFileInput.click();
-                };
-
-                const btnDelete = document.createElement('button');
-                btnDelete.className = 'btn btn-danger btn-sm btn-delete';
-                btnDelete.innerText = 'Delete';
-                btnDelete.onclick = function() {
-                    imgContainer.remove();
-                    checkImageCount();
-                };
-
-                imgContainer.appendChild(btnEdit);
-                imgContainer.appendChild(btnDelete);
-
-                // Append to the correct row
-                if (document.getElementById('row1').childElementCount < 2) {
-                    document.getElementById('row1').appendChild(imgContainer);
-                } else if (document.getElementById('row2').childElementCount < 3) {
-                    document.getElementById('row2').appendChild(imgContainer);
-                } else if (document.getElementById('row3').childElementCount < 4) {
-                    document.getElementById('row3').appendChild(imgContainer);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `/kegiatan/${imageId}`);
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    // Update the image preview
+                    const imageElement = document.querySelector(`.image-container[data-id="${imageId}"] img`);
+                    imageElement.src = response.image_path;
+                } else {
+                    console.error('Error:', xhr.statusText);
+                    // Handle error
                 }
-
-                // Check image count to disable add button if needed
-                checkImageCount();
             };
-
-            reader.readAsDataURL(file);
-        }
-
-        // Close the modal
-        document.querySelector('.btn-close').click();
-
-        // Clear the form
-        document.getElementById('activityForm').reset();
-        document.getElementById('imagePreview').innerHTML = '';
-    });
-
-    function checkImageCount() {
-        const uploadedImages = document.getElementById('uploadedImages');
-        const addButton = document.getElementById('addButton');
-        const imageCount = uploadedImages.getElementsByClassName('image-container').length;
-
-        if (imageCount >= 9) {
-            addButton.disabled = true;
-        } else {
-            addButton.disabled = false;
-        }
+            xhr.onerror = function() {
+                console.error('Request failed');
+                // Handle error
+            };
+            xhr.send(formData);
+        };
+        newFileInput.click();
     }
 </script>
 @endsection

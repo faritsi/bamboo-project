@@ -30,12 +30,6 @@ checkoutButton.addEventListener("click", async function (e) {
     const formData = new FormData(form);
     const data = new URLSearchParams(formData);
     const objData = Object.fromEntries(data);
-    // const message = formatMessage(objData);
-    // window.open(
-    //     // "http://wa.me/6283148258814?text=" + encodeURIComponent(message)
-    //     "http://web.whatsapp.com/6283148258814?text=" +
-    //         encodeURIComponent(message)
-    // );
 
     // req token
     try {
@@ -45,7 +39,6 @@ checkoutButton.addEventListener("click", async function (e) {
         });
         const token = await response.text();
         window.snap.pay(token);
-        // console.log(token);
     } catch (err) {
         console.log(err.message);
     }
@@ -67,18 +60,18 @@ const formatMessage = (obj) => {
     `;
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-    const qtyInput = document.getElementById("qtyInput");
-    const priceText = document.getElementById("priceText").innerText;
-    const qtyFormField = document.getElementById("qty");
-    const hargaFormField = document.getElementById("harga");
+// document.addEventListener("DOMContentLoaded", function () {
+//     const qtyInput = document.getElementById("qtyInput");
+//     const priceText = document.getElementById("priceText").innerText;
+//     const qtyFormField = document.getElementById("qty");
+//     const hargaFormField = document.getElementById("harga");
 
-    // Set the initial values
-    qtyFormField.value = qtyInput.value;
-    hargaFormField.value = priceText;
+//     // Set the initial values
+//     qtyFormField.value = qtyInput.value;
+//     hargaFormField.value = priceText;
 
-    // Update the qtyFormField value on qtyInput change
-    qtyInput.addEventListener("input", function () {
-        qtyFormField.value = qtyInput.value;
-    });
-});
+//     // Update the qtyFormField value on qtyInput change
+//     qtyInput.addEventListener("input", function () {
+//         qtyFormField.value = qtyInput.value;
+//     });
+// });

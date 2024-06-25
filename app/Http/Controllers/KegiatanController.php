@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -19,15 +20,7 @@ class KegiatanController extends Controller
         $kegiatan = Kegiatan::all();
         return view('admin.kegiatan',[
             'title' => 'Kegiatan'
-        ],compact('kegiatan', 'user'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        ], compact('kegiatan', 'user'));
     }
 
     /**
@@ -36,62 +29,66 @@ class KegiatanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image1' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image2' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image3' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image4' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image5' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image6' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image7' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image8' => 'nullable|mimes:png,jpg,jpeg,webp',
-            'image9' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        
-        if ($request->hasFile('image1')) {
-            $image = $request->file('image1');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->move(public_path('images'), $imageName); // Pindahkan gambar ke folder public/images
-            $validated['image1'] = $imageName; // Simpan nama file gambar ke dalam array validated
-        } else {
-            return back()->withErrors(['image1' => 'Image upload failed']);
+
+        // $imagePath = null;
+        // if($request->file('image')) {
+        //     $imagePath = $request->file('image')->store('kegiatan-images');
+        // }
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('kegiatan_images');
+                Kegiatan::create(['image_path' => $path]);
+            }
         }
 
-        Kegiatan::create([
-            'image1' => $validated['image1'],
-        ]);
-
-        return redirect()->route('kegiatan.index')->with('success', 'Data Berhasil ditambah');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Kegiatan $kegiatan)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Kegiatan $kegiatan)
-    {
-        //
+        return redirect()->back()->with('success', 'Images uploaded successfully.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kegiatan $kegiatan)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    $kegiatan = Kegiatan::findOrFail($id);
+
+    if ($request->hasFile('image')) {
+        // Delete the old image if it exists
+        if ($kegiatan->image_path) {
+            Storage::delete($kegiatan->image_path);
+        }
+
+        // Handle image upload
+        $image = $request->file('image');
+        $imagePath = $image->store('kegiatan_images');
+        $kegiatan->image_path = $imagePath;
+        $kegiatan->save();
+
+        return response()->json(['success' => true, 'image_path' => asset('storage/' . $imagePath)]);
     }
+
+    return response()->json(['success' => false, 'message' => 'No image found.']);
+}
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kegiatan $kegiatan)
+    public function destroy($id)
     {
-        //
+        $kegiatan = Kegiatan::findOrFail($id);
+        // Check if the record exists
+        if ($kegiatan) {
+            // Delete the image from storage if it exists
+            if ($kegiatan->image_path) {
+                Storage::delete($kegiatan->image_path);
+            }
+            $kegiatan->delete();
+        }
+        // Storage::disk('kegiatan_images')->delete($image->image_path);
+
+        return redirect()->back()->with('success', 'Image deleted successfully.');
     }
 }

@@ -12,16 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kegiatans', function (Blueprint $table) {
-            $table->string('kid');
-            $table->String('image1')->nullable();
-            $table->String('image2')->nullable();
-            $table->String('image3')->nullable();
-            $table->String('image4')->nullable();
-            $table->String('image5')->nullable();
-            $table->String('image6')->nullable();
-            $table->String('image7')->nullable();
-            $table->String('image8')->nullable();
-            $table->String('image9')->nullable();
+            $table->id();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

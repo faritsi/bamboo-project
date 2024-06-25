@@ -24,14 +24,15 @@ require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
 $params = array(
     'transaction_details' => array(
         'order_id' => rand(),
-        'gross_amount' => $_POST['total'],
+        'gross_amount' => $_POST['total_pembayaran'],
     ),
     'item_details' => array(
         array(
-            'id' => rand(), // you might want to include an ID or name for each item
-            'name' => $_POST['produk'], // uncomment and provide product name if needed
+            'id' => $_POST['kode_produk'], // you might want to include an ID or name for each item
+            'name' => $_POST['nama_produk'], // uncomment and provide product name if needed
             'quantity' => $_POST['qty'],
             'price' => $_POST['harga'],
+            'category' => $_POST['jenis_produk'],
         )
     ),
     'customer_details' => array(
@@ -39,9 +40,20 @@ $params = array(
         'address' => $_POST['alamat'],
         'postal_code' => $_POST['pos'],
         'phone' => $_POST['nohp'],
+        "billing_address"=> array (
+            'first_name' => $_POST['name'],
+            'phone' => $_POST['nohp'],
+            'address' => $_POST['alamat'],
+            'postal_code' => $_POST['pos']
+        )
     ),
+    'callbacks' => array(
+        'finish' => 'http://bamboo.local/konfirmasi'
+    )
 );
 
 $snapToken = \Midtrans\Snap::getSnapToken($params);
 echo $snapToken;
+// $snapToken = \Midtrans\Snap::getSnapToken($params);
+// echo json_encode(['token' => $snapToken]);
 ?>

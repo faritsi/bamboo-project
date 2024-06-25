@@ -21,8 +21,8 @@ use App\Http\Controllers\TransaksiController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/konfirmasi', function () {
+    return view('konfirmasi/index');
 });
 Route::get('/login', function () {
     return view('halaman/login');
@@ -40,6 +40,8 @@ Route::controller(AuthController::class)->group(function(){
 Route::controller(LayoutController::class)->group(function(){
     Route::get('dashboard', 'halu');
 });
+
+Route::get('/produk/{pid}', [ProdukController::class, 'show'])->name('produk.show');
 
 // Route::group(['middleware' => ['auth']], function () {
 //     Route::group(['middleware' => ['CekAuth:1,2']], function () {
