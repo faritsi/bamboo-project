@@ -53,6 +53,7 @@
     background: #004c50;
     padding: 25px 20px;
     transition: all 0.4s ease;
+    box-shadow: 0 12px 20px rgb(0, 0, 0, 0.75);
 }
 
 #sidebar:hover {
@@ -297,6 +298,7 @@
     padding: 40px;
     background: #94df07;
     border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(75, 75, 75, 0.5);
 }
 
 #bg-isi-content #cc-content-pimpinan {
@@ -305,6 +307,7 @@
     padding: 40px;
     background: #d23130;
     border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(75, 75, 75, 0.5);
 }
 
 #bg-isi-content #cc-content-produk {
@@ -313,6 +316,7 @@
     padding: 40px;
     background: #fad40a;
     border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(75, 75, 75, 0.5);
 }
 
 #cc-content-admin .material-symbols-outlined {

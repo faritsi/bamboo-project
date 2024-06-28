@@ -69,9 +69,9 @@
                     <tr class="details-row" style="display: none;">
                         <td colspan="6">
                             @if ($p->image)
-                                <img src="{{ asset('/storage/' . $p->image) }}" alt="">
+                                <img src="{{ asset('/storage/' . $p->image) }}" alt="" id="avatar-profile">
                             @else
-                                <img src="/img/default-img/default.png" alt="">
+                                <img src="/img/default-img/default.png" alt="" id="avatar-profile">
                             @endif
                             <div><strong>Kode Produk: </strong> {{ $p->kode_produk }}</div>
                             <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
@@ -121,17 +121,15 @@
             <div class="form-group">
                 <label for="kategori">Kategori <span class="required">*</span></label>
                 <div class="dropdown">
-                    <button class="dropbtn" type="button">Pilih Kategori</button>
-                    <div class="dropdown-content">
+                    <button class="dropbtn" type="button" onclick="toggleDropdown()" id="dropdownButton">Pilih Kategori</button>
+                    <div class="dropdown-content" id="dropdownMenu">
                         <a href="#" data-value="Kategori 1">Kategori 1</a>
                         <a href="#" data-value="Kategori 2">Kategori 2</a>
                         <a href="#" data-value="Kategori 3">Kategori 3</a>
                     </div>
                 </div>
-                <input type="text" id="jenis_produk" name="jenis_produk" value="">
-                <div id="selected-category" style="display:none;">
-                    <strong>Kategori yang dipilih:</strong> <span id="selected-category-text"></span>
-                </div>
+                <input type="hidden" name="jenis_produk" id="jenis_produk"> 
+
                 @if ($errors->has('jenis_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
                 @endif
@@ -184,7 +182,7 @@
 <div id="editModal-{{ $p->pid }}" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <form action="{{ route('produk.update', $p->pid) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('produk.update', $p->pid) }}" method="POST" enctype="multipart/form-data" id="categoryForm">
             @csrf
             @method('PUT')
             <div id="head-modul">
@@ -215,17 +213,14 @@
             <div class="form-group">
                 <label for="kategori">Kategori <span class="required">*</span></label>
                 <div class="dropdown">
-                    <button class="dropbtn" type="button">Pilih Kategori</button>
-                    <div class="dropdown-content">
+                    <button class="dropbtn" type="button" id="dropdownButton">Pilih Kategori</button>
+                    <div class="dropdown-content" id="dropdownMenu">
                         <a href="#" data-value="Kategori 1">Kategori 1</a>
                         <a href="#" data-value="Kategori 2">Kategori 2</a>
                         <a href="#" data-value="Kategori 3">Kategori 3</a>
                     </div>
                 </div>
-                <input type="text" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">
-                <div id="selected-category" style="display:none;">
-                    <strong>Kategori yang dipilih:</strong> <span id="selected-category-text"></span>
-                </div>
+                <input type="hidden" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">        
                 @if ($errors->has('jenis_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
                 @endif
@@ -363,15 +358,34 @@
             }
         });
 
-        // Display selected category below dropdown
-        $(".dropdown-content a").on("click", function (event) {
-            event.preventDefault();
-            var selectedCategory = $(this).data('value');
-            $("#selected-category-text").text(selectedCategory);
-            $("#selected-category").show();
-            $(".dropdown-content").hide();
-            $("input[name='jenis_produk']").val(selectedCategory);
-            $("input[name='jenis_produk-" + ppid + "']").val(selectedCategory);
+        $(document).ready(function() {
+            // Set the dropdown button text based on the hidden input value on page load
+            var existingValue = $("#jenis_produk-{{ $p->pid }}").val();
+            if (existingValue) {
+                $("#dropdownButton").text(existingValue);
+            }
+
+            // Toggle dropdown menu visibility
+            $("#dropdownButton").on("click", function(event) {
+                event.preventDefault();
+                $("#dropdownMenu").toggleClass("show");
+            });
+
+            // Handle click event on dropdown menu items
+            $(".dropdown-content a").on("click", function(event) {
+                event.preventDefault();
+                var selectedCategory = $(this).data('value');
+                $("#dropdownButton").text(selectedCategory); // Update dropdown button text
+                $("#dropdownMenu").removeClass("show"); // Hide dropdown menu
+                $("#jenis_produk-{{ $p->pid }}").val(selectedCategory); // Update hidden input value
+            });
+
+            // Close the dropdown if the user clicks outside of it
+            $(window).on("click", function(event) {
+                if (!event.target.matches('.dropbtn')) {
+                    $("#dropdownMenu").removeClass("show");
+                }
+            });
         });
     });
 </script>

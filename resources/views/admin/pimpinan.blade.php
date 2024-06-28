@@ -74,9 +74,9 @@
                     <tr class="details-row">
                         <td colspan="6">
                             @if ($p->image)
-                                <img src="{{ asset('/storage/' . $p->image) }}" alt="">
+                                <img src="{{ asset('/storage/' . $p->image) }}" alt="" id="avatar-profile">
                             @else
-                                <img src="/img/default-img/default.png" alt="">
+                                <img src="/img/default-img/default.png" alt="" id="avatar-profile">
                             @endif
                             {{-- <div><img src="{{ asset('/storage/images/' . $p->image) }}" alt=""></div> --}}
                             <div><strong>Nama Pimpinan: </strong> {{ $p->name }}</div>

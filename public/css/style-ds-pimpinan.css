@@ -330,3 +330,11 @@
     /* border-radius: 50px; */
     /* justify-content: space-between; */
 }
+
+#avatar-profile {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}

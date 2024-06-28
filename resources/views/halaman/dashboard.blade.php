@@ -422,7 +422,7 @@
         @foreach ($pimpinan as $p)            
         <div class="profile-container">
             <div class="profile-card">
-                <img src="{{ asset('images/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
+                <img src="{{ asset('/storage/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
                 <h1 class="profile-name">{{$p->name}}</h1>
                 <h2 class="profile-title">{{$p->jabatan}}</h2>
                 <p class="profile-description">

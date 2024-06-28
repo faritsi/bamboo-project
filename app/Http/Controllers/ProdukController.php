@@ -18,9 +18,9 @@ class ProdukController extends Controller
     {
         $user = Auth::user();
         $produk = Produk::all();
-        return view('admin.produk',[
+        return view('admin.produk', [
             'title' => 'Produk'
-        ],compact('produk', 'user'));
+        ], compact('produk', 'user'));
     }
 
     /**
@@ -29,9 +29,9 @@ class ProdukController extends Controller
     public function create()
     {
         $produk = Produk::all();
-        return view('form.add-produk',[
+        return view('form.add-produk', [
             'title' => 'Tambah Produk'
-        ],compact('produk'));
+        ], compact('produk'));
     }
 
     /**
@@ -54,8 +54,9 @@ class ProdukController extends Controller
         ]);
 
         $imagePath = null;
-        if($request->file('image')) {
-            $imagePath = $request->file('image')->store('produk-images');
+        $imageName = $pid . '.' . $request->file('image')->getClientOriginalExtension();
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->storeAs('produk-images', $imageName, 'public');
         }
 
         // Buat objek model produk dengan data yang sudah divalidasi
@@ -78,7 +79,8 @@ class ProdukController extends Controller
         // Redirect ke route produk.index dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Produk Berhasil ditambah');
     }
-    private function generateRandomString1($length = 10) {
+    private function generateRandomString1($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -93,7 +95,7 @@ class ProdukController extends Controller
     public function show($pid)
     {
         $produk = DB::table('produks')->where('pid', $pid)->get();
-        return view ('produk_show.index', compact('produk'));
+        return view('produk_show.index', compact('produk'));
     }
 
     /**
@@ -121,13 +123,15 @@ class ProdukController extends Controller
             'shopee' => 'required|string',
         ]);
 
-        $image = $request->oldImage;
-
+        // $image = $request->oldImage;
+        $produk = DB::table('produks')->where('pid', $pid)->first();
+        $image = null;
         if ($request->file('image')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+            $imageNameEdit = $pid . '.' . $request->file('image')->getClientOriginalExtension();
+            if ($produk->image) {
+                Storage::delete($produk->image);
             }
-            $image = $request->file('image')->store('produk-images');
+            $image = $request->file('image')->storeAs('produk-images', $imageNameEdit, 'public');
         }
 
         DB::table('produks')->where('pid', $pid)->update([
@@ -135,14 +139,13 @@ class ProdukController extends Controller
             'nama_produk' => $request->nama_produk,
             'jenis_produk' => $request->jenis_produk,
             'jumlah_produk' => $request->jumlah_produk,
-            'image' => $image,
+            'image' => $image ?? $produk->image,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
             'tokped' => $request->tokped,
             'shopee' => $request->shopee,
         ]);
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
-
     }
 
     /**

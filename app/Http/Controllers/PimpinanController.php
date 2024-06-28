@@ -21,9 +21,9 @@ class PimpinanController extends Controller
     {
         $user = Auth::user();
         $pimpinan = Pimpinan::all();
-        return view('admin.pimpinan',[
+        return view('admin.pimpinan', [
             'title' => 'Pimpinan'
-        ],compact('pimpinan', 'user'));
+        ], compact('pimpinan', 'user'));
     }
 
     /**
@@ -50,8 +50,9 @@ class PimpinanController extends Controller
         ]);
 
         $imagePath = null;
-        if($request->file('image')) {
-            $imagePath = $request->file('image')->store('pimpinan-images');
+        $imageName = $ppid . '.' . $request->file('image')->getClientOriginalExtension();
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->storeAs('pimpinan-images', $imageName, 'public');
         }
 
         $pimpinan = new Pimpinan([
@@ -67,7 +68,8 @@ class PimpinanController extends Controller
         return redirect()->route('pimpinan.index')->with('success', 'Pimpinan added successfully.');
     }
 
-    private function generateRandomString1($length = 10) {
+    private function generateRandomString1($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -105,20 +107,21 @@ class PimpinanController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $image = $request->oldImage;
-
+        $pimpinan = DB::table('pimpinans')->where('ppid', $ppid)->first();
+        $image = null;
         if ($request->file('image')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+            $imageNameEdit = $ppid . '.' . $request->file('image')->getClientOriginalExtension();
+            if ($pimpinan->image) {
+                Storage::delete($pimpinan->image);
             }
-            $image = $request->file('image')->store('pimpinan-images');
+            $image = $request->file('image')->storeAs('pimpinan-images', $imageNameEdit, 'public');
         }
 
         DB::table('pimpinans')->where('ppid', $ppid)->update([
             'name' => $request->name,
             'jabatan' => $request->jabatan,
             'deskripsi' => $request->deskripsi,
-            'image' => $image,
+            'image' => $image ?? $pimpinan->image,
         ]);
 
         return redirect()->route('pimpinan.index')->with('success', 'Pimpinan updated successfully.');
@@ -143,5 +146,4 @@ class PimpinanController extends Controller
 
         return redirect()->route('pimpinan.index')->with('success', 'Pimpinan deleted successfully.');
     }
-
 }
