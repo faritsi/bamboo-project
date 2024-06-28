@@ -1,0 +1,68 @@
+/* Make modal content scrollable */
+.modal-body {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Responsive image preview inside the modal */
+#imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#imagePreview img.preview-img {
+    max-width: 100%;
+    height: auto;
+    flex: 1 1 calc(33.333% - 10px);
+}
+
+/* Container for uploaded images */
+#uploadedImages {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.flex-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* Styling for image container */
+.image-container {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-container img.preview-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.btn-edit,
+.btn-delete {
+    margin: 2px;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+    .flex-row {
+        flex-direction: column;
+    }
+
+    #imagePreview img.preview-img,
+    .image-container img.preview-img {
+        flex: 1 1 100%;
+    }
+}
