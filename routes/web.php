@@ -21,6 +21,10 @@ use App\Http\Controllers\TransaksiController;
 |
 */
 
+Route::get('/', function () {
+    return view('detail-produk.product-details');
+});
+
 Route::get('/konfirmasi', function () {
     return view('konfirmasi/index');
 });
