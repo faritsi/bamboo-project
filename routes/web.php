@@ -22,8 +22,9 @@ use App\Http\Controllers\TransaksiController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('detail-produk.detail-produk');
 });
+
 Route::get('/login', function () {
     return view('halaman/login');
 });
