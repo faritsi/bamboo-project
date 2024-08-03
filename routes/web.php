@@ -31,13 +31,22 @@ Route::get('/admin', function () {
     return view('halaman/dashboard-admin');
 });
 
-Route::controller(AuthController::class)->group(function(){
+// Dashboard Depan
+Route::get('/catalog', function () {
+    return view('halaman/all_produk');
+});
+
+Route::get('/detail-produk', function () {
+    return view('halaman/detail-produk');
+});
+
+Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'index')->name('login');
     Route::post('login/proses', 'proses');
     Route::get('logout', 'logout');
 });
 
-Route::controller(LayoutController::class)->group(function(){
+Route::controller(LayoutController::class)->group(function () {
     Route::get('dashboard', 'halu');
 });
 
@@ -59,7 +68,7 @@ Route::get('/produk/{pid}', [ProdukController::class, 'show'])->name('produk.sho
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['CekAuth:1,2']], function () {
         // Route::resource('home', LayoutController::class);
-        Route::controller(LayoutController::class)->group(function(){
+        Route::controller(LayoutController::class)->group(function () {
             Route::get('home', 'index');
             Route::get('sidebar', 'sidebar');
         });
@@ -71,4 +80,3 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('info', IngpoController::class);
     });
 });
-
