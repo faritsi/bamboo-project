@@ -40,6 +40,10 @@ Route::get('/detail-produk', function () {
     return view('halaman/detail-produk');
 });
 
+Route::get('/checkout', function () {
+    return view('halaman/checkout-page');
+});
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'index')->name('login');
     Route::post('login/proses', 'proses');
