@@ -26,7 +26,7 @@
                             <li class="kuning">Home</li>
                             <li>About Us</li>
                             <li>Services</li>
-                            <li><a href="/catalog">Catalog</li>
+                            <li>Catalog</li>
                             <li>Contact Us</li>
                         </ul>
                     </div>

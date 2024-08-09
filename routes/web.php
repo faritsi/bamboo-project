@@ -54,6 +54,13 @@ Route::controller(LayoutController::class)->group(function () {
     Route::get('dashboard', 'halu');
 });
 
+// NEW DASHBOARD
+
+Route::get('/halaman-utama', function () {
+    return view('halaman/new-dashboard');
+});
+
+
 Route::get('/produk/{pid}', [ProdukController::class, 'show'])->name('produk.show');
 
 // Route::group(['middleware' => ['auth']], function () {
