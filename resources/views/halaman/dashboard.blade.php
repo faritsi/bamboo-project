@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     {{-- <script src="/js/script.js"></script> --}}
 </head>
 <body>
@@ -198,7 +198,55 @@
         </div>
 
         <div class="container-product">
+            @foreach ($produk as $p)
             <div class="card-product">
+                <img
+                    class="product-image"
+                    src="img/pd.png"
+                    alt="Product Image"
+                />
+                <div class="product-info">
+                    <div class="product-title">{{ $p->judul }}</div>
+                    <div class="product-description">
+                        {{ $p->deskripsi }}
+                    </div>
+                </div>
+                <div class="order-text">Pesan di :</div>
+                <div class="order-options">
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Tokopedia Icon"
+                        />
+                        <div class="order-label">
+                            <a href="{{ $p->tokped }}">Tokopedia</a>
+                        </div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">
+                            <a href="{{ $p->shopee }}">Shopee</a>
+                        </div>
+                    </div>
+                    <div class="order-option">
+                        <img
+                            class="order-icon"
+                            src="https://via.placeholder.com/29x29"
+                            alt="Shopee Icon"
+                        />
+                        <div class="order-label">
+                            <a href="/produk/{{$p->pid}}">pesan langsung</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            {{-- <div class="card-product">
                 <img
                     class="product-image"
                     src="img/pd.png"
@@ -267,42 +315,7 @@
                         <div class="order-label">Shopee</div>
                     </div>
                 </div>
-            </div>
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">Tokopedia</div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Client -->
@@ -406,41 +419,35 @@
         <div class="title-container">
             <h1 class="title">Pimpinan Perusahaan</h1>
         </div>
-
+        @foreach ($pimpinan as $p)            
         <div class="profile-container">
             <div class="profile-card">
+                <img src="{{ asset('/storage/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">{{$p->name}}</h1>
+                <h2 class="profile-title">{{$p->jabatan}}</h2>
+                <p class="profile-description">
+                    {{$p->deskripsi}}
+                </p>
+            </div>
+            {{-- <div class="profile-card">
+                <img src="{{ asset('images/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
+                <h1 class="profile-name">{{$p->name}}</h1>
+                <h2 class="profile-title">{{$p->jabatan}}</h2>
+                <p class="profile-description">
+                    {{$p->deskripsi}}
+                </p>
+            </div> --}}
+            {{-- <div class="profile-card">
                 <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
                 <h1 class="profile-name">John Doe</h1>
                 <h2 class="profile-title">CEO</h2>
                 <p class="profile-description">
                     John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
                 </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
-            <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div>
+            </div> --}}
+            
         </div>
+        @endforeach
 
         <!-- FOOTER -->
         <div class="container-footer">
@@ -455,25 +462,27 @@
             <div class="site-links">
                 <div class="site-links-title">Site Links</div>
                 <div class="links">
-                    <div>Home</div>
-                    <div>About Us</div>
-                    <div>Service</div>
-                    <div>Catalog</div>
-                    <div>Contact Us</div>
+                    <div><a href="#bg-header">Home</a></div>
+                    <div><a href="#bg-about">About Us</a></div>
+                    <div><a href="#bg-ourserpis">Service</a></div>
+                    <div><a href="#bg-catalog">Service</a></div>
+                    <div><a href="#container-footer">Contact Us</a></div>
                 </div>
             </div>
+            @foreach ($ingpo as $i)      
             <div class="contact-info">
                 <div class="contact-title">Contact Us</div>
-                <div class="contact-email">Email @gmail.com</div>
-                <div class="contact-phone">08xx-xxxx-xxxx</div>
+                <div class="contact-email">{{$i->email}}</div>
+                <div class="contact-phone">{{$i->nowa}}</div>
                 <div class="email-icon"></div>
                 <div class="phone-icon"></div>
             </div>
             <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
             <div class="whatsapp-button">
-                <img src="https://via.placeholder.com/29x29" alt="WhatsApp">
-                <div>Whatsapp</div>
+                <a href="https://wa.me/{{$i->nowa}}?text=Saya%20ingin%20memesan%20produk%20bambu"><img src="https://via.placeholder.com/29x29" alt="WhatsApp">
+                <div>Whatsapp</div></a>
             </div>
+            @endforeach
         </div>
         
     </div>
