@@ -10,7 +10,7 @@
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <title>Document</title>
+    <title>{{$title}}</title>
 </head>
 <body>
     <div id="background">
@@ -18,111 +18,42 @@
         <div id="bg-container">
             <div id="container">
                 <div id="tipe-produk" class="clearfix">
-                    <div id="tipe-semua-produk">
+                    <div id="tipe-semua-produk" class="kategori" data-jenis_produk="semua">
                         <h3>Semua</h3>
                     </div>
-                    <div id="tipe-toples-produk">
+                    <div id="tipe-toples-produk" class="kategori" data-jenis_produk="Awet">
                         <h3>Toples</h3>
                     </div>
-                    <div id="tipe-layangan-produk">
+                    <div id="tipe-layangan-produk" class="kategori" data-jenis_produk="Keripik">
                         <h3>Layangan</h3>
                     </div>
-                    <div id="tipe-miniatur-produk">
+                    <div id="tipe-miniatur-produk" class="kategori" data-jenis_produk="miniatur">
                         <h3>Miniatur</h3>
                     </div>
                 </div>
+                
                 {{-- Content Produk --}}
-                <div id="content-produk">
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock : 18</p>
+                @foreach ($produk as $p)
+                <a href="/produk/{{$p->pid}}">
+                    <div id="content-produk" class="content-produk" data-jenis_produk="{{$p->jenis_produk}}">
+                        <div id="card-container">
+                            <div id="card-produk">
+                                <div id="card-stok">
+                                    <p id="stok-produk">Stock : {{$p->jumlah_produk}}</p>
+                                </div>
+                                <div id="card-image">
+                                    <img src="{{ asset('/storage/' . $p->image) }}" alt="Produk Image" id="image-produk">
+                                </div>
                             </div>
-                            <div id="card-image">
-                                <img src="img/pd.png" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
                             <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
+                                <h4 id="nama-produk">{{$p->nama_produk}}</h4>
+                                <p id="harga-produk">{{$p->harga}}</p>
+                            </div>
                         </div>
                     </div>
+                </a>
+                @endforeach
 
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock :18</p>
-                            </div>
-                            <div id="card-image">
-                                <img src="" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
-                            <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
-                        </div>
-                    </div>
-                    
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock :18</p>
-                            </div>
-                            <div id="card-image">
-                                <img src="" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
-                            <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
-                        </div>
-                    </div>
-
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock :18</p>
-                            </div>
-                            <div id="card-image">
-                                <img src="" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
-                            <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
-                        </div>
-                    </div>
-
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock :18</p>
-                            </div>
-                            <div id="card-image">
-                                <img src="" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
-                            <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
-                        </div>
-                    </div>
-
-                    <div id="card-container">
-                        <div id="card-produk">
-                            <div id="card-stok">
-                                <p id="stok-produk">Stock :18</p>
-                            </div>
-                            <div id="card-image">
-                                <img src="" alt="Produk Image" id="image-produk">
-                            </div>
-                        </div>
-                            <div id="card-text">
-                            <h4 id="nama-produk">Tatakan Bambu Kuning Hitam Putih</h3>
-                            <p id="harga-produk">Rp. 99.99</p>
-                        </div>
-                    </div>
-                </div>
                 {{-- Button Page --}}
                 <div id="container-page-button">
                     <div id="page-button">
@@ -187,6 +118,30 @@
                 hideModals();
             }
         });
+    });
+    $(document).ready(function(){
+        // Fungsi untuk menampilkan produk berdasarkan jenis_produk
+        function filterProduk(jenis_produk) {
+            if (jenis_produk === "semua") {
+                $(".content-produk").show(); // Tampilkan semua produk
+            } else {
+                $(".content-produk").hide(); // Sembunyikan semua produk
+                $('.content-produk[data-jenis_produk="'+jenis_produk+'"]').show(); // Tampilkan produk berdasarkan jenis_produk
+            }
+        }
+
+        // Event listener untuk klik pada kategori
+        $(".kategori").on("click", function(){
+            var jenis_produk = $(this).data("jenis_produk");
+            filterProduk(jenis_produk);
+
+            // Menambahkan kelas aktif pada kategori yang dipilih
+            $(".kategori").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        // Inisialisasi: tampilkan semua produk pada load pertama
+        filterProduk("semua");
     });
 </script>
 </html>

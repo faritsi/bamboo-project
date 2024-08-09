@@ -128,7 +128,7 @@
                         <a href="#" data-value="Kategori 3">Kategori 3</a>
                     </div>
                 </div>
-                <input type="hidden" name="jenis_produk" id="jenis_produk"> 
+                <input type="text" name="jenis_produk" id="jenis_produk"> 
 
                 @if ($errors->has('jenis_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
@@ -215,12 +215,12 @@
                 <div class="dropdown">
                     <button class="dropbtn" type="button" id="dropdownButton">Pilih Kategori</button>
                     <div class="dropdown-content" id="dropdownMenu">
-                        <a href="#" data-value="Kategori 1">Kategori 1</a>
-                        <a href="#" data-value="Kategori 2">Kategori 2</a>
-                        <a href="#" data-value="Kategori 3">Kategori 3</a>
+                        <a href="#" data-value="awet">Awet</a>
+                        <a href="#" data-value="mudah-pecah">Mudah Pecah</a>
+                        <a href="#" data-value="tahan-lama">Tahan Lama</a>
                     </div>
                 </div>
-                <input type="hidden" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">        
+                <input type="text" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">        
                 @if ($errors->has('jenis_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
                 @endif

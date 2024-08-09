@@ -45,10 +45,17 @@ $params = array(
             'phone' => $_POST['nohp'],
             'address' => $_POST['alamat'],
             'postal_code' => $_POST['pos']
+        ), "shipping_address"=> array (
+            'first_name'=> $_POST['name'],
+            'phone'=> $_POST['nohp'],
+            'address'=> $_POST['alamat'],
+            'city'=> $_POST['city'],
+            'postal_code'=> $_POST['pos'],
+            'country_code'=> 'IDN'
         )
     ),
     'callbacks' => array(
-        'finish' => 'http://bamboo.local/konfirmasi'
+        'finish' => 'catalog'
     )
 );
 

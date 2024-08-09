@@ -205,3 +205,20 @@
     text-decoration: none;
     cursor: pointer;
 }
+/* CSS untuk tombol yang enable (warna aslinya) */
+.checkout-button {
+    background-color: #4caf50; /* Warna asli tombol */
+    color: white;
+    cursor: pointer;
+}
+
+/* CSS untuk tombol yang disable */
+.checkout-button.disabled {
+    background-color: #ccc; /* Warna abu-abu ketika disable */
+    color: #666;
+    cursor: not-allowed;
+}
+.kategori.active {
+    background-color: #ffc107; /* Ubah sesuai dengan desain Anda */
+    color: #fff;
+}

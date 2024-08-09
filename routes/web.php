@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\IngpoController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\CatalogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +33,11 @@ Route::get('/admin', function () {
 });
 
 // Dashboard Depan
-Route::get('/catalog', function () {
-    return view('halaman/all_produk');
+// Route::get('/catalog', function () {
+//     return view('halaman/all_produk');
+// });
+Route::controller(CatalogController::class)->group(function () {
+    Route::get('catalog', 'index');
 });
 
 Route::get('/detail-produk', function () {
