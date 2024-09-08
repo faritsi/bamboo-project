@@ -10,6 +10,7 @@ use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\IngpoController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\coba;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,13 @@ Route::controller(LayoutController::class)->group(function () {
     Route::get('dashboard', 'halu');
 });
 
+// Route::get('/coba', [coba::class, 'getCity']);
+Route::get('/provinces', [coba::class, 'getProvinces']);
+Route::get('/cities/{province_id}', [coba::class, 'getCities']);
+Route::post('/cost', [coba::class, 'getCost']);
+
 Route::get('/produk/{pid}', [ProdukController::class, 'show'])->name('produk.show');
+Route::post('/produk/{pid}', [ProdukController::class, 'show']);
 
 // Route::group(['middleware' => ['auth']], function () {
 //     Route::group(['middleware' => ['CekAuth:1,2']], function () {

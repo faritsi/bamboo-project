@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use GuzzleHttp\Client;
 
 class ProdukController extends Controller
 {
@@ -92,10 +93,49 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      */
+    
+    public function getProvinsi(){
+        $client = new Client();
+        try {
+            $response = $client->request('POST', 'https://api.rajaongkir.com/starter/province',
+            array(
+                'headers' => array(
+                    'key' => '1a14ace5f65a3788c0ccf8115baed896'
+                )
+            )
+        );
+        } catch (RequestException $e) {
+            var_dump($e->getResponse()->getBody()->getContents());
+        }
+        $json = $response->getBody()->getContents();
+        $array_result = json_decode($json, true);
+        print_r($array_result);
+    }
+
     public function show($pid)
     {
+        $client = new Client();
+        $apiKey = '1a14ace5f65a3788c0ccf8115baed896'; // Ganti dengan API Key Anda
+
+        $response = $client->request('POST', 'https://api.rajaongkir.com/starter/cost', [
+            'headers' => [
+                'key' => $apiKey,
+                'content-type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => [
+                'origin' => 501, // Kode kota asal
+                'destination' => 130, // Kode kota tujuan
+                'weight' => 1000, // Berat dalam gram
+                'courier' => 'jne' // Kurir yang digunakan (jne, pos, tiki)
+            ],
+        ]);
+
+        $body = json_decode($response->getBody(), true);
+
+        // Ambil data biaya dari response API
+        $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
         $produk = DB::table('produks')->where('pid', $pid)->get();
-        return view('produk_show.index', compact('produk'));
+        return view('produk_show.index', compact('produk', 'ongkir'));
     }
 
     /**

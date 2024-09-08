@@ -28,6 +28,8 @@
     @endforeach
 </head>
 <body>
+    {{-- <h1>Biaya Ongkir</h1>
+    <p>Biaya: Rp {{ number_format($ongkir, 0, ',', '.') }}</p> --}}
     <div id="background">
         <div id="co-background">
             @foreach ($produk as $p)
@@ -102,8 +104,27 @@
                     <label for="nama-lengkap">Nama Lengkap <span class="required">*</span></label>
                     <input type="text" name="name" id="name" placeholder="Masukan Nama Lengkap" required>
                 </div>
+                <label for="province">Provinsi:</label>
+                <select id="province">
+                    <option value="">Pilih Provinsi</option>
+                </select>
+
+                <label for="city">Kota:</label>
+                <select id="city" disabled>
+                    <option value="">Pilih Kota</option>
+                </select>
+
+                <label for="courier">Kurir:</label>
+                <select id="courier">
+                    <option value="jne">JNE</option>
+                    <option value="pos">POS</option>
+                    <option value="tiki">TIKI</option>
+                </select>
+
+                <h3>Biaya Ongkir:</h3>
+                <div id="cost">Pilih kota dan kurir untuk melihat ongkir</div>
                 <div class="form-group">
-                    <label for="alamat">Alamat <span class="required">*</span></label>
+                    <label for="alamat">Alamat Lengkap<span class="required">*</span></label>
                     <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat" required>
                 </div>
                 <div class="form-group">
@@ -237,6 +258,46 @@
             checkForm(); // Check form state when modal is opened
         }
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Ambil daftar provinsi
+            $.get('/provinces', function (data) {
+                data.forEach(function (province) {
+                    $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
+                });
+            });
+
+            // Ketika provinsi dipilih, ambil kota
+            $('#province').change(function () {
+                var province_id = $(this).val();
+                $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
+
+                $.get('/cities/' + province_id, function (data) {
+                    data.forEach(function (city) {
+                        $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
+                    });
+                });
+            });
+
+            // Ketika kota atau kurir berubah, hitung ongkir
+            $('#city, #courier').change(function () {
+                var city_id = $('#city').val();
+                var courier = $('#courier').val();
+
+                if (city_id) {
+                    $.post('/cost', {
+                        _token: '{{ csrf_token() }}',
+                        origin: 24, // Kota asal (contoh: Yogyakarta)
+                        destination: city_id,
+                        courier: courier
+                    }, function (data) {
+                        var cost = data[0].costs[0].cost[0].value;
+                        $('#cost').text('Rp ' + cost);
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
