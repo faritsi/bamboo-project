@@ -51,12 +51,13 @@
                     <div id="text-atur-produk">
                         <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli !</p>
                     </div>
+                    {{-- Jumlah Produk --}}
                     <div id="jumlah-produk">
                         <div id="banyak-kuantitas-produk">
                             <p id="banyak-kuantitas">Banyak : </p>
                         </div>
                         <div id="text-kuantitas-produk">
-                            <input type="number" name="qty" class="qty" value="">
+                            <input type="number" name="qty" class="qty" value="1" min="1">
                         </div>
                         <div id="text-stock">
                             <p id="stock">Stock Tersedia : </p>
@@ -65,14 +66,16 @@
                             <p id="angka-barang">{{ $p->jumlah_produk }}</p>
                         </div>
                     </div>
+                    {{-- Harga Total Produk --}}
                     <div id="container-total-produk">
                         <div id="sub-text">
                             <p id="subtotal-produk">SUB TOTAL : </p>
                         </div>
                         <div id="harga-total">
-                            <input type="number" name="total_pembayaran" class="total_pembayaran" value="" readonly>
+                            <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
                         </div>
                     </div>
+                    {{-- Btn Beli --}}
                     <div id="btnBeli" class="bg-biodata">
                         <div id="container-biodata">
                             <div class="biodata">
@@ -149,9 +152,15 @@
             qtyElement.closest('#content').querySelector(".total_pembayaran").value = total;
         }
 
-        document.querySelectorAll(".qty").forEach(function (element) {
-            element.addEventListener("input", function () {
-                calculateTotal(this);
+        // Kalkulasi harga total saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll(".qty").forEach(function (element) {
+                calculateTotal(element); // Hitung total harga ketika halaman dimuat
+
+                // Kalkulasi ulang ketika jumlah produk diubah
+                element.addEventListener("input", function () {
+                    calculateTotal(this);
+                });
             });
         });
 

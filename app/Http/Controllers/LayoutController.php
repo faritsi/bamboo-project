@@ -15,7 +15,7 @@ class LayoutController extends Controller
 {
     public function halu()
     {
-        return view('halaman.dashboard')->with([
+        return view('halaman.new-dashboard')->with([
             'title' => 'Halaman Utama',
             'produk' => produk::orderBy('created_at')->take(3)->get(),
             'pimpinan' => Pimpinan::take(4)->get(),

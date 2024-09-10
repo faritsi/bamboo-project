@@ -147,29 +147,6 @@
     width: 100%;
 }
 
-/* Button Isi Biodata */
-#btnBeli {
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-}
-
-#container-biodata {
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffd700;
-    gap: 5px;
-    border-radius: 20px;
-}
-
-#container-biodata .biodata {
-}
-
-#text-button {
-}
-
 /* Modal isi biodata */
 .modal {
     display: none; /* Hidden by default */

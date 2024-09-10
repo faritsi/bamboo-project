@@ -60,18 +60,6 @@
                         1 2 3 4 5 
                     </div>
                 </div>
-
-                {{-- Pengisian Biodata --}}
-                <div id="btnBeli" class="bg-biodata">
-                    <div id="container-biodata">
-                        <div class="biodata">
-                            <span class="material-symbols-outlined">shopping_bag</span>
-                        </div>
-                        <div id="text-button">
-                            <p>Beli</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
