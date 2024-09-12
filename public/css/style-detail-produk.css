@@ -1,0 +1,232 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#background {
+    padding: 50px 0;
+    background-color: #fff;
+}
+
+#co-background {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#content {
+    display: flex;
+    gap: 50px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#image-produk {
+    width: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#image-produk img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#keterangan-produk {
+    width: 50%;
+}
+
+#nama-produk h1 {
+    font-size: 32px;
+    color: #2c3e50;
+}
+
+#harga-produk p {
+    font-size: 24px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+#deskripsi-produk h2 {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+#deskripsi-produk p {
+    font-size: 16px;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+#text-atur-produk {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+#jumlah-produk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#jumlah-produk input {
+    width: 60px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#container-total-produk p {
+    font-size: 18px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+#tot_bayar {
+    width: 150px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btnBeli {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #27ae60;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnBeli:hover {
+    background-color: #2ecc71;
+}
+
+#container-biodata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.biodata .material-symbols-outlined {
+    font-size: 28px;
+    padding-top: 5px;
+}
+
+/* Modal isi biodata */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    font-family: "Arial", sans-serif;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 50%; /* Adjust as needed */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#header-modul h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
+    color: #333;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group .required {
+    color: red;
+    margin-left: 5px;
+}
+
+.info-message {
+    margin: 10px auto;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+.submit-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
