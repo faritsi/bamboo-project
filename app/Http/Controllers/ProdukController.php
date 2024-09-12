@@ -112,30 +112,68 @@ class ProdukController extends Controller
         print_r($array_result);
     }
 
+    public function keranjang()
+    {
+        $produk = Produk::all();
+        return view('cart_view.cart', compact('produk'));
+    }
+
+    public function TambahKeranjang(Request $request, $pid)
+    {
+        $produk = Produk::find($pid);
+    
+        $keranjang = session()->get('keranjang', []);
+    
+        if (isset($keranjang[$pid])) {
+            $keranjang[$pid]['quantity']++;
+        } else {
+            $keranjang[$pid] = [
+                "nama_produk" => $produk->nama_produk,
+                "harga" => $produk->harga,
+                "quantity" => 1
+            ];
+        }
+    
+        session()->put('keranjang', $keranjang);
+    
+        return response()->json([
+            'message' => 'Produk ditambahkan ke keranjang!',
+            'cart_count' => count($keranjang)
+        ]);
+    }
+    
+    public function syncCart(Request $request)
+    {
+        // Save the cart to the session
+        session()->put('keranjang', $request->cart);
+        return response()->json(['message' => 'Cart updated']);
+    }
+
+
     public function show($pid)
     {
-        $client = new Client();
-        $apiKey = '1a14ace5f65a3788c0ccf8115baed896'; // Ganti dengan API Key Anda
+        // $client = new Client();
+        // $apiKey = '1a14ace5f65a3788c0ccf8115baed896'; // Ganti dengan API Key Anda
 
-        $response = $client->request('POST', 'https://api.rajaongkir.com/starter/cost', [
-            'headers' => [
-                'key' => $apiKey,
-                'content-type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => [
-                'origin' => 501, // Kode kota asal
-                'destination' => 130, // Kode kota tujuan
-                'weight' => 1000, // Berat dalam gram
-                'courier' => 'jne' // Kurir yang digunakan (jne, pos, tiki)
-            ],
-        ]);
+        // $response = $client->request('POST', 'https://api.rajaongkir.com/starter/cost', [
+        //     'headers' => [
+        //         'key' => $apiKey,
+        //         'content-type' => 'application/x-www-form-urlencoded',
+        //     ],
+        //     'form_params' => [
+        //         'origin' => 501, // Kode kota asal
+        //         'destination' => 130, // Kode kota tujuan
+        //         'weight' => 1000, // Berat dalam gram
+        //         'courier' => 'jne' // Kurir yang digunakan (jne, pos, tiki)
+        //     ],
+        // ]);
 
-        $body = json_decode($response->getBody(), true);
+        // $body = json_decode($response->getBody(), true);
 
         // Ambil data biaya dari response API
-        $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+        // $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
         $produk = DB::table('produks')->where('pid', $pid)->get();
-        return view('produk_show.index', compact('produk', 'ongkir'));
+        return view('produk_show.index', compact('produk'));
     }
 
     /**
@@ -185,6 +223,14 @@ class ProdukController extends Controller
             'tokped' => $request->tokped,
             'shopee' => $request->shopee,
         ]);
+
+        if($request->pid && $request->quantity){
+            $keranjang = session()->get('keranjang');
+            $keranjang[$request->pid]["quantity"] = $request->quantity;
+            session()->put('keranjang', $keranjang);
+            session()->flash('success', 'keranjang updated successfully');
+        }
+
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
     }
 
@@ -208,5 +254,18 @@ class ProdukController extends Controller
         }
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
+    }
+    public function remove(Request $request)
+
+    {
+        if($request->pid) {
+            $keranjang = session()->get('keranjang');
+            if(isset($keranjang[$request->pid])) {
+                unset($keranjang[$request->pid]);
+                session()->put('keranjang', $keranjang);
+            }
+            session()->flash('success', 'Product removed successfully');
+        }
+
     }
 }

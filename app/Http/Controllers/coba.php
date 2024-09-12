@@ -37,21 +37,22 @@ class coba extends Controller
 
     // Fungsi untuk menghitung biaya ongkir
     public function getCost(Request $request)
-    {
-        $client = new Client();
-        $response = $client->post('https://api.rajaongkir.com/starter/cost', [
-            'headers' => [
-                'key' => env('RAJAONGKIR_API_KEY'),
-            ],
-            'form_params' => [
-                'origin' => $request->origin, // ID kota asal
-                'destination' => $request->destination, // ID kota tujuan
-                'weight' => 500, // Tetapkan berat default 1000 gram
-                'courier' => $request->courier // JNE, POS, TIKI, dll
-            ]
-        ]);
-    
-        $cost = json_decode($response->getBody(), true);
-        return response()->json($cost['rajaongkir']['results']);
-    }    
+{
+    $client = new Client();
+    $response = $client->post('https://api.rajaongkir.com/starter/cost', [
+        'headers' => [
+            'key' => env('RAJAONGKIR_API_KEY'),
+        ],
+        'form_params' => [
+            'origin' => $request->origin, // ID kota asal
+            'destination' => $request->destination, // ID kota tujuan
+            'weight' => 500, // Berat barang (gram)
+            'courier' => $request->courier // JNE, POS, TIKI, dll
+        ]
+    ]);
+
+    $cost = json_decode($response->getBody(), true);
+    return response()->json($cost['rajaongkir']['results']);
+}
+  
 }

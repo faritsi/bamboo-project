@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="cartData()">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/style-detail-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
     <style>
         /* CSS untuk tombol yang enable (warna aslinya) */
         .checkout-button {
@@ -28,6 +29,58 @@
     @endforeach
 </head>
 <body>
+    <div id="bg-header">
+        <div id="bo-header" class="clearfix">
+            <div id="kiri-header" class="clearfix">
+                <div id="atas-header">
+                    <h1>PT. Bintang</h1>
+                </div>
+                <div id="bawah-header">
+                    <h1>Mitra Kencana</h1>
+                </div>
+            </div>
+            <div id="kanan-header">
+                <ul>
+                    <li class="kuning">Home</li>
+                    <li>About Us</li>
+                    <li>Services</li>
+                    <li><a href="/catalog">Catalog</a></li>
+                    <li>Contact Us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Button to Open Cart -->
+    <button class="open-cart-btn" @click="toggleCart()">🛒</button>
+
+    <!-- Cart Menu -->
+    <div class="cart-menu" :class="{ 'active': cartVisible }">
+        <div class="cart-header">
+            <h3>Keranjang Belanja</h3>
+            <span class="close-cart" @click="toggleCart()">✖</span>
+        </div>
+        <div class="cart-body">
+            <ul>
+                <template x-for="(item, index) in cartItems" :key="item.pid">
+                    <li class="cart-item">
+                        <div class="cart-item-info">
+                            <span x-text="item.nama_produk"></span>
+                            <div class="cart-item-quantity">
+                                <button @click="decreaseQuantity(index)" class="quantity-btn">-</button>
+                                <input type="number" x-model="item.quantity" @change="updateCart(index)" min="1">
+                                <button @click="increaseQuantity(index)" class="quantity-btn">+</button>
+                                <span>Rp <span x-text="item.harga * item.quantity"></span></span>
+                            </div>
+                        </div>
+                        <button @click="removeFromCart(index)">Hapus</button>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="cart-total">
+            Total: Rp <span x-text="cartTotal"></span>
+        </div>
+    </div>
     {{-- <h1>Biaya Ongkir</h1>
     <p>Biaya: Rp {{ number_format($ongkir, 0, ',', '.') }}</p> --}}
     <div id="background">
@@ -85,6 +138,11 @@
                             </div>
                         </div>
                     </div>
+                    <div id="card-text">
+                        <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }})">
+                            Tambah ke Keranjang
+                        </button>
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -120,6 +178,11 @@
                     <option value="pos">POS</option>
                     <option value="tiki">TIKI</option>
                 </select>
+                
+                <label for="courier_service">Layanan Kurir:</label>
+                <select id="courier_service" disabled>
+                    <option value="">Pilih Layanan Kurir</option>
+                </select>                
 
                 <h3>Biaya Ongkir:</h3>
                 <div id="cost">Pilih kota dan kurir untuk melihat ongkir</div>
@@ -260,44 +323,132 @@
 
     </script>
     <script>
-        $(document).ready(function () {
-            // Ambil daftar provinsi
-            $.get('/provinces', function (data) {
-                data.forEach(function (province) {
-                    $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
-                });
-            });
+$(document).ready(function () {
+    // Fetch provinces
+    $.get('/provinces', function (data) {
+        data.forEach(function (province) {
+            $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
+        });
+    });
 
-            // Ketika provinsi dipilih, ambil kota
-            $('#province').change(function () {
-                var province_id = $(this).val();
-                $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
+    // Fetch cities based on province
+    $('#province').change(function () {
+        var province_id = $(this).val();
+        $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
 
-                $.get('/cities/' + province_id, function (data) {
-                    data.forEach(function (city) {
-                        $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
-                    });
-                });
-            });
-
-            // Ketika kota atau kurir berubah, hitung ongkir
-            $('#city, #courier').change(function () {
-                var city_id = $('#city').val();
-                var courier = $('#courier').val();
-
-                if (city_id) {
-                    $.post('/cost', {
-                        _token: '{{ csrf_token() }}',
-                        origin: 24, // Kota asal (contoh: Yogyakarta)
-                        destination: city_id,
-                        courier: courier
-                    }, function (data) {
-                        var cost = data[0].costs[0].cost[0].value;
-                        $('#cost').text('Rp ' + cost);
-                    });
-                }
+        $.get('/cities/' + province_id, function (data) {
+            data.forEach(function (city) {
+                $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
             });
         });
+    });
+
+    // Fetch services and costs when city and courier are selected
+    $('#city, #courier').change(function () {
+        var city_id = $('#city').val();
+        var courier = $('#courier').val();
+
+        if (city_id && courier) {
+            $.post('/cost', {
+                _token: '{{ csrf_token() }}',
+                origin: 24, // Example origin city ID (Yogyakarta)
+                destination: city_id,
+                courier: courier
+            }, function (data) {
+                if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
+                    var services = data[0].costs;
+                    $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
+                    services.forEach(function (service) {
+                        $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
+                    });
+                } else {
+                    $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
+                }
+            });
+        }
+    });
+
+    // Update shipping cost when courier service is selected
+    $('#courier_service').change(function () {
+        var selectedService = $('#courier_service option:selected');
+        var cost = selectedService.data('cost');
+
+        if (cost) {
+            $('#cost').text('Rp ' + cost);
+        } else {
+            $('#cost').text('Pilih kota dan kurir untuk melihat ongkir');
+        }
+    });
+});
     </script>
+    <script>
+        function cartData() {
+            return {
+                cartItems: @json(session('keranjang', [])), // Fetch cart items from session
+                cartTotal: 0,
+                cartVisible: false,
+        
+                init() {
+                    this.updateCartTotal();
+                },
+        
+                toggleCart() {
+                    this.cartVisible = !this.cartVisible;
+                },
+        
+                addToCart(pid, nama_produk, harga) {
+                    let item = this.cartItems.find(item => item.pid === pid);
+                    if (item) {
+                        item.quantity++;
+                    } else {
+                        this.cartItems.push({ pid, nama_produk, harga, quantity: 1 });
+                    }
+                    this.updateCartTotal();
+                    this.syncCartWithSession();
+                },
+        
+                updateCartTotal() {
+                    this.cartTotal = this.cartItems.reduce((total, item) => total + item.quantity * item.harga, 0);
+                },
+        
+                removeFromCart(index) {
+                    this.cartItems.splice(index, 1);
+                    this.updateCartTotal();
+                    this.syncCartWithSession();
+                },
+        
+                updateCart(index) {
+                    if (this.cartItems[index].quantity <= 0) {
+                        this.removeFromCart(index);
+                    }
+                    this.updateCartTotal();
+                    this.syncCartWithSession();
+                },
+        
+                syncCartWithSession() {
+                    fetch('/sync-cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({ cart: this.cartItems })
+                    });
+                },
+        
+                increaseQuantity(index) {
+                    this.cartItems[index].quantity++;
+                    this.updateCartTotal();
+                },
+        
+                decreaseQuantity(index) {
+                    if (this.cartItems[index].quantity > 1) {
+                        this.cartItems[index].quantity--;
+                        this.updateCartTotal();
+                    }
+                },
+            }
+        }
+        </script>
 </body>
 </html>

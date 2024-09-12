@@ -66,6 +66,9 @@ Route::post('/cost', [coba::class, 'getCost']);
 
 Route::get('/produk/{pid}', [ProdukController::class, 'show'])->name('produk.show');
 Route::post('/produk/{pid}', [ProdukController::class, 'show']);
+Route::get('/keranjang', [ProdukController::class, 'keranjang']);
+Route::post('/tambah-keranjang/{pid}', [ProdukController::class, 'TambahKeranjang']);
+Route::post('/sync-cart', [ProdukController::class, 'syncCart'])->name('sync.cart');
 
 // Route::group(['middleware' => ['auth']], function () {
 //     Route::group(['middleware' => ['CekAuth:1,2']], function () {
