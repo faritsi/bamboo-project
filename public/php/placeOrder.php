@@ -1,3 +1,4 @@
+<!-- DEPACRATED CODE -->
 <?php
 /*Install Midtrans PHP Library (https://github.com/Midtrans/midtrans-php)
 composer require midtrans/midtrans-php
@@ -40,18 +41,19 @@ $params = array(
         'address' => $_POST['alamat'],
         'postal_code' => $_POST['pos'],
         'phone' => $_POST['nohp'],
-        "billing_address"=> array (
+        "billing_address" => array(
             'first_name' => $_POST['name'],
             'phone' => $_POST['nohp'],
             'address' => $_POST['alamat'],
             'postal_code' => $_POST['pos']
-        ), "shipping_address"=> array (
-            'first_name'=> $_POST['name'],
-            'phone'=> $_POST['nohp'],
-            'address'=> $_POST['alamat'],
-            'city'=> $_POST['city'],
-            'postal_code'=> $_POST['pos'],
-            'country_code'=> 'IDN'
+        ),
+        "shipping_address" => array(
+            'first_name' => $_POST['name'],
+            'phone' => $_POST['nohp'],
+            'address' => $_POST['alamat'],
+            'city' => $_POST['city'],
+            'postal_code' => $_POST['pos'],
+            'country_code' => 'IDN'
         )
     ),
     'callbacks' => array(
@@ -59,8 +61,8 @@ $params = array(
     )
 );
 
+
 $snapToken = \Midtrans\Snap::getSnapToken($params);
 echo $snapToken;
 // $snapToken = \Midtrans\Snap::getSnapToken($params);
 // echo json_encode(['token' => $snapToken]);
-?>

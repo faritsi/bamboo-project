@@ -10,20 +10,26 @@ use App\Models\Role;
 use App\Models\Produk;
 use App\Models\Pimpinan;
 use App\Models\Ingpo;
+use App\Services\MidtransService;
 
 class CatalogController extends Controller
 {
+    protected $midtransService;
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtransService = $midtransService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
         // $produk = DB::table('produks')->where('pid')->get();
         $produk = Produk::all();
         return view('halaman/all_produk', [
             'title' => 'Catalog',
         ], compact('produk'));
-        
     }
 
     /**

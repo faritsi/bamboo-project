@@ -11,6 +11,8 @@ class MidtransService
     {
         Config::$serverKey = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.isSanitized');
+        Config::$is3ds = config('midtrans.is3ds');
     }
 
     public function getTransactionStatus($orderId)

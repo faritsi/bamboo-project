@@ -3,6 +3,7 @@
 namespace Midtrans;
 
 use Exception;
+
 /**
  * API methods to get transaction status, approve and cancel transactions
  */

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- LINK --}}
     <link rel="stylesheet" href="{{ asset('css/style-checkout.css') }}">
     <link rel="stylesheet"href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
@@ -54,6 +55,11 @@
 </body>
 </html>
 <script>
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
     document.addEventListener("DOMContentLoaded", function() {
         // Ambil nilai dari localStorage
         var nama = localStorage.getItem("nama");
@@ -95,27 +101,30 @@
         var modal_total = localStorage.getItem("modal_total");
         var jenis_produk = localStorage.getItem("jenis_produk");
         var kode_produk = localStorage.getItem("kode_produk");
+
+
         
         $.ajax({
-            url: 'php/placeOrder.php', // Ubah dengan path ke file PHP Anda
-            method: 'POST',
-            data: {
-                total_pembayaran: modal_total,
-                kode_produk: kode_produk,
-                nama_produk: nama_produk,
-                qty: modal_qty,
-                harga: modal_harga,
-                name: nama,
-                alamat: alamat,
-                city: city,
-                pos: pos,
-                nohp: nohp,
-                jenis_produk: jenis_produk,
-            },
-            success: function(data) {
-                snap.pay(data); // Panggil Midtrans Snap
-            }
-        });
+        url: '/create-transaction', // Laravel route to handle the transaction creation
+        method: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content'), // Include CSRF token
+            total_pembayaran: modal_total,
+            kode_produk: kode_produk,
+            nama_produk: nama_produk,
+            qty: modal_qty,
+            harga: modal_harga,
+            name: nama,
+            alamat: alamat,
+            city: city,
+            pos: pos,
+            nohp: nohp,
+            jenis_produk: jenis_produk,
+        },
+        success: function(data) {
+            snap.pay(data.snap_token); // Call Midtrans Snap
+        }
+    });
     };
 </script>
 

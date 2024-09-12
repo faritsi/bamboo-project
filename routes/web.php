@@ -48,6 +48,8 @@ Route::get('/checkout', function () {
     return view('halaman/checkout-page');
 });
 
+Route::post('/create-transaction', [TransaksiController::class, 'createTransaction']);
+
 Route::controller(AuthController::class)->group(function () {
     Route::get('login', 'index')->name('login');
     Route::post('login/proses', 'proses');

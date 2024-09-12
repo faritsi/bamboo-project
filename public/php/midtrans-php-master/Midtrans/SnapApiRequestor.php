@@ -48,14 +48,14 @@ class SnapApiRequestor
         $ch = curl_init();
 
         $curl_options = array(
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'Authorization: Basic ' . base64_encode($server_key . ':')
-        ),
-        CURLOPT_RETURNTRANSFER => 1,
-        // CURLOPT_CAINFO => dirname(__FILE__) . "/../data/cacert.pem"
+            CURLOPT_URL => $url,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic ' . base64_encode($server_key . ':')
+            ),
+            CURLOPT_RETURNTRANSFER => 1,
+            // CURLOPT_CAINFO => dirname(__FILE__) . "/../data/cacert.pem"
         );
 
         // merging with Config::$curlOptions
@@ -63,7 +63,7 @@ class SnapApiRequestor
             // We need to combine headers manually, because it's array and it will no be merged
             if (Config::$curlOptions[CURLOPT_HTTPHEADER]) {
                 $mergedHeders = array_merge($curl_options[CURLOPT_HTTPHEADER], Config::$curlOptions[CURLOPT_HTTPHEADER]);
-                $headerOptions = array( CURLOPT_HTTPHEADER => $mergedHeders );
+                $headerOptions = array(CURLOPT_HTTPHEADER => $mergedHeders);
             } else {
                 $mergedHeders = array();
             }
@@ -100,14 +100,15 @@ class SnapApiRequestor
             try {
                 $result_array = json_decode($result);
             } catch (\Exception $e) {
-                $message = "API Request Error unable to json_decode API response: ".$result . ' | Request url: '.$url;
+                $message = "API Request Error unable to json_decode API response: " . $result . ' | Request url: ' . $url;
                 throw new \Exception($message);
             }
             if ($info['http_code'] != 201) {
                 $message = 'Midtrans Error (' . $info['http_code'] . '): '
-                    . $result . ' | Request url: '.$url;
+                    . $result . ' | Request url: ' . $url;
                 throw new \Exception($message, $info['http_code']);
             } else {
+                dd("TEST 12312312312");
                 return $result_array;
             }
         }
@@ -116,13 +117,14 @@ class SnapApiRequestor
     private static function processStubed($curl, $url, $server_key, $data_hash, $post)
     {
         VT_Tests::$lastHttpRequest = array(
-        "url" => $url,
-        "server_key" => $server_key,
-        "data_hash" => $data_hash,
-        "post" => $post,
-        "curl" => $curl
+            "url" => $url,
+            "server_key" => $server_key,
+            "data_hash" => $data_hash,
+            "post" => $post,
+            "curl" => $curl
         );
 
+        dd("TEST");
         return VT_Tests::$stubHttpResponse;
     }
 }
