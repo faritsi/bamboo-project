@@ -41,23 +41,23 @@
         <div id="bg-container">
             <div id="container">
                 <div id="tipe-produk" class="clearfix">
-                    <div id="tipe-semua-produk" class="kategori" data-jenis_produk="semua">
+                    <div id="tipe-semua-produk" class="kategori" data-kategori_id="semua">
                         <h3>Semua</h3>
                     </div>
-                    <div id="tipe-toples-produk" class="kategori" data-jenis_produk="Awet">
+                    <div id="tipe-toples-produk" class="kategori" data-kategori_id="Awet">
                         <h3>Toples</h3>
                     </div>
-                    <div id="tipe-layangan-produk" class="kategori" data-jenis_produk="Keripik">
+                    <div id="tipe-layangan-produk" class="kategori" data-kategori_id="Keripik">
                         <h3>Layangan</h3>
                     </div>
-                    <div id="tipe-miniatur-produk" class="kategori" data-jenis_produk="miniatur">
+                    <div id="tipe-miniatur-produk" class="kategori" data-kategori_id="miniatur">
                         <h3>Miniatur</h3>
                     </div>
                 </div>
                 
                 <!-- Content Produk -->
                 @foreach ($produk as $p)
-                <div id="content-produk" class="content-produk" data-jenis_produk="{{$p->jenis_produk}}">
+                <div id="content-produk" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
                     <div id="card-container">
                         <a href="/produk/{{$p->pid}}">
                             <div id="card-produk">
@@ -236,20 +236,20 @@ function cartData() {
     });
 
     $(document).ready(function(){
-        // Fungsi untuk menampilkan produk berdasarkan jenis_produk
-        function filterProduk(jenis_produk) {
-            if (jenis_produk === "semua") {
+        // Fungsi untuk menampilkan produk berdasarkan kategori_id
+        function filterProduk(kategori_id) {
+            if (kategori_id === "semua") {
                 $(".content-produk").show(); // Tampilkan semua produk
             } else {
                 $(".content-produk").hide(); // Sembunyikan semua produk
-                $('.content-produk[data-jenis_produk="'+jenis_produk+'"]').show(); // Tampilkan produk berdasarkan jenis_produk
+                $('.content-produk[data-kategori_id="'+kategori_id+'"]').show(); // Tampilkan produk berdasarkan kategori_id
             }
         }
 
         // Event listener untuk klik pada kategori
         $(".kategori").on("click", function(){
-            var jenis_produk = $(this).data("jenis_produk");
-            filterProduk(jenis_produk);
+            var kategori_id = $(this).data("kategori_id");
+            filterProduk(kategori_id);
 
             // Menambahkan kelas aktif pada kategori yang dipilih
             $(".kategori").removeClass("active");

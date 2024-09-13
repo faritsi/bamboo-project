@@ -46,7 +46,7 @@ class PimpinanController extends Controller
             'name' => 'required',
             'jabatan' => 'required',
             'deskripsi' => 'required',
-            'image' => 'image|max:2048'
+            'image' => 'image|max:5120'
         ]);
 
         $imagePath = null;
@@ -104,7 +104,7 @@ class PimpinanController extends Controller
             'name' => 'required|string',
             'jabatan' => 'required|string',
             'deskripsi' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $pimpinan = DB::table('pimpinans')->where('ppid', $ppid)->first();

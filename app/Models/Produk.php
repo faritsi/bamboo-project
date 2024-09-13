@@ -13,7 +13,7 @@ class Produk extends Model
         'pid',
         'kode_produk',
         'nama_produk',
-        'jenis_produk',
+        'kategori_id',
         'jumlah_produk',
         'image',
         'harga',
@@ -21,5 +21,9 @@ class Produk extends Model
         'tokped',
         'shopee',
     ]; 
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
     // protected $primaryKey = ['pid'];
 }

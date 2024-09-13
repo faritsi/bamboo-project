@@ -24,7 +24,7 @@ require_once dirname(__FILE__) . '/midtrans-php-master/Midtrans.php';
 $params = array(
     'transaction_details' => array(
         'order_id' => rand(),
-        'gross_amount' => $_POST['total_pembayaran'],
+        'gross_amount' => $_POST['pembayaran'],
     ),
     'item_details' => array(
         array(

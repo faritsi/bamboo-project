@@ -4,489 +4,265 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$title}}</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    {{-- <script src="/js/script.js"></script> --}}
+    <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
+    <title>Dashboard</title>
 </head>
 <body>
-    <div id="bg-asli">
-        <div id="bg-gambar">
-            <div id="bg-header">
-                <div id="bo-header" class="clearfix">
-                    <div id="kiri-header" class="clearfix">
-                        <div id="atas-header">
-                            <h1>PT. Bintang</h1>
+    <div id="background">
+        <div id="co-background">
+            {{-- NAVBAR --}}
+            <div id="bg-navbar">
+                <div id="background-img">
+                    <img src="/img/bambu/bambu_11.jpeg" alt="Background Image">
+                </div>
+                <div id="navbar">
+                    <div id="header-kiri">
+                        <div id="header-atas">
+                            <p>PT. Bintang</p>
                         </div>
-                        <div id="bawah-header">
-                            <h1>Mitra Kencana</h1>
+                        <div id="header-bawah">
+                            <p>Mitra Kencana</p>
                         </div>
                     </div>
-                    <div id="kanan-header">
+                    {{-- Burger Icon --}}
+                    <div id="burger-menu">
+                        <span>&#9776;</span> <!-- Icon Burger -->
+                    </div>
+                    <div id="header-kanan" class="navbar-links">
                         <ul>
-                            <li class="kuning">Home</li>
+                            <li>Home</li>
                             <li>About Us</li>
-                            <li>Services</li>
                             <li><a href="catalog">Catalog</a></li>
                             <li>Contact Us</li>
                         </ul>
                     </div>
                 </div>
+
+                <div id="overlay-welcome">
+                    <div id="selamat-datang">
+                        <p>Welcome To</p>
+                        <p>PT. Bintang Mitra</p>
+                        <p>Kencana</p>
+                    </div>
+                    <div id="text-selamat">
+                        <p id="text-selamat-datang">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus enim ullam repellat eligendi sint. Iusto iste ullam dolor odit qui.</p>
+                    </div>
+                </div>    
             </div>
-            <div id="bg-judul">
-                <div id="bo-judul">
-                    <div id="bungkusjudul"">
-                        <div id="atas-judul">
-                            <h1>Welcome to</h1>
-                            <h1>PT. Bintang Mitra Kencana</h1>
-                        </div>
-                        <div id="bawah-judul">
-                            <h3>Lorem ipsum dolor sit amet consectetur 
-                                adipisicing elit. Commodi labore illum quo 
-                                ipsam nisi pariatur unde dolores laboriosam 
-                                qui quasi impedit ipsum numquam, provident 
-                                facilis quis veniam quaerat beatae aliquid.</h3>
-                        </div>
+
+            {{-- Slogan --}}
+            <div id="content-slogan">
+                <div id="icon-slogan">
+                    <img src="img/Launch.png" alt="Icon Slogan">
+                </div>
+                <div id="text-slogan">
+                    <p>Memanfaatkan Keanekaragaman Alam: Inovasi Bambu untuk Kehidupan Berkelanjutan</p>
+                </div>
+                <div id="penjelasan-slogan">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In voluptates reprehenderit libero rerum corrupti a ducimus consequatur molestiae debitis est?</p>
+                </div>
+            </div>
+
+            {{-- About Us --}}
+            <div id="content-about-us">
+                <div id="container-about-us">
+                    <div id="img-about-us">
+                        <img src="img/bambu/bambu_8.jpeg" alt="About Us">
+                    </div>
+                    <div id="text-about-us">
+                        {{-- <p id="about-us">About Us</p> --}}
+                        <p id="judul-about-us">About Us</p>
+                        <p id="about-us">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum vitae culpa quis, maxime amet doloremque fugit eaque odit placeat laudantium cupiditate, error esse eius iusto ex voluptates repellat qui nulla corporis neque ipsum incidunt voluptatibus? Deleniti eius possimus odio fugiat.</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Motto -->
-        <div id="bg-motto">
-            <div id="bo-motto">
-                <div id="bungkusmotto" class="clearfix">
-                    <div id="logomotto">
-                        <img src="/img/Launch.png" alt="">
-                    </div>
-                    <div id="motto">
-                        <h2>Memanfaatkan Keanekaragaman Alam: 
-                            Inovasi Bambu untuk Kehidupan Berkelanjutan</h2>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- About Us -->
-
-        <div id="about-color">
-            <div id="bg-about">
-                <div id="bo-about">
-                    <div id="bungkus-about" class="clearfix">
-                        <div id="img-about">
-                            <img src="/img/about.png" alt="">
+            {{-- Visi Misi  --}}
+            <div id="content-visi-misi">
+                <div id="container-visimisi">
+                    <div id="container-visi">
+                        <div id="icon-visi">
+                            <img src="/img/logo/visi.png" alt="">
                         </div>
-                        <div id="about">
-                            <h2>About Us</h2>
-                            <h1>lorem ipsum</h1>
-                            <h3>Lorem ipsum dolor sit amet consectetur 
-                                adipisicing elit. Commodi labore illum quo 
-                                ipsam nisi pariatur unde dolores laboriosam 
-                                qui quasi impedit ipsum numquam, provident 
-                                facilis quis veniam quaerat beatae aliquid.</h3>
+                        <div id="judul-visi">
+                            <p>VISI</p>
+                        </div>
+                        <div id="text-visi">
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Visi Misi -->
-
-        <div id="bg-visi">
-            <div id="bo-visi">
-                <div id="bungkus-visi" class="clearfix">
-                    <div id="visi">
-                        <img src="/img/logo/visi.png" alt="">
-                        <h1>VISI</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                    <div id="misi">
-                        <img src="/img/logo/misi.png" alt="">
-                        <h1>MISI</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Our Service -->
-
-        <div id="bg-ourserpis">
-            <div id="bo-ourserpis">
-                <div id="bungkus-ourserpis">
-                    <h1>Our Services</h1>
-                    <h3>Lorem ipsum dolor sit amet consectetur 
-                        adipisicing elit. Commodi labore illum quo 
-                        ipsam nisi pariatur unde dolores laboriosam 
-                        qui quasi impedit ipsum numquam, provident 
-                        facilis quis veniam quaerat beatae aliquid.</h3>
-                </div>
-            </div>
-        </div>
-        <div id="bg-fiturserpis">
-            <div id="bo-fiturserpis">
-                <div id="bungkus-serpis" class="clearfix">
-                    <div id="cover-serpis">
-                        <img src="/img/logo/Cup.png" alt="">
-                        <h1>Lorem ipsum</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                    <div id="cover-serpis1">
-                        <img src="/img/logo/Cup.png" alt="">
-                        <h1>Lorem ipsum</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                    <div id="cover-serpis1">
-                        <img src="/img/logo/Cup.png" alt="">
-                        <h1>Lorem ipsum</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                    <div id="cover-serpis1">
-                        <img src="/img/logo/Cup.png" alt="">
-                        <h1>Lorem ipsum</h1>
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Produk List -->
-        <div id="bg-catalog">
-            <div id="bo-catalog">
-                <div id="bungkus-catalog" class="clearfix">
-                    <div id="kiri-catalog">
-                        <h3>Catalog</h3>
-                        <h1>Produk - Produk Terbaik Kami</h1>
-                    </div>
-                    <div id="kanan-catalog">
-                        <h3>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Commodi labore illum quo 
-                            ipsam nisi pariatur unde dolores laboriosam 
-                            qui quasi impedit ipsum numquam, provident 
-                            facilis quis veniam quaerat beatae aliquid.</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-product">
-            @foreach ($produk as $p)
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">{{ $p->judul }}</div>
-                    <div class="product-description">
-                        {{ $p->deskripsi }}
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">
-                            <a href="{{ $p->tokped }}">Tokopedia</a>
+                    <div id="container-misi">
+                        <div id="icon-misi">
+                            <img src="/img/logo/misi.png" alt="">
                         </div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">
-                            <a href="{{ $p->shopee }}">Shopee</a>
+                        <div id="judul-misi">
+                            <p>MISI</p>
                         </div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">
-                            <a href="/produk/{{$p->pid}}">pesan langsung</a>
+                        <div id="text-misi">
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
                         </div>
                     </div>
                 </div>
             </div>
-            @endforeach
-            {{-- <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">Tokopedia</div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-product">
-                <img
-                    class="product-image"
-                    src="img/pd.png"
-                    alt="Product Image"
-                />
-                <div class="product-info">
-                    <div class="product-title">Lorem Ipsum</div>
-                    <div class="product-description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut laboret dolore
-                        magna aliqua. Ut en ad minim ullamco laboris nisi ut
-                        aliquip.
-                    </div>
-                </div>
-                <div class="order-text">Pesan di :</div>
-                <div class="order-options">
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Tokopedia Icon"
-                        />
-                        <div class="order-label">Tokopedia</div>
-                    </div>
-                    <div class="order-option">
-                        <img
-                            class="order-icon"
-                            src="https://via.placeholder.com/29x29"
-                            alt="Shopee Icon"
-                        />
-                        <div class="order-label">Shopee</div>
-                    </div>
-                </div>
-            </div> --}}
-        </div>
 
-        <!-- Client -->
-
-        <div id="bg-client">
-            <bg id="bo-client">
-                <div id="client-header">
-                    <h1>Our Client</h1>
-                </div>
-                <div class="clearfix" id="bg-xxx">
-                    <div class="bungkus-client">
-                        <div class="client active">
-                            <img src="/img/logo/1.png" alt="">
+            {{-- Our Service --}}
+            <div id="content-our-service">
+                <div id="container-our-service">
+                    <div id="judul-our-service">
+                        <p>Our Service</p>
+                    </div>
+                    <div id="our-service">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ducimus non placeat. Labore laudantium iure eius hic adipisci. Placeat, voluptatem consequuntur! Modi voluptatem similique sunt repellat reiciendis voluptates natus earum?</p>
+                    </div>
+                    <div id="list-our-service">
+                        <div id="service1">
+                            <div id="icon-service1">
+                                <img src="/img/logo/Cup.png" alt="Cup">
+                            </div>
+                            <div id="judul-service1">
+                                <p>HANDAL</p>
+                            </div>
+                            <div id="text-service1">
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                            </div>
                         </div>
-                        <div class="client">
-                            <img src="/img/logo/2.png" alt="">
+                        <div id="service2">
+                            <div id="icon-service2">
+                                <img src="/img/logo/Cup.png" alt="Cup">
+                            </div>
+                            <div id="judul-service2">
+                                <p>HANDAL</p>
+                            </div>
+                            <div id="text-service2">
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                            </div>
                         </div>
-                        <div class="client">
-                            <img src="/img/logo/3.png" alt="">
+                        <div id="service3">
+                            <div id="icon-service3">
+                                <img src="/img/logo/Cup.png" alt="Cup">
+                            </div>
+                            <div id="judul-service3">
+                                <p>HANDAL</p>
+                            </div>
+                            <div id="text-service3">
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                            </div>
                         </div>
-                        <div class="client">
-                            <img src="/img/logo/4.png" alt="">
+                        <div id="service4">
+                            <div id="icon-service4">
+                                <img src="/img/logo/Cup.png" alt="Cup">
+                            </div>
+                            <div id="judul-service4">
+                                <p>HANDAL</p>
+                            </div>
+                            <div id="text-service4">
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </bg>
-        </div>
+            </div>
 
-        <!-- Aktivity -->
-        <div class="title-container">
-            <h1 class="title">Our Activity</h1>
-        </div>
+            {{-- CATALOG --}}
+            <div id="content-catalog">
+                <div id="container-catalog">
+                    <div id="judul-catalog">
+                        <p>PRODUK-PRODUK</p>
+                        <p>TERBAIK KAMI</p>
+                    </div>
+                    <div id="text-catalog">
+                        <p id="catalog-text">Temukan produk bambu berkualitas tinggi yang ramah lingkungan dan tahan lama. Setiap produk dibuat dengan penuh perhatian dan keahlian.</p>
+                        <a href="/catalog"><p id="all-produk">Lihat Semua Produk</p></a>
+                    </div>
+                </div>
+                <div id="carousel-catalog">
+                    <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
 
-        <div class="container-grid">
-            <div class="photo-grid">
-                <div class="row">
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 1"
-                        />
+                    <div id="container-catalog-carousel">
+                        <div class="carousel-track">
+                            @foreach ($produk as $p)                     
+                            <div class="carousel-slide">
+                                <div id="carousel-image">
+                                    <img src="{{ asset('storage/' . $p->image) }}" alt="Product 1">
+                                </div>
+                                <p id="nama-produk">{{$p->nama_produk}}</p>
+                                <p id="desc-produk">{{$p->deskripsi}}</p>
+                                <p id="harga-produk">{{$p->harga}}</p>
+                            </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 2"
-                        />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 3"
-                        />
-                    </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 4"
-                        />
-                    </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 5"
-                        />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 6"
-                        />
-                    </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 7"
-                        />
-                    </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 8"
-                        />
-                    </div>
-                    <div class="photo">
-                        <img
-                            src="https://via.placeholder.com/150x150"
-                            alt="Photo 9"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+                    <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
 
-        <!-- Profil Pimpinan Perusahaan -->
-        <div class="title-container">
-            <h1 class="title">Pimpinan Perusahaan</h1>
-        </div>
-        @foreach ($pimpinan as $p)            
-        <div class="profile-container">
-            <div class="profile-card">
-                <img src="{{ asset('/storage/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">{{$p->name}}</h1>
-                <h2 class="profile-title">{{$p->jabatan}}</h2>
-                <p class="profile-description">
-                    {{$p->deskripsi}}
-                </p>
+                </div>
             </div>
-            {{-- <div class="profile-card">
-                <img src="{{ asset('images/' . $p->image) }}" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">{{$p->name}}</h1>
-                <h2 class="profile-title">{{$p->jabatan}}</h2>
-                <p class="profile-description">
-                    {{$p->deskripsi}}
-                </p>
-            </div> --}}
-            {{-- <div class="profile-card">
-                <img src="https://via.placeholder.com/150" alt="Leader Photo" class="profile-photo">
-                <h1 class="profile-name">John Doe</h1>
-                <h2 class="profile-title">CEO</h2>
-                <p class="profile-description">
-                    John Doe is the CEO of the company, with over 20 years of experience in the industry. His leadership has guided the company to achieve new heights and expand its global presence.
-                </p>
-            </div> --}}
-            
-        </div>
-        @endforeach
 
-        <!-- FOOTER -->
-        <div class="container-footer">
-            <div class="background-footer"></div>
-            <div class="company-info-footer">
-                <div class="logo"></div>
-                <div class="company-details">
-                    <div class="company-name">PT. Bintang Mitra Kencana</div>
-                    <div class="company-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut laboret dolore magna aliqua</div>
+            {{-- Activity --}}
+            <div id="content-activity">
+                <p id="text-activity">Our Activity</p>
+                @foreach ($kegiatan as $k)                    
+                <div class="carousel-act">
+                    <div class="carousel-track-act">
+                        <div class="carousel-slide-act"><img src="{{ asset('storage/' . $k->image_path) }}" alt="Kegiatan 1"></div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+
+            {{-- Pimpinan --}}
+            <div id="content-so">
+                <div id="container-so">
+                    <p id="text-so">Pimpinan Perusahaan</p>
+                    <div id="profile-so">
+                        @foreach ($pimpinan as $pm)                            
+                        <div class="profile-card">
+                            <img src="{{ asset('storage/' . $pm->image) }}" alt="Image 1">
+                            <p class="nama-pimpinan">{{$pm->name}}</p>
+                            <p class="jabatan-pimpinan">{{$pm->jabatan}}</p>
+                            <p class="desc-pimpinan">{{$pm->deskripsi}}</p>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-            <div class="site-links">
-                <div class="site-links-title">Site Links</div>
-                <div class="links">
-                    <div><a href="#bg-header">Home</a></div>
-                    <div><a href="#bg-about">About Us</a></div>
-                    <div><a href="#bg-ourserpis">Service</a></div>
-                    <div><a href="#bg-catalog">Service</a></div>
-                    <div><a href="#container-footer">Contact Us</a></div>
+
+            {{-- Footer --}}
+            <div id="content-footer">
+                <div id="container-footer">
+                    <div id="company-footer">
+                        <div id="logo-company">
+                            <img src="img/logo.png" alt="Logo">
+                        </div>
+                        <div id="company-details">
+                            <div id="company-name">PT. Bintang Mitra Kencana</div>
+                            <div id="company-desc">Kami berkomitmen untuk menyediakan produk berkualitas tinggi dengan inovasi berkelanjutan untuk masa depan yang lebih baik.</div>
+                        </div>
+                    </div>
+                    <div id="footer-links">
+                        <ul>
+                            <li><a href="#navbar">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#products">Products</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div id="footer-social">
+                        <a href="#"><img src="img\social-media\facebook.png" alt="Facebook"></a>
+                        <a href="#"><img src="img\social-media\wa.png" alt="Twitter"></a>
+                        <a href="#"><img src="img\social-media\ig.png" alt="Instagram"></a>
+                        <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
+                    </div>
                 </div>
             </div>
-            @foreach ($ingpo as $i)      
-            <div class="contact-info">
-                <div class="contact-title">Contact Us</div>
-                <div class="contact-email">{{$i->email}}</div>
-                <div class="contact-phone">{{$i->nowa}}</div>
-                <div class="email-icon"></div>
-                <div class="phone-icon"></div>
-            </div>
-            <div class="footer">COPYRIGHT © 2019. ALL RIGHTS RESERVED.</div>
-            <div class="whatsapp-button">
-                <a href="https://wa.me/{{$i->nowa}}?text=Saya%20ingin%20memesan%20produk%20bambu"><img src="https://via.placeholder.com/29x29" alt="WhatsApp">
-                <div>Whatsapp</div></a>
-            </div>
-            @endforeach
         </div>
-        
     </div>
 
-    
+    {{-- Script --}}
+    <script src="/js/carousel-produk.js"></script>
+    <script src="/js/carousel-activity.js"></script>
+    <script src="/js/animasi-dashboard.js"></script>
+    <script src="/js/burger.js"></script>
 </body>
 </html>

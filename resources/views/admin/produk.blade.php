@@ -1,5 +1,15 @@
 @extends('halaman.admin')
 @section('content')
+<div id="myKegiatan" class="bg-tambah-data">
+    <div id="bo-tambah-data">
+        <div class="icon-tambah-data">
+            <span class="material-symbols-outlined">add</span>                                                        
+        </div>
+        <div id="text">
+            <strong>Kegiatan</strong>
+        </div>
+    </div>
+</div>
 <div id="myBtn" class="bg-tambah-data">
     <div id="bo-tambah-data">
         <div class="icon-tambah-data">
@@ -11,19 +21,33 @@
     </div>
 </div>
 
-@if ($errors->any())
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("myModal").style.display = "block";
-    });
-</script>
+@if ($errors->has('name'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("myActivity").style.display = "block";
+        });
+    </script>
+@elseif ($errors->has('kode_produk') || $errors->has('nama_produk'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("myModal").style.display = "block";
+        });
+    </script>
 @endif
 
+
 @if (session('success'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("myActivity").style.display = "none";
+        });
+    </script>
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
+
 
 <div id="bg-isi-content" class="clearfix">
     <div id="bo-isi-content">
@@ -75,7 +99,7 @@
                             @endif
                             <div><strong>Kode Produk: </strong> {{ $p->kode_produk }}</div>
                             <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
-                            <div><strong>Jenis Produk: </strong> {{ $p->jenis_produk }}</div>
+                            <div><strong>Kategori Produk: </strong> {{ $p->kategori->name }}</div>
                             <div><strong>Jumlah Produk: </strong>{{ $p->jumlah_produk }}</div>
                             <div><strong>Harga: </strong> {{ $p->harga }}</div>
                             <div><strong>Deskripsi: </strong> {{ $p->deskripsi }}</div>
@@ -85,6 +109,29 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+{{-- modal kegiatan --}}
+<div id="myActivity" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="{{ route('kategori.store') }}" method="POST">
+            @csrf
+            <div id="head-modul">
+                <h1>Tambah Kategori</h1>
+            </div>
+            <div class="form-group">
+                <label for="name">Nama Kategori Baru <span class="required">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategiri Baru" value="{{ old('name') }}">
+                @if ($errors->has('name'))
+                    <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -119,23 +166,17 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="kategori">Kategori <span class="required">*</span></label>
-                <div class="dropdown">
-                    <button class="dropbtn" type="button" onclick="toggleDropdown()" id="dropdownButton">Pilih Kategori</button>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="#" data-value="Kategori 1">Kategori 1</a>
-                        <a href="#" data-value="Kategori 2">Kategori 2</a>
-                        <a href="#" data-value="Kategori 3">Kategori 3</a>
-                    </div>
-                </div>
-                <input type="text" name="jenis_produk" id="jenis_produk"> 
-
-                @if ($errors->has('jenis_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
-                @endif
+                <label for="kategori_id">Kategori <span class="required">*</span></label>
+                <select id="kategori_id" name="kategori_id" class="form-control">
+                    <option value="" disabled selected>Pilih Kategori</option>
+                    @foreach ($kategori as $p)
+                    <option value="{{$p->id}}">{{$p->name}}</option>
+                    @endforeach
+                </select>
             </div>
+            
             <div class="form-group">
-                <label for="jumlah_produk">Jumalh Produk <span class="required">*</span></label>
+                <label for="jumlah_produk">Jumlah Produk <span class="required">*</span></label>
                 <input type="text" id="jumlah_produk" name="jumlah_produk" placeholder="Masukan jumlah produk" value="{{ old('jumlah_produk') }}">
                 @if ($errors->has('jumlah_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
@@ -306,13 +347,21 @@
         function showModal(modalId) {
             $(modalId).show();
         }
+        
+        function showKegiatan(modalId) {
+            $(modalId).show();
+        }
 
         function hideModals() {
             $(".modal").hide();
         }
-
+        // Tambah Produk
         $("#myBtn").on("click", function () {
             showModal("#myModal");
+        });
+        // Tambah Kegiatan
+        $("#myKegiatan").on("click", function () {
+            showKegiatan("#myActivity");
         });
 
         $(".close").on("click", function () {
@@ -358,35 +407,59 @@
             }
         });
 
-        $(document).ready(function() {
+        @foreach ($produk as $p)
             // Set the dropdown button text based on the hidden input value on page load
             var existingValue = $("#jenis_produk-{{ $p->pid }}").val();
             if (existingValue) {
-                $("#dropdownButton").text(existingValue);
+                $("#dropdownButton-{{ $p->pid }}").text(existingValue);
             }
 
             // Toggle dropdown menu visibility
-            $("#dropdownButton").on("click", function(event) {
+            $("#dropdownButton-{{ $p->pid }}").on("click", function(event) {
                 event.preventDefault();
-                $("#dropdownMenu").toggleClass("show");
+                $("#dropdownMenu-{{ $p->pid }}").toggleClass("show");
             });
 
             // Handle click event on dropdown menu items
-            $(".dropdown-content a").on("click", function(event) {
+            $("#dropdownMenu-{{ $p->pid }} a").on("click", function(event) {
                 event.preventDefault();
                 var selectedCategory = $(this).data('value');
-                $("#dropdownButton").text(selectedCategory); // Update dropdown button text
-                $("#dropdownMenu").removeClass("show"); // Hide dropdown menu
+                $("#dropdownButton-{{ $p->pid }}").text(selectedCategory); // Update dropdown button text
+                $("#dropdownMenu-{{ $p->pid }}").removeClass("show"); // Hide dropdown menu
                 $("#jenis_produk-{{ $p->pid }}").val(selectedCategory); // Update hidden input value
             });
 
             // Close the dropdown if the user clicks outside of it
             $(window).on("click", function(event) {
-                if (!event.target.matches('.dropbtn')) {
+                if (!event.target.matches('#dropdownButton-{{ $p->pid }}')) {
+                    $("#dropdownMenu-{{ $p->pid }}").removeClass("show");
+                }
+            });
+        @endforeach
+        $(document).ready(function() {
+    // Tampilkan dropdown
+            $("#dropdownButton").on("click", function(event) {
+                event.preventDefault();
+                $("#dropdownMenu").toggleClass("show");
+            });
+
+            // Pilih kategori dan simpan ke input tersembunyi
+            $("#dropdownMenu a").on("click", function(event) {
+                event.preventDefault();
+                var selectedCategory = $(this).data('value');
+                $("#dropdownButton").text(selectedCategory); // Ubah teks tombol dropdown
+                $("#dropdownMenu").removeClass("show"); // Sembunyikan menu dropdown
+                $("input[name='kategori']").val(selectedCategory); // Simpan nilai ke input tersembunyi
+            });
+
+            // Tutup dropdown jika klik di luar
+            $(window).on("click", function(event) {
+                if (!event.target.matches('#dropdownButton')) {
                     $("#dropdownMenu").removeClass("show");
                 }
             });
         });
     });
 </script>
+
 @endsection

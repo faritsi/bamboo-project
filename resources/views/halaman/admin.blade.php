@@ -54,7 +54,7 @@
                             <li><a href="/pimpinan"><span class="material-symbols-outlined">groups</span> Pimpinan</a></li>
                             <li><a href="/produk"><span class="material-symbols-outlined">inventory_2</span> Produk</a></li>
                             <li><a href="/kegiatan"><span class="material-symbols-outlined">image</span> Kegiatan</a></li>
-                            <li><a href="/info"><span class="material-symbols-outlined">category</span> Footer</a></li>
+                            <li><a href="/info"><span class="material-symbols-outlined">category</span> Lainnya</a></li>
                         </ul>
                         <div id="logout">
                             <a href="#"><span class="material-symbols-outlined">logout</span> Logout</a>

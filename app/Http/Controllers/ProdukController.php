@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\User;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -19,9 +20,10 @@ class ProdukController extends Controller
     {
         $user = Auth::user();
         $produk = Produk::all();
+        $kategori = Kategori::all();
         return view('admin.produk', [
             'title' => 'Produk'
-        ], compact('produk', 'user'));
+        ], compact('produk', 'user', 'kategori'));
     }
 
     /**
@@ -45,9 +47,10 @@ class ProdukController extends Controller
         $request->validate([
             'kode_produk' => 'required|string',
             'nama_produk' => 'required|string',
-            'jenis_produk' => 'required|string',
+            'kategori_id' => 'required|string',
+            // 'jenis_produk' => 'required|string',
             'jumlah_produk' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi gambar
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
             'tokped' => 'required|string',
@@ -65,7 +68,8 @@ class ProdukController extends Controller
             'pid' => $pid,
             'kode_produk' => $request->kode_produk,
             'nama_produk' => $request->nama_produk,
-            'jenis_produk' => $request->jenis_produk,
+            'kategori_id' => $request->kategori_id,
+            // 'jenis_produk' => $request->jenis_produk,
             'jumlah_produk' => $request->jumlah_produk,
             'image' => $imagePath,
             'deskripsi' => $request->deskripsi,
@@ -192,7 +196,8 @@ class ProdukController extends Controller
         $request->validate([
             'kode_produk' => 'string',
             'nama_produk' => 'required|string',
-            'jenis_produk' => 'required|string',
+            'kategori_id' => 'required|string',
+            // 'jenis_produk' => 'required|string',
             'jumlah_produk' => 'required|integer',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
             'deskripsi' => 'required|string',
@@ -215,7 +220,8 @@ class ProdukController extends Controller
         DB::table('produks')->where('pid', $pid)->update([
             'kode_produk' => $request->kode_produk,
             'nama_produk' => $request->nama_produk,
-            'jenis_produk' => $request->jenis_produk,
+            // 'jenis_produk' => $request->jenis_produk,
+            'kategori_id' => $request->kategori_id,
             'jumlah_produk' => $request->jumlah_produk,
             'image' => $image ?? $produk->image,
             'deskripsi' => $request->deskripsi,

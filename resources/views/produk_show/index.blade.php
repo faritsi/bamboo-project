@@ -184,7 +184,7 @@
                     <option value="">Pilih Layanan Kurir</option>
                 </select>                
 
-                <h3>Biaya Ongkir:</h3>
+                <h3 id="ongkir">Biaya Ongkir:</h3>
                 <div id="cost">Pilih kota dan kurir untuk melihat ongkir</div>
                 <div class="form-group">
                     <label for="alamat">Alamat Lengkap<span class="required">*</span></label>
@@ -192,15 +192,15 @@
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
-                    <input type="hidden" name="jenis_produk" id="jenis_produk" value="{{$p->jenis_produk}}">
+                    <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}">
                     <input type="hidden" name="modal_qty" id="modal_qty" value="">
                     <input type="hidden" name="modal_harga" id="modal_harga" value="">
                     <input type="hidden" name="modal_total" id="modal_total" value="">
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="city">Kota <span class="required">*</span></label>
                     <input type="text" name="city" id="city" placeholder="Masukan Kota" required>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="pos">Kode Pos <span class="required">*</span></label>
                     <input type="text" name="pos" id="pos" placeholder="Masukan Kode Pos" required>
@@ -269,11 +269,16 @@
 
         document.querySelector("#cek").addEventListener("click", function(e) {
             e.preventDefault();
+            var province = document.getElementById("province").options[document.getElementById("province").selectedIndex].text;
+            var city = document.getElementById("city").options[document.getElementById("city").selectedIndex].text;
+            var courier = document.getElementById("courier").value;
+            var courierService = document.getElementById("courier_service").value;
+            var cost = document.getElementById("cost").textContent.replace("Rp", "").trim();  // Fix: Use textContent instead of value
 
             var formData = {
                 nama: document.getElementById("name").value,
                 alamat: document.getElementById("alamat").value,
-                city: document.getElementById("city").value,
+                city: city,
                 pos: document.getElementById("pos").value,
                 nohp: document.getElementById("nohp").value,
                 kode_produk: document.getElementById("kode_produk").value,
@@ -281,7 +286,11 @@
                 nama_produk: document.querySelector("#nama-produk p").textContent,
                 modal_qty: document.getElementById("modal_qty").value,
                 modal_harga: document.getElementById("modal_harga").value,
-                jenis_produk: document.getElementById("jenis_produk").value,
+                kategori_id: document.getElementById("kategori_id").value,
+                cost: cost,  // Fix: Store the cost correctly
+                province: province,  // Fix: Added province to formData
+                courier: courier,  // Fix: Added courier to formData
+                courierService: courierService  // Fix: Added courier service to formData
             };
 
             for (var key in formData) {

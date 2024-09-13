@@ -10,6 +10,7 @@ use App\Http\Controllers\PimpinanController;
 use App\Http\Controllers\IngpoController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\coba;
 
 /*
@@ -55,6 +56,8 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'logout');
 });
 
+Route::post('/create-transaction', [TransaksiController::class, 'createTransaction']);
+
 Route::controller(LayoutController::class)->group(function () {
     Route::get('dashboard', 'halu');
 });
@@ -96,5 +99,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('admin', AdminController::class);
         Route::resource('pimpinan', PimpinanController::class);
         Route::resource('info', IngpoController::class);
+        Route::resource('kategori', KategoriController::class);
     });
 });
