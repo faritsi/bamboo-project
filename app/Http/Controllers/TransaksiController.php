@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use App\Models\TransaksiMidtrans;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use Midtrans\Config;

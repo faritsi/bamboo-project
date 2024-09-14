@@ -14,9 +14,19 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->string('order_id');
+            $table->foreignId('kode_produk');
+            $table->foreignId('kategori_id');
+            $table->integer('total_pembayaran');
+            $table->string('nama_produk');
+            $table->integer('qty');
+            $table->integer('harga');
+            $table->string('name');
+            $table->string('nohp');
+            $table->string('alamat');
+            $table->string('pos');
+            $table->string('city');
             $table->string('status');
-            $table->integer('gross_amount');
-            $table->timestamp('transaction_time');
+            // $table->timestamp('transaction_time');
             $table->timestamps();
         });
     }
