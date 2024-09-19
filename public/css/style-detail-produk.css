@@ -1,0 +1,411 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.cart-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    transition: right 0.4s ease-in-out; /* Transition untuk animasi muncul */
+    z-index: 100;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-menu.active {
+    right: 0;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.cart-body ul {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.cart-item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-btn {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #f57c00;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #ff9800;
+}
+
+.cart-item-quantity input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 5px;
+    font-size: 16px;
+}
+
+.cart-total {
+    font-size: 1.2em;
+    text-align: right;
+    margin-top: 20px;
+}
+
+.close-cart {
+    cursor: pointer;
+    font-size: 20px;
+    background-color: transparent;
+    border: none;
+    color: #f57c00;
+    transition: color 0.3s ease;
+}
+
+.close-cart:hover {
+    color: #ff9800;
+}
+
+/* Button to open cart */
+.open-cart-btn {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    top: 20px;
+    right: 20px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 101;
+    transition: background-color 0.3s ease;
+}
+
+.open-cart-btn:hover {
+    background-color: #27ae62;
+}
+
+#background {
+    padding: 50px 0;
+    background-color: #fff;
+}
+
+#co-background {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#content {
+    display: flex;
+    gap: 50px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#image-produk {
+    width: 50%;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 500px;
+}
+
+#image-produk img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#keterangan-produk {
+    width: 50%;
+}
+
+#nama-produk h1 {
+    font-size: 32px;
+    color: #2c3e50;
+}
+
+#harga-produk p {
+    font-size: 24px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+#deskripsi-produk h2 {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #2c3e50;
+}
+
+#deskripsi-produk p {
+    font-size: 16px;
+    color: #7f8c8d;
+    line-height: 1.6;
+}
+
+#text-atur-produk {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+#jumlah-produk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#jumlah-produk input {
+    width: 60px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#container-total-produk p {
+    font-size: 18px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+#tot_bayar {
+    width: 150px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btnBeli {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #27ae60;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnBeli:hover {
+    background-color: #2ecc71;
+}
+
+#container-biodata {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.biodata .material-symbols-outlined {
+    font-size: 28px;
+    padding-top: 5px;
+}
+
+/* Modal isi biodata */
+.modal {
+    display: none; /* Awalnya disembunyikan */
+    position: fixed; /* Tetap di layar */
+    z-index: 1; /* Tetap di atas elemen lainnya */
+    left: 0;
+    top: 0;
+    width: 100%; /* Lebar penuh */
+    height: 100%; /* Tinggi penuh */
+    overflow: hidden; /* Mengunci halaman belakang agar tidak bisa discroll */
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.5
+    ); /* Warna latar belakang hitam semi-transparan */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 40px;
+    border: none;
+    width: 40%; /* Lebar modal */
+    max-height: 80%; /* Modal akan menyesuaikan hingga maksimal 90% dari tinggi layar */
+    overflow-y: scroll; /* Konten di dalam modal bisa discroll */
+    border-radius: 10px;
+    position: relative;
+    animation: fadeIn 0.3s; /* Efek animasi muncul */
+}
+
+/* Menyembunyikan scrollbar namun tetap memungkinkan scroll */
+.modal-content {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+}
+
+#header-modul h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #27ae60;
+    outline: none;
+}
+
+.form-group .required {
+    color: red;
+    margin-left: 5px;
+}
+
+.submit-btn {
+    background-color: #27ae60;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2ecc71;
+}
+
+.checkout-button.disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+#ongkir,
+#cost {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+#ongkir {
+    font-weight: bold;
+}
+
+#cost {
+    color: #e74c3c;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
