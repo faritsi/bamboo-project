@@ -18,9 +18,7 @@ class KegiatanController extends Controller
     {
         $user = Auth::user();
         $kegiatan = Kegiatan::all();
-        return view('admin.kegiatan',[
-            'title' => 'Kegiatan'
-        ], compact('kegiatan', 'user'));
+        return view('admin.kegiatan', ['title' => 'Kegiatan'], compact('kegiatan', 'user'));
     }
 
     /**
@@ -32,14 +30,15 @@ class KegiatanController extends Controller
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // $imagePath = null;
-        // if($request->file('image')) {
-        //     $imagePath = $request->file('image')->store('kegiatan-images');
-        // }
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $file) {
-                $path = $file->store('kegiatan_images');
-                Kegiatan::create(['image_path' => $path]);
+            foreach ($request->file('images') as $index => $file) {
+                // Pastikan folder kegiatan_images ada
+                $imageName = 'kegiatan-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+                $imagePath = $file->storeAs('kegiatan-images', $imageName, 'public'); // Simpan file dengan nama unik
+
+                Kegiatan::create([
+                    'image_path' => $imagePath,
+                ]);
             }
         }
 
@@ -50,26 +49,26 @@ class KegiatanController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $kegiatan = Kegiatan::findOrFail($id);
+    {
+        $kegiatan = Kegiatan::findOrFail($id);
 
-    if ($request->hasFile('image')) {
-        // Delete the old image if it exists
-        if ($kegiatan->image_path) {
-            Storage::delete($kegiatan->image_path);
+        if ($request->hasFile('image')) {
+            // Delete the old image if it exists
+            if ($kegiatan->image_path) {
+                Storage::delete($kegiatan->image_path);
+            }
+
+            // Handle image upload
+            $image = $request->file('image');
+            $imagePath = $image->store('kegiatan_images');
+            $kegiatan->image_path = $imagePath;
+            $kegiatan->save();
+
+            return response()->json(['success' => true, 'image_path' => asset('storage/' . $imagePath)]);
         }
 
-        // Handle image upload
-        $image = $request->file('image');
-        $imagePath = $image->store('kegiatan_images');
-        $kegiatan->image_path = $imagePath;
-        $kegiatan->save();
-
-        return response()->json(['success' => true, 'image_path' => asset('storage/' . $imagePath)]);
+        return response()->json(['success' => false, 'message' => 'No image found.']);
     }
-
-    return response()->json(['success' => false, 'message' => 'No image found.']);
-}
 
 
 
@@ -78,16 +77,13 @@ class KegiatanController extends Controller
      */
     public function destroy($id)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-        // Check if the record exists
-        if ($kegiatan) {
-            // Delete the image from storage if it exists
+        $kegiatan = Kegiatan::findOrFail($id); // Check if the record exists
+        if ($kegiatan) { // Delete the image from storage if it exists
             if ($kegiatan->image_path) {
                 Storage::delete($kegiatan->image_path);
             }
             $kegiatan->delete();
-        }
-        // Storage::disk('kegiatan_images')->delete($image->image_path);
+        } // Storage::disk('kegiatan_images')->delete($image->image_path);
 
         return redirect()->back()->with('success', 'Image deleted successfully.');
     }

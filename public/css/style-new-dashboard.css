@@ -62,6 +62,14 @@ html {
     padding: 0;
     width: 100%;
     /* color: #fff; */
+    display: flex;
+    align-items: center;
+}
+
+#header-teks {
+    display: flex;
+    flex-direction: column; /* Membuat PT. Bintang di atas dan Mitra Kencana di bawah */
+    justify-content: center; /* Menyelaraskan teks secara vertikal */
 }
 
 #header-atas {
@@ -120,7 +128,7 @@ html {
 }
 
 #overlay-welcome {
-    margin: 15% auto 14.5% auto;
+    margin: 15% auto 13% auto;
     padding: 0;
     width: 100%;
 }
@@ -130,7 +138,7 @@ html {
     padding: 0;
     width: 100%;
     color: #fff;
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -139,6 +147,7 @@ html {
     padding: 0;
     width: 100%;
     color: #fff;
+    font-size: 20px;
 }
 
 #text-selamat-datang {
@@ -405,19 +414,23 @@ html {
     width: 100%;
     background-color: #ffffcc;
     border-radius: 20px;
+    height: 300px;
 }
 
-#icon-service1 {
+/* #icon-service1 {
     padding-bottom: 20px;
-}
+} */
 
-#icon-service1 img {
-    width: 60px;
+#icon-service1 .material-symbols-outlined {
+    font-variation-settings: "FILL" 1;
+    color: #00572d;
+    font-size: 50px;
 }
 
 #judul-service1 {
     font-size: 18px;
     font-weight: bold;
+    padding-bottom: 20px;
 }
 
 #text-service1 {
@@ -432,18 +445,21 @@ html {
     width: 100%;
     background-color: #f0f0f0;
     border-radius: 20px;
+    height: 300px;
 }
 
-#icon-service2 {
+/* #icon-service2 {
     padding-bottom: 20px;
-}
+} */
 
-#icon-service2 img {
-    width: 60px;
+#icon-service2 .material-symbols-outlined {
+    /* font-variation-settings: "FILL" 1; */
+    font-size: 50px;
 }
 
 #judul-service2 {
     font-size: 18px;
+    padding-bottom: 20px;
     font-weight: bold;
 }
 
@@ -458,19 +474,23 @@ html {
     width: 100%;
     border: solid #ffdf33;
     background-color: #f0f0f0;
+    height: 300px;
     border-radius: 20px;
 }
 
-#icon-service3 {
+/* #icon-service3 {
     padding-bottom: 20px;
-}
+} */
 
-#icon-service3 img {
-    width: 60px;
+#icon-service3 .material-symbols-outlined {
+    font-variation-settings: "FILL" 1;
+    font-size: 50px;
+    color: #ffd700;
 }
 
 #judul-service3 {
     font-size: 18px;
+    padding-bottom: 20px;
     font-weight: bold;
 }
 
@@ -485,19 +505,23 @@ html {
     width: 100%;
     border: solid #ffdf33;
     background-color: #f0f0f0;
+    height: 300px;
     border-radius: 20px;
 }
 
-#icon-service4 {
+/* #icon-service4 {
     padding-bottom: 20px;
-}
+} */
 
-#icon-service4 img {
-    width: 60px;
+#icon-service4 .material-symbols-outlined {
+    /* font-variation-settings: "FILL" 1; */
+    font-size: 50px;
+    color: #89cff0;
 }
 
 #judul-service4 {
     font-size: 18px;
+    padding-bottom: 20px;
     font-weight: bold;
 }
 
@@ -559,6 +583,8 @@ html {
 #all-produk {
     padding-top: 40px;
     text-align: end;
+    color: #454545;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -720,7 +746,7 @@ html {
     width: 100%;
     height: 100%; /* Agar gambar menyesuaikan tinggi kontainer */
     display: block;
-    /* object-fit: cover; Memastikan gambar memenuhi kontainer tanpa distorsi */
+    object-fit: cover;
 }
 
 /* Awalnya elemen tersembunyi */
@@ -767,14 +793,18 @@ html {
     flex-wrap: wrap;
 }
 
+/* Card untuk pimpinan */
 .profile-card {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     width: 300px;
     padding: 20px;
-    text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Agar konten, termasuk gambar, berada di tengah */
+    text-align: center;
 }
 
 .profile-card:hover {
@@ -782,16 +812,25 @@ html {
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3);
 }
 
-.profile-card img {
-    border-radius: 50%;
+#foto-pimpinan {
     width: 100px;
     height: 100px;
-    object-fit: cover;
+    border-radius: 50%;
+    overflow: hidden;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#foto-pimpinan img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.profile-card:hover img {
+.profile-card:hover #foto-pimpinan img {
     transform: scale(1.1);
 }
 
@@ -1004,6 +1043,6 @@ html {
     }
 
     #selamat-datang {
-        font-size: 40px; /* Teks yang lebih besar untuk desktop */
+        font-size: 50px; /* Teks yang lebih besar untuk desktop */
     }
 }

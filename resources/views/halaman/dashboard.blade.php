@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Dashboard</title>
 </head>
 <body>
@@ -17,11 +18,16 @@
                 </div>
                 <div id="navbar">
                     <div id="header-kiri">
-                        <div id="header-atas">
-                            <p>PT. Bintang</p>
+                        <div id="logo-company">
+                            <img src="img/logo/logo.png" alt="Logo">
                         </div>
-                        <div id="header-bawah">
-                            <p>Mitra Kencana</p>
+                        <div id="header-teks">
+                            <div id="header-atas">
+                                <p>PT. Bintang</p>
+                            </div>
+                            <div id="header-bawah">
+                                <p>Mitra Kencana</p>
+                            </div>
                         </div>
                     </div>
                     {{-- Burger Icon --}}
@@ -45,7 +51,7 @@
                         <p>Kencana</p>
                     </div>
                     <div id="text-selamat">
-                        <p id="text-selamat-datang">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus enim ullam repellat eligendi sint. Iusto iste ullam dolor odit qui.</p>
+                        <p id="text-selamat-datang">YOUR PROFITABLE BUSINESS PARTNER !</p>
                     </div>
                 </div>    
             </div>
@@ -56,11 +62,11 @@
                     <img src="img/Launch.png" alt="Icon Slogan">
                 </div>
                 <div id="text-slogan">
-                    <p>Memanfaatkan Keanekaragaman Alam: Inovasi Bambu untuk Kehidupan Berkelanjutan</p>
+                    <p>Berikan yang terbaik untuk alam, maka alam akan memberikan yang terbaik untuk kita.</p>
                 </div>
-                <div id="penjelasan-slogan">
+                {{-- <div id="penjelasan-slogan">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In voluptates reprehenderit libero rerum corrupti a ducimus consequatur molestiae debitis est?</p>
-                </div>
+                </div> --}}
             </div>
 
             {{-- About Us --}}
@@ -72,7 +78,7 @@
                     <div id="text-about-us">
                         {{-- <p id="about-us">About Us</p> --}}
                         <p id="judul-about-us">About Us</p>
-                        <p id="about-us">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum vitae culpa quis, maxime amet doloremque fugit eaque odit placeat laudantium cupiditate, error esse eius iusto ex voluptates repellat qui nulla corporis neque ipsum incidunt voluptatibus? Deleniti eius possimus odio fugiat.</p>
+                        <p id="about-us">PT. BINTANG MITRA KENCANA sebagai perusahaan yang bergerak dibidang Perdagangan Besar Berbagai macam barang yang saat ini fokus pada pengembangan potensi BAMBU khususnya produk-produk Even, perusahaan akan selalu melakukan pengukuran tingkat kepuasan pelanggan agar mengetahui apa yang sesungguhnya yang dibutuhkan oleh konsumen. Tingkat kepuasan pelanggan sangat bergantung pada mutu pada suatu produk.</p>
                     </div>
                 </div>
             </div>
@@ -88,7 +94,7 @@
                             <p>VISI</p>
                         </div>
                         <div id="text-visi">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
+                            <p>Menjadi pelopor global dalam inovasi dan pemanfaatan bambu berkelanjutan, dengan komitmen untuk melestarikan lingkungan, mendukung kesejahteraan masyarakat, serta menyediakan produk berkualitas tinggi yang ramah lingkungan</p>
                         </div>
                     </div>
                     <div id="container-misi">
@@ -99,7 +105,7 @@
                             <p>MISI</p>
                         </div>
                         <div id="text-misi">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
+                            <p>Pengelolaan Sumber Daya Alam yang Berkelanjutan, Mengembangkan praktik budi daya dan pemanenan bambu yang ramah lingkungan, berkelanjutan, dan memperhatikan keseimbangan ekosistem.</p>
                         </div>
                     </div>
                 </div>
@@ -112,51 +118,59 @@
                         <p>Our Service</p>
                     </div>
                     <div id="our-service">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ducimus non placeat. Labore laudantium iure eius hic adipisci. Placeat, voluptatem consequuntur! Modi voluptatem similique sunt repellat reiciendis voluptates natus earum?</p>
+                        <p>Kami menyediakan solusi terbaik dengan fokus pada kualitas dan kepuasan pelanggan. Setiap layanan dirancang untuk memenuhi kebutuhan Anda secara efisien dan profesional.</p>
                     </div>
                     <div id="list-our-service">
                         <div id="service1">
                             <div id="icon-service1">
-                                <img src="/img/logo/Cup.png" alt="Cup">
+                                <span class="material-symbols-outlined">
+                                    temp_preferences_eco
+                                    </span>
                             </div>
                             <div id="judul-service1">
-                                <p>HANDAL</p>
+                                <p>Bahan Ramah Lingkungan</p>
                             </div>
                             <div id="text-service1">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                                <p>Bambu dapat terurai secara alami tanpa meninggalkan residu beracun, berbeda dengan plastik yang butuh ratusan tahun untuk terurai dan mencemari lingkungan.</p>
                             </div>
                         </div>
                         <div id="service2">
                             <div id="icon-service2">
-                                <img src="/img/logo/Cup.png" alt="Cup">
+                                <span class="material-symbols-outlined">
+                                    weight
+                                    </span>
                             </div>
                             <div id="judul-service2">
-                                <p>HANDAL</p>
+                                <p>Kekuatan dan Daya Tahan</p>
                             </div>
                             <div id="text-service2">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                                <p>Produk bambu, terutama yang telah diolah dengan baik, dapat tahan terhadap kelembaban, panas, dan serangan serangga seperti rayap.</p>
                             </div>
                         </div>
                         <div id="service3">
                             <div id="icon-service3">
-                                <img src="/img/logo/Cup.png" alt="Cup">
+                                <span class="material-symbols-outlined">
+                                    bolt
+                                    </span>
                             </div>
                             <div id="judul-service3">
-                                <p>HANDAL</p>
+                                <p>Ringan dan Fleksibel</p>
                             </div>
                             <div id="text-service3">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                                <p>Karena sifatnya yang lentur, bambu dapat digunakan untuk membuat desain yang lebih kompleks dan unik dibandingkan dengan bahan-bahan lainnya.</p>
                             </div>
                         </div>
                         <div id="service4">
                             <div id="icon-service4">
-                                <img src="/img/logo/Cup.png" alt="Cup">
+                                <span class="material-symbols-outlined">
+                                    experiment
+                                    </span>
                             </div>
                             <div id="judul-service4">
-                                <p>HANDAL</p>
+                                <p>Efisiensi Energi dalam Produksi</p>
                             </div>
                             <div id="text-service4">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                                <p>Produksi produk bambu biasanya memerlukan lebih sedikit energi dibandingkan dengan bahan seperti logam atau plastik.</p>
                             </div>
                         </div>
                     </div>
@@ -200,15 +214,16 @@
             {{-- Activity --}}
             <div id="content-activity">
                 <p id="text-activity">Our Activity</p>
-                @foreach ($kegiatan as $k)                    
                 <div class="carousel-act">
                     <div class="carousel-track-act">
-                        <div class="carousel-slide-act"><img src="{{ asset('storage/' . $k->image_path) }}" alt="Kegiatan 1"></div>
+                        @foreach ($kegiatan as $k)                    
+                        <div class="carousel-slide-act">
+                            <img src="{{ asset('storage/' . $k->image_path) }}" alt="Kegiatan 1">
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
             </div>
-
 
             {{-- Pimpinan --}}
             <div id="content-so">
@@ -217,7 +232,9 @@
                     <div id="profile-so">
                         @foreach ($pimpinan as $pm)                            
                         <div class="profile-card">
-                            <img src="{{ asset('storage/' . $pm->image) }}" alt="Image 1">
+                            <div id="foto-pimpinan">
+                                <img src="{{ asset('storage/' . $pm->image) }}" alt="Image 1">
+                            </div>
                             <p class="nama-pimpinan">{{$pm->name}}</p>
                             <p class="jabatan-pimpinan">{{$pm->jabatan}}</p>
                             <p class="desc-pimpinan">{{$pm->deskripsi}}</p>
@@ -232,11 +249,11 @@
                 <div id="container-footer">
                     <div id="company-footer">
                         <div id="logo-company">
-                            <img src="img/logo.png" alt="Logo">
+                            <img src="img\logo\logo.png" alt="Logo">
                         </div>
                         <div id="company-details">
                             <div id="company-name">PT. Bintang Mitra Kencana</div>
-                            <div id="company-desc">Kami berkomitmen untuk menyediakan produk berkualitas tinggi dengan inovasi berkelanjutan untuk masa depan yang lebih baik.</div>
+                            <div id="company-desc">Berlokasi di Jl. Warungawi-Cililin No. 259 RT. 04 RW. 06 Desa Bongas Kecamatan Cililin Kabupaten Bandung Barat, Jawa Barat Kode Pos 40562 dan Alamat Workshop di Kp. Cipongkor RT. 06/05 Desa Mekarsari Kecamatan Cipongkor Kabupaten Bandung Barat.</div>
                         </div>
                     </div>
                     <div id="footer-links">
