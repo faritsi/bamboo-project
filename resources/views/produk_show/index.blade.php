@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" x-data="cartData()">
+    <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/style-detail-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
 
 </head>
 <body>
@@ -131,10 +132,10 @@
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
                 <input type="hidden" name="modal_total" id="modal_total" value="">
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="city">Kota <span class="required">*</span></label>
                     <input type="text" name="city" id="city" placeholder="Masukan Kota" required>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="pos">Kode Pos <span class="required">*</span></label>
                     <input type="text" name="pos" id="pos" placeholder="Masukan Kode Pos" required>
@@ -143,9 +144,7 @@
                     <label for="nohp">Nomor HP <span class="required">*</span></label>
                     <input type="text" name="nohp" id="nohp" placeholder="Masukan Nomor HP" required>
                 </div>
-
-                <div id="cost">Pilih pengiriman untuk melihat ongkir</div>
-
+                <H3>PILIHAN PENGIRIMAN</H3>
                 <div class="form-group">
                     <label for="province">Provinsi <span class="required">*</span></label>
                     <select id="province" name="province" required>
@@ -155,8 +154,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="city_select">Kota <span class="required">*</span></label>
-                    <select id="city_select" name="city_select" disabled required>
+                    <label for="city">Kota <span class="required">*</span></label>
+                    <select id="city" name="city" disabled required>
                         <option value="">Pilih Kota</option>
                     </select>
                 </div>
@@ -174,7 +173,7 @@
                         <option value="">Pilih Layanan Kurir</option>
                     </select>
                 </div>
-                <h3 id="ongkir">Biaya Ongkir:</h3>
+                <h3 id="ongkir">Biaya Ongkir:</h3> <div id="cost">Pilih pengiriman untuk melihat ongkir</div>
                 <div class="form-group">
                     <button type="submit" id="cek" class="submit-btn checkout-button">Tambahkan</button>
                 </div>
@@ -241,11 +240,15 @@
 
         document.querySelector("#cek").addEventListener("click", function(e) {
             e.preventDefault();
-
+            var province = document.getElementById("province").options[document.getElementById("province").selectedIndex].text;
+            var city = document.getElementById("city").options[document.getElementById("city").selectedIndex].text;
+            var courier = document.getElementById("courier").value;
+            var courierService = document.getElementById("courier_service").value;
+            var cost = document.getElementById("cost").textContent.replace("Rp", "").trim();  // Fix: Use textContent instead of value
             var formData = {
                 nama: document.getElementById("name").value,
                 alamat: document.getElementById("alamat").value,
-                city: document.getElementById("city").value,
+                city: city,
                 pos: document.getElementById("pos").value,
                 nohp: document.getElementById("nohp").value,
                 kode_produk: document.getElementById("kode_produk").value,
@@ -253,7 +256,11 @@
                 nama_produk: document.querySelector("#nama-produk p").textContent,
                 modal_qty: document.getElementById("modal_qty").value,
                 modal_harga: document.getElementById("modal_harga").value,
-                jenis_produk: document.getElementById("jenis_produk").value,
+                kategori_id: document.getElementById("kategori_id").value,
+                cost: cost,  // Fix: Store the cost correctly
+                province: province,  // Fix: Added province to formData
+                courier: courier,  // Fix: Added courier to formData
+                courierService: courierService  // Fix: Added courier service to formData
             };
 
             for (var key in formData) {
@@ -322,6 +329,59 @@
         }
     </script>
     <script>
+        $(document).ready(function () {
+            // Fetch provinces
+            $.get('/provinces', function (data) {
+                data.forEach(function (province) {
+                    $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
+                });
+            });
+            // Fetch cities based on province
+            $('#province').change(function () {
+                var province_id = $(this).val();
+                $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
+                $.get('/cities/' + province_id, function (data) {
+                    data.forEach(function (city) {
+                        $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
+                    });
+                });
+            });
+            // Fetch services and costs when city and courier are selected
+            $('#city, #courier').change(function () {
+                var city_id = $('#city').val();
+                var courier = $('#courier').val();
+                if (city_id && courier) {
+                    $.post('/cost', {
+                        _token: '{{ csrf_token() }}',
+                        origin: 24, // Example origin city ID (Yogyakarta)
+                        destination: city_id,
+                        courier: courier
+                    }, function (data) {
+                        if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
+                            var services = data[0].costs;
+                            $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
+                            services.forEach(function (service) {
+                                $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
+                            });
+                        } else {
+                            $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
+                        }
+                    });
+                }
+            });
+            // Update shipping cost when courier service is selected
+            $('#courier_service').change(function () {
+                var selectedService = $('#courier_service option:selected');
+                var cost = selectedService.data('cost');
+                if (cost) {
+                    $('#cost').text('Rp ' + cost);
+                } else {
+                    $('#cost').text('Pilih kota dan kurir untuk melihat ongkir');
+                }
+            });
+        });
+            </script>
+    <script>
         function cartData() {
             return {
                 cartItems: @json(session('keranjang', [])), // Fetch cart items from session
@@ -333,6 +393,7 @@
                 },
         
                 toggleCart() {
+                    console.log('ded');
                     this.cartVisible = !this.cartVisible;
                 },
         

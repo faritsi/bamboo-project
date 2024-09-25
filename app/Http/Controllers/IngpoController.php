@@ -104,18 +104,7 @@ class IngpoController extends Controller
             'desc_misi' => 'required|string|max:255',
             'judul_service' => 'required|string|max:255',
             'desc_service' => 'required|string|max:255',
-            'logo_service1' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'judul_service1' => 'required|string|max:255',
-            'desc_service1' => 'required|string|max:255',
-            'logo_service2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'judul_service2' => 'required|string|max:255',
-            'desc_service2' => 'required|string|max:255',
-            'logo_service3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'judul_service3' => 'required|string|max:255',
-            'desc_service3' => 'required|string|max:255',
-            'logo_service4' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'judul_service4' => 'required|string|max:255',
-            'desc_service4' => 'required|string|max:255',
+            
             'judul_produk' => 'required|string|max:255',
             'desc_produk' => 'required|string|max:255',
             'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -170,45 +159,7 @@ class IngpoController extends Controller
             $ingpo->image_misi = $request->file('image_misi')->storeAs('ingpo-images', $imageName, 'public');
         }
 
-        if ($request->hasFile('logo_service1')) {
-            $imageName = $id . '_service1.' . $request->file('logo_service1')->getClientOriginalExtension();
-
-            if ($ingpo->logo_service1 && Storage::exists('public/' . $ingpo->logo_service1)) {
-                Storage::delete('public/' . $ingpo->logo_service1);
-            }
-
-            $ingpo->logo_service1 = $request->file('logo_service1')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('logo_service2')) {
-            $imageName = $id . '_service2.' . $request->file('logo_service2')->getClientOriginalExtension();
-
-            if ($ingpo->logo_service2 && Storage::exists('public/' . $ingpo->logo_service2)) {
-                Storage::delete('public/' . $ingpo->logo_service2);
-            }
-
-            $ingpo->logo_service2 = $request->file('logo_service2')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('logo_service3')) {
-            $imageName = $id . '_service3.' . $request->file('logo_service3')->getClientOriginalExtension();
-
-            if ($ingpo->logo_service3 && Storage::exists('public/' . $ingpo->logo_service3)) {
-                Storage::delete('public/' . $ingpo->logo_service3);
-            }
-
-            $ingpo->logo_service3 = $request->file('logo_service3')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('logo_service4')) {
-            $imageName = $id . '_service4.' . $request->file('logo_service4')->getClientOriginalExtension();
-
-            if ($ingpo->logo_service4 && Storage::exists('public/' . $ingpo->logo_service4)) {
-                Storage::delete('public/' . $ingpo->logo_service4);
-            }
-
-            $ingpo->logo_service4 = $request->file('logo_service4')->storeAs('ingpo-images', $imageName, 'public');
-        }
+        
 
         if ($request->hasFile('logo_footer')) {
             $imageName = $id . '_footer.' . $request->file('logo_footer')->getClientOriginalExtension();
@@ -229,14 +180,7 @@ class IngpoController extends Controller
         $ingpo->desc_misi = $request->desc_misi;
         $ingpo->judul_service = $request->judul_service;
         $ingpo->desc_service = $request->desc_service;
-        $ingpo->judul_service1 = $request->judul_service1;
-        $ingpo->desc_service1 = $request->desc_service1;
-        $ingpo->judul_service2 = $request->judul_service2;
-        $ingpo->desc_service2 = $request->desc_service2;
-        $ingpo->judul_service3 = $request->judul_service3;
-        $ingpo->desc_service3 = $request->desc_service3;
-        $ingpo->judul_service4 = $request->judul_service4;
-        $ingpo->desc_service4 = $request->desc_service4;
+        
         $ingpo->judul_produk = $request->judul_produk;
         $ingpo->desc_produk = $request->desc_produk;
         $ingpo->judul_footer = $request->judul_footer;

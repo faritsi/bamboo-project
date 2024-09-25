@@ -67,46 +67,6 @@
         <h2>Deskripsi Service</h2>
         <input type="text" id="desc_service" name="desc_service" value="{{$i->desc_service}}">
 
-        <h2>Logo Service 1</h2>
-        <input type="file" id="logo_service1" name="logo_service1" onchange="previewImage(event, 'logoService1Preview')">
-        <img id="logoService1Preview" src="{{ asset('storage/' . $i->logo_service1) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-        
-        <h2>Judul Service 1</h2>
-        <input type="text" id="judul_service1" name="judul_service1" value="{{$i->judul_service1}}">
-
-        <h2>Deskripsi Service 1</h2>
-        <input type="text" id="desc_service1" name="desc_service1" value="{{$i->desc_service1}}">
-
-        <h2>Logo Service 2</h2>
-        <input type="file" id="logo_service2" name="logo_service2" onchange="previewImage(event, 'logoService2Preview')">
-        <img id="logoService2Preview" src="{{ asset('storage/' . $i->logo_service2) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-        
-        <h2>Judul Service 2</h2>
-        <input type="text" id="judul_service2" name="judul_service2" value="{{$i->judul_service2}}">
-
-        <h2>Deskripsi Service 2</h2>
-        <input type="text" id="desc_service2" name="desc_service2" value="{{$i->desc_service2}}">
-
-        <h2>Logo Service 3</h2>
-        <input type="file" id="logo_service3" name="logo_service3" onchange="previewImage(event, 'logoService3Preview')">
-        <img id="logoService3Preview" src="{{ asset('storage/' . $i->logo_service3) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-        
-        <h2>Judul Service 3</h2>
-        <input type="text" id="judul_service3" name="judul_service3" value="{{$i->judul_service3}}">
-
-        <h2>Deskripsi Service 3</h2>
-        <input type="text" id="desc_service3" name="desc_service3" value="{{$i->desc_service3}}">
-
-        <h2>Logo Service 4</h2>
-        <input type="file" id="logo_service4" name="logo_service4" onchange="previewImage(event, 'logoService4Preview')">
-        <img id="logoService4Preview" src="{{ asset('storage/' . $i->logo_service4) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-        
-        <h2>Judul Service 4</h2>
-        <input type="text" id="judul_service4" name="judul_service4" value="{{$i->judul_service4}}">
-
-        <h2>Deskripsi Service 4</h2>
-        <input type="text" id="desc_service4" name="desc_service4" value="{{$i->desc_service4}}">
-
         <h2>Judul Produk</h2>
         <input type="text" id="judul_produk" name="judul_produk" value="{{$i->judul_produk}}">
 

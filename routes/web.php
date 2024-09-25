@@ -12,6 +12,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\coba;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,5 +101,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('pimpinan', PimpinanController::class);
         Route::resource('info', IngpoController::class);
         Route::resource('kategori', KategoriController::class);
+        Route::resource('services', ServiceController::class);
     });
 });

@@ -39,8 +39,12 @@
                             <p><strong>Ongkir:</strong> <span id="cost"></span></p>
                         </div>
                     </div>
-                    <div class="order-total">
-                        <p><strong>Total Pembayaran:</strong> <span id="pembayaran"></span></p>
+                    <div id="order-summary">
+                        <h3>Ringkasan Pesanan</h3>
+                        <div id="order-items"></div> <!-- Container untuk menampung banyak produk -->
+                        <div class="order-total">
+                            <p><strong>Total Pembayaran:</strong> <span id="pembayaran"></span></p>
+                        </div>
                     </div>
                 </div>
                 <button type="button" id="pay-button">Konfirmasi Checkout</button>

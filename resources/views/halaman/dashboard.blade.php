@@ -52,7 +52,7 @@
                         <p>Kencana</p>
                     </div>
                     <div id="text-selamat">
-                        <p id="text-selamat-datang">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus enim ullam repellat eligendi sint. Iusto iste ullam dolor odit qui.</p>
+                        <p id="text-selamat-datang">{{$i->desc_header}}</p>
                     </div>
                 </div>    
             </div>
@@ -63,10 +63,10 @@
                     <img src="img/Launch.png" alt="Icon Slogan">
                 </div>
                 <div id="text-slogan">
-                    <p>Memanfaatkan Keanekaragaman Alam: Inovasi Bambu untuk Kehidupan Berkelanjutan</p>
+                    <p>{{$i->slogan}}</p>
                 </div>
                 <div id="penjelasan-slogan">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. In voluptates reprehenderit libero rerum corrupti a ducimus consequatur molestiae debitis est?</p>
+                    <p>{{$i->desc_slogan}}</p>
                 </div>
             </div>
 
@@ -78,8 +78,8 @@
                     </div>
                     <div id="text-about-us">
                         {{-- <p id="about-us">About Us</p> --}}
-                        <p id="judul-about-us">About Us</p>
-                        <p id="about-us">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum vitae culpa quis, maxime amet doloremque fugit eaque odit placeat laudantium cupiditate, error esse eius iusto ex voluptates repellat qui nulla corporis neque ipsum incidunt voluptatibus? Deleniti eius possimus odio fugiat.</p>
+                        <p id="judul-about-us">{{$i->judul_about}}</p>
+                        <p id="about-us">{{$i->desc_about}}</p>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
                             <p>VISI</p>
                         </div>
                         <div id="text-visi">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
+                            <p>{{$i->desc_visi}}</p>
                         </div>
                     </div>
                     <div id="container-misi">
@@ -106,7 +106,7 @@
                             <p>MISI</p>
                         </div>
                         <div id="text-misi">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae architecto explicabo blanditiis impedit quisquam odit natus, dicta exercitationem eaque. Dolor totam delectus molestias blanditiis aliquam perspiciatis quam similique eaque earum.</p>
+                            <p>{{$i->desc_misi}}</p>
                         </div>
                     </div>
                 </div>
@@ -119,53 +119,23 @@
                         <p>{{$i->judul_service}}</p>
                     </div>
                     <div id="our-service">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ducimus non placeat. Labore laudantium iure eius hic adipisci. Placeat, voluptatem consequuntur! Modi voluptatem similique sunt repellat reiciendis voluptates natus earum?</p>
+                        <p>{{$i->desc_service}}</p>
                     </div>
                     <div id="list-our-service">
+                        @foreach ($service as $s)
                         <div id="service1">
                             <div id="icon-service1">
-                                <img src="/img/logo/Cup.png" alt="Cup">
+                                <img src="{{ asset('/storage/' . $s->img) }}" alt="Cup">
                             </div>
                             <div id="judul-service1">
-                                <p>HANDAL</p>
+                                <p>{{$s->judul}}</p>
                             </div>
                             <div id="text-service1">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
+                                <p>{{$s->desc}}</p>
                             </div>
                         </div>
-                        <div id="service2">
-                            <div id="icon-service2">
-                                <img src="/img/logo/Cup.png" alt="Cup">
-                            </div>
-                            <div id="judul-service2">
-                                <p>HANDAL</p>
-                            </div>
-                            <div id="text-service2">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
-                            </div>
-                        </div>
-                        <div id="service3">
-                            <div id="icon-service3">
-                                <img src="/img/logo/Cup.png" alt="Cup">
-                            </div>
-                            <div id="judul-service3">
-                                <p>HANDAL</p>
-                            </div>
-                            <div id="text-service3">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
-                            </div>
-                        </div>
-                        <div id="service4">
-                            <div id="icon-service4">
-                                <img src="/img/logo/Cup.png" alt="Cup">
-                            </div>
-                            <div id="judul-service4">
-                                <p>HANDAL</p>
-                            </div>
-                            <div id="text-service4">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatum, incidunt asperiores? Corrupti ut dicta et, aspernatur sapiente dolor suscipit quis, repellendus iste nam ex obcaecati, temporibus ipsum id voluptate esse.</p>
-                            </div>
-                        </div>
+                        @endforeach
+                        
                     </div>
                 </div>
             </div>
@@ -240,15 +210,18 @@
             {{-- Footer --}}
             <div id="content-footer">
                 <div id="container-footer">
+                    @foreach ($ingpo as $i)
+                        
                     <div id="company-footer">
                         <div id="logo-company">
-                            <img src="img/logo.png" alt="Logo">
+                            <img src="{{ asset('/storage/' . $i->logo_footer) }}" alt="Logo">
                         </div>
                         <div id="company-details">
-                            <div id="company-name">PT. Bintang Mitra Kencana</div>
-                            <div id="company-desc">Kami berkomitmen untuk menyediakan produk berkualitas tinggi dengan inovasi berkelanjutan untuk masa depan yang lebih baik.</div>
+                            <div id="company-name">{{$i->judul_footer}}</div>
+                            <div id="company-desc">{{$i->desc_footer}}</div>
                         </div>
                     </div>
+                        @endforeach
                     <div id="footer-links">
                         <ul>
                             <li><a href="#navbar">Home</a></li>

@@ -11,6 +11,7 @@ use App\Models\Produk;
 use App\Models\Pimpinan;
 use App\Models\Ingpo;
 use App\Models\Kegiatan;
+use App\Models\Service;
 
 class LayoutController extends Controller
 {
@@ -21,6 +22,7 @@ class LayoutController extends Controller
             'produk' => produk::orderBy('created_at')->take(5)->get(),
             'pimpinan' => Pimpinan::take(4)->get(),
             'ingpo' => Ingpo::all(),
+            'service' => Service::all(),
             'kegiatan' => Kegiatan::orderBy('created_at')->take(5)->get(),
         ]);
     }
