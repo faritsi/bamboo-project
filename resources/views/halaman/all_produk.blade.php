@@ -15,27 +15,6 @@
     <title>{{$title}}</title>
 </head>
 <body>
-    <div id="bg-header">
-        <div id="bo-header" class="clearfix">
-            <div id="kiri-header" class="clearfix">
-                <div id="atas-header">
-                    <h1>PT. Bintang</h1>
-                </div>
-                <div id="bawah-header">
-                    <h1>Mitra Kencana</h1>
-                </div>
-            </div>
-            <div id="kanan-header">
-                <ul>
-                    <li class="kuning">Home</li>
-                    <li>About Us</li>
-                    <li>Services</li>
-                    <li><a href="catalog">Catalog</a></li>
-                    <li>Contact Us</li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <div id="background">
         <!-- TIPE PRODUK -->
         <div id="bg-container">
@@ -56,9 +35,9 @@
                 </div>
                 
                 <!-- Content Produk -->
-                @foreach ($produk as $p)
-                <div id="content-produk" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
-                    <div id="card-container">
+                <div id="content-produk">
+                    @foreach ($produk as $p)
+                    <div id="card-container" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
                         <a href="/produk/{{$p->pid}}">
                             <div id="card-produk">
                                 <div id="card-stok">
@@ -72,16 +51,15 @@
                         <div id="card-text">
                             <h4 id="nama-produk">{{$p->nama_produk}}</h4>
                             <p id="harga-produk">{{$p->harga}}</p>
-                            <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }})">
-                                Tambah ke Keranjang
-                            </button>
                         </div>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
 
                 <!-- Button to Open Cart -->
-                <button class="open-cart-btn" @click="toggleCart()">🛒</button>
+                <button class="open-cart-btn" @click="toggleCart()"><span class="material-symbols-outlined">
+                    shopping_cart
+                    </span></button>
 
                 <!-- Cart Menu -->
                 <div class="cart-menu" :class="{ 'active': cartVisible }">
@@ -122,23 +100,6 @@
         </div>
     </div>
 </body>
-
-<!-- Modal Pengisian Biodata -->
-<div id="modal-biodata" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <form action="" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div id="header-modul">
-                <p>Pengisian Biodata</p>
-            </div>
-            <div class="form-group">
-                <label for="nama-lengkap">Nama Lengkap <span class="required">*</span></label>
-                <input type="text" name="nama-lengkap" id="nama-lengkap" placeholder="Masukan Nama Lengkap">
-            </div>
-        </form>
-    </div>
-</div>
 
 <!-- Script -->
 <script>
@@ -211,30 +172,6 @@ function cartData() {
 }
 </script>
 <script>
-    $(document).ready(function(){
-        function showModal(modalId) {
-            $(modalId).show();
-        }
-
-        function hideModals() {
-            $(".modal").hide();
-        }
-
-        $("#btnBeli").on("click", function() {
-            showModal("#modal-biodata");
-        });
-
-        $('.close').on("click", function() {
-            hideModals();
-        });
-
-        $(window).on("click", function(event) {
-            if ($(event.target).hasClass("modal")) {
-                hideModals();
-            }
-        });
-    });
-
     $(document).ready(function(){
         // Fungsi untuk menampilkan produk berdasarkan kategori_id
         function filterProduk(kategori_id) {

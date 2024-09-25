@@ -116,8 +116,9 @@
 
 #card-image img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 #card-text {
@@ -145,29 +146,6 @@
     margin: 0 auto;
     padding: 0;
     width: 100%;
-}
-
-/* Button Isi Biodata */
-#btnBeli {
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-}
-
-#container-biodata {
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #ffd700;
-    gap: 5px;
-    border-radius: 20px;
-}
-
-#container-biodata .biodata {
-}
-
-#text-button {
 }
 
 /* Modal isi biodata */
@@ -224,7 +202,6 @@
 }
 
 /* cart */
-/* Cart menu styling */
 .cart-menu {
     position: fixed;
     top: 0;
@@ -233,9 +210,11 @@
     height: 100%;
     background-color: white;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    transition: right 0.4s ease-in-out;
+    transition: right 0.4s ease-in-out; /* Transition untuk animasi muncul */
     z-index: 100;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .cart-menu.active {
@@ -249,6 +228,11 @@
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
     margin-bottom: 10px;
+}
+
+.cart-body {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 .cart-body ul {
@@ -295,6 +279,11 @@
     font-size: 18px;
     border-radius: 5px;
     margin: 0 5px;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #ff9800;
 }
 
 .cart-item-quantity input {
@@ -316,107 +305,33 @@
 .close-cart {
     cursor: pointer;
     font-size: 20px;
+    background-color: transparent;
+    border: none;
+    color: #f57c00;
+    transition: color 0.3s ease;
+}
+
+.close-cart:hover {
+    color: #ff9800;
 }
 
 /* Button to open cart */
 .open-cart-btn {
     position: fixed;
+    width: 50px;
+    height: 50px;
     top: 20px;
     right: 20px;
-    background-color: #f57c00;
+    background-color: #27ae60;
     color: white;
     border: none;
-    padding: 10px;
     border-radius: 50%;
     cursor: pointer;
+    font-size: 24px;
     z-index: 101;
+    transition: background-color 0.3s ease;
 }
-/* Header */
-* {
-    padding: 0;
-    margin: 0;
-    font-family: sans-serif;
-    /* background-color: black; */
-}
-.clearfix:after {
-    clear: both;
-    content: ".";
-    display: block;
-    height: 0;
-    visibility: hidden;
-}
-a {
-    text-decoration: none;
-}
-/* HEADER */
-#bg-header {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    position: sticky;
-    display: inline;
-}
-#bo-header {
-    width: 80%;
-    margin: 0 auto;
-    padding: 0;
-}
-#kiri-header {
-    width: 45%;
-    margin: 0 auto;
-    padding: 20px 5px;
-    float: left;
-}
-#atas-header {
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
-}
-#atas-header h1 {
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
-    font-size: 24px;
-    color: #fff;
-}
-#bawah-header {
-    width: 100%;
-    padding: 0;
-    margin: 0 auto;
-}
-#bawah-header h1 {
-    width: 100%;
-    padding: 0 70px;
-    margin: 0 auto;
-    font-size: 24px;
-    color: #fff;
-}
-#kanan-header {
-    width: 50%;
-    margin: 0 auto;
-    padding: 0;
-    text-align: right;
-    float: right;
-}
-#kanan-header ul {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    color: #fff;
-    float: left;
-}
-#kanan-header ul li {
-    margin: 0 auto;
-    padding: 34px 21px;
-    display: inline-block;
-}
-#kanan-header ul .kuning {
-    background-color: yellow;
-    color: black;
-    margin: 0 auto;
-    padding: 10px 20px;
-    border-radius: 15px;
-}
-#kanan-header ul li a {
-    color: #fff;
+
+.open-cart-btn:hover {
+    background-color: #27ae62;
 }
