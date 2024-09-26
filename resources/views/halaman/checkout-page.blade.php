@@ -22,29 +22,19 @@
                     <h3>Biodata Pengiriman</h3>
                     <p><strong>Nama Lengkap:</strong> <span id="name"></span></p>
                     <p><strong>Alamat:</strong> <span id="alamat"></span></p>
-                    <p><strong>Provinsi:</strong> <span id="province"></span></p> <!-- New -->
+                    <p><strong>Provinsi:</strong> <span id="province"></span></p>
                     <p><strong>Kota:</strong> <span id="city"></span></p>
                     <p><strong>Kode Pos:</strong> <span id="pos"></span></p>
                     <p><strong>No. Telepon:</strong> <span id="nohp"></span></p>
-                    <p><strong>Kurir:</strong> <span id="courier"></span></p> <!-- New -->
+                    <p><strong>Kurir:</strong> <span id="courier"></span></p>
                 </div>
-                
+
                 <div id="order-summary">
                     <h3>Ringkasan Pesanan</h3>
-                    <div class="order-item">
-                        <div class="order-details">
-                            <p><strong>Nama Barang:</strong> <span id="nama_produk"></span></p>
-                            <p><strong>Harga:</strong> <span id="harga"></span> x <span id="qty"></span></p>
-                            <p><strong>Total:</strong> <span id="total_pembayaran"></span></p>
-                            <p><strong>Ongkir:</strong> <span id="cost"></span></p>
-                        </div>
-                    </div>
-                    <div id="order-summary">
-                        <h3>Ringkasan Pesanan</h3>
-                        <div id="order-items"></div> <!-- Container untuk menampung banyak produk -->
-                        <div class="order-total">
-                            <p><strong>Total Pembayaran:</strong> <span id="pembayaran"></span></p>
-                        </div>
+                    <div id="order-items"></div> <!-- Container for product list -->
+                    <div class="order-total">
+                        <p><strong>Ongkir:</strong> Rp <span id="cost"></span></p> <!-- Ongkir display -->
+                        <p><strong>Total Pembayaran:</strong> Rp <span id="pembayaran"></span></p>
                     </div>
                 </div>
                 <button type="button" id="pay-button">Konfirmasi Checkout</button>
@@ -53,100 +43,116 @@
     </div>
 </body>
 </html>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve values from localStorage
+    // Retrieve biodata from localStorage
     var nama = localStorage.getItem("nama");
     var alamat = localStorage.getItem("alamat");
     var city = localStorage.getItem("city");
     var pos = localStorage.getItem("pos");
     var nohp = localStorage.getItem("nohp");
-    var nama_produk = localStorage.getItem("nama_produk");
-    var modal_qty = localStorage.getItem("modal_qty");
-    var modal_harga = localStorage.getItem("modal_harga");
-    var modal_total = localStorage.getItem("modal_total");
-    var cost = localStorage.getItem("cost");
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courier_service");
 
-    // Calculate total (modal_total + cost)
-    var totalPayment = parseFloat(modal_total) + parseFloat(cost);
+    // Retrieve cartItems array from localStorage (instead of products)
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    // Retrieve shipping cost (ongkir) from localStorage
+    var cost = parseFloat(localStorage.getItem("cost")) || 0;
+
+    // Calculate total payment (sub-totals + shipping cost)
+    var totalPayment = cartItems.reduce((sum, item) => sum + item.subTotal, 0) + cost;
 
     // Save totalPayment to localStorage
     localStorage.setItem("totalPayment", totalPayment);
 
-    // Display the values in HTML elements
+    // Display the biodata
     document.getElementById("name").innerText = nama;
     document.getElementById("alamat").innerText = alamat;
     document.getElementById("city").innerText = city;
     document.getElementById("pos").innerText = pos;
     document.getElementById("nohp").innerText = nohp;
-    document.getElementById("nama_produk").innerText = nama_produk;
-    document.getElementById("qty").innerText = modal_qty;
-    document.getElementById("harga").innerText = modal_harga;
-    document.getElementById("cost").innerText = cost;
-    document.getElementById("total_pembayaran").innerText = modal_total;
-    document.getElementById("pembayaran").innerText = totalPayment;
-
-    // Display province and courier details
     document.getElementById("province").innerText = province;
     document.getElementById("courier").innerText = courier + ' - ' + courier_service;
+
+    // Display the cartItems in the order summary
+    var orderItemsContainer = document.getElementById("order-items");
+    cartItems.forEach(function(item) {
+        var itemHtml = `
+            <div class="order-item">
+                <p><strong>Nama Barang:</strong> ${item.nama_produk}</p>
+                <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
+                <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
+            </div>
+        `;
+        orderItemsContainer.innerHTML += itemHtml;
+    });
+
+    // Display the shipping cost (ongkir) and total payment
+    document.getElementById("cost").innerText = cost.toFixed(2); // Display ongkir
+    document.getElementById("pembayaran").innerText = totalPayment.toFixed(2); // Display total payment
 });
-</script>
-<script>
-    $.ajaxSetup({
+
+// AJAX setup for payment
+$.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-document.getElementById('pay-button').onclick = function(){
+
+document.getElementById('pay-button').onclick = function() {
+    // Retrieve necessary values from localStorage
     var nama = localStorage.getItem("nama");
     var alamat = localStorage.getItem("alamat");
     var city = localStorage.getItem("city");
     var pos = localStorage.getItem("pos");
     var nohp = localStorage.getItem("nohp");
-    var nama_produk = localStorage.getItem("nama_produk");
-    var modal_qty = localStorage.getItem("modal_qty");
-    var modal_harga = localStorage.getItem("modal_harga");
-    var modal_total = localStorage.getItem("modal_total");
+    var totalPayment = localStorage.getItem("totalPayment");
     var cost = localStorage.getItem("cost");
-    var totalPayment = localStorage.getItem("totalPayment"); // Use the updated totalPayment
-    var kategori_id = localStorage.getItem("kategori_id");
-    var kode_produk = localStorage.getItem("kode_produk");
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courier_service");
 
-    console.log(totalPayment);
-    console.log(modal_total);
-    console.log(cost);
-    
+    // Retrieve cartItems from localStorage
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    // Prepare the form data manually
+    var formData = {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        pembayaran: totalPayment,
+        cost: cost,
+        name: nama,
+        alamat: alamat,
+        city: city,
+        pos: pos,
+        nohp: nohp,
+        province: province,
+        courier: courier,
+        courier_service: courier_service
+    };
+
+    // Add each cart item to the formData with indexed keys
+    cartItems.forEach(function(item, index) {
+        formData[`products[${index}][id]`] = item.pid;
+        formData[`products[${index}][name]`] = item.nama_produk;
+        formData[`products[${index}][quantity]`] = item.quantity;
+        formData[`products[${index}][price]`] = item.harga;
+    });
+
+    // Send the AJAX request
     $.ajax({
         url: '/create-transaction', // Adjust your backend path
         method: 'POST',
-        data: {
-            _token: $('meta[name="csrf-token"]').attr('content'),
-            pembayaran: totalPayment, // Use totalPayment directly
-            total_pembayaran: modal_total,
-            kode_produk: kode_produk,
-            nama_produk: nama_produk,
-            qty: modal_qty,
-            harga: modal_harga,
-            name: nama,
-            alamat: alamat,
-            city: city,
-            pos: pos,
-            nohp: nohp,
-            kategori_id: kategori_id,
-            cost: cost,
-            province: province,
-            courier: courier,
-            courier_service: courier_service
-        },
+        data: formData, // Send form-encoded data
         success: function(data) {
-            snap.pay(data.snap_token); // Call Midtrans Snap
+            snap.pay(data.snap_token); // Call Midtrans Snap for payment
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText); // Log error for debugging
         }
     });
 };
+
 </script>

@@ -27,58 +27,57 @@ class TransaksiController extends Controller
     public function createTransaction(Request $request)
     {
         try {
+            // Log the request data for debugging purposes
+            Log::info('Create Transaction Request Data:', $request->all());
+    
             // Validate the incoming request
             $validated = $request->validate([
-                'total_pembayaran' => 'required|numeric',
-                'kode_produk' => 'required|string',
-                'nama_produk' => 'required|string',
-                'qty' => 'required|numeric',
-                'harga' => 'required|numeric',
+                'pembayaran' => 'required|numeric',
+                'products' => 'required|array', // Ensure products is an array
+                'products.*.id' => 'required|string', // Validate each product's ID
+                'products.*.name' => 'required|string', // Validate each product's name
+                'products.*.quantity' => 'required|numeric', // Validate each product's quantity
+                'products.*.price' => 'required|numeric', // Validate each product's price
                 'name' => 'required|string',
                 'alamat' => 'required|string',
                 'city' => 'required|string',
                 'pos' => 'required|string',
                 'nohp' => 'required|string',
-                'kategori_id' => 'required|string',
+                'cost' => 'required|numeric' // Validate shipping cost (ongkir)
             ]);
-
-            // For now, comment the database part
-            // $transaction = TransaksiMidtrans::create([
-            //     'order_id' => 'ORDER-' . time(),
-            //     'total_pembayaran' => $validated['total_pembayaran'],
-            //     'kode_produk' => $validated['kode_produk'],
-            //     'nama_produk' => $validated['nama_produk'],
-            //     'qty' => $validated['qty'],
-            //     'harga' => $validated['harga'],
-            //     'name' => $validated['name'],
-            //     'alamat' => $validated['alamat'],
-            //     'city' => $validated['city'],
-            //     'pos' => $validated['pos'],
-            //     'nohp' => $validated['nohp'],
-            //     'kategori_id' => $validated['kategori_id'],
-            //     'status' => 'pending' // Initial status is pending
-            // ]);
+    
+            // Prepare the array for Midtrans items (this handles multiple products)
+            $itemDetails = [];
+            foreach ($validated['products'] as $product) {
+                $itemDetails[] = [
+                    'id' => $product['id'],
+                    'name' => $product['name'],
+                    'quantity' => $product['quantity'],
+                    'price' => $product['price'],
+                ];
+            }
+    
+            // Add shipping cost (ongkir) as a separate item
+            $itemDetails[] = [
+                'id' => 'ongkir',
+                'name' => 'Ongkir',
+                'quantity' => 1,
+                'price' => $validated['cost'],
+            ];
+    
             // Set up Midtrans configuration
             Config::$serverKey = env('MIDTRANS_SERVER_KEY', 'SB-Mid-server-9zcBME8uz3JAPNkLONOYiCEa');
             Config::$isProduction = false;
             Config::$isSanitized = true;
             Config::$is3ds = true;
-
+    
             // Prepare Midtrans transaction details
             $params = [
                 'transaction_details' => [
                     'order_id' => 'ORDER-' . rand(),
-                    'gross_amount' => $validated['total_pembayaran'],
+                    'gross_amount' => $validated['pembayaran'], // The total payment amount
                 ],
-                'item_details' => [
-                    [
-                        'id' => $validated['kode_produk'],
-                        'name' => $validated['nama_produk'],
-                        'quantity' => $validated['qty'],
-                        'price' => $validated['harga'],
-                        'category' => $validated['kategori_id'],
-                    ]
-                ],
+                'item_details' => $itemDetails, // The array of products with quantities and prices
                 'customer_details' => [
                     'first_name' => $validated['name'],
                     'phone' => $validated['nohp'],
@@ -103,10 +102,10 @@ class TransaksiController extends Controller
                     'finish' => url('/catalog')
                 ]
             ];
-
+    
             // Generate Snap token
             $snapToken = Snap::getSnapToken($params);
-
+    
             // Return Snap token for the frontend to trigger payment
             return response()->json([
                 'snap_token' => $snapToken
@@ -114,7 +113,7 @@ class TransaksiController extends Controller
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error creating transaction: ' . $e->getMessage());
-
+    
             // Return error response
             return response()->json(['error' => 'Something went wrong.'], 500);
         }

@@ -11,40 +11,48 @@
 
 </head>
 <body>
-    <!-- Button to Open Cart -->
-    <button class="open-cart-btn" @click="toggleCart()"><span class="material-symbols-outlined">
-        shopping_cart
-        </span></button>
+   <!-- Button to Open Cart -->
+   <button class="open-cart-btn" @click="toggleCart()"><span class="material-symbols-outlined">shopping_cart</span></button>
 
-    <!-- Cart Menu -->
-    <div class="cart-menu" :class="{ 'active': cartVisible }">
-        <div class="cart-header">
-            <h3>Keranjang Belanja</h3>
-            <span class="close-cart" @click="toggleCart()">✖</span>
-        </div>
-        <div class="cart-body">
-            <ul>
-                <template x-for="(item, index) in cartItems" :key="item.pid">
-                    <li class="cart-item">
-                        <div class="cart-item-info">
-                            <span x-text="item.nama_produk"></span>
-                            <div class="cart-item-quantity">
-                                <button @click="decreaseQuantity(index)" class="quantity-btn">-</button>
-                                <input type="number" x-model="item.quantity" @change="updateCart(index)" min="1">
-                                <button @click="increaseQuantity(index)" class="quantity-btn">+</button>
-                                <span>Rp <span x-text="item.harga * item.quantity"></span></span>
-                            </div>
-                        </div>
-                        <button @click="removeFromCart(index)">Hapus</button>
-                    </li>
-                </template>
-            </ul>
-        </div>
-        <div class="cart-total">
-            Total: Rp <span x-text="cartTotal"></span>
+   <!-- Cart Menu -->
+   <div class="cart-menu" :class="{ 'active': cartVisible }">
+       <div class="cart-header">
+           <h3>Keranjang Belanja</h3>
+           <span class="close-cart" @click="toggleCart()">✖</span>
+       </div>
+
+       <div class="cart-body">
+           <ul>
+               <template x-for="(item, index) in cartItems" :key="item.pid">
+                   <li class="cart-item">
+                       <div class="cart-item-info">
+                           <span x-text="item.nama_produk"></span>
+                           <div class="cart-item-quantity">
+                               <button @click="decreaseQuantity(item.pid)">-</button>
+                               <input type="number" x-model="item.quantity" @change="updateQuantity(item.pid, item.quantity)" min="1">
+                               <button @click="increaseQuantity(item.pid)">+</button>
+                               <span>Rp <span x-text="item.harga * item.quantity"></span></span>
+                           </div>
+                       </div>
+                       <button @click="removeFromCart(item.pid)">Hapus</button>
+                   </li>
+               </template>
+           </ul>
+       </div>
+       <div class="cart-total">
+           Total: Rp <span x-text="cartTotal"></span>
+       </div>
+       <div id="btnBeli" class="bg-biodata">
+        <div id="container-biodata">
+            <div class="biodata">
+                <span class="material-symbols-outlined">shopping_bag</span>
+            </div>
+            <div id="text-button">
+                <p>Buy</p>
+            </div>
         </div>
     </div>
-
+   </div>
     <div id="background">
         <div id="co-background">
             @foreach ($produk as $p)
@@ -74,7 +82,7 @@
                             <p id="banyak-kuantitas">Banyak : </p>
                         </div>
                         <div id="text-kuantitas-produk">
-                            <input type="number" name="qty" class="qty" value="1" min="1">
+                            <input type="number" name="qty" class="qty" value="1" min="1" id="qty-{{ $p->pid }}">
                         </div>
                         <div id="text-stock">
                             <p id="stock">Stock Tersedia : </p>
@@ -92,14 +100,14 @@
                             <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
                         </div>
                     </div>
-                    {{-- Btn Beli --}}
-                    <div id="btnBeli" class="bg-biodata">
+                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
+                    <div id="abtnBeli" class="bg-biodata">
                         <div id="container-biodata">
                             <div class="biodata">
                                 <span class="material-symbols-outlined">shopping_bag</span>
                             </div>
                             <div id="text-button">
-                                <p>Add To Cart</p>
+                                <p>Buy</p>
                             </div>
                         </div>
                     </div>
@@ -252,10 +260,10 @@
                 pos: document.getElementById("pos").value,
                 nohp: document.getElementById("nohp").value,
                 kode_produk: document.getElementById("kode_produk").value,
-                modal_total: document.getElementById("modal_total").value,
-                nama_produk: document.querySelector("#nama-produk p").textContent,
-                modal_qty: document.getElementById("modal_qty").value,
-                modal_harga: document.getElementById("modal_harga").value,
+                // modal_total: document.getElementById("modal_total").value,
+                // nama_produk: document.querySelector("#nama-produk").textContent,
+                // modal_qty: document.getElementById("modal_qty").value,
+                // modal_harga: document.getElementById("modal_harga").value,
                 kategori_id: document.getElementById("kategori_id").value,
                 cost: cost,  // Fix: Store the cost correctly
                 province: province,  // Fix: Added province to formData
@@ -382,74 +390,103 @@
         });
             </script>
     <script>
-        function cartData() {
-            return {
-                cartItems: @json(session('keranjang', [])), // Fetch cart items from session
-                cartTotal: 0,
-                cartVisible: false,
-        
-                init() {
-                    this.updateCartTotal();
-                },
-        
-                toggleCart() {
-                    console.log('ded');
-                    this.cartVisible = !this.cartVisible;
-                },
-        
-                addToCart(pid, nama_produk, harga) {
-                    let item = this.cartItems.find(item => item.pid === pid);
-                    if (item) {
-                        item.quantity++;
-                    } else {
-                        this.cartItems.push({ pid, nama_produk, harga, quantity: 1 });
-                    }
-                    this.updateCartTotal();
-                    this.syncCartWithSession();
-                },
-        
-                updateCartTotal() {
-                    this.cartTotal = this.cartItems.reduce((total, item) => total + item.quantity * item.harga, 0);
-                },
-        
-                removeFromCart(index) {
-                    this.cartItems.splice(index, 1);
-                    this.updateCartTotal();
-                    this.syncCartWithSession();
-                },
-        
-                updateCart(index) {
-                    if (this.cartItems[index].quantity <= 0) {
-                        this.removeFromCart(index);
-                    }
-                    this.updateCartTotal();
-                    this.syncCartWithSession();
-                },
-        
-                syncCartWithSession() {
-                    fetch('/sync-cart', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        body: JSON.stringify({ cart: this.cartItems })
-                    });
-                },
-        
-                increaseQuantity(index) {
-                    this.cartItems[index].quantity++;
-                    this.updateCartTotal();
-                },
-        
-                decreaseQuantity(index) {
-                    if (this.cartItems[index].quantity > 1) {
-                        this.cartItems[index].quantity--;
+       function cartData() {
+                return {
+                    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // Initialize cartItems from localStorage or as an empty array
+                    cartTotal: 0,
+                    cartVisible: false,
+
+                    init() {
                         this.updateCartTotal();
-                    }
-                },
+                    },
+
+                    toggleCart() {
+                        this.cartVisible = !this.cartVisible;
+                    },
+
+                    addToCart(pid, nama_produk, harga, event) {
+                        let qtyElement = event.target.closest('#content').querySelector('.qty');
+                        let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
+                        let subTotal = qty * harga; // Calculate sub-total for this product
+
+                        // Check if the item already exists in the cartItems array
+                        let product = this.cartItems.find(item => item.pid === pid);
+                        if (product) {
+                            product.quantity += qty; // Update the quantity
+                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                        } else {
+                            // Add new product to cartItems array
+                            this.cartItems.push({ pid, nama_produk, harga, quantity: qty, subTotal: subTotal });
+                        }
+
+                        // Update the cart and localStorage
+                        this.updateCartTotal();
+                        this.saveCartToLocalStorage(); // Save the updated cartItems array to localStorage
+                    },
+
+                    removeFromCart(pid) {
+                        // Find the product index
+                        let productIndex = this.cartItems.findIndex(item => item.pid === pid);
+                        if (productIndex !== -1) {
+                            // Remove product from the array
+                            this.cartItems.splice(productIndex, 1);
+                        }
+
+                        // Update the cart and localStorage
+                        this.updateCartTotal();
+                        this.saveCartToLocalStorage(); // Update localStorage after removal
+                    },
+
+                    updateQuantity(pid, newQty) {
+                        // Find the product in the array
+                        let product = this.cartItems.find(item => item.pid === pid);
+                        if (product) {
+                            product.quantity = newQty;
+                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                        }
+
+                        // Update the cart and localStorage
+                        this.updateCartTotal();
+                        this.saveCartToLocalStorage(); // Update localStorage when quantity changes
+                    },
+
+                    updateCartTotal() {
+                        // Update the overall cart total (sum of all sub-totals)
+                        this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
+                    },
+
+                    saveCartToLocalStorage() {
+                        localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
+                    },
+
+                    increaseQuantity(pid) {
+                        let product = this.cartItems.find(item => item.pid === pid);
+                        if (product) {
+                            product.quantity++; // Increase quantity
+                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                        }
+
+                        // Update cart and save changes
+                        this.updateCartTotal();
+                        this.saveCartToLocalStorage(); // Save updated data to localStorage
+                    },
+
+                    decreaseQuantity(pid) {
+                        let product = this.cartItems.find(item => item.pid === pid);
+                        if (product && product.quantity > 1) {
+                            product.quantity--; // Decrease quantity
+                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                        } else if (product && product.quantity === 1) {
+                            // If quantity is 1, remove the item
+                            this.removeFromCart(pid);
+                        }
+
+                        // Update cart and save changes
+                        this.updateCartTotal();
+                        this.saveCartToLocalStorage(); // Save updated data to localStorage
+                    },
+                };
             }
-        }
     </script>
 </body>
 </html>
