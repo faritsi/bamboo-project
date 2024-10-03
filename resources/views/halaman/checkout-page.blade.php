@@ -115,9 +115,15 @@ document.getElementById('pay-button').onclick = function() {
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courier_service");
 
-    // Retrieve cartItems from localStorage
-    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    var kode_produk = localStorage.getItem("kode_produk");
+    var kategori_id = localStorage.getItem("kategori_id");
+    var nama_produk = localStorage.getItem("nama_produk");
+    var qty = localStorage.getItem("modal_qty");
+    var harga = localStorage.getItem("modal_harga");
 
+    // Retrieve cartItems from localStorage
+    // var cartItems = JSON.parse(localStorage.getItem("cartItems") || '[]');
+    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
     // Prepare the form data manually
     var formData = {
         _token: $('meta[name="csrf-token"]').attr('content'),
@@ -130,7 +136,12 @@ document.getElementById('pay-button').onclick = function() {
         nohp: nohp,
         province: province,
         courier: courier,
-        courier_service: courier_service
+        courier_service: courier_service,
+        kode_produk: kode_produk,
+        kategori_id: kategori_id,
+        nama_produk: nama_produk,
+        qty: qty,
+        harga: harga
     };
 
     // Add each cart item to the formData with indexed keys
@@ -148,6 +159,7 @@ document.getElementById('pay-button').onclick = function() {
         data: formData, // Send form-encoded data
         success: function(data) {
             snap.pay(data.snap_token); // Call Midtrans Snap for payment
+            localStorage.clear(); // clear localstorage
         },
         error: function(xhr) {
             console.log(xhr.responseText); // Log error for debugging

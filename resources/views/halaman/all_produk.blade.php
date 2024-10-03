@@ -173,6 +173,7 @@ function cartData() {
 </script>
 <script>
     $(document).ready(function(){
+        localStorage.clear();
         // Fungsi untuk menampilkan produk berdasarkan kategori_id
         function filterProduk(kategori_id) {
             if (kategori_id === "semua") {

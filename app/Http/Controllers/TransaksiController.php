@@ -29,7 +29,8 @@ class TransaksiController extends Controller
         try {
             // Log the request data for debugging purposes
             Log::info('Create Transaction Request Data:', $request->all());
-    
+            $gen_id_order = 'ORDER-' . rand();
+
             // Validate the incoming request
             $validated = $request->validate([
                 'pembayaran' => 'required|numeric',
@@ -45,7 +46,22 @@ class TransaksiController extends Controller
                 'nohp' => 'required|string',
                 'cost' => 'required|numeric' // Validate shipping cost (ongkir)
             ]);
-    
+            $transaksi = new Transaksi([
+                // 'id'=>$id,
+                'order_id' => $gen_id_order,
+                'kode_produk' => $request->kode_produk,
+                'kategori_id' => $request->kategori_id,
+                'total_pembayaran' => $request->pembayaran,
+                'nama_produk' => $request->nama_produk,
+                'qty' => $request->qty,
+                'harga' => $request->harga,
+                'name' => $request->name,
+                'nohp' => $request->nohp,
+                'alamat' => $request->alamat,
+                'pos' => $request->pos,
+                'city' => $request->city,
+                'status' => 'capture'
+            ]);
             // Prepare the array for Midtrans items (this handles multiple products)
             $itemDetails = [];
             foreach ($validated['products'] as $product) {
@@ -56,7 +72,7 @@ class TransaksiController extends Controller
                     'price' => $product['price'],
                 ];
             }
-    
+            
             // Add shipping cost (ongkir) as a separate item
             $itemDetails[] = [
                 'id' => 'ongkir',
@@ -74,7 +90,7 @@ class TransaksiController extends Controller
             // Prepare Midtrans transaction details
             $params = [
                 'transaction_details' => [
-                    'order_id' => 'ORDER-' . rand(),
+                    'order_id' => $gen_id_order,
                     'gross_amount' => $validated['pembayaran'], // The total payment amount
                 ],
                 'item_details' => $itemDetails, // The array of products with quantities and prices
@@ -105,7 +121,11 @@ class TransaksiController extends Controller
     
             // Generate Snap token
             $snapToken = Snap::getSnapToken($params);
-    
+            $transaksi->save();
+            // $produk = DB::table('produks')->where('kode_produk', $request->kode_produk)->first();
+            // DB::table('produks')->where('kode_produk', $request->kode_produk)->update([
+            //     'jumlah_produk' => intval($produk->jumlah_produk) - intval($request->qty),
+            // ]);
             // Return Snap token for the frontend to trigger payment
             return response()->json([
                 'snap_token' => $snapToken
