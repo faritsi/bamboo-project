@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courier_service");
+    // var kode_produk = localStorage.getItem("kode_produk");
 
     // Retrieve cartItems array from localStorage (instead of products)
     var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -82,6 +83,7 @@ document.addEventListener("DOMContentLoaded", function() {
     cartItems.forEach(function(item) {
         var itemHtml = `
             <div class="order-item">
+                <p><strong>Kode Produk:</strong> ${item.kode_produk}</p>
                 <p><strong>Nama Barang:</strong> ${item.nama_produk}</p>
                 <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
                 <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
@@ -137,7 +139,7 @@ document.getElementById('pay-button').onclick = function() {
         province: province,
         courier: courier,
         courier_service: courier_service,
-        kode_produk: kode_produk,
+        // kode_produk: kode_produk,
         kategori_id: kategori_id,
         nama_produk: nama_produk,
         qty: qty,
@@ -147,6 +149,7 @@ document.getElementById('pay-button').onclick = function() {
     // Add each cart item to the formData with indexed keys
     cartItems.forEach(function(item, index) {
         formData[`products[${index}][id]`] = item.pid;
+        formData[`products[${index}][kode]`] = item.kode_produk;
         formData[`products[${index}][name]`] = item.nama_produk;
         formData[`products[${index}][quantity]`] = item.quantity;
         formData[`products[${index}][price]`] = item.harga;

@@ -45,7 +45,7 @@
                             </h4>
                             <li><a href="/home"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
                             <li><a href="#"><span class="material-symbols-outlined">monitoring</span> Analytic</a></li>
-                            <li><a href="#"><span class="material-symbols-outlined">attach_money</span> Pembelian</a></li>
+                            <li><a href="/pembelian"><span class="material-symbols-outlined">attach_money</span> Pembelian</a></li>
                             <h4>
                                 <span>General</span>
                                 <div id="menu-seperate"></div>
@@ -74,7 +74,7 @@
                                 <img src="https://via.placeholder.com/800x600" alt="profile-img" />
                                 <div id="user-detail">
                                     <h3>Nama</h3>
-                                    <span>Superadmin</span>
+                                    {{-- <span>{{$u->role->name}}</span> --}}
                                 </div>
                             </div>
                         </div>

@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Transaksi extends Model
 {
     use HasFactory;
-    // protected $fillable = [
+// protected $fillable = [
     //     'order_id',
     //     'kategori_id',
     //     // 'kode_produk'
     // ];
     protected $guarded = ['id'];
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
 }

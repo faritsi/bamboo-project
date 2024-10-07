@@ -13,6 +13,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\coba;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\TransaksiMidtrans;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('sidebar', 'sidebar');
         });
         Route::get('/transactions', [TransaksiController::class, 'index']);
+        Route::get('/pembelian', [TransaksiController::class, 'view_tf']);
         Route::resource('produk', ProdukController::class);
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('admin', AdminController::class);

@@ -100,7 +100,7 @@
                             <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
                         </div>
                     </div>
-                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
+                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}','{{$p->kode_produk}}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
                     <div id="abtnBeli" class="bg-biodata">
                         <div id="container-biodata">
                             <div class="biodata">
@@ -135,7 +135,7 @@
                     <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat" required>
                 </div>
                 <!-- Hidden Inputs -->
-                <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
+                <input type="text" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
                 <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}">
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
@@ -253,13 +253,14 @@
             var courier = document.getElementById("courier").value;
             var courierService = document.getElementById("courier_service").value;
             var cost = document.getElementById("cost").textContent.replace("Rp", "").trim();  // Fix: Use textContent instead of value
+            // var kode_produk = document.getElementById("kode_produk").value;
             var formData = {
                 nama: document.getElementById("name").value,
                 alamat: document.getElementById("alamat").value,
                 city: city,
                 pos: document.getElementById("pos").value,
                 nohp: document.getElementById("nohp").value,
-                kode_produk: document.getElementById("kode_produk").value,
+                // kode_produk: document.getElementById("kode_produk").value,
                 // modal_total: document.getElementById("modal_total").value,
                 // nama_produk: document.querySelector("#nama-produk").textContent,
                 // modal_qty: document.getElementById("modal_qty").value,
@@ -390,103 +391,104 @@
         });
             </script>
     <script>
-       function cartData() {
-                return {
-                    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // Initialize cartItems from localStorage or as an empty array
-                    cartTotal: 0,
-                    cartVisible: false,
-
-                    init() {
-                        this.updateCartTotal();
-                    },
-
-                    toggleCart() {
-                        this.cartVisible = !this.cartVisible;
-                    },
-
-                    addToCart(pid, nama_produk, harga, event) {
-                        let qtyElement = event.target.closest('#content').querySelector('.qty');
-                        let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
-                        let subTotal = qty * harga; // Calculate sub-total for this product
-
-                        // Check if the item already exists in the cartItems array
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity += qty; // Update the quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        } else {
-                            // Add new product to cartItems array
-                            this.cartItems.push({ pid, nama_produk, harga, quantity: qty, subTotal: subTotal });
-                        }
-
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save the updated cartItems array to localStorage
-                    },
-
-                    removeFromCart(pid) {
-                        // Find the product index
-                        let productIndex = this.cartItems.findIndex(item => item.pid === pid);
-                        if (productIndex !== -1) {
-                            // Remove product from the array
-                            this.cartItems.splice(productIndex, 1);
-                        }
-
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage after removal
-                    },
-
-                    updateQuantity(pid, newQty) {
-                        // Find the product in the array
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity = newQty;
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        }
-
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage when quantity changes
-                    },
-
-                    updateCartTotal() {
-                        // Update the overall cart total (sum of all sub-totals)
-                        this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
-                    },
-
-                    saveCartToLocalStorage() {
-                        localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
-                    },
-
-                    increaseQuantity(pid) {
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity++; // Increase quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        }
-
-                        // Update cart and save changes
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
-                    },
-
-                    decreaseQuantity(pid) {
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product && product.quantity > 1) {
-                            product.quantity--; // Decrease quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        } else if (product && product.quantity === 1) {
-                            // If quantity is 1, remove the item
-                            this.removeFromCart(pid);
-                        }
-
-                        // Update cart and save changes
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
-                    },
-                };
-            }
+        function cartData() {
+            return {
+                cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // Initialize cartItems from localStorage or as an empty array
+                cartTotal: 0,
+                cartVisible: false,
+    
+                init() {
+                    this.updateCartTotal();
+                },
+    
+                toggleCart() {
+                    this.cartVisible = !this.cartVisible;
+                },
+    
+                addToCart(pid, nama_produk, kode_produk, harga, event) {
+                    let qtyElement = event.target.closest('#content').querySelector('.qty');
+                    let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
+                    let subTotal = qty * harga; // Calculate sub-total for this product
+                    
+                    // Check if the item already exists in the cartItems array
+                    let product = this.cartItems.find(item => item.pid === pid);
+                    if (product) {
+                        product.quantity += qty; // Update the quantity
+                        product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                    } else {
+                        // Add new product to cartItems array
+                        this.cartItems.push({ pid, nama_produk, kode_produk, harga, quantity: qty, subTotal: subTotal });
+                    }
+    
+                    // Update the cart and localStorage
+                    this.updateCartTotal();
+                    this.saveCartToLocalStorage(); // Save the updated cartItems array to localStorage
+                },
+    
+                removeFromCart(pid) {
+                    // Find the product index
+                    let productIndex = this.cartItems.findIndex(item => item.pid === pid);
+                    if (productIndex !== -1) {
+                        // Remove product from the array
+                        this.cartItems.splice(productIndex, 1);
+                    }
+    
+                    // Update the cart and localStorage
+                    this.updateCartTotal();
+                    this.saveCartToLocalStorage(); // Update localStorage after removal
+                },
+    
+                updateQuantity(pid, newQty) {
+                    // Find the product in the array
+                    let product = this.cartItems.find(item => item.pid === pid);
+                    if (product) {
+                        product.quantity = newQty;
+                        product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                    }
+    
+                    // Update the cart and localStorage
+                    this.updateCartTotal();
+                    this.saveCartToLocalStorage(); // Update localStorage when quantity changes
+                },
+    
+                updateCartTotal() {
+                    // Update the overall cart total (sum of all sub-totals)
+                    this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
+                },
+    
+                saveCartToLocalStorage() {
+                    localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
+                },
+    
+                increaseQuantity(pid) {
+                    let product = this.cartItems.find(item => item.pid === pid);
+                    if (product) {
+                        product.quantity++; // Increase quantity
+                        product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                    }
+    
+                    // Update cart and save changes
+                    this.updateCartTotal();
+                    this.saveCartToLocalStorage(); // Save updated data to localStorage
+                },
+    
+                decreaseQuantity(pid) {
+                    let product = this.cartItems.find(item => item.pid === pid);
+                    if (product && product.quantity > 1) {
+                        product.quantity--; // Decrease quantity
+                        product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                    } else if (product && product.quantity === 1) {
+                        // If quantity is 1, remove the item
+                        this.removeFromCart(pid);
+                    }
+    
+                    // Update cart and save changes
+                    this.updateCartTotal();
+                    this.saveCartToLocalStorage(); // Save updated data to localStorage
+                },
+            };
+        }
     </script>
+    
 </body>
 </html>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use App\Models\Kategori;
+use App\Models\Produk;
+use App\Models\User;
 use App\Models\TransaksiMidtrans;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
@@ -10,6 +13,9 @@ use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -22,7 +28,15 @@ class TransaksiController extends Controller
     {
         $this->midtransService = $midtransService;
     }
-
+    public function view_tf() {
+        $user = Auth::user();
+        $produk = Produk::all();
+        $kategori = Kategori::all();
+        $tf = Transaksi::all();
+        return view('admin.transaksi', [
+            'title' => 'Pembelian'
+        ], compact('produk', 'user', 'kategori', 'tf'));
+    }
 
     public function createTransaction(Request $request)
     {
@@ -35,58 +49,71 @@ class TransaksiController extends Controller
             $validated = $request->validate([
                 'pembayaran' => 'required|numeric',
                 'products' => 'required|array', // Ensure products is an array
-                'products.*.id' => 'required|string', // Validate each product's ID
-                'products.*.name' => 'required|string', // Validate each product's name
-                'products.*.quantity' => 'required|numeric', // Validate each product's quantity
-                'products.*.price' => 'required|numeric', // Validate each product's price
+                'products.*.id' => 'required|string',
+                'products.*.kode' => 'required|string',
+                'products.*.name' => 'required|string',
+                'products.*.quantity' => 'required|numeric',
+                'products.*.price' => 'required|numeric',
                 'name' => 'required|string',
                 'alamat' => 'required|string',
                 'city' => 'required|string',
                 'pos' => 'required|string',
                 'nohp' => 'required|string',
-                'cost' => 'required|numeric' // Validate shipping cost (ongkir)
+                'cost' => 'required|numeric',
+                // 'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
+                'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
             ]);
-            $transaksi = new Transaksi([
-                // 'id'=>$id,
-                'order_id' => $gen_id_order,
-                'kode_produk' => $request->kode_produk,
-                'kategori_id' => $request->kategori_id,
-                'total_pembayaran' => $request->pembayaran,
-                'nama_produk' => $request->nama_produk,
-                'qty' => $request->qty,
-                'harga' => $request->harga,
-                'name' => $request->name,
-                'nohp' => $request->nohp,
-                'alamat' => $request->alamat,
-                'pos' => $request->pos,
-                'city' => $request->city,
-                'status' => 'capture'
-            ]);
-            // Prepare the array for Midtrans items (this handles multiple products)
+
+            // Iterasi melalui setiap produk dan simpan transaksi per produk
+            foreach ($validated['products'] as $product) {
+                $transaksi = new Transaksi([
+                    'order_id' => $gen_id_order,
+                    'kode_produk' => $product['kode'],
+                    'kategori_id' => $validated['kategori_id'],
+                    'total_pembayaran' => $validated['pembayaran'], // Total pembayaran tetap sama untuk semua
+                    'nama_produk' => $product['name'], // Nama produk dari array products
+                    'qty' => $product['quantity'], // Jumlah dari produk
+                    'harga' => $product['price'], // Harga dari produk
+                    'name' => $validated['name'],
+                    'nohp' => $validated['nohp'],
+                    'alamat' => $validated['alamat'],
+                    'pos' => $validated['pos'],
+                    'city' => $validated['city'],
+                    'status' => 'capture'
+                ]);
+
+                Log::info('Data transaksi yang akan disimpan:', $transaksi->toArray());
+
+                // Simpan transaksi
+                $transaksi->save();
+            }
+
+            // Add shipping cost (ongkir) as a separate item in the Midtrans payload
             $itemDetails = [];
             foreach ($validated['products'] as $product) {
                 $itemDetails[] = [
                     'id' => $product['id'],
+                    'kode' => $product['kode'],
                     'name' => $product['name'],
                     'quantity' => $product['quantity'],
                     'price' => $product['price'],
                 ];
             }
-            
-            // Add shipping cost (ongkir) as a separate item
+
+            // Add shipping cost as an item
             $itemDetails[] = [
                 'id' => 'ongkir',
                 'name' => 'Ongkir',
                 'quantity' => 1,
                 'price' => $validated['cost'],
             ];
-    
+
             // Set up Midtrans configuration
             Config::$serverKey = env('MIDTRANS_SERVER_KEY', 'SB-Mid-server-9zcBME8uz3JAPNkLONOYiCEa');
             Config::$isProduction = false;
             Config::$isSanitized = true;
             Config::$is3ds = true;
-    
+
             // Prepare Midtrans transaction details
             $params = [
                 'transaction_details' => [
@@ -118,14 +145,10 @@ class TransaksiController extends Controller
                     'finish' => url('/catalog')
                 ]
             ];
-    
+
             // Generate Snap token
             $snapToken = Snap::getSnapToken($params);
-            $transaksi->save();
-            // $produk = DB::table('produks')->where('kode_produk', $request->kode_produk)->first();
-            // DB::table('produks')->where('kode_produk', $request->kode_produk)->update([
-            //     'jumlah_produk' => intval($produk->jumlah_produk) - intval($request->qty),
-            // ]);
+
             // Return Snap token for the frontend to trigger payment
             return response()->json([
                 'snap_token' => $snapToken
@@ -133,11 +156,13 @@ class TransaksiController extends Controller
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error creating transaction: ' . $e->getMessage());
-    
+
             // Return error response
             return response()->json(['error' => 'Something went wrong.'], 500);
         }
     }
+
+
     public function index()
     {
         $transactions = $this->midtransService->getAllStoredTransactions();
@@ -159,61 +184,13 @@ class TransaksiController extends Controller
         return view('admin.transaksi', compact('transactions'));
     }
 
-    // public function notificationHandler(Request $request)
-    // {
-    //     try {
-    //         // Instantiate Midtrans notification object
-    //         $notification = new Notification();
-
-    //         // Retrieve order_id and transaction status from notification
-    //         $orderId = $notification->order_id;
-    //         $transactionStatus = $notification->transaction_status;
-    //         $fraudStatus = $notification->fraud_status;
-
-    //         // Log the notification for debugging purposes
-    //         Log::info("Midtrans Notification: Order ID: $orderId, Status: $transactionStatus");
-
-    //         // Find the corresponding transaction in your database
-    //         // $transaction = Transaction::where('order_id', $orderId)->firstOrFail();
-
-    //         // Handle transaction statuses
-    //         if ($transactionStatus == 'capture') {
-    //             // For credit card transactions, check whether the transaction is challenged by fraud detection
-    //             if ($fraudStatus == 'challenge') {
-    //                 $transaction->status = 'challenge';
-    //             } else {
-    //                 $transaction->status = 'success';
-    //             }
-    //         } elseif ($transactionStatus == 'settlement') {
-    //             // Update the transaction status to success
-    //             $transaction->status = 'success';
-    //         } elseif ($transactionStatus == 'pending') {
-    //             // Update the transaction status to pending
-    //             $transaction->status = 'pending';
-    //         } elseif ($transactionStatus == 'deny') {
-    //             // Update the transaction status to denied
-    //             $transaction->status = 'denied';
-    //         } elseif ($transactionStatus == 'expire') {
-    //             // Update the transaction status to expired
-    //             $transaction->status = 'expired';
-    //         } elseif ($transactionStatus == 'cancel') {
-    //             // Update the transaction status to canceled
-    //             $transaction->status = 'canceled';
-    //         }
-
-    //         // Save the updated status to the database
-    //         $transaction->save();
-
-    //         return response()->json(['message' => 'Notification successfully processed'], 200);
-    //     } catch (\Exception $e) {
-    //         Log::error('Error handling Midtrans notification: ' . $e->getMessage());
-    //         return response()->json(['error' => 'Failed to process notification'], 500);
-    //     }
-    // }
-
     public function notificationHandler(Request $request)
     {
         try {
+            // Konfigurasi Midtrans
+            Config::$serverKey = env('MIDTRANS_SERVER_KEY', 'SB-Mid-server-9zcBME8uz3JAPNkLONOYiCEa');
+            Config::$isProduction = false; // Ubah ke true jika menggunakan mode produksi
+
             // Instantiate Midtrans notification object
             $notification = new Notification();
 
@@ -229,13 +206,17 @@ class TransaksiController extends Controller
                 'fraud_status' => $fraudStatus
             ]);
 
-            // For testing purposes, find the corresponding transaction in the database
-            // $transaction = Transaction::where('order_id', $orderId)->firstOrFail();
+            // Cari transaksi berdasarkan order_id
+            $transactions = Transaksi::where('order_id', $orderId)->get();
+
+            if ($transactions->isEmpty()) {
+                return response()->json(['error' => 'Transaction not found'], 404);
+            }
 
             // Initialize the new status variable
             $newStatus = null;
 
-            // Handle transaction statuses without saving to the database
+            // Tentukan status baru berdasarkan status dari Midtrans
             if ($transactionStatus == 'capture') {
                 if ($fraudStatus == 'challenge') {
                     $newStatus = 'challenge';
@@ -254,21 +235,49 @@ class TransaksiController extends Controller
                 $newStatus = 'canceled';
             }
 
-            // Log the new status for testing purposes
-            Log::info('Transaction Status Update: ', [
+            // Perbarui status setiap transaksi yang terkait dengan order_id
+            foreach ($transactions as $transaction) {
+                $transaction->status = $newStatus;
+                $transaction->save();
+
+                // Jika status transaksi adalah 'success', kurangi stok produk
+                if ($newStatus === 'success') {
+                    // Cari produk berdasarkan kode_produk
+                    $produk = DB::table('produks')->where('kode_produk', $transaction->kode_produk)->first();
+
+                    if ($produk) {
+                        // Kurangi stok produk
+                        $stokBaru = $produk->jumlah_produk - $transaction->qty;
+
+                        // Pastikan stok tidak menjadi negatif
+                        if ($stokBaru < 0) {
+                            $stokBaru = 0;
+                        }
+
+                        // Update stok produk di database
+                        DB::table('produks')->where('kode_produk', $transaction->kode_produk)->update([
+                            'jumlah_produk' => $stokBaru
+                        ]);
+
+                        // Log informasi tentang stok yang sudah dikurangi
+                        Log::info('Stok produk dikurangi: ', [
+                            'kode_produk' => $transaction->kode_produk,
+                            'stok_sekarang' => $stokBaru,
+                            'qty_terjual' => $transaction->qty
+                        ]);
+                    } else {
+                        Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
+                    }
+                }
+            }
+
+            // Log perubahan status
+            Log::info('Transaction Status Updated: ', [
                 'order_id' => $orderId,
-                // 'old_status' => $transaction->status,
                 'new_status' => $newStatus
             ]);
 
-            // Optionally, use dd() for testing if you want to see the values directly in the response
-            // dd('Old Status: ' . $transaction->status, 'New Status: ' . $newStatus);
-
-            // Do not save the transaction to the database during testing
-            // $transaction->status = $newStatus;
-            // $transaction->save();
-
-            return response()->json(['message' => 'Notification received and status logged'], 200);
+            return response()->json(['message' => 'Notification received and status updated, stock adjusted'], 200);
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error handling Midtrans notification: ' . $e->getMessage());
@@ -277,6 +286,8 @@ class TransaksiController extends Controller
             return response()->json(['error' => 'Failed to process notification'], 500);
         }
     }
+
+
     /**
      * Show the form for creating a new resource.
      */
