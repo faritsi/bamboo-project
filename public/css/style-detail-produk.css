@@ -11,15 +11,16 @@ body {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 300px;
+    width: 350px; /* Lebih lebar untuk tampilan yang lebih luas */
     height: 100%;
     background-color: white;
     box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-    transition: right 0.4s ease-in-out; /* Transition untuk animasi muncul */
-    z-index: 100;
+    transition: right 0.4s ease-in-out; /* Animasi transisi saat muncul */
+    /* z-index: 100; */
     padding: 20px;
     display: flex;
     flex-direction: column;
+    border-radius: 10px 0 0 10px; /* Membulatkan sudut kiri cart */
 }
 
 .cart-menu.active {
@@ -32,12 +33,18 @@ body {
     align-items: center;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Memberikan jarak lebih */
+}
+
+.cart-header h3 {
+    font-size: 1.5em;
+    color: #2c3e50;
 }
 
 .cart-body {
     flex-grow: 1;
     overflow-y: auto;
+    padding-right: 10px;
 }
 
 .cart-body ul {
@@ -49,8 +56,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.cart-item:hover {
+    background-color: #f9f9f9;
 }
 
 .cart-item img {
@@ -58,37 +70,63 @@ body {
     height: 50px;
     object-fit: cover;
     margin-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sedikit bayangan di gambar */
 }
 
 .cart-item-info {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+}
+
+.cart-item-info .nama-produk {
+    font-size: 1.1em;
+    color: #34495e;
 }
 
 .cart-item-quantity {
     display: flex;
     align-items: center;
+    margin-top: 5px;
 }
 
-.quantity-btn {
+/* CSS untuk div tombol minus, plus, dan delete */
+.cart-item-quantity .quantity-control,
+.delete-control {
     width: 30px;
     height: 30px;
-    border: 1px solid #ccc;
-    background-color: #f57c00;
-    color: white;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 18px;
-    border-radius: 5px;
-    margin: 0 5px;
+    cursor: pointer;
+    background-color: #f57c00; /* Sama seperti sebelumnya */
+    border-radius: 5px; /* Membulatkan sudut */
+    margin: 0 5px; /* Jarak antar elemen */
+    color: white;
     transition: background-color 0.3s ease;
 }
+.quantity-control .span,
+.delete-control .span {
+    color: #fff;
+}
 
-.quantity-btn:hover {
-    background-color: #ff9800;
+.cart-item-quantity .quantity-control:hover,
+.delete-control:hover {
+    background-color: #ff9800; /* Warna berubah saat hover */
+}
+
+.delete-control {
+    background-color: #e74c3c; /* Merah untuk tombol delete */
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.delete-control:hover {
+    background-color: #c0392b; /* Lebih gelap saat hover */
 }
 
 .cart-item-quantity input {
@@ -102,14 +140,16 @@ body {
 }
 
 .cart-total {
-    font-size: 1.2em;
+    font-size: 1.5em;
+    font-weight: bold;
     text-align: right;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #2c3e50;
 }
 
 .close-cart {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 24px;
     background-color: transparent;
     border: none;
     color: #f57c00;
@@ -133,12 +173,32 @@ body {
     border-radius: 50%;
     cursor: pointer;
     font-size: 24px;
-    z-index: 101;
-    transition: background-color 0.3s ease;
+    /* z-index: 101; */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .open-cart-btn:hover {
-    background-color: #27ae62;
+    background-color: #2ecc71;
+    transform: scale(1.05); /* Efek hover membesarkan sedikit */
+}
+
+#btnBeli {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 15px;
+    background-color: #27ae60;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#btnBeli:hover {
+    background-color: #2ecc71;
+    transform: translateY(-2px); /* Efek hover sedikit naik */
 }
 
 #background {
@@ -238,19 +298,19 @@ body {
     cursor: pointer;
 }
 
-#btnBeli {
+#btnAddCart {
     text-align: center;
     margin-top: 30px;
     padding: 15px;
-    background-color: #27ae60;
+    background-color: #ffc000;
     color: white;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#btnBeli:hover {
-    background-color: #2ecc71;
+#btnAddCart:hover {
+    background-color: #ffd700;
 }
 
 #container-biodata {
@@ -384,18 +444,23 @@ body {
     cursor: not-allowed;
 }
 
-#ongkir,
-#cost {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
+#container-ongkir {
+    display: flex;
+    align-items: center; /* Agar teks sejajar secara vertikal */
+    gap: 10px; /* Menambahkan jarak antar elemen */
+    margin: 30px;
+    justify-content: end;
 }
 
 #ongkir {
     font-weight: bold;
+    color: #2c3e50;
+    font-size: 18px;
 }
 
 #cost {
+    font-weight: normal;
+    font-size: 18px;
     color: #e74c3c;
 }
 
