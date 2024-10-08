@@ -1,0 +1,160 @@
+/* Tabel Pimpinan */
+#table-pimpinan {
+    /* width: 95%; */
+    padding-bottom: 20px;
+    padding-right: 25px;
+    margin: 0 auto;
+}
+
+#table-pimpinan table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-pimpinan th,
+#table-pimpinan td {
+    padding: 10px 0px 10px 5px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#table-pimpinan th:last-child,
+#table-pimpinan td:last-child {
+    border-right: none;
+}
+
+#table-pimpinan thead th {
+    background-color: #d9d9d9;
+    border-right: 1px solid #ccc;
+    text-align: center;
+}
+
+#table-pimpinan th:nth-child(1),
+#table-pimpinan td:nth-child(1) {
+    width: 22px;
+}
+
+#table-pimpinan th:nth-child(2),
+#table-pimpinan td:nth-child(2) {
+    width: 25px;
+}
+
+#table-pimpinan th:nth-child(3),
+#table-pimpinan td:nth-child(3) {
+    width: 150px;
+}
+
+#table-pimpinan th:nth-child(4),
+#table-pimpinan td:nth-child(4) {
+    width: 150px;
+}
+
+#table-pimpinan th:nth-child(5),
+#table-pimpinan td:nth-child(5) {
+    width: 300px;
+}
+
+#table-pimpinan th:nth-child(6),
+#table-pimpinan td:nth-child(6) {
+    width: 100px;
+}
+
+#table-pimpinan .details-row {
+    display: none;
+}
+
+#table-pimpinan .details-row div {
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#table-pimpinan .details-row div:last-child {
+    border-bottom: none;
+}
+
+#table-pimpinan .btn-details {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+}
+
+#table-pimpinan .btn-details.red {
+    background-color: red;
+}
+
+#table-pimpinan .btn-details .material-symbols-outlined {
+    color: white;
+}
+
+#btn-cfg {
+    margin-top: auto;
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* background: #94df07; */
+    border-radius: 50px;
+}
+
+#btn-cfg .btn-edit {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    cursor: pointer;
+}
+
+#btn-cfg .btn-delete {
+    padding-left: 20px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+#table-pimpinan .btn-edit .material-symbols-outlined {
+    color: blue;
+}
+
+#table-pimpinan .btn-delete .material-symbols-outlined {
+    color: red;
+}
+
+#table-pimpinan #btn-edit i {
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#table-pimpinan #btn-edit i:last-child {
+    margin-right: 0;
+}
+
+#table-pimpinan #btn-edit i.fa-pen-to-square {
+    color: blue;
+}
+
+#table-pimpinan #btn-edit i.fa-trash {
+    color: red;
+}
+
+#table-pimpinan .btn-toggle .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#table-pimpinan td span.btn-toggle,
+#table-pimpinan td span#btn-edit {
+    display: flex;
+    align-items: center;
+}
