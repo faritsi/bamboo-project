@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="/css/style-ds-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-tabel-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
+        <link rel="stylesheet" href="/css/style-ingpo.css" />
 
         {{-- JS --}}
         <script src="/js/script-modal.js"></script>
@@ -81,6 +82,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <!-- Content -->
             <main>
