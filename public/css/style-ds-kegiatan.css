@@ -1,68 +1,200 @@
-/* Make modal content scrollable */
-.modal-body {
-    max-height: 60vh;
-    overflow-y: auto;
+/* Global Styling */
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Responsive image preview inside the modal */
-#imagePreview {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+/* Navbar Styling */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2980b9; /* Warna latar belakang navbar */
+    z-index: 999; /* Z-index yang tinggi untuk memastikan navbar di atas elemen lain */
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#imagePreview img.preview-img {
-    max-width: 100%;
-    height: auto;
-    flex: 1 1 calc(33.333% - 10px);
+.navbar a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-/* Container for uploaded images */
-#uploadedImages {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.navbar a:hover {
+    background-color: #1e5799;
 }
 
-.flex-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+/* Section Title Styling */
+.section-title {
+    text-align: center;
+    margin-top: 80px; /* Memberi ruang di bawah navbar */
+    margin-bottom: 30px;
 }
 
-.flex-row {
-    display: flex;
-    gap: 10px;
+.section-title h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2c3e50; /* Warna abu-abu biru yang elegan */
+    letter-spacing: 1.2px;
 }
 
-/* Styling for image container */
-.image-container {
+/* Add Photo Button */
+.add-photo-button {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.add-photo-button .btn {
+    background-color: #2980b9; /* Warna biru tua yang modern */
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.add-photo-button .btn:hover {
+    background-color: #1e5799; /* Warna biru yang lebih tua */
+    transform: translateY(-2px);
+}
+
+/* Photo Gallery Grid (Modern Grid Layout) */
+.grid-gallery {
+    width: 90%; /* Mengatur lebar div grid gallery menjadi 90% */
+    margin: 0 auto; /* Menjadikan grid center di halaman */
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(250px, 1fr)
+    ); /* Grid yang fleksibel */
+    grid-gap: 15px;
+    justify-content: center; /* Menyusun konten grid agar berada di tengah */
+    z-index: 1; /* Z-index lebih rendah sehingga grid berada di belakang navbar */
+}
+
+.photo-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-.image-container img.preview-img {
+.photo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image inside card */
+.photo-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.photo-card:hover .photo-image img {
+    transform: scale(1.05);
+}
+
+/* Details inside the card (Edit & Delete Buttons) */
+.photo-details {
+    padding: 15px;
+    text-align: center;
+}
+
+.photo-details button {
+    margin: 5px;
+    padding: 8px 15px;
+    font-size: 14px;
+    width: 45%;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button styles */
+.photo-details .btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.photo-details .btn-warning:hover {
+    background-color: #d68910;
+}
+
+.photo-details .btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.photo-details .btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Modal Styling */
+.modal-header {
+    background-color: #2980b9;
+    color: white;
+    padding: 15px;
+}
+
+.modal-title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 15px;
+}
+
+.modal-footer .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.modal-footer .btn-primary {
+    background-color: #2980b9;
+    color: white;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #1e5799;
+}
+
+/* Image Preview Styling */
+#imagePreview img {
     max-width: 100%;
     height: auto;
-    margin-bottom: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-edit,
-.btn-delete {
-    margin: 2px;
-}
-
-/* Responsive media queries */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .flex-row {
-        flex-direction: column;
-    }
-
-    #imagePreview img.preview-img,
-    .image-container img.preview-img {
-        flex: 1 1 100%;
+    .add-photo-button .btn {
+        width: 100%;
     }
 }

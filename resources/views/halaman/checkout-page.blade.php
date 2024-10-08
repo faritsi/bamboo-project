@@ -37,7 +37,8 @@
                         <p><strong>Total Pembayaran:</strong> Rp <span id="pembayaran"></span></p>
                     </div>
                 </div>
-                <button type="button" id="pay-button">Konfirmasi Checkout</button>
+                {{-- Konfirm Checkout --}}
+                <div id="pay-button" class="checkout-button">Konfirmasi Checkout</div>
             </div>
         </div>
     </div>

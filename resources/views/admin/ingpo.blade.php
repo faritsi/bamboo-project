@@ -137,6 +137,12 @@
             </div>
         </div>
 
+        <!-- Judul Footer Section -->
+        <div class="section">
+            <h2>Judul Footer</h2>
+            <input type="text" id="judul_footer" name="judul_footer" value="{{ $i->judul_footer }}">
+        </div>
+
         <!-- Deskripsi Footer -->
         <div class="section">
             <h2>Deskripsi Footer</h2>
