@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0px;
+    visibility: hidden;
+}
+
+#background {
+    margin: 0 auto;
+    padding: 0px;
+    width: 100%;
+}
+
+/* TIPE PRODUK */
+#bg-container {
+    margin: 0 auto;
+    padding: 0px;
+    width: 100%;
+}
+
+#container {
+    margin: 0 auto;
+    padding: 0px;
+    width: 90%;
+}
+
+#tipe-produk {
+    margin: 20px 0px;
+    padding: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    text-align: center;
+    gap: 20px;
+}
+
+#tipe-semua-produk,
+#tipe-toples-produk,
+#tipe-layangan-produk,
+#tipe-miniatur-produk {
+    background-color: #ffd700;
+    border: solid #fff;
+    padding: 10px 30px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.kategori.active {
+    background-color: #ff6f61;
+    color: white;
+}
+
+/* CARD PRODUK */
+#content-produk {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* justify-content: center; */
+    padding-top: 20px;
+}
+
+#card-container {
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    width: 220px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    position: relative; /* Penting untuk membuat posisi stok relatif terhadap card */
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+}
+
+#card-container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.35);
+}
+
+#card-image {
+    height: 160px;
+    overflow: hidden;
+    border-radius: 15px 15px 0px 0px;
+}
+
+#card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+#card-container:hover #card-image img {
+    transform: scale(1.1);
+}
+
+#card-text {
+    padding: 15px;
+    text-align: center;
+}
+
+#card-text #nama-produk {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#card-text #harga-produk {
+    font-size: 16px;
+    color: #ff6f61;
+}
+
+/* Stok Produk di Posisi Atas Kanan */
+#card-stok {
+    position: absolute; /* Posisi absolute agar stok bisa berada di atas card */
+    top: 0px; /* Atas */
+    right: 0; /* Kanan */
+    background-color: #32ff32;
+    padding: 5px 10px;
+    border-radius: 0 15px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    z-index: 1; /* Agar berada di depan gambar produk */
+}
