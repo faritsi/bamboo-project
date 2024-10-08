@@ -66,6 +66,13 @@ html {
     align-items: center;
 }
 
+#logo-company img {
+    max-width: 80px;
+    height: auto;
+    display: block;
+    margin-right: 20px;
+}
+
 #header-teks {
     display: flex;
     flex-direction: column; /* Membuat PT. Bintang di atas dan Mitra Kencana di bawah */
@@ -74,14 +81,14 @@ html {
 
 #header-atas {
     color: #ffd700;
-    font-size: 24px;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 
 #header-bawah {
     padding-left: 40px;
     color: #ffd700;
-    font-size: 24px;
+    font-size: 1.5vw;
     font-weight: bold;
 }
 
@@ -888,12 +895,6 @@ html {
     align-items: flex-start;
 }
 
-#logo-company img {
-    width: 80px;
-    height: auto;
-    margin-right: 20px;
-}
-
 #company-details {
     text-align: left;
 }
@@ -970,7 +971,25 @@ html {
 
 /* Responsive Layout */
 /* Responsif untuk layar kecil (ponsel) */
+@media (max-width: 425px) {
+    /* Header */
+    
+}
+
 @media (max-width: 768px) {
+    /* Header */
+    #header-atas {
+        font-size: 6vw;
+    }
+    
+    #header-bawah {
+        font-size: 6vw;
+    }
+
+    #logo-company img {
+        max-width: 60px;
+    }
+
     #burger-menu {
         display: block; /* Tampilkan burger button */
     }
@@ -1011,6 +1030,7 @@ html {
 
 /* Responsif untuk tablet (layar sedang) */
 @media (max-width: 1024px) {
+    /* Header */
     #navbar {
         flex-direction: column;
         align-items: flex-start;
@@ -1019,6 +1039,14 @@ html {
     #header-kiri,
     #header-kanan {
         width: 100%;
+    }
+
+    #header-atas {
+        font-size: 3vw;
+    }
+    
+    #header-bawah {
+        font-size: 3vw;
     }
 
     #header-kanan ul li {
