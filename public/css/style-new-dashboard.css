@@ -10,6 +10,27 @@
 html {
     scroll-behavior: smooth;
 }
+#visitor-counter {
+    position: fixed; /* Mengganti absolute dengan fixed */
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: opacity 0.3s ease; /* Animasi smooth jika ingin menyembunyikan/muncul */
+}
+
+#visitor-counter div {
+    margin-bottom: 5px;
+}
+
+#visitor-counter strong {
+    color: #ffcc00; /* Warna teks yang menonjol */
+}
 
 #background {
     margin: 0 auto;

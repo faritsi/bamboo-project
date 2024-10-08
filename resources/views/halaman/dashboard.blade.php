@@ -239,6 +239,12 @@
                     </div>
                 </div>
             </div>
+            <div style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 999;">
+                <p>Total Visitors Today: {{ $visitorCounts['today'] }}</p>
+                <p>Total Visitors This Week: {{ $visitorCounts['thisWeek'] }}</p>
+                <p>Total Visitors This Month: {{ $visitorCounts['thisMonth'] }}</p>
+                <p>Total Visits (All Time): {{ $visitorCounts['totalVisits'] }}</p>
+            </div>
         </div>
     </div>
 
