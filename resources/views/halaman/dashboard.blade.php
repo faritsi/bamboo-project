@@ -240,11 +240,21 @@
                 </div>
             </div>
             <div style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 999;">
-                <p>Total Visitors Today: {{ $visitorCounts['today'] }}</p>
-                <p>Total Visitors This Week: {{ $visitorCounts['thisWeek'] }}</p>
-                <p>Total Visitors This Month: {{ $visitorCounts['thisMonth'] }}</p>
-                <p>Total Visits (All Time): {{ $visitorCounts['totalVisits'] }}</p>
+                <!-- Icon : Today's Visitor Count -->
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined mr-2">run_circle</span>
+                    <span class="mr-1">:</span>
+                    <p class="mb-0">{{ $visitorCounts['today'] }}</p>
+                </div>
+            
+                <!-- Icon : Total Visits (All Time) -->
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined mr-2">groups_3</span>
+                    <span class="mr-1">:</span>
+                    <p class="mb-0">{{ $visitorCounts['totalVisits'] }}</p>
+                </div>
             </div>
+            
         </div>
     </div>
 

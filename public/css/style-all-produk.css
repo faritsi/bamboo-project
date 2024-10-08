@@ -6,11 +6,7 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
-.disabled-product {
-    pointer-events: none; /* Disable clicking */
-    opacity: 0.5; /* Make the product look grayed out */
-    color: gray;
-}
+
 .clearfix:after {
     clear: both;
     content: ".";

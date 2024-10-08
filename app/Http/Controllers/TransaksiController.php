@@ -51,6 +51,7 @@ class TransaksiController extends Controller
                 'products' => 'required|array', // Ensure products is an array
                 'products.*.id' => 'required|string', // Validate each product's ID
                 'products.*.name' => 'required|string', // Validate each product's name
+                'products.*.kode' => 'required|string', // Validate each product's name
                 'products.*.quantity' => 'required|numeric', // Validate each product's quantity
                 'products.*.price' => 'required|numeric', // Validate each product's price
                 'name' => 'required|string',

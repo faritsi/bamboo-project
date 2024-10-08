@@ -46,123 +46,109 @@
 </html>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Retrieve biodata from localStorage
-    var nama = localStorage.getItem("nama");
-    var alamat = localStorage.getItem("alamat");
-    var city = localStorage.getItem("city");
-    var pos = localStorage.getItem("pos");
-    var nohp = localStorage.getItem("nohp");
-    var province = localStorage.getItem("province");
-    var courier = localStorage.getItem("courier");
-    var courier_service = localStorage.getItem("courier_service");
-    // var kode_produk = localStorage.getItem("kode_produk");
-
-    // Retrieve cartItems array from localStorage (instead of products)
-    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-    // Retrieve shipping cost (ongkir) from localStorage
-    var cost = parseFloat(localStorage.getItem("cost")) || 0;
-
-    // Calculate total payment (sub-totals + shipping cost)
-    var totalPayment = cartItems.reduce((sum, item) => sum + item.subTotal, 0) + cost;
-
-    // Save totalPayment to localStorage
-    localStorage.setItem("totalPayment", totalPayment);
-
-    // Display the biodata
-    document.getElementById("name").innerText = nama;
-    document.getElementById("alamat").innerText = alamat;
-    document.getElementById("city").innerText = city;
-    document.getElementById("pos").innerText = pos;
-    document.getElementById("nohp").innerText = nohp;
-    document.getElementById("province").innerText = province;
-    document.getElementById("courier").innerText = courier + ' - ' + courier_service;
-
-    // Display the cartItems in the order summary
-    var orderItemsContainer = document.getElementById("order-items");
-    cartItems.forEach(function(item) {
-        var itemHtml = `
-            <div class="order-item">
-                <p><strong>Kode Produk:</strong> ${item.kode_produk}</p>
-                <p><strong>Nama Barang:</strong> ${item.nama_produk}</p>
-                <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
-                <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
-            </div>
-        `;
-        orderItemsContainer.innerHTML += itemHtml;
+    document.addEventListener("DOMContentLoaded", function() {
+        // Retrieve biodata from localStorage
+        var nama = localStorage.getItem("nama");
+        var alamat = localStorage.getItem("alamat");
+        var city = localStorage.getItem("city");
+        var pos = localStorage.getItem("pos");
+        var nohp = localStorage.getItem("nohp");
+        var province = localStorage.getItem("province");
+        var courier = localStorage.getItem("courier");
+        var courier_service = localStorage.getItem("courier_service");
+        // var kode_produk = localStorage.getItem("kode_produk");
+        // Retrieve cartItems array from localStorage (instead of products)
+        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        // Retrieve shipping cost (ongkir) from localStorage
+        var cost = parseFloat(localStorage.getItem("cost")) || 0;
+        // Calculate total payment (sub-totals + shipping cost)
+        var totalPayment = cartItems.reduce((sum, item) => sum + item.subTotal, 0) + cost;
+        // Save totalPayment to localStorage
+        localStorage.setItem("totalPayment", totalPayment);
+        // Display the biodata
+        document.getElementById("name").innerText = nama;
+        document.getElementById("alamat").innerText = alamat;
+        document.getElementById("city").innerText = city;
+        document.getElementById("pos").innerText = pos;
+        document.getElementById("nohp").innerText = nohp;
+        document.getElementById("province").innerText = province;
+        document.getElementById("courier").innerText = courier + ' - ' + courier_service;
+        // Display the cartItems in the order summary
+        var orderItemsContainer = document.getElementById("order-items");
+        cartItems.forEach(function(item) {
+            var itemHtml = `
+                <div class="order-item">
+                    <p><strong>Kode Produk:</strong> ${item.kode_produk}</p>
+                    <p><strong>Nama Barang:</strong> ${item.nama_produk}</p>
+                    <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
+                    <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
+                </div>
+            `;
+            orderItemsContainer.innerHTML += itemHtml;
+        });
+        // Display the shipping cost (ongkir) and total payment
+        document.getElementById("cost").innerText = cost.toFixed(2); // Display ongkir
+        document.getElementById("pembayaran").innerText = totalPayment.toFixed(2); // Display total payment
     });
-
-    // Display the shipping cost (ongkir) and total payment
-    document.getElementById("cost").innerText = cost.toFixed(2); // Display ongkir
-    document.getElementById("pembayaran").innerText = totalPayment.toFixed(2); // Display total payment
-});
-
-// AJAX setup for payment
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-document.getElementById('pay-button').onclick = function() {
-    // Retrieve necessary values from localStorage
-    var nama = localStorage.getItem("nama");
-    var alamat = localStorage.getItem("alamat");
-    var city = localStorage.getItem("city");
-    var pos = localStorage.getItem("pos");
-    var nohp = localStorage.getItem("nohp");
-    var totalPayment = localStorage.getItem("totalPayment");
-    var cost = localStorage.getItem("cost");
-    var province = localStorage.getItem("province");
-    var courier = localStorage.getItem("courier");
-    var courier_service = localStorage.getItem("courier_service");
-
-    var kode_produk = localStorage.getItem("kode_produk");
-    var kategori_id = localStorage.getItem("kategori_id");
-    var nama_produk = localStorage.getItem("nama_produk");
-    var qty = localStorage.getItem("modal_qty");
-    var harga = localStorage.getItem("modal_harga");
-
-    // Retrieve cartItems from localStorage
-    // var cartItems = JSON.parse(localStorage.getItem("cartItems") || '[]');
-    var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    // Prepare the form data manually
-    var formData = {
-        _token: $('meta[name="csrf-token"]').attr('content'),
-        pembayaran: totalPayment,
-        cost: cost,
-        name: nama,
-        alamat: alamat,
-        city: city,
-        pos: pos,
-        nohp: nohp,
-        province: province,
-        courier: courier,
-        courier_service: courier_service
-    };
-
-    // Add each cart item to the formData with indexed keys
-    cartItems.forEach(function(item, index) {
-        formData[`products[${index}][id]`] = item.pid;
-        formData[`products[${index}][kode]`] = item.kode_produk;
-        formData[`products[${index}][name]`] = item.nama_produk;
-        formData[`products[${index}][quantity]`] = item.quantity;
-        formData[`products[${index}][price]`] = item.harga;
-    });
-
-    // Send the AJAX request
-    $.ajax({
-        url: '/create-transaction', // Adjust your backend path
-        method: 'POST',
-        data: formData, // Send form-encoded data
-        success: function(data) {
-            snap.pay(data.snap_token); // Call Midtrans Snap for payment
-        },
-        error: function(xhr) {
-            console.log(xhr.responseText); // Log error for debugging
+    // AJAX setup for payment
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-};
-
-</script>
+    document.getElementById('pay-button').onclick = function() {
+        // Retrieve necessary values from localStorage
+        var nama = localStorage.getItem("nama");
+        var alamat = localStorage.getItem("alamat");
+        var city = localStorage.getItem("city");
+        var pos = localStorage.getItem("pos");
+        var nohp = localStorage.getItem("nohp");
+        var totalPayment = localStorage.getItem("totalPayment");
+        var cost = localStorage.getItem("cost");
+        var province = localStorage.getItem("province");
+        var courier = localStorage.getItem("courier");
+        var courier_service = localStorage.getItem("courier_service");
+        var kode_produk = localStorage.getItem("kode_produk");
+        var kategori_id = localStorage.getItem("kategori_id");
+        var nama_produk = localStorage.getItem("nama_produk");
+        var qty = localStorage.getItem("modal_qty");
+        var harga = localStorage.getItem("modal_harga");
+        // Retrieve cartItems from localStorage
+        // var cartItems = JSON.parse(localStorage.getItem("cartItems") || '[]');
+        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        // Prepare the form data manually
+        var formData = {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            pembayaran: totalPayment,
+            cost: cost,
+            name: nama,
+            alamat: alamat,
+            city: city,
+            pos: pos,
+            nohp: nohp,
+            province: province,
+            courier: courier,
+            courier_service: courier_service
+        };
+        // Add each cart item to the formData with indexed keys
+        cartItems.forEach(function(item, index) {
+            formData[`products[${index}][id]`] = item.pid;
+            formData[`products[${index}][kode]`] = item.kode_produk;
+            formData[`products[${index}][name]`] = item.nama_produk;
+            formData[`products[${index}][quantity]`] = item.quantity;
+            formData[`products[${index}][price]`] = item.harga;
+        });
+        // Send the AJAX request
+        $.ajax({
+            url: '/create-transaction', // Adjust your backend path
+            method: 'POST',
+            data: formData, // Send form-encoded data
+            success: function(data) {
+                snap.pay(data.snap_token); // Call Midtrans Snap for payment
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText); // Log error for debugging
+            }
+        });
+    };
+    </script>

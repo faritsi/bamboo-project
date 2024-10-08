@@ -34,20 +34,20 @@
                                     remove
                                 </span>
                             </div>
-                
+
                             <input type="number" x-model="item.quantity" @change="updateQuantity(item.pid, item.quantity)" min="1">
-                            
+
                             <!-- Div untuk tombol plus -->
                             <div class="quantity-control" @click="increaseQuantity(item.pid)">
                                 <span class="material-symbols-outlined">
                                     add
                                 </span>
                             </div>
-                            
+
                             <span>Rp <span x-text="item.harga * item.quantity"></span></span>
                         </div>
                     </div>
-                
+
                     <!-- Div untuk tombol delete -->
                     <div class="delete-control" @click="removeFromCart(item.pid)">
                         <span class="material-symbols-outlined">
@@ -55,7 +55,7 @@
                         </span>
                     </div>
                 </li>
-                
+
                </template>
            </ul>
        </div>
@@ -120,8 +120,7 @@
                             <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
                         </div>
                     </div>
-                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
-                    <div id="abtnBeli" class="bg-biodata">
+                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}','{{$p->kode_produk}}', {{ $p->harga }}, $event)">
                         <div id="container-biodata">
                             <div class="biodata">
                                 <span class="material-symbols-outlined">
@@ -157,7 +156,7 @@
                     <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat" required>
                 </div>
                 <!-- Hidden Inputs -->
-                <input type="text" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
+                <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
                 <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}">
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
@@ -218,59 +217,48 @@
         function calculateTotal(qtyElement) {
             var qty = qtyElement.value;
             var harga = qtyElement.closest('#content').querySelector("#harga").getAttribute("data-harga");
-
             var qtyInt = parseInt(qty, 10);
             var hargaInt = parseInt(harga, 10);
-
             if (isNaN(qtyInt) || isNaN(hargaInt)) {
                 qtyElement.closest('#content').querySelector(".total_pembayaran").value = "";
                 return;
             }
-
             var total = qtyInt * hargaInt;
             qtyElement.closest('#content').querySelector(".total_pembayaran").value = total;
         }
-
         // Kalkulasi harga total saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll(".qty").forEach(function (element) {
                 calculateTotal(element); // Hitung total harga ketika halaman dimuat
-
                 // Kalkulasi ulang ketika jumlah produk diubah
                 element.addEventListener("input", function () {
                     calculateTotal(this);
                 });
             });
         });
-
         // Modal handling
         var modal = document.getElementById("modal-biodata");
         var btn = document.getElementById("btnBeli");
         var span = document.getElementsByClassName("close")[0];
-
         btn.onclick = function() {
             modal.style.display = "flex";
             modal.style.justifyContent = "center";
             modal.style.alignItems = "center";
         }
-
         span.onclick = function() {
             modal.style.display = "none";
         }
-
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
         document.querySelector("#btnBeli").addEventListener("click", function(e) {
             e.preventDefault();
             document.getElementById("modal_qty").value = document.querySelector(".qty").value;
             document.getElementById("modal_harga").value = document.querySelector("#harga").textContent;
             document.getElementById("modal_total").value = document.querySelector(".total_pembayaran").value;
         });
-
         document.querySelector("#cek").addEventListener("click", function(e) {
             e.preventDefault();
             var province = document.getElementById("province").options[document.getElementById("province").selectedIndex].text;
@@ -278,14 +266,13 @@
             var courier = document.getElementById("courier").value;
             var courierService = document.getElementById("courier_service").value;
             var cost = document.getElementById("cost").textContent.replace("Rp", "").trim();  // Fix: Use textContent instead of value
-            // var kode_produk = document.getElementById("kode_produk").value;
             var formData = {
                 nama: document.getElementById("name").value,
                 alamat: document.getElementById("alamat").value,
                 city: city,
                 pos: document.getElementById("pos").value,
                 nohp: document.getElementById("nohp").value,
-                // kode_produk: document.getElementById("kode_produk").value,
+                kode_produk: document.getElementById("kode_produk").value,
                 // modal_total: document.getElementById("modal_total").value,
                 // nama_produk: document.querySelector("#nama-produk").textContent,
                 // modal_qty: document.getElementById("modal_qty").value,
@@ -296,14 +283,11 @@
                 courier: courier,  // Fix: Added courier to formData
                 courierService: courierService  // Fix: Added courier service to formData
             };
-
             for (var key in formData) {
                 localStorage.setItem(key, formData[key]);
             }
-
             window.location.href = "/checkout";
         });
-
         // Implementing checkForm function
         function checkForm() {
             var isDisabled = false;
@@ -320,12 +304,10 @@
                 $(".checkout-button").prop("disabled", false);
             }
         }
-
         // Trigger checkForm on input changes within the modal form
         $("#mainForm input").on("input", function() {
             checkForm();
         });
-
         // Run checkForm initially when the modal opens
         btn.onclick = function() {
             modal.style.display = "flex";
@@ -333,13 +315,11 @@
             modal.style.alignItems = "center";
             checkForm(); // Check form state when modal is opened
         }
-
         // Modal Scrolling
         // Mendapatkan elemen modal dan tombol close
         var modal = document.getElementById("modal-biodata");
         var closeBtn = document.getElementsByClassName("close")[0];
         var body = document.body;
-
         // Saat tombol 'Beli' diklik, modal akan terbuka
         document.getElementById("btnBeli").onclick = function() {
             modal.style.display = "flex"; // Menampilkan modal
@@ -347,13 +327,11 @@
             modal.style.alignItems = "center"; // Pusatkan secara horizontal
             body.style.overflow = "hidden"; // Mengunci scroll halaman belakang
         }
-
         // Saat tombol 'X' diklik, modal akan ditutup
         closeBtn.onclick = function() {
             modal.style.display = "none"; // Sembunyikan modal
             body.style.overflow = "auto"; // Kembalikan scroll halaman belakang
         }
-
         // Jika user mengklik di luar modal, modal akan ditutup
         window.onclick = function(event) {
             if (event.target == modal) {
@@ -514,6 +492,5 @@
             };
         }
     </script>
-    
 </body>
 </html>
