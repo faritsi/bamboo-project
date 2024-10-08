@@ -37,7 +37,8 @@
                         <p><strong>Total Pembayaran:</strong> Rp <span id="pembayaran"></span></p>
                     </div>
                 </div>
-                <button type="button" id="pay-button">Konfirmasi Checkout</button>
+                {{-- Konfirm Checkout --}}
+                <div id="pay-button" class="checkout-button">Konfirmasi Checkout</div>
             </div>
         </div>
     </div>
@@ -138,12 +139,7 @@ document.getElementById('pay-button').onclick = function() {
         nohp: nohp,
         province: province,
         courier: courier,
-        courier_service: courier_service,
-        // kode_produk: kode_produk,
-        kategori_id: kategori_id,
-        nama_produk: nama_produk,
-        qty: qty,
-        harga: harga
+        courier_service: courier_service
     };
 
     // Add each cart item to the formData with indexed keys
@@ -162,7 +158,6 @@ document.getElementById('pay-button').onclick = function() {
         data: formData, // Send form-encoded data
         success: function(data) {
             snap.pay(data.snap_token); // Call Midtrans Snap for payment
-            localStorage.clear(); // clear localstorage
         },
         error: function(xhr) {
             console.log(xhr.responseText); // Log error for debugging

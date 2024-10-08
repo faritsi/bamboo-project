@@ -49,46 +49,19 @@ class TransaksiController extends Controller
             $validated = $request->validate([
                 'pembayaran' => 'required|numeric',
                 'products' => 'required|array', // Ensure products is an array
-                'products.*.id' => 'required|string',
-                'products.*.kode' => 'required|string',
-                'products.*.name' => 'required|string',
-                'products.*.quantity' => 'required|numeric',
-                'products.*.price' => 'required|numeric',
+                'products.*.id' => 'required|string', // Validate each product's ID
+                'products.*.name' => 'required|string', // Validate each product's name
+                'products.*.quantity' => 'required|numeric', // Validate each product's quantity
+                'products.*.price' => 'required|numeric', // Validate each product's price
                 'name' => 'required|string',
                 'alamat' => 'required|string',
                 'city' => 'required|string',
                 'pos' => 'required|string',
                 'nohp' => 'required|string',
-                'cost' => 'required|numeric',
-                // 'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
-                'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
+                'cost' => 'required|numeric' // Validate shipping cost (ongkir)
             ]);
-
-            // Iterasi melalui setiap produk dan simpan transaksi per produk
-            foreach ($validated['products'] as $product) {
-                $transaksi = new Transaksi([
-                    'order_id' => $gen_id_order,
-                    'kode_produk' => $product['kode'],
-                    'kategori_id' => $validated['kategori_id'],
-                    'total_pembayaran' => $validated['pembayaran'], // Total pembayaran tetap sama untuk semua
-                    'nama_produk' => $product['name'], // Nama produk dari array products
-                    'qty' => $product['quantity'], // Jumlah dari produk
-                    'harga' => $product['price'], // Harga dari produk
-                    'name' => $validated['name'],
-                    'nohp' => $validated['nohp'],
-                    'alamat' => $validated['alamat'],
-                    'pos' => $validated['pos'],
-                    'city' => $validated['city'],
-                    'status' => 'capture'
-                ]);
-
-                Log::info('Data transaksi yang akan disimpan:', $transaksi->toArray());
-
-                // Simpan transaksi
-                $transaksi->save();
-            }
-
-            // Add shipping cost (ongkir) as a separate item in the Midtrans payload
+    
+            // Prepare the array for Midtrans items (this handles multiple products)
             $itemDetails = [];
             foreach ($validated['products'] as $product) {
                 $itemDetails[] = [
@@ -235,44 +208,8 @@ class TransaksiController extends Controller
                 $newStatus = 'canceled';
             }
 
-            // Perbarui status setiap transaksi yang terkait dengan order_id
-            foreach ($transactions as $transaction) {
-                $transaction->status = $newStatus;
-                $transaction->save();
-
-                // Jika status transaksi adalah 'success', kurangi stok produk
-                if ($newStatus === 'success') {
-                    // Cari produk berdasarkan kode_produk
-                    $produk = DB::table('produks')->where('kode_produk', $transaction->kode_produk)->first();
-
-                    if ($produk) {
-                        // Kurangi stok produk
-                        $stokBaru = $produk->jumlah_produk - $transaction->qty;
-
-                        // Pastikan stok tidak menjadi negatif
-                        if ($stokBaru < 0) {
-                            $stokBaru = 0;
-                        }
-
-                        // Update stok produk di database
-                        DB::table('produks')->where('kode_produk', $transaction->kode_produk)->update([
-                            'jumlah_produk' => $stokBaru
-                        ]);
-
-                        // Log informasi tentang stok yang sudah dikurangi
-                        Log::info('Stok produk dikurangi: ', [
-                            'kode_produk' => $transaction->kode_produk,
-                            'stok_sekarang' => $stokBaru,
-                            'qty_terjual' => $transaction->qty
-                        ]);
-                    } else {
-                        Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
-                    }
-                }
-            }
-
-            // Log perubahan status
-            Log::info('Transaction Status Updated: ', [
+            // Log the new status for testing purposes
+            Log::info('Transaction Status Update: ', [
                 'order_id' => $orderId,
                 'new_status' => $newStatus
             ]);

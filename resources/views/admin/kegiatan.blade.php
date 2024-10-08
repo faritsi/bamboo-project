@@ -2,27 +2,34 @@
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<div id="btn-modal">
-    <button type="button" id="addButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activityModal">
-        Tambah Gambar Kegiatan
+
+<!-- Section Title -->
+<div class="section-title">
+    <h2>Galeri Foto Kegiatan</h2>
+</div>
+
+<!-- Button to Add Image -->
+<div class="add-photo-button my-3">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhotoModal">
+        Tambah Foto Kegiatan
     </button>
 </div>
 
-<!-- Modal Structure -->
-<div class="modal fade" id="activityModal" tabindex="-1" aria-labelledby="activityModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal for Adding New Photo -->
+<div class="modal fade" id="addPhotoModal" tabindex="-1" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="activityModalLabel">Upload Gambar Kegiatan</h5>
+                <h5 class="modal-title" id="addPhotoModalLabel">Upload Foto Kegiatan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="activityForm" action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="photoForm" action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="images" class="form-label">Pilih Gambar (Max 9)</label>
-                        <input class="form-control" type="file" id="images" name="images[]" accept="image/*" multiple required>
-                        <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
+                        <label for="image" class="form-label">Pilih Gambar</label>
+                        <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                        <div id="imagePreview" class="mt-3"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -34,50 +41,43 @@
     </div>
 </div>
 
-<div id="container-img-preview">
-    <h2>Gambar Kegiatan</h2>
-    <div id="uploadedImages" class="flex-container">
-        <div class="flex-row" id="row1">
-            @foreach ($kegiatan as $i)
-                <div class="image-container" data-id="{{ $i->id }}">
-                    <img src="{{ asset('storage/' . $i->image_path) }}" class="preview-img">
-                    <button class="btn btn-warning btn-sm btn-edit" onclick="editImage({{ $i->id }})">Edit</button>
+<!-- Display Uploaded Images -->
+<div class="photo-gallery mt-5">
+    <div class="grid-gallery">
+        @foreach ($kegiatan as $i)
+            <div class="photo-card">
+                <div class="photo-image">
+                    <img src="{{ asset('storage/' . $i->image_path) }}" alt="Foto Kegiatan" class="img-fluid">
+                </div>
+                <div class="photo-details">
+                    <button class="btn btn-warning btn-sm" onclick="editImage({{ $i->id }})">Edit</button>
                     <form action="{{ route('kegiatan.destroy', $i->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm btn-delete">Delete</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                     </form>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>
 
 <script>
-    document.getElementById('images').addEventListener('change', function(event) {
+    document.getElementById('image').addEventListener('change', function(event) {
         const imagePreview = document.getElementById('imagePreview');
         imagePreview.innerHTML = '';
-        const files = event.target.files;
+        const file = event.target.files[0];
 
-        if (files.length > 9) {
-            alert('Maksimal 9 gambar.');
-            this.value = ''; // Clear the input if more than 9 files are selected
-            return;
-        }
-
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.className = 'preview-img';
-                imagePreview.appendChild(img);
-            };
-
-            reader.readAsDataURL(file);
-        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.className = 'img-fluid';
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            imagePreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
     });
 
     function editImage(imageId) {
@@ -88,7 +88,7 @@
             const newFile = event.target.files[0];
             const formData = new FormData();
             formData.append('image', newFile);
-            formData.append('_method', 'PUT'); // Add this line for Laravel PUT method
+            formData.append('_method', 'PUT'); // For Laravel PUT method
 
             const xhr = new XMLHttpRequest();
             xhr.open('POST', `/kegiatan/${imageId}`);
@@ -96,17 +96,14 @@
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    // Update the image preview
-                    const imageElement = document.querySelector(`.image-container[data-id="${imageId}"] img`);
+                    const imageElement = document.querySelector(`.photo-card img[data-id="${imageId}"]`);
                     imageElement.src = response.image_path;
                 } else {
                     console.error('Error:', xhr.statusText);
-                    // Handle error
                 }
             };
             xhr.onerror = function() {
                 console.error('Request failed');
-                // Handle error
             };
             xhr.send(formData);
         };

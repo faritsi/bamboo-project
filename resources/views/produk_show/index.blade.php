@@ -24,18 +24,38 @@
        <div class="cart-body">
            <ul>
                <template x-for="(item, index) in cartItems" :key="item.pid">
-                   <li class="cart-item">
-                       <div class="cart-item-info">
-                           <span x-text="item.nama_produk"></span>
-                           <div class="cart-item-quantity">
-                               <button @click="decreaseQuantity(item.pid)">-</button>
-                               <input type="number" x-model="item.quantity" @change="updateQuantity(item.pid, item.quantity)" min="1">
-                               <button @click="increaseQuantity(item.pid)">+</button>
-                               <span>Rp <span x-text="item.harga * item.quantity"></span></span>
-                           </div>
-                       </div>
-                       <button @click="removeFromCart(item.pid)">Hapus</button>
-                   </li>
+                <li class="cart-item">
+                    <div class="cart-item-info">
+                        <span class="nama-produk" x-text="item.nama_produk"></span>
+                        <div class="cart-item-quantity">
+                            <!-- Div untuk tombol minus -->
+                            <div class="quantity-control" @click="decreaseQuantity(item.pid)">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </div>
+                
+                            <input type="number" x-model="item.quantity" @change="updateQuantity(item.pid, item.quantity)" min="1">
+                            
+                            <!-- Div untuk tombol plus -->
+                            <div class="quantity-control" @click="increaseQuantity(item.pid)">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </div>
+                            
+                            <span>Rp <span x-text="item.harga * item.quantity"></span></span>
+                        </div>
+                    </div>
+                
+                    <!-- Div untuk tombol delete -->
+                    <div class="delete-control" @click="removeFromCart(item.pid)">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </div>
+                </li>
+                
                </template>
            </ul>
        </div>
@@ -43,15 +63,15 @@
            Total: Rp <span x-text="cartTotal"></span>
        </div>
        <div id="btnBeli" class="bg-biodata">
-        <div id="container-biodata">
-            <div class="biodata">
-                <span class="material-symbols-outlined">shopping_bag</span>
-            </div>
-            <div id="text-button">
-                <p>Buy</p>
+            <div id="container-biodata">
+                <div class="biodata">
+                    <span class="material-symbols-outlined">shopping_bag</span>
+                </div>
+                <div id="text-button">
+                    <p>Buy</p>
+                </div>
             </div>
         </div>
-    </div>
    </div>
     <div id="background">
         <div id="co-background">
@@ -100,17 +120,19 @@
                             <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
                         </div>
                     </div>
-                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}','{{$p->kode_produk}}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
+                    <button @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">Tambah ke Keranjang</button> 
                     <div id="abtnBeli" class="bg-biodata">
                         <div id="container-biodata">
                             <div class="biodata">
-                                <span class="material-symbols-outlined">shopping_bag</span>
+                                <span class="material-symbols-outlined">
+                                    shopping_cart
+                                    </span>
                             </div>
                             <div id="text-button">
-                                <p>Buy</p>
+                                <p>Add To Cart</p>
                             </div>
                         </div>
-                    </div>
+                    </div>                    
                 </div>
             </div>
             @endforeach
@@ -181,7 +203,10 @@
                         <option value="">Pilih Layanan Kurir</option>
                     </select>
                 </div>
-                <h3 id="ongkir">Biaya Ongkir:</h3> <div id="cost">Pilih pengiriman untuk melihat ongkir</div>
+                <div id="container-ongkir">
+                    <div id="ongkir">Biaya Ongkir: </div>
+                    <div id="cost">Ongkir ?</div>
+                </div>
                 <div class="form-group">
                     <button type="submit" id="cek" class="submit-btn checkout-button">Tambahkan</button>
                 </div>

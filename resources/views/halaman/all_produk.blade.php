@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- LINK -->
     <link rel="stylesheet" href="{{ asset('css/style-all-produk.css') }}">
-    <!-- Corrected script linking -->
-    {{-- <script src="resources/js/script-all-produk.js"></script> --}}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
@@ -61,6 +59,40 @@
                     @endforeach
                 </div>
 
+                <!-- Button to Open Cart -->
+                <button class="open-cart-btn" @click="toggleCart()"><span class="material-symbols-outlined">
+                    shopping_cart
+                    </span></button>
+
+                <!-- Cart Menu -->
+                <div class="cart-menu" :class="{ 'active': cartVisible }">
+                    <div class="cart-header">
+                        <h3>Keranjang Belanja</h3>
+                        <span class="close-cart" @click="toggleCart()">✖</span>
+                    </div>
+                    <div class="cart-body">
+                        <ul>
+                            <template x-for="(item, index) in cartItems" :key="item.pid">
+                                <li class="cart-item">
+                                    <div class="cart-item-info">
+                                        <span x-text="item.nama_produk"></span>
+                                        <div class="cart-item-quantity">
+                                            <button @click="decreaseQuantity(index)" class="quantity-btn">-</button>
+                                            <input type="number" x-model="item.quantity" @change="updateCart(index)" min="1">
+                                            <button @click="increaseQuantity(index)" class="quantity-btn">+</button>
+                                            <span>Rp <span x-text="item.harga * item.quantity"></span></span>
+                                        </div>
+                                    </div>
+                                    <button @click="removeFromCart(index)">Hapus</button>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                    <div class="cart-total">
+                        Total: Rp <span x-text="cartTotal"></span>
+                    </div>
+                </div>
+
                 <!-- Button Page -->
                 <div id="container-page-button">
                     <div id="page-button">
@@ -73,7 +105,7 @@
 </body>
 
 <!-- Script -->
-{{-- <script>
+<script>
 function cartData() {
     return {
         cartItems: @json(session('keranjang', [])), // Fetch cart items from session
@@ -141,10 +173,9 @@ function cartData() {
         },
     }
 }
-</script> --}}
+</script>
 <script>
     $(document).ready(function(){
-        localStorage.clear();
         // Fungsi untuk menampilkan produk berdasarkan kategori_id
         function filterProduk(kategori_id) {
             if (kategori_id === "semua") {

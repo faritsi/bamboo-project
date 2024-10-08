@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="/css/style-ds-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-tabel-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
+        <link rel="stylesheet" href="/css/style-ingpo.css" />
 
         {{-- JS --}}
         <script src="/js/script-modal.js"></script>
@@ -53,9 +54,11 @@
                             <li><a href="/admin"><span class="material-symbols-outlined">manage_accounts</span> Admin</a></li>
                             <li><a href="/pimpinan"><span class="material-symbols-outlined">groups</span> Pimpinan</a></li>
                             <li><a href="/produk"><span class="material-symbols-outlined">inventory_2</span> Produk</a></li>
-                            <li><a href="/services"><span class="material-symbols-outlined">category</span> Service</a></li>
+                            <li><a href="/services"><span class="material-symbols-outlined">
+                                linked_services
+                                </span> Service</a></li>
                             <li><a href="/kegiatan"><span class="material-symbols-outlined">image</span> Kegiatan</a></li>
-                            <li><a href="/info"><span class="material-symbols-outlined">category</span> Menu</a></li>
+                            <li><a href="/info"><span class="material-symbols-outlined">category</span> Lainnya</a></li>
                         </ul>
                         <div id="logout">
                             <a href="#"><span class="material-symbols-outlined">logout</span> Logout</a>
@@ -81,6 +84,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <!-- Content -->
             <main>
