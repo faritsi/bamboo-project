@@ -160,7 +160,6 @@
                     </div>
                     <div id="carousel-catalog">
                         <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
-
                         <div id="container-catalog-carousel">
                             <div class="carousel-track">
                                 @foreach ($produk as $p)
@@ -176,7 +175,6 @@
                             </div>
                         </div>
                         <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
-
                     </div>
                 </div>
 
