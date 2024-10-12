@@ -865,9 +865,9 @@ html {
 #container-footer {
     width: 80%;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+    gap: 2.5rem;
 }
 
 #company-footer {
@@ -898,7 +898,6 @@ html {
 
 #footer-links ul {
     list-style: none;
-    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -952,8 +951,7 @@ html {
 /* Responsive Layout */
 /* Responsif untuk layar kecil (ponsel) */
 @media (max-width: 425px) {
-    /* Header */
-    
+
 }
 
 @media (max-width: 768px) {
@@ -1016,6 +1014,17 @@ html {
         align-content: center;
         height: fit-content;
         padding: 50px 0;
+    }
+
+    /* Footer */
+    #footer-links {
+        margin-left: 80px;
+    }
+
+    #footer-social {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row;
     }
 }
 
