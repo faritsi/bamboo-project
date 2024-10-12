@@ -11,6 +11,10 @@ html {
     scroll-behavior: smooth;
 }
 
+.container {
+    padding: 10px 10%;
+}
+
 #background {
     margin: 0 auto;
     width: 100%;
@@ -512,15 +516,17 @@ html {
 
 /* Carousel */
 #carousel-catalog {
-    position: relative;
     padding: 20px 0; /* Tambah padding untuk memberi ruang tombol di luar carousel */
 }
 
 #container-catalog-carousel {
-    position: relative;
     width: 80%;
     margin: 30px auto;
     overflow: hidden;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .carousel-track {
@@ -552,7 +558,7 @@ html {
     border-radius: 20px 20px 0 0;
 }
 
-.carousel-control {
+/* .carousel-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -562,7 +568,7 @@ html {
     padding: 10px;
     cursor: pointer;
     z-index: 10;
-    width: 50px; /* Ukuran diperbesar */
+    width: 50px;
     height: 50px;
     border-radius: 50%;
     display: flex;
@@ -572,12 +578,17 @@ html {
 
 .carousel-control.prev {
     background-color: #006400;
-    left: 50px; /* Sedikit di luar area carousel */
+    left: 50px;
 }
 
 .carousel-control.next {
     background-color: #006400;
-    right: 50px; /* Sedikit di luar area carousel */
+    right: 50px;
+} */
+
+.swiper {
+    width: 100%;
+    height: 100%;
 }
 
 #nama-produk {
@@ -609,6 +620,31 @@ html {
     padding: 0 0 30px 20px;
     font-size: 18px;
     font-weight: bold;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-pagination-bullet {
+    width: 30px;
+    height: 8px;
+    border-radius: 6px;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: #006400;
+}
+
+.swiper-button-next {
+    right: -1rem;
+    top: 7rem;
+}
+
+.swiper-button-prev {
+    left: -1rem;
+    top: 7rem;
 }
 
 /* Awalnya elemen tersembunyi */
@@ -887,7 +923,6 @@ html {
 /* Responsive Layout */
 /* Responsif untuk layar kecil (ponsel) */
 @media (max-width: 425px) {
-
 }
 
 @media (max-width: 768px) {
@@ -895,7 +930,7 @@ html {
     #header-atas {
         font-size: 6vw;
     }
-    
+
     #header-bawah {
         font-size: 6vw;
     }
@@ -940,7 +975,7 @@ html {
     .navbar-links.show {
         display: flex;
     }
-    
+
     /* Visi Misi */
     #container-visimisi {
         display: flex;
@@ -950,11 +985,6 @@ html {
         align-content: center;
         height: fit-content;
         padding: 50px 0;
-    }
-
-    /* Catalog */
-    .carousel-slide {
-        flex: 1 0 100%;
     }
 
     /* Footer */
@@ -985,7 +1015,7 @@ html {
     #header-atas {
         font-size: 3vw;
     }
-    
+
     #header-bawah {
         font-size: 3vw;
     }
@@ -1002,11 +1032,6 @@ html {
 
     #selamat-datang {
         font-size: 30px;
-    }
-
-    /* Catalog */
-    .carousel-slide {
-        flex: 1 0 48%;
     }
 
     /* Service */

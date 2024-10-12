@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <title>Dashboard</title>
 </head>
 @foreach ($ingpo as $i)
@@ -159,22 +160,27 @@
                         </div>
                     </div>
                     <div id="carousel-catalog">
-                        <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
-                        <div id="container-catalog-carousel">
-                            <div class="carousel-track">
-                                @foreach ($produk as $p)
-                                    <div class="carousel-slide">
-                                        <div id="carousel-image">
-                                            <img src="{{ asset('storage/' . $p->image) }}" alt="Product 1">
+                        <div class="container">
+                            {{-- <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button> --}}
+                            <div class="swiper mySwiper" id="container-catalog-carousel">
+                                <div class="carousel-track swiper-wrapper">
+                                    @foreach ($produk as $p)
+                                        <div class="carousel-slide swiper-slide">
+                                            <div id="carousel-image">
+                                                <img src="{{ asset('storage/' . $p->image) }}" alt="Product 1">
+                                            </div>
+                                            <p id="nama-produk">{{ $p->nama_produk }}</p>
+                                            <p id="desc-produk">{{ $p->deskripsi }}</p>
+                                            <p id="harga-produk">{{ $p->harga }}</p>
                                         </div>
-                                        <p id="nama-produk">{{ $p->nama_produk }}</p>
-                                        <p id="desc-produk">{{ $p->deskripsi }}</p>
-                                        <p id="harga-produk">{{ $p->harga }}</p>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
+                            {{-- <button class="carousel-control next" onclick="nextSlide()">&#10095;</button> --}}
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-pagination"></div>
                         </div>
-                        <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
                     </div>
                 </div>
 
@@ -256,6 +262,40 @@
         <script src="/js/carousel-activity.js"></script>
         <script src="/js/animasi-dashboard.js"></script>
         <script src="/js/burger.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+        <!-- Initialize Swiper -->
+        <script>
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 2,
+                loop: true,
+                spaceBetween: 10,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    dynamicBullets: true,
+                    type: "bullets"
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 30,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    1440: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        </script>
     </body>
 @endforeach
 
