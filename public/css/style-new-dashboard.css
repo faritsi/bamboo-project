@@ -987,6 +987,19 @@ html {
         padding: 50px 0;
     }
 
+    /* Catalog */
+    #nama-produk {
+        font-size: 16px;
+    }
+    
+    #desc-produk {
+        font-size: 12px;
+    }
+    
+    #harga-produk {
+        font-size: 14px;
+    }
+
     /* Footer */
     #footer-links {
         margin-left: 80px;
