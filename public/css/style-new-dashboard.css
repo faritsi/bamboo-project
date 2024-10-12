@@ -13,20 +13,17 @@ html {
 
 #background {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
 }
 
 #co-background {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
 }
 
 /* Navbar */
 #bg-navbar {
     margin: 0 auto;
-    padding: 0;
     width: 80%;
 }
 
@@ -40,7 +37,6 @@ html {
 
 #background-img {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     height: 120%;
     overflow: hidden;
@@ -59,7 +55,6 @@ html {
 
 #header-kiri {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     /* color: #fff; */
     display: flex;
@@ -108,14 +103,12 @@ html {
 
 #header-kanan {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     text-align: center;
 }
 
 #header-kanan ul {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     list-style-type: none;
 }
@@ -136,13 +129,11 @@ html {
 
 #overlay-welcome {
     margin: 15% auto 13% auto;
-    padding: 0;
     width: 100%;
 }
 
 #selamat-datang {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     color: #fff;
     font-size: 50px;
@@ -151,7 +142,6 @@ html {
 
 #text-selamat {
     margin: 0 auto;
-    padding: 0;
     width: 100%;
     color: #fff;
     font-size: 20px;
@@ -206,7 +196,6 @@ html {
     margin: 0 auto;
     padding: 30px 0; /* Tambahkan padding untuk memberi jarak atas dan bawah */
     width: 100%;
-    height: 500px;
     background-color: #00572d;
     text-align: center;
     display: flex;
@@ -216,23 +205,20 @@ html {
 }
 
 #icon-slogan {
-    margin-bottom: 40px; /* Jarak antara ikon dan teks slogan */
     width: auto; /* Sesuaikan lebar */
+    padding: 10px 0;
 }
 
 #icon-slogan img {
     width: 60px;
-    position: relative;
-    top: -60px;
 }
 
 #text-slogan {
     font-size: 28px;
     color: #ffd700;
-    max-width: 50%; /* Gunakan max-width untuk menghindari overflow */
+    max-width: 60%; /* Gunakan max-width untuk menghindari overflow */
     text-align: center;
-    position: relative;
-    top: -60px;
+    padding: 10px 0;
 }
 
 #penjelasan-slogan {
@@ -240,9 +226,8 @@ html {
     color: #ffd700;
     max-width: 50%; /* Gunakan max-width untuk menghindari overflow */
     text-align: center;
-    padding: 20px 0;
-    position: relative;
-    top: -60px;
+    padding: 10px 0;
+    margin-bottom: 50px;
 }
 
 /* About Us */
@@ -255,7 +240,7 @@ html {
     border-radius: 50px 50px 0 0;
     /* border: solid; */
     position: relative;
-    top: -90px;
+    top: -50px;
 }
 
 #container-about-us {
