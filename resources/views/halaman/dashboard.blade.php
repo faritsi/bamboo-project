@@ -16,50 +16,65 @@
     <body>
         <div id="background">
             <div id="co-background">
-                {{-- NAVBAR --}}
                 <div id="bg-navbar">
+                    {{-- Background --}}
                     <div id="background-img">
                         <img src="{{ asset('/storage/' . $i->image_header) }}" alt="Background Image">
                     </div>
-                    <div id="navbar">
-                        <div id="header-kiri">
-                            <div id="logo-company">
-                                <img src="img/logo/logo.png" alt="Logo">
-                            </div>
-                            <div id="header-teks">
-                                <div id="header-atas">
-                                    <p>PT. Bintang</p>
-                                </div>
-                                <div id="header-bawah">
-                                    <p>Mitra Kencana</p>
-                                </div>
-                            </div>
-                            {{-- Burger Icon --}}
-                            <div id="burger-menu">
-                                <span>&#9776;</span> <!-- Icon Burger -->
-                            </div>
-                        </div>
 
-                        <div id="header-kanan" class="navbar-links">
-                            <ul>
-                                <li>Home</li>
-                                <li>About Us</li>
-                                <li><a href="catalog">Catalog</a></li>
-                                <li>Contact Us</li>
-                            </ul>
+                    {{-- Header --}}
+                    <header>
+                        <div class="container">
+                            <div class="header-content">
+                                <div class="logo">
+                                    <a href="#home">
+                                        <div id="header-kiri">
+                                            <div id="logo-company">
+                                                <img src="img/logo/logo.png" alt="Logo">
+                                            </div>
+                                            <div id="header-teks">
+                                                <div id="header-atas">
+                                                    <p>PT. Bintang</p>
+                                                </div>
+                                                <div id="header-bawah">
+                                                    <p>Mitra Kencana</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="hamburger">
+                                    <div class="line"></div>
+                                    <div class="line"></div>
+                                    <div class="line"></div>
+                                </div>
+                                <nav class="nav-bar">
+                                    <ul>
+                                        <li><a href="#home" class="active">Home</a></li>
+                                        <li><a href="#about-us">About Us</a></li>
+                                        <li><a href="catalog">Catalog</a></li>
+                                        <li><a href="#contact-us">Contact Us</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
                         </div>
-                    </div>
+                    </header>
 
-                    <div id="overlay-welcome">
-                        <div id="selamat-datang">
-                            <p>Welcome To</p>
-                            <p>PT. Bintang Mitra</p>
-                            <p>Kencana</p>
+                    {{-- Home --}}
+                    <section class="home">
+                        <div class="container">
+                            <div id="overlay-welcome">
+                                <div id="selamat-datang">
+                                    <p>Welcome To</p>
+                                    <p>PT. Bintang Mitra</p>
+                                    <p>Kencana</p>
+                                </div>
+                                <div id="text-selamat">
+                                    <p id="text-selamat-datang">{{ $i->desc_header }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="text-selamat">
-                            <p id="text-selamat-datang">{{ $i->desc_header }}</p>
-                        </div>
-                    </div>
+                    </section>
                 </div>
 
                 {{-- Slogan --}}
@@ -295,6 +310,15 @@
                     prevEl: ".swiper-button-prev",
                 },
             });
+        </script>
+
+        {{-- Hamburger --}}
+        <script>
+            hamburger = document.querySelector(".hamburger");
+            hamburger.onclick = function() {
+                navBar = document.querySelector(".nav-bar");
+                navBar.classList.toggle("active");
+            }
         </script>
     </body>
 @endforeach

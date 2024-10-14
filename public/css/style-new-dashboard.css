@@ -3,6 +3,8 @@
 * {
     margin: 0;
     padding: 0;
+    list-style: none;
+    text-decoration: none;
     /* box-sizing: border-box; */
     font-family: "Poppins", sans-serif;
 }
@@ -15,7 +17,7 @@ html {
     padding: 10px 10%;
 }
 
-#background {
+/* #background {
     margin: 0 auto;
     width: 100%;
 }
@@ -25,19 +27,10 @@ html {
     width: 100%;
 }
 
-/* Navbar */
 #bg-navbar {
     margin: 0 auto;
     width: 80%;
-}
-
-#navbar {
-    margin: 0 auto;
-    padding: 20px 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
+} */
 
 #background-img {
     margin: 0 auto;
@@ -57,10 +50,18 @@ html {
     object-fit: cover;
 }
 
+/* Navbar */
+.header-content {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #header-kiri {
     margin: 0 auto;
     width: 100%;
-    /* color: #fff; */
     display: flex;
     align-items: center;
 }
@@ -74,8 +75,8 @@ html {
 
 #header-teks {
     display: flex;
-    flex-direction: column; /* Membuat PT. Bintang di atas dan Mitra Kencana di bawah */
-    justify-content: center; /* Menyelaraskan teks secara vertikal */
+    flex-direction: column;
+    justify-content: center;
 }
 
 #header-atas {
@@ -91,46 +92,35 @@ html {
     font-weight: bold;
 }
 
-/* Burger Icon */
-#burger-menu {
+.hamburger {
     display: none;
-    cursor: pointer;
-    font-size: 30px;
-    color: #fff;
-    margin-left: auto;
 }
 
-.navbar-links {
+.nav-bar ul {
     display: flex;
-    flex-direction: row;
 }
 
-#header-kanan {
-    margin: 0 auto;
-    width: 100%;
-    text-align: center;
-}
-
-#header-kanan ul {
-    margin: 0 auto;
-    width: 100%;
-    list-style-type: none;
-}
-
-#header-kanan ul li {
-    margin: 0 auto;
-    padding: 0 20px;
-    width: 100%;
-    display: inline;
-    cursor: pointer;
+.nav-bar ul li a {
+    display: block;
     color: #fff;
+    font-size: 18px;
+    padding: 10px 25px;
+    border-radius: 20px;
+    transition: 0.2s;
+    margin: 0 5px;
 }
 
-#header-kanan ul li a {
-    text-decoration: none;
-    color: #fff;
+.nav-bar ul li a:hover {
+    color: #000;
+    background: #ffd700;
 }
 
+.nav-bar ul li a.active {
+    color: #000;
+    background: #ffd700;
+}
+
+/* Home */
 #overlay-welcome {
     margin: 15% auto 13% auto;
     width: 100%;
@@ -923,57 +913,28 @@ html {
 /* Responsive Layout */
 /* Responsif untuk layar kecil (ponsel) */
 @media (max-width: 425px) {
+    /* Home */
+    #selamat-datang {
+        font-size: 20px;
+    }
+    
+    #text-selamat {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 768px) {
-    /* Header */
-    #header-atas {
-        font-size: 6vw;
+    /* Home */
+    #selamat-datang {
+        font-size: 30px;
+    }
+    
+    #text-selamat {
+        font-size: 16px;
     }
 
-    #header-bawah {
-        font-size: 6vw;
-    }
-
-    #logo-company img {
-        max-width: 60px;
-    }
-
-    #burger-menu {
-        display: block; /* Tampilkan burger button */
-    }
-
-    /* Awalnya sembunyikan menu navigasi */
-    .navbar-links {
-        display: none; /* Menu tidak tampil */
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.8);
+    #text-selamat-datang {
         width: 100%;
-        position: absolute;
-        top: 60px; /* Geser menu ke bawah */
-        left: 0;
-        padding: 10px;
-    }
-
-    .navbar-links ul {
-        padding-left: 0;
-    }
-
-    .navbar-links ul li {
-        padding: 15px 0;
-        text-align: center;
-        width: 100%;
-    }
-
-    .navbar-links ul li a {
-        text-decoration: none;
-        color: #fff;
-        font-size: 18px;
-    }
-
-    /* Tampilkan menu saat burger diklik */
-    .navbar-links.show {
-        display: flex;
     }
 
     /* Visi Misi */
@@ -1012,54 +973,84 @@ html {
     }
 }
 
+@media (max-width: 991px) {
+    /* Header */
+    header {
+        background: #454545;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger .line {
+        width: 30px;
+        height: 3px;
+        background: #f5f5f5;
+        margin: 6px 0;
+    }
+
+    .nav-bar{
+        height: 0;
+        position: absolute;
+        top: 120px;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        transition: 0.5s;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .nav-bar.active {
+        height: 250px;
+    }
+
+    .nav-bar ul {
+        display: block;
+        width: fit-content;
+        margin: 30px auto 0 auto;
+        text-align: center;
+        transition: 0.5s;
+        opacity: 0;
+    }
+
+    .nav-bar.active ul {
+        opacity: 1;
+    }
+
+    .nav-bar ul li a {
+        margin-bottom: 12px;
+        color: #f5f5f5;
+        font-size: 16px;
+    }
+}
+
 /* Responsif untuk tablet (layar sedang) */
 @media (max-width: 1024px) {
     /* Header */
-    #navbar {
-        flex-direction: column;
-        align-items: flex-start;
+    #logo-company img {
+        max-width: 70px;
     }
-
-    #header-kiri,
-    #header-kanan {
-        width: 100%;
-    }
-
+    
     #header-atas {
-        font-size: 3vw;
+        font-size: 16px;
     }
 
     #header-bawah {
-        font-size: 3vw;
+        font-size: 16px;
+        padding-left: 20px;
     }
-
-    #header-kanan ul li {
-        display: inline-block; /* Tampilkan menu secara horizontal */
-        padding: 10px;
-    }
-
-    #text-selamat-datang {
-        width: 80%; /* Sesuaikan lebar teks */
-        font-size: 18px;
-    }
-
-    #selamat-datang {
-        font-size: 30px;
+    
+    .nav-bar ul li a {
+        font-size: 14px;
     }
 
     /* Service */
     #service1 {
         width: 300px;
-    }
-}
-
-/* Untuk layar besar (desktop) */
-@media (min-width: 1025px) {
-    #text-selamat-datang {
-        width: 50%; /* Lebar teks tetap di 50% untuk layar besar */
-    }
-
-    #selamat-datang {
-        font-size: 50px; /* Teks yang lebih besar untuk desktop */
     }
 }
