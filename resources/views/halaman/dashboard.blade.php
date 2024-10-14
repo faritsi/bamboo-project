@@ -314,11 +314,16 @@
 
         {{-- Hamburger --}}
         <script>
-            hamburger = document.querySelector(".hamburger");
-            hamburger.onclick = function() {
-                navBar = document.querySelector(".nav-bar");
-                navBar.classList.toggle("active");
-            }
+            document.addEventListener("DOMContentLoaded", function() {
+                const hamburger = document.querySelector(".hamburger");
+                const navBar = document.querySelector(".nav-bar");
+                const header = document.querySelector("header");
+
+                hamburger.onclick = function() {
+                    navBar.classList.toggle("active");
+                    header.classList.toggle("black-bg");
+                }
+            });
         </script>
     </body>
 @endforeach

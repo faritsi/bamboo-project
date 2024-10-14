@@ -975,8 +975,9 @@ html {
 
 @media (max-width: 991px) {
     /* Header */
-    header {
-        background: #454545;
+    header.black-bg {
+        background: rgba(0, 0, 0, 0.8);
+        transition: 0.5s;
     }
 
     .hamburger {
@@ -998,7 +999,7 @@ html {
         left: 0;
         right: 0;
         width: 100vw;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(15, 15, 15, 0.8);
         backdrop-filter: blur(10px);
         transition: 0.5s;
         overflow: hidden;
@@ -1006,7 +1007,7 @@ html {
     }
 
     .nav-bar.active {
-        height: 250px;
+        height: 100%;
     }
 
     .nav-bar ul {
