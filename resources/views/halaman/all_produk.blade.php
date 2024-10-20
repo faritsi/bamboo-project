@@ -36,7 +36,7 @@
                 <div id="content-produk">
                     @foreach ($produk as $p)
                     <div id="card-container" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
-                        <a href="/produk/{{$p->pid}}">
+                        <a href="/produk/{{$p->nama_produk}}">
                             <div id="card-produk">
                                 <div id="card-stok">
                                     <p id="stok-produk">Stock : {{$p->jumlah_produk}}</p>

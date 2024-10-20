@@ -16,14 +16,19 @@ class CatalogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->query("status_code");
+
+        if ($query) {
+            // Redirect ke catalog tanpa parameter
+            return redirect('/catalog');
+        }
         // $produk = DB::table('produks')->where('pid')->get();
         $produk = Produk::all();
         return view('halaman/all_produk', [
             'title' => 'Catalog',
         ], compact('produk'));
-        
     }
 
     /**

@@ -97,17 +97,20 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      */
-    
-    public function getProvinsi(){
+
+    public function getProvinsi()
+    {
         $client = new Client();
         try {
-            $response = $client->request('POST', 'https://api.rajaongkir.com/starter/province',
-            array(
-                'headers' => array(
-                    'key' => '1a14ace5f65a3788c0ccf8115baed896'
+            $response = $client->request(
+                'POST',
+                'https://api.rajaongkir.com/starter/province',
+                array(
+                    'headers' => array(
+                        'key' => '1a14ace5f65a3788c0ccf8115baed896'
+                    )
                 )
-            )
-        );
+            );
         } catch (RequestException $e) {
             var_dump($e->getResponse()->getBody()->getContents());
         }
@@ -125,9 +128,9 @@ class ProdukController extends Controller
     public function TambahKeranjang(Request $request, $pid)
     {
         $produk = Produk::find($pid);
-    
+
         $keranjang = session()->get('keranjang', []);
-    
+
         if (isset($keranjang[$pid])) {
             $keranjang[$pid]['quantity']++;
         } else {
@@ -137,15 +140,15 @@ class ProdukController extends Controller
                 "quantity" => 1
             ];
         }
-    
+
         session()->put('keranjang', $keranjang);
-    
+
         return response()->json([
             'message' => 'Produk ditambahkan ke keranjang!',
             'cart_count' => count($keranjang)
         ]);
     }
-    
+
     public function syncCart(Request $request)
     {
         // Save the cart to the session
@@ -154,7 +157,7 @@ class ProdukController extends Controller
     }
 
 
-    public function show($pid)
+    public function show($nama_produk)
     {
         // $client = new Client();
         // $apiKey = '1a14ace5f65a3788c0ccf8115baed896'; // Ganti dengan API Key Anda
@@ -176,7 +179,7 @@ class ProdukController extends Controller
 
         // Ambil data biaya dari response API
         // $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
-        $produk = DB::table('produks')->where('pid', $pid)->get();
+        $produk = DB::table('produks')->where('nama_produk', $nama_produk)->get();
         return view('produk_show.index', compact('produk'));
     }
 
@@ -230,7 +233,7 @@ class ProdukController extends Controller
             'shopee' => $request->shopee,
         ]);
 
-        if($request->pid && $request->quantity){
+        if ($request->pid && $request->quantity) {
             $keranjang = session()->get('keranjang');
             $keranjang[$request->pid]["quantity"] = $request->quantity;
             session()->put('keranjang', $keranjang);
@@ -264,14 +267,13 @@ class ProdukController extends Controller
     public function remove(Request $request)
 
     {
-        if($request->pid) {
+        if ($request->pid) {
             $keranjang = session()->get('keranjang');
-            if(isset($keranjang[$request->pid])) {
+            if (isset($keranjang[$request->pid])) {
                 unset($keranjang[$request->pid]);
                 session()->put('keranjang', $keranjang);
             }
             session()->flash('success', 'Product removed successfully');
         }
-
     }
 }
