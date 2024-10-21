@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Admin;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
+use App\Models\Role;
+
+class AdminController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $role = role::all();
+        $users = User::all();
+        return view('admin.adminForm',[
+            'title' => 'Admin'
+        ],compact('user','users', 'role'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'username' => 'required|string|unique:users,username',
+            'password' => 'required|min:8',
+            'password_confirm' => 'required|same:password',
+            'role_id' => 'required|string',
+        ]);
+
+        $user = new User([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+            // 'status' => $request->status ?? 'aktif', // Default value if not provided
+        ]);
+        // dd($user);
+        // Save the model to the database
+        $user->save();
+
+        // Redirect to the admin index route with a success message
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
+        return back()->withErrors([
+            'username' => 'Username telah terdaftar!',
+            'password' => 'Password tidak cocok',
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Admin $admin)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Admin $admin)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'username' => 'required|string',
+            'password' => 'required|min:8',
+            'password_confirm' => 'required|same:password',
+            'role_id' => 'required|string',
+        ]);
+        $admin = User::find($id);
+        $admin->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            // 'password_confirm' => Hash::make($request->password),
+            'role_id' => $request->role_id,
+        ]);
+        // dd($admin);
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Diubah');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $admin = User::find($id);
+        $admin->delete();
+        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Dihapus');
+    }
+}

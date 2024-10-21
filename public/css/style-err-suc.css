@@ -1,0 +1,18 @@
+.hayo {
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: red;
+    color: #fff;
+    border-radius: 10px;
+    float: left;
+}
+.hore {
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: green;
+    color: #fff;
+    border-radius: 10px;
+    float: left;
+}
