@@ -5,6 +5,7 @@
     padding: 0;
     /* box-sizing: border-box; */
     font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
 }
 
 html {
@@ -256,18 +257,19 @@ html {
     margin: 0 auto;
     padding: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 40px;
 }
 
 #img-about-us {
     width: 70%;
-    height: 600px;
+    height: 400px;
     padding: 0;
     margin: 0 auto;
     overflow: hidden;
     border-radius: 30px;
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    max-width: 600px;
 }
 
 #img-about-us img {
@@ -284,9 +286,10 @@ html {
 }
 
 #judul-about-us {
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
     padding: 0 0 30px 0;
+    color: #3c6e47;
 }
 
 #about-us {
@@ -310,67 +313,64 @@ html {
 }
 
 /* Visi Misi */
-
-#content-visi-misi {
-    margin: 0 auto;
-    padding: 30px 0;
-    width: 100%;
-    background-color: #00572d;
-}
-
-#container-visimisi {
+.wrapper-visi-misi {
     margin: 0 auto;
     padding: 0;
     width: 80%;
-    height: 400px;
+}
+
+.boxes-visi-misi {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 50px;
 }
 
-#container-visi {
-    margin: 0 auto;
-    padding: 0;
+.container-visi-misi {
+    flex: 1;
+
+    .con-visi-misi {
+        padding: 40px;
+        height: 450px;
+        width: 100%;
+        background-color: #fff;
+        position: relative;
+        right: -20%;
+        border-radius: 30px;
+        top: 60px;
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for button */
+
+        .container-visi {
+            h1 {
+                color: #3c6e47;
+                font-size: 2rem;
+            }
+        }
+
+        .container-misi {
+            margin-top: 20px;
+
+            h1 {
+                color: #3c6e47;
+                font-size: 2rem;
+            }
+
+            ol {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
+.container-visi-misi-image {
+    height: 600px;
+    flex: 1;
+    overflow: hidden;
+    border-radius: 30px;
+}
+
+.container-visi-misi-image img {
     width: 100%;
-    text-align: center;
-}
-
-#icon-visi img {
-    width: 60px;
-}
-
-#judul-visi {
-    padding-top: 15px;
-    font-size: 28px;
-    color: #ffd700;
-}
-
-#text-visi {
-    font-size: 14px;
-    color: #ffd700;
-}
-
-#container-misi {
-    margin: 0 auto;
-    padding: 0;
-    width: 100%;
-    text-align: center;
-}
-
-#icon-misi img {
-    width: 60px;
-}
-
-#judul-misi {
-    padding-top: 15px;
-    font-size: 28px;
-    color: #ffd700;
-}
-
-#text-misi {
-    font-size: 14px;
-    color: #ffd700;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Our Service */
@@ -388,146 +388,87 @@ html {
 }
 
 #judul-our-service {
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
+    color: #3c6e47;
 }
 
 #our-service {
     font-size: 16px;
-    color: #454545;
+    color: #000;
     width: 50%;
 }
 
+/* Main container for the service list */
 #list-our-service {
-    margin: 0 auto;
-    padding: 40px 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(280px, 1fr)
+    ); /* Responsive grid */
     gap: 20px;
+    padding: 40px;
 }
 
-#service1 {
-    margin: 0 auto;
-    padding: 15px;
-    width: 100%;
-    background-color: #ffffcc;
-    border-radius: 20px;
-    height: 300px;
+/* Individual service card with bamboo-inspired styling */
+.service-card {
+    background-color: #ffffff;
+    border: 1px solid #d4d8d4; /* Soft border for a handcrafted look */
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
-/* #icon-service1 {
-    padding-bottom: 20px;
-} */
-
-#icon-service1 .material-symbols-outlined {
-    font-variation-settings: "FILL" 1;
-    color: #00572d;
-    font-size: 50px;
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
 }
 
-#judul-service1 {
-    font-size: 18px;
+/* Icon styling with bamboo color accents */
+.icon-service img {
+    width: 70px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 50%;
+    border: 2px solid #8fbf79; /* Bamboo green border for the icon */
+    padding: 5px;
+}
+
+/* Title styling in bamboo green */
+.judul-service p {
+    font-size: 1.3rem;
     font-weight: bold;
-    padding-bottom: 20px;
+    color: #000; /* Rich green for the title */
+    margin-bottom: 15px;
 }
 
-#text-service1 {
-    font-size: 14px;
-    color: #454545;
+/* Service description text with earthy brown color */
+.text-service p {
+    font-size: 1rem;
+    color: #000; /* Earthy brown for description */
+    line-height: 1.6;
 }
 
-#service2 {
-    margin: 0 auto;
-    padding: 15px;
-    border: solid #ffdf33;
-    width: 100%;
-    background-color: #f0f0f0;
-    border-radius: 20px;
-    height: 300px;
-}
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    #list-our-service {
+        padding: 20px;
+    }
 
-/* #icon-service2 {
-    padding-bottom: 20px;
-} */
+    .service-card {
+        padding: 20px;
+    }
 
-#icon-service2 .material-symbols-outlined {
-    /* font-variation-settings: "FILL" 1; */
-    font-size: 50px;
-}
+    .judul-service p {
+        font-size: 1.2rem;
+    }
 
-#judul-service2 {
-    font-size: 18px;
-    padding-bottom: 20px;
-    font-weight: bold;
-}
-
-#text-service2 {
-    font-size: 14px;
-    color: #454545;
-}
-
-#service3 {
-    margin: 0 auto;
-    padding: 15px;
-    width: 100%;
-    border: solid #ffdf33;
-    background-color: #f0f0f0;
-    height: 300px;
-    border-radius: 20px;
-}
-
-/* #icon-service3 {
-    padding-bottom: 20px;
-} */
-
-#icon-service3 .material-symbols-outlined {
-    font-variation-settings: "FILL" 1;
-    font-size: 50px;
-    color: #ffd700;
-}
-
-#judul-service3 {
-    font-size: 18px;
-    padding-bottom: 20px;
-    font-weight: bold;
-}
-
-#text-service3 {
-    font-size: 14px;
-    color: #454545;
-}
-
-#service4 {
-    margin: 0 auto;
-    padding: 15px;
-    width: 100%;
-    border: solid #ffdf33;
-    background-color: #f0f0f0;
-    height: 300px;
-    border-radius: 20px;
-}
-
-/* #icon-service4 {
-    padding-bottom: 20px;
-} */
-
-#icon-service4 .material-symbols-outlined {
-    /* font-variation-settings: "FILL" 1; */
-    font-size: 50px;
-    color: #89cff0;
-}
-
-#judul-service4 {
-    font-size: 18px;
-    padding-bottom: 20px;
-    font-weight: bold;
-}
-
-#text-service4 {
-    font-size: 14px;
-    color: #454545;
+    .text-service p {
+        font-size: 0.95rem;
+    }
 }
 
 /* Awalnya elemen tersembunyi */
@@ -566,26 +507,57 @@ html {
     width: 100%;
     padding: 0;
     margin: 0 auto;
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
+    color: #3c6e47;
 }
 
 #text-catalog {
-    width: 100%;
-    padding: 0;
+    max-width: 800px;
     margin: 0 auto;
+    text-align: end; /* Align text and button to the right */
 }
 
 #catalog-text {
-    color: #454545;
+    color: #000; /* Earthy green for text */
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 40px; /* Space before the "Lihat Semua Produk" link */
 }
 
+/* Style for the "Lihat Semua Produk" button */
 #all-produk {
-    padding-top: 40px;
-    text-align: end;
-    color: #454545;
-    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #8b4513; /* Darker brown (earthy) color for button */
+    padding: 12px 30px;
+    border-radius: 5px; /* Rounded corners for the button */
+    text-align: center;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for button */
+}
+
+/* Hover effect */
+#all-produk:hover {
+    background-color: #5a3210; /* Darker brown for hover effect */
+    transform: translateY(-3px); /* Slight lift effect */
+}
+
+/* Focus state for accessibility */
+#all-produk:focus {
+    outline: 2px solid #5a3210; /* Darker brown outline on focus */
+}
+
+/* Ensure that the <a> tag has no underline */
+#all-produk-link {
+    text-decoration: none; /* Remove underline for the entire link */
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Carousel */
@@ -614,6 +586,10 @@ html {
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures the buttons stay at the bottom */
+    /* padding: 15px; */
 }
 
 #carousel-image {
@@ -658,7 +634,7 @@ html {
 }
 
 #nama-produk {
-    color: #006400;
+    color: #2f4f2f; /* Dark green to represent nature */
     text-align: left;
     padding: 20px;
     font-size: 20px;
@@ -666,29 +642,31 @@ html {
 }
 
 #desc-produk {
-    color: #4b5320;
+    color: #556b2f; /* Olive green for description */
     text-align: left;
     padding: 0 20px 20px 20px;
     font-size: 16px;
+    line-height: 1.5em; /* Line height set to 1.5 times font size */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 3; /* Limits to 5 lines */
     -webkit-box-orient: vertical;
     word-wrap: break-word;
-    max-height: 150px;
+    max-height: calc(1.5em * 3); /* Height set to 5 lines */
     margin-bottom: 30px;
+    flex-grow: 1;
 }
 
 #harga-produk {
-    color: #8b4513;
+    color: #8b4513; /* Earthy brown to highlight price */
     text-align: left;
     padding: 0 0 30px 20px;
     font-size: 18px;
     font-weight: bold;
 }
 
-/* Awalnya elemen tersembunyi */
+/* Initial hidden state for animations */
 #judul-catalog,
 #text-catalog,
 #carousel-catalog {
@@ -697,12 +675,75 @@ html {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-/* Muncul saat discroll ke bawah */
+/* Visible on scroll */
 #judul-catalog.visible,
 #text-catalog.visible,
 #carousel-catalog.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Button container styling */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 20px;
+}
+
+/* Shop buttons (Tokopedia, Shopee) in a row */
+.shop-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between Tokopedia and Shopee buttons */
+    width: 100%;
+    margin-bottom: 15px; /* Space between shop buttons and buy button */
+}
+
+/* Style for individual shop buttons */
+.shop-button {
+    flex: 1;
+    padding: 10px 20px;
+    background-color: #42b549; /* Earthy brown for both buttons */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* Shopee-specific button color */
+.shop-button:nth-child(2) {
+    background-color: #d74327; /* Slightly lighter red for Shopee */
+}
+
+/* Hover effects for shop buttons */
+.shop-button:hover {
+    background-color: #379744; /* Darker brown on hover */
+}
+
+.shop-button:nth-child(2):hover {
+    background-color: #b22222; /* Darker red on hover for Shopee */
+}
+
+/* Buy button (Beli Disini) */
+.buy-button {
+    padding: 12px 25px;
+    background-color: #024caa; /* Olive green for Buy button */
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 60%; /* Smaller width for a compact look */
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buy button */
+.buy-button:hover {
+    background-color: #013c88; /* Darker green on hover */
 }
 
 /* Activity */
@@ -716,9 +757,10 @@ html {
     width: 100%;
     padding-bottom: 30px;
     margin: 0 auto;
-    font-size: 26px;
+    font-size: 2rem;
     font-weight: bold;
     text-align: center;
+    color: #3c6e47;
 }
 .carousel-act {
     width: 100%;
@@ -764,6 +806,78 @@ html {
     transform: translateY(0);
 }
 
+/* Video Company */
+#content-video {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    background-color: #f3f9f1; /* Light green background */
+}
+
+#text-video {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3c6e47; /* Dark green for title */
+    margin-bottom: 20px;
+}
+#video-container {
+    width: 100%;
+    max-width: 800px; /* Restrict maximum width for larger screens */
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+#video-container iframe {
+    width: 100%;
+    height: 450px; /* Adjust height as needed */
+    border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #video-container iframe {
+        height: 300px; /* Smaller height for mobile screens */
+    }
+}
+
+/* Video Company */
+#content-video {
+    margin-top: 40px;
+    text-align: center;
+    padding: 20px;
+    background-color: #f3f9f1; /* Light green background */
+}
+
+#text-video {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #3c6e47; /* Dark green for title */
+    margin-bottom: 20px;
+}
+
+/* Video Container */
+#video-container {
+    width: 100%;
+    max-width: 800px; /* Restrict maximum width for larger screens */
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+#video-container iframe {
+    width: 100%;
+    height: 450px; /* Adjust height as needed */
+    border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #video-container iframe {
+        height: 300px; /* Smaller height for mobile screens */
+    }
+}
+
 /* Pimpinan */
 #content-so {
     margin: 0 auto;
@@ -780,9 +894,9 @@ html {
 }
 
 #text-so {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: bold;
-    color: #333;
+    color: #3c6e47;
     margin-bottom: 50px;
 }
 
@@ -837,7 +951,7 @@ html {
 .nama-pimpinan {
     font-size: 20px;
     font-weight: bold;
-    color: #00572d;
+    color: #000;
     margin-bottom: 10px;
 }
 

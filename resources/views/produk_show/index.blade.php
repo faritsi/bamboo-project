@@ -44,7 +44,7 @@
                                 </span>
                             </div>
                             
-                            <span>Rp <span x-text="item.harga * item.quantity"></span></span>
+                            <span><span x-text="formatRupiah(item.harga * item.quantity)"></span></span>
                         </div>
                     </div>
                 
@@ -60,7 +60,7 @@
            </ul>
        </div>
        <div class="cart-total">
-           Total: Rp <span x-text="cartTotal"></span>
+           Total: <span x-text="formatRupiah(cartTotal)"></span>
        </div>
        <div id="btnBeli" class="bg-biodata">
             <div id="container-biodata">
@@ -73,69 +73,75 @@
             </div>
         </div>
    </div>
-    <div id="background">
-        <div id="co-background">
-            @foreach ($produk as $p)
-            <div id="content">
-                <div id="image-produk">
-                    <img src="{{ asset('storage/' . $p->image) }}" alt="Gambar {{$p->nama_produk}}">
+   <div id="product-page">
+    <div id="co-background">
+        @foreach ($produk as $p)
+        <div id="content">
+            <!-- Product Gallery with Main Image and Thumbnails -->
+            <div id="image-produk">
+                <div class="main-image">
+                    <img id="main-image" src="{{ asset('/storage/' . $p->image) }}" alt="Gambar {{$p->nama_produk}}">
                 </div>
-                <div id="keterangan-produk">
-                    <div id="nama-produk">
-                        <p id="nama">{{$p->nama_produk}}</p>
-                    </div>
-                    <div id="harga-produk">
-                        <p id="harga" data-harga="{{ $p->harga }}">{{ $p->harga }}</p>
-                    </div>
-                    <div id="deskripsi-produk">
-                        <p id="judul-deskripsi">Deskripsi</p>
-                    </div>
-                    <div id="deskripsi-text">
-                        <p id="deskripsi">{{$p->deskripsi}}</p>
-                    </div>
-                    <div id="text-atur-produk">
-                        <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli !</p>
-                    </div>
-                    {{-- Jumlah Produk --}}
-                    <div id="jumlah-produk">
-                        <div id="banyak-kuantitas-produk">
-                            <p id="banyak-kuantitas">Banyak : </p>
-                        </div>
-                        <div id="text-kuantitas-produk">
-                            <input type="number" name="qty" class="qty" value="1" min="1" id="qty-{{ $p->pid }}">
-                        </div>
-                        <div id="text-stock">
-                            <p id="stock">Stock Tersedia : </p>
-                        </div>
-                        <div id="stock-barang">
-                            <p id="angka-barang">{{ $p->jumlah_produk }}</p>
-                        </div>
-                    </div>
-                    {{-- Harga Total Produk --}}
-                    <div id="container-total-produk">
-                        <div id="sub-text">
-                            <p id="subtotal-produk">SUB TOTAL : </p>
-                        </div>
-                        <div id="harga-total">
-                            <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" value="" readonly>
-                        </div>
-                    </div>
-                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
-                        <div id="container-biodata">
-                            <div class="biodata">
-                                <span class="material-symbols-outlined">
-                                    shopping_cart
-                                    </span>
-                            </div>
-                            <div id="text-button">
-                                <p>Add To Cart</p>
-                            </div>
-                        </div>
-                    </div>                    
+                <!-- Thumbnails below the main image -->
+                <div class="thumbnail-images">
+                    <img src="..\img\bambu\bambu_10.jpeg" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                    <img src="..\img\bambu\bambu_11.jpeg" alt="Thumbnail 2" onclick="changeMainImage(this)">
+                    <img src="..\img\bambu\bambu_12.jpeg" alt="Thumbnail 3" onclick="changeMainImage(this)">
+                    <img src="..\img\bambu\bambu_13.jpeg" alt="Thumbnail 4" onclick="changeMainImage(this)">
                 </div>
             </div>
-            @endforeach
+    
+            <!-- Product Details Section on the Right -->
+            <div id="keterangan-produk">
+                <div id="nama-produk">
+                    <p id="nama">{{$p->nama_produk}}</p>
+                </div>
+                <div id="harga-produk">
+                    <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+                </div>
+    
+                <div id="deskripsi-produk">
+                    <h3>Deskripsi</h3>
+                </div>
+                <div id="deskripsi-text">
+                    <p id="deskripsi">{{$p->deskripsi}}</p>
+                </div>
+    
+                <div id="jumlah-produk">
+                    <div id="text-stock">
+                        <p id="stock">Stok Tersedia: <span id="angka-barang">{{ $p->jumlah_produk }}</span></p>
+                    </div>
+                </div>
+    
+                <div id="text-atur-produk">
+                    <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli!</p>
+                </div>
+                <div id="text-kuantitas-produk">
+                    <input type="number" name="qty" class="qty" value="1" min="1" id="qty-{{ $p->pid }}">
+                </div>
+    
+                <div id="container-total-produk">
+                    <div id="sub-text">
+                        <p id="subtotal-produk">SUB TOTAL:</p>
+                    </div>
+                    <div id="harga-total">
+                        <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" x-text="formatRupiah(cartTotal)" value="" readonly>
+                    </div>
+                </div>
+    
+                <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
+                    <div id="container-biodata">
+                        <div class="biodata">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </div>
+                        <div id="text-button">
+                            <p>Tambah ke Keranjang</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        @endforeach
     </div>
 
     <!-- MODAL -->
@@ -360,59 +366,86 @@
             }
         }
     </script>
+    
     <script>
-        $(document).ready(function () {
-            // Fetch provinces
-            $.get('/provinces', function (data) {
-                data.forEach(function (province) {
-                    $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
-                });
-            });
-            // Fetch cities based on province
-            $('#province').change(function () {
-                var province_id = $(this).val();
-                $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
-                $.get('/cities/' + province_id, function (data) {
-                    data.forEach(function (city) {
-                        $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
-                    });
-                });
-            });
-            // Fetch services and costs when city and courier are selected
-            $('#city, #courier').change(function () {
-                var city_id = $('#city').val();
-                var courier = $('#courier').val();
-                if (city_id && courier) {
-                    $.post('/cost', {
-                        _token: '{{ csrf_token() }}',
-                        origin: 24, // Example origin city ID (Yogyakarta)
-                        destination: city_id,
-                        courier: courier
-                    }, function (data) {
-                        if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
-                            var services = data[0].costs;
-                            $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
-                            services.forEach(function (service) {
-                                $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
-                            });
-                        } else {
-                            $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
-                        }
-                    });
-                }
-            });
-            // Update shipping cost when courier service is selected
-            $('#courier_service').change(function () {
-                var selectedService = $('#courier_service option:selected');
-                var cost = selectedService.data('cost');
-                if (cost) {
-                    $('#cost').text('Rp ' + cost);
+            $(document).ready(function () {
+        // Fetch provinces
+        $.get('/provinces')
+            .done(function (data) {
+                if (data.length === 0) {
+                    console.log("No provinces found.");
                 } else {
-                    $('#cost').text('Pilih kota dan kurir untuk melihat ongkir');
+                    data.forEach(function (province) {
+                        $('#province').append('<option value="' + province.province_id + '">' + province.province + '</option>');
+                    });
                 }
+            })
+            .fail(function () {
+                console.error("Error fetching provinces. Check your endpoint or server response.");
             });
+
+        // Fetch cities based on selected province
+        $('#province').change(function () {
+            var province_id = $(this).val();
+            $('#city').prop('disabled', false).empty().append('<option value="">Pilih Kota</option>');
+
+            $.get('/cities/' + province_id)
+                .done(function (data) {
+                    if (data.length === 0) {
+                        console.log("No cities found for this province.");
+                    } else {
+                        data.forEach(function (city) {
+                            $('#city').append('<option value="' + city.city_id + '">' + city.city_name + '</option>');
+                        });
+                    }
+                })
+                .fail(function () {
+                    console.error("Error fetching cities for the selected province.");
+                });
         });
-            </script>
+
+        // Fetch services and costs based on selected city and courier
+        $('#city, #courier').change(function () {
+            var city_id = $('#city').val();
+            var courier = $('#courier').val();
+
+            if (city_id && courier) {
+                $.post('/cost', {
+                    _token: '{{ csrf_token() }}',
+                    origin: 24, // Example origin city ID
+                    destination: city_id,
+                    courier: courier
+                })
+                .done(function (data) {
+                    if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
+                        var services = data[0].costs;
+                        $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
+                        services.forEach(function (service) {
+                            $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
+                        });
+                    } else {
+                        $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
+                    }
+                })
+                .fail(function () {
+                    console.error("Error fetching courier services and costs.");
+                });
+            }
+        });
+
+        // Update shipping cost display based on selected courier service
+        $('#courier_service').change(function () {
+            var selectedService = $('#courier_service option:selected');
+            var cost = selectedService.data('cost');
+            if (cost) {
+                $('#cost').text('Rp ' + cost);
+            } else {
+                $('#cost').text('Pilih kota dan kurir untuk melihat ongkir');
+            }
+        });
+    });
+
+    </script>
     <script>
        function cartData() {
                 return {
@@ -511,6 +544,23 @@
                     },
                 };
             }
+            function formatRupiah(amount) {
+                return '' + new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(amount).replace('IDR', '').trim();
+            }
+    </script>
+
+    <script>
+        function changeMainImage(thumbnail) {
+            // Get the main image element
+            const mainImage = document.getElementById('main-image');
+            
+            // Update the src of the main image to match the clicked thumbnail's src
+            mainImage.src = thumbnail.src;
+        }
     </script>
 </body>
 </html>

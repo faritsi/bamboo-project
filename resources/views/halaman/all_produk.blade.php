@@ -17,6 +17,7 @@
         <!-- TIPE PRODUK -->
         <div id="bg-container">
             <div id="container">
+                <div id="title">Catalog Produk</div>
                 <div id="tipe-produk" class="clearfix">
                     <div id="tipe-semua-produk" class="kategori" data-kategori_id="semua">
                         <h3>Semua</h3>
@@ -29,6 +30,9 @@
                     </div>
                     <div id="tipe-miniatur-produk" class="kategori" data-kategori_id="miniatur">
                         <h3>Miniatur</h3>
+                    </div>
+                    <div id="tipe-filter-produk" class="kategori" data-kategori_id="">
+                        <h3>Pilih Kategori Lainnya</h3>
                     </div>
                 </div>
                 
@@ -48,7 +52,7 @@
                         </a>
                         <div id="card-text">
                             <h4 id="nama-produk">{{$p->nama_produk}}</h4>
-                            <p id="harga-produk">{{$p->harga}}</p>
+                            <p id="harga-produk">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
                         </div>
                     </div>
                     @endforeach

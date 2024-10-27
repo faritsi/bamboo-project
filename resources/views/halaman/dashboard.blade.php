@@ -77,37 +77,48 @@
                         <img src="{{ asset('/storage/' . $i->image_about) }}" alt="About Us">
                     </div>
                     <div id="text-about-us">
-                        {{-- <p id="about-us">About Us</p> --}}
-                        <p id="judul-about-us">{{$i->judul_about}}</p>
-                        <p id="about-us">{{$i->desc_about}}</p>
+                        <p id="judul-about-us">{{ $i->judul_about }}</p>
+                        <p id="about-us">{{ $i->desc_about }}</p>
                     </div>
                 </div>
             </div>
+            
 
             {{-- Visi Misi  --}}
-            <div id="content-visi-misi">
-                <div id="container-visimisi">
-                    <div id="container-visi">
-                        <div id="icon-visi">
-                            <img src="{{ asset('/storage/' . $i->image_visi) }}" alt="">
-                        </div>
-                        <div id="judul-visi">
-                            <p>VISI</p>
-                        </div>
-                        <div id="text-visi">
-                            <p>{{$i->desc_visi}}</p>
+            <div class="wrapper-visi-misi">
+                <div class="boxes-visi-misi">
+                    <div class="container-visi-misi">
+                        <div class="con-visi-misi">
+                            <div class="container-visi">
+                                <h1>VISI</h1>
+                                <p class="text-visi">Menjadi pelopor global dalam inovasi dan pemanfaatan bambu berkelanjutan, dengan komitmen untuk melestarikan lingkungan, mendukung kesejahteraan masyarakat, serta menyediakan produk berkualitas tinggi yang ramah lingkungan.</p>
+                            </div>
+                            <div class="container-misi">
+                                <h1>MISI</h1>
+                                <p class="text-misi">
+                                    <ol>
+                                        <li>
+                                            Pengelolaan Sumber Daya Alam yang Berkelanjutan
+                                        </li>
+                                        <li>
+                                            Inovasi Produk
+                                        </li>
+                                        <li>
+                                            Pemberdayaan Komunitas Lokal
+                                        </li>
+                                        <li>
+                                            Pengurangan Jejak Karbon
+                                        </li>
+                                        <li>
+                                            Pendidikan dan Kesadaran Lingkungan
+                                        </li>
+                                    </ol>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div id="container-misi">
-                        <div id="icon-misi">
-                            <img src="{{ asset('/storage/' . $i->image_misi) }}" alt="">
-                        </div>
-                        <div id="judul-misi">
-                            <p>MISI</p>
-                        </div>
-                        <div id="text-misi">
-                            <p>{{$i->desc_misi}}</p>
-                        </div>
+                    <div class="container-visi-misi-image">
+                        <img src="img\bambu\bambu_10.jpeg" alt="">
                     </div>
                 </div>
             </div>
@@ -123,19 +134,18 @@
                     </div>
                     <div id="list-our-service">
                         @foreach ($service as $s)
-                        <div id="service1">
-                            <div id="icon-service1">
-                                <img src="{{ asset('/storage/' . $s->img) }}" alt="Cup">
+                        <div class="service-card">
+                            <div class="icon-service">
+                                <img src="{{ asset('/storage/' . $s->img) }}" alt="Service Icon">
                             </div>
-                            <div id="judul-service1">
-                                <p>{{$s->judul}}</p>
+                            <div class="judul-service">
+                                <p>{{ $s->judul }}</p>
                             </div>
-                            <div id="text-service1">
-                                <p>{{$s->desc}}</p>
+                            <div class="text-service">
+                                <p>{{ $s->desc }}</p>
                             </div>
                         </div>
                         @endforeach
-                        
                     </div>
                 </div>
             </div>
@@ -154,7 +164,7 @@
                 </div>
                 <div id="carousel-catalog">
                     <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
-
+                
                     <div id="container-catalog-carousel">
                         <div class="carousel-track">
                             @foreach ($produk as $p)                     
@@ -164,13 +174,24 @@
                                 </div>
                                 <p id="nama-produk">{{$p->nama_produk}}</p>
                                 <p id="desc-produk">{{$p->deskripsi}}</p>
-                                <p id="harga-produk">{{$p->harga}}</p>
+                                <p id="harga-produk">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+                
+                                <!-- Buttons Section -->
+                                <div class="button-container">
+                                    <!-- Tokopedia and Shopee buttons (same row) -->
+                                    <div class="shop-buttons">
+                                        <a href="https://www.tokopedia.com/your-store-link" class="shop-button" target="_blank">Tokopedia</a>
+                                        <a href="https://shopee.co.id/your-store-link" class="shop-button" target="_blank">Shopee</a>
+                                    </div>
+                
+                                    <!-- Beli Disini button (below the other two) -->
+                                    <button class="buy-button">Beli Disini</button>
+                                </div>
                             </div>
                             @endforeach
                         </div>
                     </div>
                     <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
-
                 </div>
             </div>
 
@@ -185,6 +206,19 @@
                         </div>
                         @endforeach
                     </div>
+                </div>
+            </div>
+
+            {{-- Video Compnay --}}
+            <div id="content-video">
+                <p id="text-video">Company Video</p>
+                <div id="video-container">
+                    <iframe
+                        src="https://www.youtube.com/embed/your-video-id" 
+                        title="Company Video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                    ></iframe>
                 </div>
             </div>
 

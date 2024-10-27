@@ -23,7 +23,7 @@
                 <h2>Login</h2>
                 <form action="{{ url('login/proses') }}" method="post">
                 @csrf
-                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="username" name="username">
+                    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Username" name="username">
                     @error('username')
                         <div class="invalid-feedback">
                             {{ $message }}

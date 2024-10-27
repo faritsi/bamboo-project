@@ -5,17 +5,19 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f0f0f0;
-    font-family: Arial, sans-serif;
+    background: #f7f9fc; /* Softer background color */
+    font-family: "Poppins", sans-serif; /* Modern font family */
 }
 
 .square-container {
     display: flex;
     width: 100%;
     max-width: 1000px;
-    /* height: 100%; */
     max-height: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 12px; /* Rounded corners for a softer look */
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Softer shadow for a floating effect */
 }
 
 .left-section,
@@ -28,6 +30,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #e0f7fa; /* Light, calming background color */
 }
 
 .background-image {
@@ -45,8 +48,9 @@ html {
 }
 
 .logo {
-    width: 100px; /* Adjust as needed */
+    width: 120px; /* Slightly larger logo */
     height: auto;
+    margin-bottom: 10px;
 }
 
 .right-section {
@@ -54,37 +58,58 @@ html {
     justify-content: center;
     align-items: center;
     background: #ffffff;
-    padding: 20px;
+    padding: 30px; /* More padding for breathing space */
 }
 
 .login-form {
     width: 100%;
-    max-width: 300px;
-}
-
-.login-form h2 {
-    margin-bottom: 20px;
+    max-width: 350px; /* Increased width for the login form */
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for focus */
     text-align: center;
 }
 
+.login-form h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333; /* Darker font for contrast */
+}
+
 .login-form .form-control {
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
     width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
     box-sizing: border-box;
 }
 
+.login-form .form-control:focus {
+    border-color: #007bff; /* Change border color on focus */
+}
+
 .login-form button {
-    padding: 10px;
+    padding: 15px;
     width: 100%;
     background-color: #007bff;
     color: white;
     border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .login-form button:hover {
     background-color: #0056b3;
+    transform: translateY(-2px); /* Button lifts slightly on hover */
 }
 
 .invalid-feedback {
@@ -112,14 +137,12 @@ html {
         display: flex;
         width: 100%;
         max-width: 1000px;
-        /* height: 70%; */
         max-height: 600px;
     }
 
     .left-section,
     .right-section {
         width: 50%;
-        /* height: 100%; */
     }
 }
 
@@ -132,7 +155,6 @@ html {
 
     .right-section {
         flex: none;
-        /* width: 100%; */
         height: 50%;
     }
     .left-section {
@@ -142,19 +164,19 @@ html {
 
 @media (max-width: 480px) {
     .left-section {
-        display: none; /* Adjust as needed */
+        display: none;
     }
 
     .login-form {
-        padding: 10px;
+        padding: 20px;
     }
 
     .login-form h2 {
-        font-size: 1.5em;
+        font-size: 1.5rem;
     }
 
     .login-form .form-control,
     .login-form button {
-        padding: 8px;
+        padding: 10px;
     }
 }
