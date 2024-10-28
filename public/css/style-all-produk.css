@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    /* font-family: "Arial", sans-serif; */
+    background-color: #f0fdf4; /* Light Green background */
+    color: #333;
+}
+
+#background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+#container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+#tipe-produk {
+    text-align: center;
+}
+
+#title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2e7d32; /* Dark Green */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Category Styling */
+.kategori {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: #6cbf84; /* Vibrant green */
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kategori.active,
+.kategori:hover {
+    background-color: #1b5e20; /* Darker green on hover/active */
+}
+
+/* Product Content Styling */
+#content-produk {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for products */
+    gap: 30px; /* More spacing between products */
+    margin-top: 30px;
+}
+
+.content-produk {
+    background-color: #ffffff; /* White background for products */
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.content-produk:hover {
+    transform: translateY(-10px); /* Lift-up effect */
+    border-color: #2e7d32; /* Green border on hover */
+}
+
+#card-image img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 3px solid #2e7d32; /* Green bottom border for product image */
+}
+
+#card-stok {
+    width: 100px; /* Set width to 1/4 */
+    background-color: #1b5e20; /* Dark Green background */
+    color: white; /* White text */
+    padding: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    border-radius: 0 0 0 15px; /* Round bottom-left corner */
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#card-produk {
+    position: relative;
+}
+
+#card-text {
+    padding: 20px;
+    text-align: center;
+    background-color: #f1f1f1; /* Light Grey for text section */
+}
+
+#nama-produk {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2e7d32; /* Vibrant green for product name */
+    margin-bottom: 10px;
+}
+
+#harga-produk {
+    font-size: 1.2rem;
+    color: #ff7043; /* Accent color: orange for the price */
+    font-weight: bold;
+}
+
+@media (max-width: 992px) {
+    #content-produk {
+        grid-template-columns: repeat(
+            2,
+            1fr
+        ); /* 2 columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    #content-produk {
+        grid-template-columns: 2, 1fr; /* 1 column for small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    #content-produk {
+        grid-template-columns: 1fr; /* 1 column for small screens */
+    }
+}
