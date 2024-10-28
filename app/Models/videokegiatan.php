@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kegiatan extends Model
+class videokegiatan extends Model
 {
     use HasFactory;
-    // protected $guarded = ['id'];
-    protected $fillable = ['image_path', 'video_path'];
+    protected $guarded = ['id'];
 }

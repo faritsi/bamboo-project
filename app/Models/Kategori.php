@@ -13,4 +13,8 @@ class Kategori extends Model
     {
         return $this->hasOne(Produk::class);
     }
+    public function transaksi()
+    {
+        return $this->hasOne(Transaksi::class);
+    }
 }

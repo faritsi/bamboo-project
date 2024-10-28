@@ -152,6 +152,34 @@
                 @endif
             </div>
             <div class="form-group">
+                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <input type="file" id="image1" name="image1">
+                @if ($errors->has('image1'))
+                    <p class="alert alert-danger">{{ $errors->first('image1') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <input type="file" id="image2" name="image2">
+                @if ($errors->has('image2'))
+                    <p class="alert alert-danger">{{ $errors->first('image2') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <input type="file" id="image3" name="image3">
+                @if ($errors->has('image3'))
+                    <p class="alert alert-danger">{{ $errors->first('image3') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
+                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <input type="file" id="image4" name="image4">
+                @if ($errors->has('image4'))
+                    <p class="alert alert-danger">{{ $errors->first('image4') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
                 <label for="kode_produk">Kode Produk <span class="required">*</span></label>
                 <input type="text" id="kode_produk" name="kode_produk" placeholder="EXP-021" value="{{ old('kode_produk') }}">
                 @if ($errors->has('kode_produk'))
@@ -211,6 +239,13 @@
                 @endif
             </div>
             <div class="form-group">
+                <label for="berat">Berat Produk <span class="required">*</span></label>
+                <input type="number" id="berat" name="berat" placeholder="1" value="{{ old('berat') }}">
+                @if ($errors->has('berat'))
+                    <p class="alert alert-danger">{{ $errors->first('berat') }}</p>
+                @endif
+            </div>
+            <div class="form-group">
                 <button type="submit" class="submit-btn">Submit</button>
             </div>
         </form>
@@ -237,6 +272,38 @@
                     <p class="alert alert-danger">{{ $errors->first('image') }}</p>
                 @endif
             </div>
+            <div class="thumbnail">
+                <input type="hidden" name="oldImage" value="{{ $p->image1 }}">
+                <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail">
+                <input type="file" id="thumbnail-{{ $p->pid }}" name="image1">
+                @if ($errors->has('image1'))
+                    <p class="alert alert-danger">{{ $errors->first('image1') }}</p>
+                @endif
+            </div>
+            <div class="thumbnail">
+                <input type="hidden" name="oldImage" value="{{ $p->image2 }}">
+                <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail">
+                <input type="file" id="thumbnail-{{ $p->pid }}" name="image2">
+                @if ($errors->has('image2'))
+                    <p class="alert alert-danger">{{ $errors->first('image2') }}</p>
+                @endif
+            </div>
+            <div class="thumbnail">
+                <input type="hidden" name="oldImage" value="{{ $p->image3 }}">
+                <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail">
+                <input type="file" id="thumbnail-{{ $p->pid }}" name="image3">
+                @if ($errors->has('image3'))
+                    <p class="alert alert-danger">{{ $errors->first('image3') }}</p>
+                @endif
+            </div>
+            <div class="thumbnail">
+                <input type="hidden" name="oldImage" value="{{ $p->image4 }}">
+                <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail">
+                <input type="file" id="thumbnail-{{ $p->pid }}" name="image4">
+                @if ($errors->has('image4'))
+                    <p class="alert alert-danger">{{ $errors->first('image4') }}</p>
+                @endif
+            </div>
             <div class="form-group">
                 <label for="kode_produk-{{ $p->pid }}">Kode Produk <span class="required">*</span></label>
                 <input type="text" id="kode_produk-{{ $p->pid }}" name="kode_produk" placeholder="Masukan Nama" value="{{ old('kode_produk', $p->kode_produk) }}">
@@ -251,19 +318,16 @@
                     <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
                 @endif
             </div>
+            <!-- Kategori Dropdown -->
             <div class="form-group">
-                <label for="kategori">Kategori <span class="required">*</span></label>
-                <div class="dropdown">
-                    <button class="dropbtn" type="button" id="dropdownButton">Pilih Kategori</button>
-                    <div class="dropdown-content" id="dropdownMenu">
-                        <a href="#" data-value="awet">Awet</a>
-                        <a href="#" data-value="mudah-pecah">Mudah Pecah</a>
-                        <a href="#" data-value="tahan-lama">Tahan Lama</a>
-                    </div>
-                </div>
-                <input type="text" id="jenis_produk-{{ $p->pid }}" name="jenis_produk" value="{{ old('jenis_produk', $p->jenis_produk) }}">        
-                @if ($errors->has('jenis_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('jenis_produk') }}</p>
+                <label for="kategori_id-{{ $p->pid }}">Kategori <span class="required">*</span></label>
+                <select id="kategori_id-{{ $p->pid }}" name="kategori_id" class="form-control">
+                    @foreach ($kategori as $kategoriItem)
+                        <option value="{{ $kategoriItem->id }}" {{ $kategoriItem->id == $p->kategori_id ? 'selected' : '' }}>{{ $kategoriItem->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('kategori_id'))
+                    <p class="alert alert-danger">{{ $errors->first('kategori_id') }}</p>
                 @endif
             </div>
             <div class="form-group">

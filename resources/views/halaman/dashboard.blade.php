@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -180,12 +181,12 @@
                                 <div class="button-container">
                                     <!-- Tokopedia and Shopee buttons (same row) -->
                                     <div class="shop-buttons">
-                                        <a href="https://www.tokopedia.com/your-store-link" class="shop-button" target="_blank">Tokopedia</a>
-                                        <a href="https://shopee.co.id/your-store-link" class="shop-button" target="_blank">Shopee</a>
+                                        <a href="{{$p->tokped}}" class="shop-button" target="_blank">Tokopedia</a>
+                                        <a href="{{$p->shopee}}" class="shop-button" target="_blank">Shopee</a>
                                     </div>
                 
                                     <!-- Beli Disini button (below the other two) -->
-                                    <button class="buy-button">Beli Disini</button>
+                                    <a href="/produk/{{$p->nama_produk}}"><button class="buy-button">Beli Disini</button></a>
                                 </div>
                             </div>
                             @endforeach
@@ -209,16 +210,17 @@
                 </div>
             </div>
 
-            {{-- Video Compnay --}}
             <div id="content-video">
                 <p id="text-video">Company Video</p>
                 <div id="video-container">
-                    <iframe
-                        src="https://www.youtube.com/embed/your-video-id" 
+                    @foreach ($video as $v)
+                        <iframe
+                        src="{{$v->video_path}}" 
                         title="Company Video"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen
                     ></iframe>
+                    @endforeach
                 </div>
             </div>
 
@@ -270,6 +272,19 @@
                         <a href="#"><img src="img\social-media\wa.png" alt="Twitter"></a>
                         <a href="#"><img src="img\social-media\ig.png" alt="Instagram"></a>
                         <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
+                    </div>
+                    <div style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 15px; border-radius: 8px; z-index: 999;">
+                        <!-- Icon : Today's Visitor Count -->
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-2">run_circle</span>
+                            <span class="mr-1">:</span>
+                            <p class="mb-0">{{ $visitorCounts['today'] }}</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined mr-2">groups_3</span>
+                            <span class="mr-1">:</span>
+                            <p class="mb-0">{{ $visitorCounts['totalVisits'] }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

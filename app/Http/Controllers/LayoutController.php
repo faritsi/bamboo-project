@@ -12,6 +12,7 @@ use App\Models\Pimpinan;
 use App\Models\Ingpo;
 use App\Models\Kegiatan;
 use App\Models\Service;
+use App\Models\videokegiatan;
 
 class LayoutController extends Controller
 {
@@ -23,6 +24,7 @@ class LayoutController extends Controller
             'pimpinan' => Pimpinan::take(4)->get(),
             'ingpo' => Ingpo::all(),
             'service' => Service::all(),
+            'video' => videokegiatan::all(),
             'kegiatan' => Kegiatan::orderBy('created_at')->take(5)->get(),
         ]);
     }
@@ -34,6 +36,7 @@ class LayoutController extends Controller
         // ]);
         return view('admin.beranda')->with([
             'user' => Auth::user(),
+            'ingpo' => Ingpo::all(),
             'role' => role::all(),
             'title' => 'Dashboard'
         ], compact('user1'));

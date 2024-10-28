@@ -84,10 +84,11 @@
                 </div>
                 <!-- Thumbnails below the main image -->
                 <div class="thumbnail-images">
-                    <img src="..\img\bambu\bambu_10.jpeg" alt="Thumbnail 1" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_11.jpeg" alt="Thumbnail 2" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_12.jpeg" alt="Thumbnail 3" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_13.jpeg" alt="Thumbnail 4" onclick="changeMainImage(this)">
+                    <img src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                    <img src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                    <img src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail 2" onclick="changeMainImage(this)">
+                    <img src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail 3" onclick="changeMainImage(this)">
+                    <img src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail 4" onclick="changeMainImage(this)">
                 </div>
             </div>
     
@@ -99,7 +100,8 @@
                 <div id="harga-produk">
                     <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
                 </div>
-    
+                <p id="berat">{{$p->berat}}</p>
+                
                 <div id="deskripsi-produk">
                     <h3>Deskripsi</h3>
                 </div>
@@ -167,6 +169,11 @@
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
                 <input type="hidden" name="modal_total" id="modal_total" value="">
+                <div class="cart-total">
+                    Total Berat: <span x-text="totalWeight + ' gram'"></span> <!-- Tampilkan total berat -->
+                </div>
+                <input type="hidden" id="total-weight" x-model="totalWeight">
+                
                 {{-- <div class="form-group">
                     <label for="city">Kota <span class="required">*</span></label>
                     <input type="text" name="city" id="city" placeholder="Masukan Kota" required>
@@ -408,13 +415,15 @@
         $('#city, #courier').change(function () {
             var city_id = $('#city').val();
             var courier = $('#courier').val();
+            var weight = $('#total-weight').val();
 
             if (city_id && courier) {
                 $.post('/cost', {
                     _token: '{{ csrf_token() }}',
                     origin: 24, // Example origin city ID
                     destination: city_id,
-                    courier: courier
+                    courier: courier,
+                    weight: weight,
                 })
                 .done(function (data) {
                     if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
@@ -446,112 +455,160 @@
     });
 
     </script>
-    <script>
-       function cartData() {
-                return {
-                    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // Initialize cartItems from localStorage or as an empty array
-                    cartTotal: 0,
-                    cartVisible: false,
+   <script>
+    function cartData() {
+        return {
+            cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
+            cartTotal: parseFloat(localStorage.getItem("cartTotal")) || 0,
+            totalWeight: parseFloat(localStorage.getItem("totalWeight")) || 0,
+            cartVisible: false,
 
-                    init() {
-                        this.updateCartTotal();
-                    },
+            init() {
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.updateShippingCost(); // Hitung ongkos kirim saat inisialisasi
+            },
 
-                    toggleCart() {
-                        this.cartVisible = !this.cartVisible;
-                    },
+            toggleCart() {
+                this.cartVisible = !this.cartVisible;
+            },
 
-                    addToCart(pid, nama_produk, harga, event) {
-                        let qtyElement = event.target.closest('#content').querySelector('.qty');
-                        let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
-                        let subTotal = qty * harga; // Calculate sub-total for this product
+            addToCart(pid, nama_produk, harga, event) {
+                let qtyElement = event.target.closest('#content').querySelector('.qty');
+                let qty = parseInt(qtyElement.value, 10);
+                let subTotal = qty * harga;
+                let berat = parseFloat(event.target.closest('#content').querySelector('#berat').textContent);
 
-                        // Check if the item already exists in the cartItems array
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity += qty; // Update the quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                let product = this.cartItems.find(item => item.pid === pid);
+                if (product) {
+                    product.quantity += qty;
+                    product.subTotal = product.quantity * product.harga;
+                    product.totalWeight = product.quantity * product.berat;
+                } else {
+                    this.cartItems.push({
+                        pid,
+                        nama_produk,
+                        harga,
+                        quantity: qty,
+                        subTotal: subTotal,
+                        berat: berat,
+                        totalWeight: qty * berat
+                    });
+                }
+
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.saveCartToLocalStorage();
+                this.updateShippingCost();
+            },
+
+            removeFromCart(pid) {
+                let productIndex = this.cartItems.findIndex(item => item.pid === pid);
+                if (productIndex !== -1) {
+                    this.cartItems.splice(productIndex, 1);
+                }
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.saveCartToLocalStorage();
+                this.updateShippingCost();
+            },
+
+            updateQuantity(pid, newQty) {
+                let product = this.cartItems.find(item => item.pid === pid);
+                if (product) {
+                    product.quantity = newQty;
+                    product.subTotal = product.quantity * product.harga;
+                    product.totalWeight = product.quantity * product.berat;
+                }
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.saveCartToLocalStorage();
+                this.updateShippingCost();
+            },
+
+            updateCartTotal() {
+                this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
+                localStorage.setItem("cartTotal", this.cartTotal); // Simpan cartTotal
+            },
+
+            updateTotalWeight() {
+                this.totalWeight = this.cartItems.reduce((total, item) => total + item.totalWeight, 0);
+                localStorage.setItem("totalWeight", this.totalWeight); // Simpan totalWeight
+            },
+
+            saveCartToLocalStorage() {
+                localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
+            },
+
+            updateShippingCost() {
+                const city_id = $('#city').val();
+                const courier = $('#courier').val();
+
+                if (city_id && courier && this.totalWeight > 0) {
+                    $.post('/cost', {
+                        _token: '{{ csrf_token() }}',
+                        origin: 24,
+                        destination: city_id,
+                        courier: courier,
+                        weight: this.totalWeight, // Kirim totalWeight
+                    })
+                    .done((data) => {
+                        if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
+                            const services = data[0].costs;
+                            $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
+                            services.forEach(function (service) {
+                                $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
+                            });
                         } else {
-                            // Add new product to cartItems array
-                            this.cartItems.push({ pid, nama_produk, harga, quantity: qty, subTotal: subTotal });
+                            $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
                         }
+                    })
+                    .fail(() => {
+                        console.error("Error fetching courier services and costs.");
+                    });
+                }
+            },
 
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save the updated cartItems array to localStorage
-                    },
+            increaseQuantity(pid) {
+                let product = this.cartItems.find(item => item.pid === pid);
+                if (product) {
+                    product.quantity++;
+                    product.subTotal = product.quantity * product.harga;
+                    product.totalWeight = product.quantity * product.berat;
+                }
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.saveCartToLocalStorage();
+                this.updateShippingCost();
+            },
 
-                    removeFromCart(pid) {
-                        // Find the product index
-                        let productIndex = this.cartItems.findIndex(item => item.pid === pid);
-                        if (productIndex !== -1) {
-                            // Remove product from the array
-                            this.cartItems.splice(productIndex, 1);
-                        }
+            decreaseQuantity(pid) {
+                let product = this.cartItems.find(item => item.pid === pid);
+                if (product && product.quantity > 1) {
+                    product.quantity--;
+                    product.subTotal = product.quantity * product.harga;
+                    product.totalWeight = product.quantity * product.berat;
+                } else if (product && product.quantity === 1) {
+                    this.removeFromCart(pid);
+                }
+                this.updateCartTotal();
+                this.updateTotalWeight();
+                this.saveCartToLocalStorage();
+                this.updateShippingCost();
+            },
 
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage after removal
-                    },
-
-                    updateQuantity(pid, newQty) {
-                        // Find the product in the array
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity = newQty;
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        }
-
-                        // Update the cart and localStorage
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage when quantity changes
-                    },
-
-                    updateCartTotal() {
-                        // Update the overall cart total (sum of all sub-totals)
-                        this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
-                    },
-
-                    saveCartToLocalStorage() {
-                        localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
-                    },
-
-                    increaseQuantity(pid) {
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product) {
-                            product.quantity++; // Increase quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        }
-
-                        // Update cart and save changes
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
-                    },
-
-                    decreaseQuantity(pid) {
-                        let product = this.cartItems.find(item => item.pid === pid);
-                        if (product && product.quantity > 1) {
-                            product.quantity--; // Decrease quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
-                        } else if (product && product.quantity === 1) {
-                            // If quantity is 1, remove the item
-                            this.removeFromCart(pid);
-                        }
-
-                        // Update cart and save changes
-                        this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
-                    },
-                };
-            }
-            function formatRupiah(amount) {
-                return '' + new Intl.NumberFormat('id-ID', {
+            formatRupiah(amount) {
+                return new Intl.NumberFormat('id-ID', {
                     style: 'currency',
                     currency: 'IDR',
                     minimumFractionDigits: 0
                 }).format(amount).replace('IDR', '').trim();
             }
-    </script>
+        };
+    }
+</script>
+
+    
 
     <script>
         function changeMainImage(thumbnail) {

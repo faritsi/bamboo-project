@@ -19,10 +19,15 @@ return new class extends Migration
             // $table->String('jenis_produk');
             $table->Integer('jumlah_produk');
             $table->String('image')->nullable();
+            $table->String('image1')->nullable();
+            $table->String('image2')->nullable();
+            $table->String('image3')->nullable();
+            $table->String('image4')->nullable();
             $table->String('deskripsi')->nullable();
             $table->String('tokped');
             $table->String('shopee');
             $table->Integer('harga');
+            $table->Integer('berat');
             $table->timestamps();
         });
     }

@@ -15,6 +15,8 @@ class MenuDinamis extends Seeder
     {
         $ingpo = [
             [
+                'favicon' => '/img/bambu/bambu_11.jpeg',
+                'title' => 'bintang',
                 'image_header' => '/img/bambu/bambu_11.jpeg',
                 'desc_header' => 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus enim ullam repellat eligendi sint. Iusto iste ullam dolor odit qui.',
                 'slogan' => 'Memanfaatkan Keanekaragaman Alam: Inovasi Bambu untuk Kehidupan Berkelanjutan',

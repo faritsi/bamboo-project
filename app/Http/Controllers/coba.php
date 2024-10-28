@@ -46,7 +46,7 @@ class coba extends Controller
         'form_params' => [
             'origin' => $request->origin, // ID kota asal
             'destination' => $request->destination, // ID kota tujuan
-            'weight' => 500, // Berat barang (gram)
+            'weight' => $request->weight, // Berat barang (gram)
             'courier' => $request->courier // JNE, POS, TIKI, dll
         ]
     ]);

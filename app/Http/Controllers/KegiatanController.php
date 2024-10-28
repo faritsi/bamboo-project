@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kegiatan;
+use App\Models\videokegiatan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -18,32 +19,39 @@ class KegiatanController extends Controller
     {
         $user = Auth::user();
         $kegiatan = Kegiatan::all();
-        return view('admin.kegiatan', ['title' => 'Kegiatan'], compact('kegiatan', 'user'));
+        $video = videokegiatan::all();
+        return view('admin.kegiatan', ['title' => 'Kegiatan'], compact('kegiatan', 'user', 'video'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+{
+    $request->validate([
+        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'video_path' => 'nullable|string',
+    ]);
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $file) {
-                // Pastikan folder kegiatan_images ada
-                $imageName = 'kegiatan-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
-                $imagePath = $file->storeAs('kegiatan-images', $imageName, 'public'); // Simpan file dengan nama unik
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $index => $file) {
+            $imageName = 'kegiatan-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
+            $imagePath = $file->storeAs('kegiatan-images', $imageName, 'public');
 
-                Kegiatan::create([
-                    'image_path' => $imagePath,
-                ]);
-            }
+            Kegiatan::create([
+                'image_path' => $imagePath,
+            ]);
         }
-
-        return redirect()->back()->with('success', 'Images uploaded successfully.');
     }
+    $video = new videokegiatan([
+        'video_path' => $request->video_path,
+    ]);
+    // dd($produk);
+    $video->save();
+
+    return redirect()->back()->with('success', 'Images uploaded successfully.');
+}
+
 
     /**
      * Update the specified resource in storage.
@@ -51,6 +59,11 @@ class KegiatanController extends Controller
     public function update(Request $request, $id)
     {
         $kegiatan = Kegiatan::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'video_path' => 'nullable|url', // Validasi untuk URL video
+        ]);
 
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
@@ -62,6 +75,9 @@ class KegiatanController extends Controller
             $image = $request->file('image');
             $imagePath = $image->store('kegiatan_images');
             $kegiatan->image_path = $imagePath;
+            if ($request->video_path) {
+                $kegiatan->video_path = $request->video_path;
+            }
             $kegiatan->save();
 
             return response()->json(['success' => true, 'image_path' => asset('storage/' . $imagePath)]);
