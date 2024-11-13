@@ -1,8 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    list-style-type: none;
+    text-decoration: none;
 }
 
 body,
@@ -10,21 +14,130 @@ html {
     margin: 0;
     padding: 0;
     /* font-family: "Arial", sans-serif; */
-    background-color: #f0fdf4; /* Light Green background */
+    background-color: #fafaff; /* Light Green background */
     color: #333;
 }
 
-#background {
+#bg-navbar {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    background-color: #00572d;
+}
+
+#navbar {
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+#wrapper-navbar {
+    flex: 1;
+}
+
+#header-kiri {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    /* color: #fff; */
+    display: flex;
+    align-items: center;
+    /* flex: 1; */
+}
+
+#logo-company img {
+    width: 80px;
+    height: auto;
+    margin-right: 20px;
+}
+
+#header-teks {
+    display: flex;
+    flex-direction: column; /* Membuat PT. Bintang di atas dan Mitra Kencana di bawah */
+    justify-content: center; /* Menyelaraskan teks secara vertikal */
+}
+
+#header-atas {
+    color: #ffd700;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#header-bawah {
+    padding-left: 40px;
+    color: #ffd700;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Burger Icon */
+#burger-menu {
+    display: none;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+    margin-left: auto;
+    z-index: 999;
+}
+
+.burger-menu-list {
+    display: none; /* Sembunyikan menu burger secara default */
+
+    li {
+        list-style-type: none;
+        margin: 15px 0px;
+    }
+}
+
+.navbar-links ul {
+    display: flex; /* Tampilkan menu horizontal secara default */
+}
+
+.navbar-links {
+    display: flex;
+    flex-direction: row;
+}
+
+#header-kanan {
+    margin: 0 auto;
+    padding: 0;
+    /* width: 100%; */
+    text-align: center;
+    flex: 1;
+}
+
+#header-kanan ul {
+    margin: 0 auto;
+    padding: 0;
+    list-style-type: none;
+}
+
+#header-kanan ul li {
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    display: inline;
+    cursor: pointer;
+}
+
+#header-kanan ul li a {
+    text-decoration: none;
+    color: #ffd700;
+}
+
+#bg-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     min-height: 100vh;
-    background-color: #f9f9f9;
-    padding: 20px;
+    background-color: #fafaff;
+    padding-top: 25px;
 }
 
 #container {
-    width: 100%;
+    width: 80%;
     max-width: 1200px;
 }
 
@@ -108,7 +221,6 @@ html {
 #card-text {
     padding: 20px;
     text-align: center;
-    background-color: #f1f1f1; /* Light Grey for text section */
 }
 
 #nama-produk {
@@ -120,11 +232,158 @@ html {
 
 #harga-produk {
     font-size: 1.2rem;
-    color: #ff7043; /* Accent color: orange for the price */
     font-weight: bold;
 }
 
+/* Pagination Info Section */
+.pagination-info {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 16px;
+    color: #2e3d2b; /* Earthy dark green */
+}
+
+.pagination-info p {
+    margin-bottom: 10px;
+}
+
+/* Pagination Buttons Container */
+.pagination-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Pagination Button */
+.pagination-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #6cbf84; /* Green color */
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover Effect */
+.pagination-btn:hover {
+    background-color: #56a76b; /* Slightly darker green for hover */
+    color: #fff;
+}
+
+/* Disabled State */
+.pagination-btn:disabled {
+    background-color: #ccc;
+    color: #888;
+    pointer-events: none;
+}
+
+/* Active Current Page Button */
+.pagination-btn.active {
+    background-color: #4e9d6b; /* A darker green for the active page */
+    color: #fff;
+    font-weight: bold;
+    border-radius: 100%;
+}
+
+/* Pagination Links */
+.pagination-links {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Style for individual page links */
+.pagination-links .page-link {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    font-size: 16px;
+    background-color: #6cbf84; /* Green color */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for page links */
+.pagination-links .page-link:hover {
+    background-color: #56a76b; /* Darker green on hover */
+    color: #fff;
+}
+
+/* Active page link styling */
+.pagination-links .active .page-link {
+    background-color: #4e9d6b; /* Darker green for active page */
+    color: white;
+    font-weight: bold;
+}
+
+/* Right Arrow */
+.pagination-links .page-link[rel="next"] {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+/* Pagination arrows */
+.pagination-links .page-link[rel="prev"],
+.pagination-links .page-link[rel="next"] {
+    background-color: #6cbf84; /* Green color */
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-links .page-link[rel="prev"]:hover,
+.pagination-links .page-link[rel="next"]:hover {
+    background-color: #56a76b; /* Darker green for hover */
+    color: #fff;
+}
+
+/* Pagination Container */
+.pagination-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#footer-copyright {
+    background-color: #000; /* Warna latar belakang hitam */
+    color: #ccc; /* Warna teks abu-abu */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    margin-top: 100px;
+}
+
+/* Muncul saat discroll ke bawah */
+#container-footer.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 1200px) {
+    #logo-company img {
+        width: 65px;
+    }
+}
+
 @media (max-width: 992px) {
+    #navbar {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #header-atas,
+    #header-bawah {
+        font-size: 20px;
+    }
+
+    #logo-company img {
+        width: 50px;
+    }
+
     #content-produk {
         grid-template-columns: repeat(
             2,
@@ -137,9 +396,22 @@ html {
     #content-produk {
         grid-template-columns: 2, 1fr; /* 1 column for small screens */
     }
+
+    #header-teks {
+        display: none;
+    }
 }
 
 @media (max-width: 576px) {
+    #header-atas,
+    #header-bawah {
+        font-size: 16px;
+    }
+
+    #header-teks {
+        display: none;
+    }
+
     #content-produk {
         grid-template-columns: 1fr; /* 1 column for small screens */
     }

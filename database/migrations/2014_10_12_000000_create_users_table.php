@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('role_id');
             $table->String('name');
             $table->String('username')->unique();
-            $table->String('password');           
+            $table->String('password');
+            $table->String('image')->nullabel();
             $table->timestamps();
         });
     }

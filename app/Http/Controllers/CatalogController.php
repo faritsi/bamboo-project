@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Produk;
 use App\Models\Pimpinan;
 use App\Models\Ingpo;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CatalogController extends Controller
 {
@@ -21,15 +22,38 @@ class CatalogController extends Controller
         $query = $request->query("status_code");
 
         if ($query) {
-            // Redirect ke catalog tanpa parameter
+            // Redirect to catalog without parameter
             return redirect('/catalog');
         }
-        // $produk = DB::table('produks')->where('pid')->get();
-        $produk = Produk::all();
+
+        // Paginate produk with a specific limit
+        $produk = QueryBuilder::for(Produk::class)
+            ->paginate(20);
+
+        // Extract pagination data
+        $produkItems = $produk->items();
+        $currentPage = $produk->currentPage();
+        $totalPages = $produk->lastPage();
+        $firstPageUrl = $produk->url(1);
+        $lastPageUrl = $produk->url($produk->lastPage());
+        $previousPageUrl = $produk->previousPageUrl();
+        $nextPageUrl = $produk->nextPageUrl();
+
         return view('halaman/all_produk', [
             'title' => 'Catalog',
-        ], compact('produk'));
+            'ingpo' => Ingpo::all(),
+            'produkItems' => $produkItems,
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'firstPageUrl' => $firstPageUrl,
+            'lastPageUrl' => $lastPageUrl,
+            'previousPageUrl' => $previousPageUrl,
+            'nextPageUrl' => $nextPageUrl,
+            'produk' => $produk, // Pass the full pagination instance
+        ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

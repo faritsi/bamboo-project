@@ -89,6 +89,8 @@ class IngpoController extends Controller
     {
         // Validate form data
         $request->validate([
+            'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title' => 'required|string|max:255',
             'image_header' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'desc_header' => 'required|string|max:255',
             'slogan' => 'required|string|max:255',
@@ -111,60 +113,47 @@ class IngpoController extends Controller
         // Find the existing layout data
         $ingpo = Ingpo::findOrFail($id);
 
-        // Handle image uploads using the custom image naming format
-        if ($request->hasFile('image_header')) {
-            $imageName = $id . '_header_' . time() . '.' . $request->file('image_header')->getClientOriginalExtension();
-            if ($ingpo->image_header && Storage::exists('public/' . $ingpo->image_header)) {
-                Storage::delete('public/' . $ingpo->image_header);
+        // Array of fields for file uploads
+        $fileFields = [
+            'favicon' => 'favicon',
+            'image_header' => 'header',
+            'image_about' => 'about',
+            'image_visi' => 'visi',
+            'image_misi' => 'misi',
+            'logo_footer' => 'footer',
+        ];
+
+        // Loop to handle file uploads
+        foreach ($fileFields as $field => $suffix) {
+            if ($request->hasFile($field)) {
+                $imageName = $id . "_{$suffix}_" . time() . '.' . $request->file($field)->getClientOriginalExtension();
+
+                // Delete old image if exists
+                if ($ingpo->$field && Storage::exists('public/' . $ingpo->$field)) {
+                    Storage::delete('public/' . $ingpo->$field);
+                }
+
+                // Store new image and update path
+                $ingpo->$field = $request->file($field)->storeAs('ingpo-images', $imageName, 'public');
             }
-            $ingpo->image_header = $request->file('image_header')->storeAs('ingpo-images', $imageName, 'public');
         }
 
-        if ($request->hasFile('image_about')) {
-            $imageName = $id . '_about_' . time() . '.' . $request->file('image_about')->getClientOriginalExtension();
-            if ($ingpo->image_about && Storage::exists('public/' . $ingpo->image_about)) {
-                Storage::delete('public/' . $ingpo->image_about);
-            }
-            $ingpo->image_about = $request->file('image_about')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('image_visi')) {
-            $imageName = $id . '_visi_' . time() . '.' . $request->file('image_visi')->getClientOriginalExtension();
-            if ($ingpo->image_visi && Storage::exists('public/' . $ingpo->image_visi)) {
-                Storage::delete('public/' . $ingpo->image_visi);
-            }
-            $ingpo->image_visi = $request->file('image_visi')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('image_misi')) {
-            $imageName = $id . '_misi_' . time() . '.' . $request->file('image_misi')->getClientOriginalExtension();
-            if ($ingpo->image_misi && Storage::exists('public/' . $ingpo->image_misi)) {
-                Storage::delete('public/' . $ingpo->image_misi);
-            }
-            $ingpo->image_misi = $request->file('image_misi')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        if ($request->hasFile('logo_footer')) {
-            $imageName = $id . '_footer_' . time() . '.' . $request->file('logo_footer')->getClientOriginalExtension();
-            if ($ingpo->logo_footer && Storage::exists('public/' . $ingpo->logo_footer)) {
-                Storage::delete('public/' . $ingpo->logo_footer);
-            }
-            $ingpo->logo_footer = $request->file('logo_footer')->storeAs('ingpo-images', $imageName, 'public');
-        }
-
-        // Update other form fields
-        $ingpo->desc_header = $request->desc_header;
-        $ingpo->slogan = $request->slogan;
-        $ingpo->desc_slogan = $request->desc_slogan;
-        $ingpo->desc_about = $request->desc_about;
-        $ingpo->desc_visi = $request->desc_visi;
-        $ingpo->desc_misi = $request->desc_misi;
-        $ingpo->judul_service = $request->judul_service;
-        $ingpo->desc_service = $request->desc_service;
-        $ingpo->judul_produk = $request->judul_produk;
-        $ingpo->desc_produk = $request->desc_produk;
-        $ingpo->judul_footer = $request->judul_footer;
-        $ingpo->desc_footer = $request->desc_footer;
+        // Update other form fields directly
+        $ingpo->fill([
+            'title' => $request->title,
+            'desc_header' => $request->desc_header,
+            'slogan' => $request->slogan,
+            'desc_slogan' => $request->desc_slogan,
+            'desc_about' => $request->desc_about,
+            'desc_visi' => $request->desc_visi,
+            'desc_misi' => $request->desc_misi,
+            'judul_service' => $request->judul_service,
+            'desc_service' => $request->desc_service,
+            'judul_produk' => $request->judul_produk,
+            'desc_produk' => $request->desc_produk,
+            'judul_footer' => $request->judul_footer,
+            'desc_footer' => $request->desc_footer,
+        ]);
 
         // Save the updated layout
         $ingpo->save();
@@ -172,6 +161,7 @@ class IngpoController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Layout updated successfully!');
     }
+
 
     /**
      * Remove the specified resource from storage.

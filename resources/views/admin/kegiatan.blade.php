@@ -28,8 +28,12 @@
                     @csrf
                     <div class="mb-3">
                         <label for="image" class="form-label">Pilih Gambar</label>
-                        <input class="form-control" type="file" id="image" name="image" accept="image/*" required>
+                        <input class="form-control" type="file" id="image" name="images[]" accept="image/*" multiple required>
                         <div id="imagePreview" class="mt-3"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="video_path" class="form-label">Link Video</label>
+                        <input class="form-control" type="url" id="video_path" name="video_path" placeholder="https://youtube.com/your-video-link">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -41,7 +45,6 @@
     </div>
 </div>
 
-<!-- Display Uploaded Images -->
 <div class="photo-gallery mt-5">
     <div class="grid-gallery">
         @foreach ($kegiatan as $i)
@@ -61,13 +64,26 @@
         @endforeach
     </div>
 </div>
+<div id="video-container">
+    @foreach ($video as $v)
+        @if($v->video_path)
+            <iframe
+                src="{{ $v->video_path }}" 
+                title="Company Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+            ></iframe>
+        @endif
+    @endforeach
+</div>
 
 <script>
     document.getElementById('image').addEventListener('change', function(event) {
-        const imagePreview = document.getElementById('imagePreview');
-        imagePreview.innerHTML = '';
-        const file = event.target.files[0];
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = '';
+    const files = event.target.files;
 
+    Array.from(files).forEach(file => {
         const reader = new FileReader();
         reader.onload = function(e) {
             const img = document.createElement('img');
@@ -79,6 +95,8 @@
         };
         reader.readAsDataURL(file);
     });
+});
+
 
     function editImage(imageId) {
         const newFileInput = document.createElement('input');

@@ -32,6 +32,19 @@
             <hr>
         </div>
 
+        <div class="section">
+            <h2>Logo</h2>
+            <input type="file" id="favicon" name="favicon">
+            <div class="image-preview">
+                <img id="imageHeaderPreview1" src="{{ asset('storage/' . $i->favicon) }}" style="max-width: 200px; max-height: 150px;">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Title</h2>
+            <textarea id="title" name="title" rows="5">{{ $i->title }}</textarea>
+        </div>
+
         <!-- Background Header Section -->
         <div class="section">
             <h2>Background Header</h2>

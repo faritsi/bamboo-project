@@ -4,15 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="/img/logo/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/style-detail-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
-
+    <title>{{$produk[0]->nama_produk}}</title>
 </head>
 <body>
    <!-- Button to Open Cart -->
-   <button class="open-cart-btn" @click="toggleCart()"><span class="material-symbols-outlined">shopping_cart</span></button>
+    <div id="bg-navbar">
+        <div id="navbar">
+                <div id="header-kiri">
+                    <a href="{{ route('dashboard.index') }}">
+                        <div id="logo-company">
+                            <img src="/img/logo/logo.png" alt="Logo">
+                        </div>
+                    </a>
+                    <div id="header-teks">
+                        <div id="header-atas">
+                            <p>PT. Bintang</p>
+                        </div>
+                        <div id="header-bawah">
+                            <p>Mitra Kencana</p>
+                        </div>
+                    </div>
+                </div>
+            <div id="header-kanan" class="navbar-links">
+                <ul>
+                    <li><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    {{-- <li>About Us</li> --}}
+                    <li><a href="{{ route('catalog.index') }}">Catalog</a></li>
+                    {{-- <li>Contact Us</li> --}}
+                    <li class="open-cart-btn" @click="toggleCart()">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                    </li>
+                </ul>
+                {{-- Burger Icon --}}
+                <div id="burger-menu">
+                    <span id="burger-icon">&#9776;</span>
+                </div>
+                <div class="burger-menu-list" id="burgerMenuList">
+                    <li><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    {{-- <li>About Us</li> --}}
+                    <li><a href="{{ route('catalog.index') }}">Catalog</a></li>
+                    {{-- <a href="#">Contact Us</a> --}}
+                </div>
+            </div>
+        </div>
+    </div>
 
    <!-- Cart Menu -->
    <div class="cart-menu" :class="{ 'active': cartVisible }">
@@ -63,85 +103,118 @@
            Total: <span x-text="formatRupiah(cartTotal)"></span>
        </div>
        <div id="btnBeli" class="bg-biodata">
-            <div id="container-biodata">
-                <div class="biodata">
+            <div id="container-beli">
+                <div class="beli">
                     <span class="material-symbols-outlined">shopping_bag</span>
                 </div>
                 <div id="text-button">
-                    <p>Buy</p>
+                    <p>Checkout</p>
                 </div>
             </div>
         </div>
    </div>
    <div id="product-page">
-    <div id="co-background">
-        @foreach ($produk as $p)
-        <div id="content">
-            <!-- Product Gallery with Main Image and Thumbnails -->
-            <div id="image-produk">
-                <div class="main-image">
-                    <img id="main-image" src="{{ asset('/storage/' . $p->image) }}" alt="Gambar {{$p->nama_produk}}">
+        <div id="co-background">
+            @foreach ($produk as $p)
+            <div id="content">
+                <!-- Product Gallery with Main Image and Thumbnails -->
+                <div id="image-produk">
+                    <div class="main-image">
+                        <img id="main-image" src="{{ asset('/storage/' . $p->image) }}" alt="Gambar {{$p->nama_produk}}">
+                    </div>
+                    <!-- Thumbnails below the main image -->
+                    <div class="thumbnail-images">
+                        <img src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                        <img src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                        <img src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail 2" onclick="changeMainImage(this)">
+                        <img src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail 3" onclick="changeMainImage(this)">
+                        <img src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail 4" onclick="changeMainImage(this)">
+                    </div>
                 </div>
-                <!-- Thumbnails below the main image -->
-                <div class="thumbnail-images">
-                    <img src="..\img\bambu\bambu_10.jpeg" alt="Thumbnail 1" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_11.jpeg" alt="Thumbnail 2" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_12.jpeg" alt="Thumbnail 3" onclick="changeMainImage(this)">
-                    <img src="..\img\bambu\bambu_13.jpeg" alt="Thumbnail 4" onclick="changeMainImage(this)">
+        
+                <!-- Product Details Section on the Right -->
+                <div id="keterangan-produk">
+                    <div id="nama-produk">
+                        <p id="nama">{{$p->nama_produk}}</p>
+                    </div>
+                    <div id="harga-produk">
+                        <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+                    </div>
+        
+                    <div id="deskripsi-produk">
+                        <h3>Deskripsi</h3>
+                    </div>
+                    <div id="deskripsi-text">
+                        <p id="deskripsi">{{$p->deskripsi}}</p>
+                    </div>
+
+                    <p id="berat">Berat : <span id="berat-barang">{{$p->berat}}</span><span id="kg"> Kg</span></p>
+        
+                    <div id="jumlah-produk">
+                        <div id="text-stock">
+                            <p id="stock">Stok Tersedia : <span id="angka-barang">{{ $p->jumlah_produk }}</span><span id="stok-buah"> Buah</span></p>
+                        </div>
+                    </div>
+        
+                    <div id="text-atur-produk">
+                        <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli!</p>
+                    </div>
+
+                    <div class="quantity-wrapper">
+                        <button class="quantity-btn" onclick="kurangBarangBelanja(this)">−</button>
+                        <input type="number" class="qty quantity-input" value="1" min="1" name="qty">
+                        <button class="quantity-btn" onclick="tambahBarangBelanja(this)">+</button>
+                    </div>
+        
+                    <div id="container-total-produk">
+                        <div id="sub-text">
+                            <p id="subtotal-produk">SUB TOTAL:</p>
+                        </div>
+                        <div id="harga-total">
+                            {{-- <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" x-text="formatRupiah(cartTotal)" value="" readonly> --}}
+                            <span id="tot_bayar" class="total_pembayaran"></span>
+                        </div>
+                    </div>
+        
+                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
+                        <div id="container-keranjang">
+                            <div class="keranjang">
+                                <span class="material-symbols-outlined">shopping_cart</span>
+                            </div>
+                            <div id="text-button">
+                                <p>Tambah ke Keranjang</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-    
-            <!-- Product Details Section on the Right -->
-            <div id="keterangan-produk">
-                <div id="nama-produk">
-                    <p id="nama">{{$p->nama_produk}}</p>
-                </div>
-                <div id="harga-produk">
-                    <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
-                </div>
-    
-                <div id="deskripsi-produk">
-                    <h3>Deskripsi</h3>
-                </div>
-                <div id="deskripsi-text">
-                    <p id="deskripsi">{{$p->deskripsi}}</p>
-                </div>
-    
-                <div id="jumlah-produk">
-                    <div id="text-stock">
-                        <p id="stock">Stok Tersedia: <span id="angka-barang">{{ $p->jumlah_produk }}</span></p>
+        @endforeach
+        </div>
+   </div>
+
+   {{-- Show Other Produk --}}
+    <div id="produk-section">
+        <div id="border-container">
+            <h2>Produk Lainnya</h2>
+            <div class="product-grid">
+                @foreach($produkLainnya as $p)
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{{ asset('/storage/' . $p->image) }}" alt="Gambar {{ $p->nama_produk }}">
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ $p->nama_produk }}</h3>
+                        {{-- <p>Rp {{ number_format($p->harga, 0, ',', '.') }}</p> --}}
+                        <a href="{{ route('produk.show', $p->nama_produk) }}" class="btn-view-detail">Detail</a>
                     </div>
                 </div>
-    
-                <div id="text-atur-produk">
-                    <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli!</p>
-                </div>
-                <div id="text-kuantitas-produk">
-                    <input type="number" name="qty" class="qty" value="1" min="1" id="qty-{{ $p->pid }}">
-                </div>
-    
-                <div id="container-total-produk">
-                    <div id="sub-text">
-                        <p id="subtotal-produk">SUB TOTAL:</p>
-                    </div>
-                    <div id="harga-total">
-                        <input type="number" name="total_pembayaran" id="tot_bayar" class="total_pembayaran" x-text="formatRupiah(cartTotal)" value="" readonly>
-                    </div>
-                </div>
-    
-                <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
-                    <div id="container-biodata">
-                        <div class="biodata">
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                        </div>
-                        <div id="text-button">
-                            <p>Tambah ke Keranjang</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
-        @endforeach
+    </div>
+
+    <div id="footer-copyright">
+        <p>&copy; {{ date('Y') }} ITENAS</p>
     </div>
 
     <!-- MODAL -->
@@ -167,10 +240,11 @@
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
                 <input type="hidden" name="modal_total" id="modal_total" value="">
-                {{-- <div class="form-group">
-                    <label for="city">Kota <span class="required">*</span></label>
-                    <input type="text" name="city" id="city" placeholder="Masukan Kota" required>
-                </div> --}}
+                <div class="cart-total">
+                    Total Berat: <span x-text="totalWeight + ' Kg'"></span> <!-- Tampilkan total berat -->
+                </div>
+                <input type="hidden" id="total-weight" x-model="totalWeight">
+
                 <div class="form-group">
                     <label for="pos">Kode Pos <span class="required">*</span></label>
                     <input type="text" name="pos" id="pos" placeholder="Masukan Kode Pos" required>
@@ -218,6 +292,8 @@
             </form>
         </div>
     </div>
+    <script src="/js/burger.js"></script>
+
 
     <script>
         function calculateTotal(qtyElement) {
@@ -233,9 +309,28 @@
             }
 
             var total = qtyInt * hargaInt;
-            qtyElement.closest('#content').querySelector(".total_pembayaran").value = total;
+            qtyElement.closest('#content').querySelector(".total_pembayaran").innerText = formatRupiah(total);
         }
 
+        // Fungsi untuk mengurangi kuantitas produk
+        function kurangBarangBelanja(button) {
+            // Dapatkan elemen input kuantitas dari tombol kurang
+            var qtyElement = button.nextElementSibling;
+            var value = parseInt(qtyElement.value, 10);
+            if (value > 1) {
+                qtyElement.value = value - 1;
+                calculateTotal(qtyElement); // Update subtotal setelah mengurangi
+            }
+        }
+
+        // Fungsi untuk menambah kuantitas produk
+        function tambahBarangBelanja(button) {
+            // Dapatkan elemen input kuantitas dari tombol tambah
+            var qtyElement = button.previousElementSibling;
+            var value = parseInt(qtyElement.value, 10);
+            qtyElement.value = value + 1;
+            calculateTotal(qtyElement); // Update subtotal setelah menambah
+        }
         // Kalkulasi harga total saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll(".qty").forEach(function (element) {
@@ -368,7 +463,7 @@
     </script>
     
     <script>
-            $(document).ready(function () {
+        $(document).ready(function () {
         // Fetch provinces
         $.get('/provinces')
             .done(function (data) {
@@ -408,13 +503,15 @@
         $('#city, #courier').change(function () {
             var city_id = $('#city').val();
             var courier = $('#courier').val();
+            var weight = $('#total-weight').val();
 
             if (city_id && courier) {
                 $.post('/cost', {
                     _token: '{{ csrf_token() }}',
                     origin: 24, // Example origin city ID
                     destination: city_id,
-                    courier: courier
+                    courier: courier,
+                    weight: weight,
                 })
                 .done(function (data) {
                     if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
@@ -449,12 +546,15 @@
     <script>
        function cartData() {
                 return {
-                    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [], // Initialize cartItems from localStorage or as an empty array
-                    cartTotal: 0,
+                    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
+                    cartTotal: parseFloat(localStorage.getItem("cartTotal")) || 0,
+                    totalWeight: parseFloat(localStorage.getItem("totalWeight")) || 0,
                     cartVisible: false,
 
                     init() {
                         this.updateCartTotal();
+                        this.updateTotalWeight();
+                        this.updateShippingCost();
                     },
 
                     toggleCart() {
@@ -465,20 +565,32 @@
                         let qtyElement = event.target.closest('#content').querySelector('.qty');
                         let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
                         let subTotal = qty * harga; // Calculate sub-total for this product
+                        let berat = parseFloat(event.target.closest('#content').querySelector('#berat-barang').textContent);
+                        console.log(berat)
 
                         // Check if the item already exists in the cartItems array
                         let product = this.cartItems.find(item => item.pid === pid);
                         if (product) {
                             product.quantity += qty; // Update the quantity
                             product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                            product.totalWeight = product.quantity * product.berat;
                         } else {
                             // Add new product to cartItems array
-                            this.cartItems.push({ pid, nama_produk, harga, quantity: qty, subTotal: subTotal });
+                            this.cartItems.push({ pid,
+                            nama_produk,
+                            harga,
+                            quantity: qty,
+                            subTotal: subTotal,
+                            berat: berat,
+                            totalWeight: qty * berat
+                            });
                         }
 
                         // Update the cart and localStorage
                         this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save the updated cartItems array to localStorage
+                        this.updateTotalWeight();
+                        this.saveCartToLocalStorage();
+                        this.updateShippingCost(); 
                     },
 
                     removeFromCart(pid) {
@@ -491,7 +603,9 @@
 
                         // Update the cart and localStorage
                         this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage after removal
+                        this.updateTotalWeight();
+                        this.saveCartToLocalStorage();
+                        this.updateShippingCost();
                     },
 
                     updateQuantity(pid, newQty) {
@@ -500,20 +614,30 @@
                         if (product) {
                             product.quantity = newQty;
                             product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                            product.totalWeight = product.quantity * product.berat;
                         }
 
                         // Update the cart and localStorage
                         this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Update localStorage when quantity changes
+                        this.updateTotalWeight();
+                        this.saveCartToLocalStorage();
+                        this.updateShippingCost();
                     },
 
                     updateCartTotal() {
                         // Update the overall cart total (sum of all sub-totals)
                         this.cartTotal = this.cartItems.reduce((total, item) => total + item.subTotal, 0);
+                        localStorage.setItem("cartTotal", this.cartTotal);
+                    },
+
+                    updateTotalWeight() {
+                        this.totalWeight = this.cartItems.reduce((total, item) => total + item.totalWeight, 0);
+                        localStorage.setItem("totalWeight", this.totalWeight); // Simpan totalWeight
                     },
 
                     saveCartToLocalStorage() {
                         localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
+                    
                     },
 
                     increaseQuantity(pid) {
@@ -521,11 +645,14 @@
                         if (product) {
                             product.quantity++; // Increase quantity
                             product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                            product.totalWeight = product.quantity * product.berat;
                         }
 
                         // Update cart and save changes
                         this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
+                        this.updateTotalWeight();
+                        this.saveCartToLocalStorage();
+                        this.updateShippingCost();
                     },
 
                     decreaseQuantity(pid) {
@@ -533,6 +660,7 @@
                         if (product && product.quantity > 1) {
                             product.quantity--; // Decrease quantity
                             product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                            product.totalWeight = product.quantity * product.berat;
                         } else if (product && product.quantity === 1) {
                             // If quantity is 1, remove the item
                             this.removeFromCart(pid);
@@ -540,7 +668,38 @@
 
                         // Update cart and save changes
                         this.updateCartTotal();
-                        this.saveCartToLocalStorage(); // Save updated data to localStorage
+                        this.updateTotalWeight();
+                        this.saveCartToLocalStorage();
+                        this.updateShippingCost();
+                    },
+
+                    updateShippingCost() {
+                        const city_id = $('#city').val();
+                        const courier = $('#courier').val();
+
+                        if (city_id && courier && this.totalWeight > 0) {
+                            $.post('/cost', {
+                                _token: '{{ csrf_token() }}',
+                                origin: 24,
+                                destination: city_id,
+                                courier: courier,
+                                weight: this.totalWeight, // Kirim totalWeight
+                            })
+                            .done((data) => {
+                                if (data && data[0] && data[0].costs && data[0].costs.length > 0) {
+                                    const services = data[0].costs;
+                                    $('#courier_service').prop('disabled', false).empty().append('<option value="">Pilih Layanan Kurir</option>');
+                                    services.forEach(function (service) {
+                                        $('#courier_service').append('<option value="' + service.service + '" data-cost="' + service.cost[0].value + '">' + service.service + ' - Rp ' + service.cost[0].value + '</option>');
+                                    });
+                                } else {
+                                    $('#courier_service').prop('disabled', true).empty().append('<option value="">Tidak ada layanan tersedia</option>');
+                                }
+                            })
+                            .fail(() => {
+                                console.error("Error fetching courier services and costs.");
+                            });
+                        }
                     },
                 };
             }

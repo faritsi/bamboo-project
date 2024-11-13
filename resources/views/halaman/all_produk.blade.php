@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="cartData()">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,7 @@
     <!-- LINK -->
     <link rel="stylesheet" href="{{ asset('css/style-all-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="icon" href="img/logo/favicon/favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
 
@@ -14,6 +15,48 @@
 </head>
 <body>
     <div id="background">
+        <div id="bg-navbar">
+            {{-- @foreach ($ingpo as $i) --}}
+            <div id="navbar">
+                <div id="wrapper-navbar">
+                    <a href="dashboard">
+                        <div id="header-kiri">
+                            <div id="logo-company">
+                                <img src="img/logo/logo.png" alt="Logo">
+                            </div>
+                            <div id="header-teks">
+                                <div id="header-atas">
+                                    <p>PT. Bintang</p>
+                                </div>
+                                <div id="header-bawah">
+                                    <p>Mitra Kencana</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div id="header-kanan" class="navbar-links">
+                    <ul>
+                        <li><a href="dashboard">Home</a></li>
+                        {{-- <li>About Us</li> --}}
+                        <li><a href="catalog">Catalog</a></li>
+                        {{-- <li>Contact Us</li> --}}
+                    </ul>
+                    {{-- Burger Icon --}}
+                    <div id="burger-menu">
+                        <span id="burger-icon">&#9776;</span>
+                    </div>
+                    <div class="burger-menu-list" id="burgerMenuList">
+                        <li><a href="dashboard">Home</a></li>
+                        {{-- <li>About Us</li> --}}
+                        <li><a href="catalog">Catalog</a></li>
+                        {{-- <a href="#">Contact Us</a> --}}
+                    </div>
+                </div>
+            </div>  
+            {{-- @endforeach --}}
+        </div>
+
         <!-- TIPE PRODUK -->
         <div id="bg-container">
             <div id="container">
@@ -38,9 +81,10 @@
                 
                 <!-- Content Produk -->
                 <div id="content-produk">
-                    @foreach ($produk as $p)
+                    @foreach ($produkItems as $p)
                     <div id="card-container" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
-                        <a href="/produk/{{$p->nama_produk}}">
+                        <a href="{{ url('/produk/' . str_replace(' ', '-', $p->nama_produk)) }}">
+                        
                             <div id="card-produk">
                                 <div id="card-stok">
                                     <p id="stok-produk">Stock : {{$p->jumlah_produk}}</p>
@@ -57,9 +101,64 @@
                     </div>
                     @endforeach
                 </div>
+                <!-- Pagination Info -->
+                <!-- Pagination Info Section -->
+                
+
+                <!-- Pagination Links -->
+                <div class="pagination-links">
+                    <a href="{{ $firstPageUrl }}" class="page-link" rel="prev">&#171;</a>
+                    <a href="{{ $previousPageUrl }}" class="page-link" rel="prev">&#10094;</a>
+
+                    @foreach ($produk->getUrlRange(1, $totalPages) as $page => $url)
+                        <a href="{{ $url }}" class="page-link {{ $page == $currentPage ? 'active' : '' }}">{{ $page }}</a>
+                    @endforeach
+
+                    <a href="{{ $nextPageUrl }}" class="page-link" rel="next">&#10095;</a>
+                    <a href="{{ $lastPageUrl }}" class="page-link" rel="next">&#187;</a>
+                </div>
+                <div class="pagination-info">
+                    <p>Page {{ $currentPage }} of {{ $totalPages }}</p>
+                </div>
             </div>
         </div>
+
+        {{-- Footer --}}
+        {{-- <div id="content-footer">
+            <div id="container-footer">
+                @foreach ($ingpo as $i)
+                    
+                <div id="company-footer">
+                    <div id="logo-company">
+                        <img src="{{ asset('/storage/' . $i->logo_footer) }}" alt="Logo">
+                    </div>
+                    <div id="company-details">
+                        <div id="company-name">{{$i->judul_footer}}</div>
+                        <div id="company-desc">{{$i->desc_footer}}</div>
+                    </div>
+                </div>
+                    @endforeach
+                <div id="footer-links">
+                    <ul>
+                        <li><a href="#navbar">Home</a></li>
+                        <li><a href="catalog">Catalog</a></li>
+                    </ul>
+                </div>
+                <div id="footer-social">
+                    <a href="#"><img src="img\social-media\facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="img\social-media\wa.png" alt="Twitter"></a>
+                    <a href="#"><img src="img\social-media\ig.png" alt="Instagram"></a>
+                    <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div> --}}
+
+        <div id="footer-copyright">
+            <p>&copy; {{ date('Y') }} ITENAS</p>
+        </div>
     </div>
+    <script src="/js/burger.js"></script>
+
 </body>
 
 <script>

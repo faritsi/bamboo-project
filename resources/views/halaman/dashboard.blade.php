@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="img/logo/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Dashboard</title>
+    {{-- <link rel="stylesheet" href="{{ asset('css/lightslider.css') }}"> --}}
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    {{-- <script type="text/javascript" src="/js/lightslider.js"></script> --}}
+    @foreach($ingpo as $i)
+    <title>{{$i->title}}</title>
+    @endforeach
 </head>
 @foreach ($ingpo as $i)    
 <body>
@@ -18,30 +24,43 @@
                     <img src="{{ asset('/storage/' . $i->image_header) }}" alt="Background Image">
                 </div>
                 <div id="navbar">
-                    <div id="header-kiri">
-                        <div id="logo-company">
-                            <img src="img/logo/logo.png" alt="Logo">
-                        </div>
-                        <div id="header-teks">
-                            <div id="header-atas">
-                                <p>PT. Bintang</p>
-                            </div>
-                            <div id="header-bawah">
-                                <p>Mitra Kencana</p>
+                    <div id="wrapper-header">
+                            <div id="header-kiri">
+                                <a href="dashboard">
+                                    <div id="logo-company">
+                                        <img src="{{ asset('/storage/' . $i->favicon) }}" alt="Logo">
+                                    </div>
+                                    <div id="header-teks">
+                                        <div id="header-atas">
+                                        <p>PT. Bintang</p>
+                                    </div>
+                                    <div id="header-bawah">
+                                        <p>Mitra Kencana</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    {{-- Burger Icon --}}
-                    <div id="burger-menu">
-                        <span>&#9776;</span> <!-- Icon Burger -->
-                    </div>
+                    
+                    
                     <div id="header-kanan" class="navbar-links">
                         <ul>
-                            <li>Home</li>
-                            <li>About Us</li>
+                            {{-- <li><a href="dashboard">Home</a></li> --}}
+                            <li><a href="#content-about-us">About Us</a></li>
+                            <li><a href="#content-our-service">Our Service</a></li>
                             <li><a href="catalog">Catalog</a></li>
-                            <li>Contact Us</li>
+                            <li><a href="#content-footer">Contact Us</a></li>
                         </ul>
+                        {{-- Burger Icon --}}
+                        <div id="burger-menu">
+                            <span id="burger-icon">&#9776;</span>
+                        </div>
+                        <div class="burger-menu-list" id="burgerMenuList">
+                            <a href="#content-about-us">About Us</a>
+                            <a href="#content-our-service">Our Service</a>
+                            <a href="catalog">Catalog</a></li>
+                            <a href="#content-footer">Contact Us</a>
+                        </div>
                     </div>
                 </div>
 
@@ -166,34 +185,44 @@
                     <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
                 
                     <div id="container-catalog-carousel">
-                        <div class="carousel-track">
-                            @foreach ($produk as $p)                     
-                            <div class="carousel-slide">
-                                <div id="carousel-image">
-                                    <img src="{{ asset('storage/' . $p->image) }}" alt="Product 1">
-                                </div>
-                                <p id="nama-produk">{{$p->nama_produk}}</p>
-                                <p id="desc-produk">{{$p->deskripsi}}</p>
-                                <p id="harga-produk">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
-                
-                                <!-- Buttons Section -->
-                                <div class="button-container">
-                                    <!-- Tokopedia and Shopee buttons (same row) -->
-                                    <div class="shop-buttons">
-                                        <a href="https://www.tokopedia.com/your-store-link" class="shop-button" target="_blank">Tokopedia</a>
-                                        <a href="https://shopee.co.id/your-store-link" class="shop-button" target="_blank">Shopee</a>
+                        <ul id="autoWidth" class="carousel-track cS-hidden">
+                            @foreach ($produk as $p)
+                            <li class="carousel-slide">
+                                <div class="box">
+                                    <!-- Image and overlay -->
+                                    <div class="slide-img">
+                                        <img src="{{ asset('storage/' . $p->image) }}" alt="Product Image">
+                                        <div class="overlay">
+                                            <a href="https://www.tokopedia.com/your-store-link" class="shop-button" target="_blank">Tokopedia</a>
+                                            <a href="https://shopee.co.id/your-store-link" class="shop-button" target="_blank">Shopee</a>
+                                        </div>
                                     </div>
                 
-                                    <!-- Beli Disini button (below the other two) -->
-                                    <button class="buy-button">Beli Disini</button>
+                                    <!-- Product details -->
+                                    <div class="detail-box">
+                                        <div class="type">
+                                            <a href="#">{{ $p->nama_produk }}</a>
+                                            {{-- <span>{{ $p->deskripsi }}</span> --}}
+                                        <p class="price">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+
+                                        </div>
+                                    </div>
+                
+                                    <!-- Shop buttons -->
+                                    <div class="button-container">
+                                        <div class="shop-buttons">
+                                            <a href="#" class="buy-btn">Beli Disini</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </li>
                             @endforeach
-                        </div>
+                        </ul>
                     </div>
                     <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
-                </div>
+                </div>                
             </div>
+            
 
             {{-- Activity --}}
             <div id="content-activity">
@@ -213,12 +242,14 @@
             <div id="content-video">
                 <p id="text-video">Company Video</p>
                 <div id="video-container">
-                    <iframe
-                        src="https://www.youtube.com/embed/your-video-id" 
+                    @foreach ($video as $v)
+                        <iframe
+                        src="{{$v->video_path}}" 
                         title="Company Video"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen
                     ></iframe>
+                    @endforeach
                 </div>
             </div>
 
@@ -248,7 +279,7 @@
                         
                     <div id="company-footer">
                         <div id="logo-company">
-                            <img src="{{ asset('/storage/' . $i->logo_footer) }}" alt="Logo">
+                            <img src="{{ asset('/storage/' . $i->favicon) }}" alt="Logo">
                         </div>
                         <div id="company-details">
                             <div id="company-name">{{$i->judul_footer}}</div>
@@ -272,6 +303,24 @@
                         <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
                     </div>
                 </div>
+            </div>
+            {{-- Visitor --}}
+            <div style="position: fixed; bottom: 50%; right: -5px; background-color: #28a745; color: white; padding: 15px; border-radius: 20px 0 0 20px; z-index: 999;">
+                        <!-- Icon : Today's Visitor Count -->
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined mr-2">run_circle</span>
+                    <span class="mr-1">:</span>
+                    <p class="mb-0">{{ $visitorCounts['today'] }}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined mr-2">groups_3</span>
+                    <span class="mr-1">:</span>
+                    <p class="mb-0">{{ $visitorCounts['totalVisits'] }}</p>
+                </div>
+            </div>
+            
+            <div id="footer-copyright">
+                <p>&copy; {{ date('Y') }} ITENAS</p>
             </div>
         </div>
     </div>

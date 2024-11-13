@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- LINK --}}
+    <link rel="icon" href="img/logo/favicon/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/style-checkout.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

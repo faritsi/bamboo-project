@@ -2,10 +2,12 @@
 @section('content')
 <div id="bo-content">
     <div id="content">
-        <h2>Selamat Datang !</h2>
-        <h3>
-            Ini Adalah Halaman Dashboard Untuk Mengubah Data
-        </h3>
+        <div id="wrapper-welcome">
+            <h2>Selamat Datang !</h2>
+            <h3>
+                Ini Adalah Halaman Dashboard Untuk Mengubah Data
+            </h3>
+        </div>
 
         <!-- Isi Content -->
 
@@ -26,7 +28,7 @@
                         groups
                     </span>
                     <div id="cc-detail-pimpinan">
-                        <h3>Admin</h3>
+                        <h3>Pimpinan</h3>
                         <span>2</span>
                     </div>
                 </div>
@@ -36,7 +38,17 @@
                         inventory_2
                     </span>
                     <div id="cc-detail-produk">
-                        <h3>Admin</h3>
+                        <h3>Produk</h3>
+                        <span>2</span>
+                    </div>
+                </div>
+
+                <div id="cc-content-penjualan">
+                    <span class="material-symbols-outlined">
+                        attach_money
+                    </span>
+                    <div id="cc-detail-penjualan">
+                        <h3>Penjualan</h3>
                         <span>2</span>
                     </div>
                 </div>

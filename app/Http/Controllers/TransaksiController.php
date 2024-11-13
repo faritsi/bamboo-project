@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
+use App\Models\Kategori;
+use App\Models\Produk;
+use App\Models\User;
 use App\Models\TransaksiMidtrans;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
@@ -10,6 +13,9 @@ use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -23,6 +29,16 @@ class TransaksiController extends Controller
         $this->midtransService = $midtransService;
     }
 
+    public function view_tf()
+    {
+        $user = Auth::user();
+        $produk = Produk::all();
+        $kategori = Kategori::all();
+        $tf = Transaksi::all();
+        return view('admin.transaksi', [
+            'title' => 'Pembelian'
+        ], compact('produk', 'user', 'kategori', 'tf'));
+    }
 
     public function createTransaction(Request $request)
     {

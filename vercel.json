@@ -1,0 +1,60 @@
+{
+    "version": 2,
+    "functions": {
+        "api/index.php": { "runtime": "vercel-php@0.5.5" }
+    },
+    "routes": [
+        {
+            "src": "/css/(.*)",
+            "dest": "/public/css/$1"
+        },
+        {
+            "src": "/images/(.*)",
+            "dest": "/public/images/$1"
+        },
+        {
+            "src": "/img/(.*)",
+            "dest": "/public/img/$1"
+        },
+        {
+            "src": "/js/(.*)",
+            "dest": "/public/js/$1"
+        },
+
+        {
+            "src": "/php/",
+            "dest": "/public/php/$1"
+        },
+        {
+            "src": "/favicon/(.*)",
+            "dest": "/public/favicon/"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_URL": "",
+        "APP_KEY": "base64:swd3szOYxELBBe1U+DfeXz8RjCNKUuu5y9CUx8K4Syw=",
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "SSR_TEMP_PATH": "/tmp/ssr",
+        "NODE_PATH": "node",
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "cookie",
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "96znd.h.filess.io",
+        "DB_PORT": "3305",
+        "DB_DATABASE": "bamboo_heatsteam",
+        "DB_USERNAME": "bamboo_heatsteam",
+        "DB_PASSWORD": "dcd428f19d9889bd92532ae618ea0a015a2e81ed"
+    }
+}

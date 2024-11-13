@@ -1,182 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
 body,
 html {
     height: 100%;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f7f9fc; /* Softer background color */
-    font-family: "Poppins", sans-serif; /* Modern font family */
+    background-color: #f0f4f7;
 }
 
-.square-container {
+.login-container {
     display: flex;
-    width: 100%;
-    max-width: 1000px;
-    max-height: 600px;
-    background-color: #fff;
-    border-radius: 12px; /* Rounded corners for a softer look */
+    width: 90vw;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Softer shadow for a floating effect */
-}
-
-.left-section,
-.right-section {
-    flex: 1;
-    position: relative;
 }
 
 .left-section {
+    flex: 1;
+    background-color: #f5f9fc;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e0f7fa; /* Light, calming background color */
+    padding: 20px;
 }
 
-.background-image {
+lottie-player {
+    width: 600px;
+    height: 600px;
+    max-width: 100%;
+}
+
+/* Right Section */
+.right-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container to align the logo and text block */
+.header-container {
+    display: flex;
+    align-items: center; /* Aligns logo and text in the middle */
+    gap: 20px; /* Space between logo and text */
+    justify-content: center;
+}
+
+/* Styling for the login header */
+.login-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    border-bottom: 2px solid #4caf50;
+}
+
+.header-welcome {
+    padding-bottom: 30px;
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #555;
+    margin: 10px 0 5px;
+}
+
+.instruction {
+    font-size: 1em;
+    color: #888;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Login Form */
+.login-form {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.logo-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    max-width: 400px;
     text-align: center;
 }
 
 .logo {
-    width: 120px; /* Slightly larger logo */
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.right-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ffffff;
-    padding: 30px; /* More padding for breathing space */
-}
-
-.login-form {
-    width: 100%;
-    max-width: 350px; /* Increased width for the login form */
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for focus */
-    text-align: center;
+    width: 70px;
 }
 
 .login-form h2 {
-    margin-bottom: 30px;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #333; /* Darker font for contrast */
+    font-size: 1.8em;
+    color: #333;
 }
 
-.login-form .form-control {
-    margin-bottom: 15px;
-    padding: 15px;
-    width: 100%;
-    border: 1px solid #ddd;
+/* Input Group */
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1rem;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Active Style on Focus */
+.input-group:focus-within {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #4caf50;
+}
+
+/* Input Icon */
+.input-icon {
+    margin-right: 10px;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+/* Change Icon Color on Active */
+.input-group:focus-within .input-icon {
+    color: #4caf50;
+}
+
+/* Input Field */
+.input-group input {
+    border: none;
     outline: none;
-    transition: border-color 0.3s ease;
-    box-sizing: border-box;
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
 }
 
-.login-form .form-control:focus {
-    border-color: #007bff; /* Change border color on focus */
-}
-
-.login-form button {
-    padding: 15px;
+/* Button Submit */
+.btn-submit {
     width: 100%;
-    background-color: #007bff;
-    color: white;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4caf50;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-.login-form button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Button lifts slightly on hover */
+/* Button Hover */
+.btn-submit:hover {
+    background-color: #45a049;
 }
 
 .invalid-feedback {
-    color: red;
-    font-size: 0.875em;
+    color: #d9534f;
+    font-size: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
 }
 
-/* Responsive Styles */
-@media (min-width: 768px) and (max-width: 1024px) {
-    .square-container {
-        flex-direction: row;
-        max-width: 100%;
-        height: auto;
-    }
-
-    .left-section,
-    .right-section {
-        width: 50%;
-        height: auto;
+@media (max-width: 1200px) {
+    .left-section lottie-player {
+        width: 400px;
+        height: 400px;
     }
 }
 
-@media (min-width: 1025px) {
-    .square-container {
-        display: flex;
-        width: 100%;
-        max-width: 1000px;
-        max-height: 600px;
+@media (max-width: 992px) {
+    .left-section lottie-player {
+        width: 300px;
+        height: 300px;
     }
 
-    .left-section,
-    .right-section {
-        width: 50%;
+    .login-header h2 {
+        font-size: 1.3em;
+    }
+
+    .welcome-message {
+        font-size: 1.1em;
+    }
+
+    .instruction {
+        font-size: 0.9em;
     }
 }
 
 @media (max-width: 768px) {
-    .square-container {
-        flex-direction: column;
-        max-width: 90%;
-        max-height: none;
+    .login-container {
+        width: 90%;
+        border-radius: 0;
     }
 
+    .left-section {
+        display: none;
+    }
+
+    .left-section,
     .right-section {
-        flex: none;
-        height: 50%;
-    }
-    .left-section {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .left-section {
-        display: none;
-    }
-
-    .login-form {
         padding: 20px;
     }
 
-    .login-form h2 {
-        font-size: 1.5rem;
+    .left-section lottie-player {
+        width: 300px;
+        height: 300px;
     }
 
-    .login-form .form-control,
-    .login-form button {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .main-title {
+        font-size: 1.6em;
+    }
+
+    .welcome-message {
+        font-size: 1.1em;
+    }
+
+    .instruction {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 1.4em;
+    }
+
+    .welcome-message {
+        font-size: 1em;
+    }
+
+    .instruction {
+        font-size: 0.8em;
+    }
+
+    .btn-submit {
         padding: 10px;
+        font-size: 14px;
     }
 }

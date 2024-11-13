@@ -22,6 +22,9 @@ html {
     margin: 0 auto;
     padding: 0;
     width: 100%;
+    position: absolute;
+    z-index: -1;
+    background-color: #fafaff;
 }
 
 /* Navbar */
@@ -43,7 +46,7 @@ html {
     margin: 0 auto;
     padding: 0;
     width: 100%;
-    height: 120%;
+    height: 700px;
     overflow: hidden;
     position: absolute;
     top: 0;
@@ -58,6 +61,10 @@ html {
     object-fit: cover;
 }
 
+#wrapper-header {
+    flex: 1;
+}
+
 #header-kiri {
     margin: 0 auto;
     padding: 0;
@@ -65,6 +72,7 @@ html {
     /* color: #fff; */
     display: flex;
     align-items: center;
+    /* flex: 2; */
 }
 
 #header-teks {
@@ -93,6 +101,15 @@ html {
     font-size: 30px;
     color: #fff;
     margin-left: auto;
+    z-index: 999;
+}
+
+.burger-menu-list {
+    display: none; /* Sembunyikan menu burger secara default */
+}
+
+.navbar-links ul {
+    display: flex; /* Tampilkan menu horizontal secara default */
 }
 
 .navbar-links {
@@ -105,6 +122,7 @@ html {
     padding: 0;
     width: 100%;
     text-align: center;
+    flex: 1;
 }
 
 #header-kanan ul {
@@ -116,7 +134,6 @@ html {
 
 #header-kanan ul li {
     margin: 0 auto;
-    padding: 0 20px;
     width: 100%;
     display: inline;
     cursor: pointer;
@@ -129,7 +146,7 @@ html {
 }
 
 #overlay-welcome {
-    margin: 15% auto 13% auto;
+    margin: 150px auto;
     padding: 0;
     width: 100%;
 }
@@ -195,12 +212,12 @@ html {
     animation: fadeIn 0.75s ease-out forwards;
 }
 
-/* Content Slogan */
+/* SLOGAN */
 #content-slogan {
     margin: 0 auto;
-    padding: 30px 0; /* Tambahkan padding untuk memberi jarak atas dan bawah */
+    padding-bottom: 80px;
     width: 100%;
-    height: 500px;
+    height: 400px; /* Allow height to adapt to content */
     background-color: #00572d;
     text-align: center;
     display: flex;
@@ -210,46 +227,40 @@ html {
 }
 
 #icon-slogan {
-    margin-bottom: 40px; /* Jarak antara ikon dan teks slogan */
-    width: auto; /* Sesuaikan lebar */
+    margin-bottom: 20px; /* Adjust spacing for different screens */
+    width: auto;
 }
 
 #icon-slogan img {
-    width: 60px;
+    width: 80px;
     position: relative;
-    top: -60px;
+    top: 0;
 }
 
+/* Slogan Text */
 #text-slogan {
-    font-size: 28px;
+    font-size: 1.75rem;
     color: #ffd700;
-    max-width: 50%; /* Gunakan max-width untuk menghindari overflow */
+    max-width: 60%;
     text-align: center;
-    position: relative;
-    top: -60px;
 }
 
 #penjelasan-slogan {
-    font-size: 16px;
+    font-size: 1rem;
     color: #ffd700;
-    max-width: 50%; /* Gunakan max-width untuk menghindari overflow */
+    max-width: 70%;
     text-align: center;
-    padding: 20px 0;
-    position: relative;
-    top: -60px;
+    padding: 10px 0;
 }
 
 /* About Us */
 #content-about-us {
     width: 100%;
-    /* height: 100px; */
     margin: 0 auto;
     padding: 100px 0;
     background-color: #fafaff;
-    border-radius: 50px 50px 0 0;
-    /* border: solid; */
     position: relative;
-    top: -90px;
+    top: -70px;
 }
 
 #container-about-us {
@@ -322,14 +333,21 @@ html {
 .boxes-visi-misi {
     display: flex;
     justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .container-visi-misi {
     flex: 1;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    z-index: 999;
 
     .con-visi-misi {
         padding: 40px;
-        height: 450px;
+        height: 480px;
         width: 100%;
         background-color: #fff;
         position: relative;
@@ -337,6 +355,9 @@ html {
         border-radius: 30px;
         top: 60px;
         box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3); /* Soft shadow for button */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 
         .container-visi {
             h1 {
@@ -365,12 +386,24 @@ html {
     flex: 1;
     overflow: hidden;
     border-radius: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 .container-visi-misi-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Visible state */
+.boxes-visi-misi.visible,
+.container-visi-misi.visible,
+.con-visi-misi.visible,
+.container-visi-misi-image.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Our Service */
@@ -397,6 +430,8 @@ html {
     font-size: 16px;
     color: #000;
     width: 50%;
+    padding-bottom: 50px;
+    line-height: 1.6;
 }
 
 /* Main container for the service list */
@@ -407,7 +442,7 @@ html {
         minmax(280px, 1fr)
     ); /* Responsive grid */
     gap: 20px;
-    padding: 40px;
+    justify-content: center;
 }
 
 /* Individual service card with bamboo-inspired styling */
@@ -433,7 +468,6 @@ html {
     height: auto;
     margin-bottom: 20px;
     border-radius: 50%;
-    border: 2px solid #8fbf79; /* Bamboo green border for the icon */
     padding: 5px;
 }
 
@@ -450,25 +484,6 @@ html {
     font-size: 1rem;
     color: #000; /* Earthy brown for description */
     line-height: 1.6;
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
-    #list-our-service {
-        padding: 20px;
-    }
-
-    .service-card {
-        padding: 20px;
-    }
-
-    .judul-service p {
-        font-size: 1.2rem;
-    }
-
-    .text-service p {
-        font-size: 0.95rem;
-    }
 }
 
 /* Awalnya elemen tersembunyi */
@@ -494,6 +509,9 @@ html {
     margin: 0 auto;
     width: 100%;
     background-color: #fafaff;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 #container-catalog {
@@ -501,6 +519,18 @@ html {
     padding: 100px 0 0 0;
     width: 80%;
     display: flex;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+#judul-catalog,
+#text-catalog,
+#carousel-catalog {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 #judul-catalog {
@@ -514,6 +544,7 @@ html {
 
 #text-catalog {
     max-width: 800px;
+    width: 100%;
     margin: 0 auto;
     text-align: end; /* Align text and button to the right */
 }
@@ -523,6 +554,36 @@ html {
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 40px; /* Space before the "Lihat Semua Produk" link */
+}
+
+#content-catalog.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1.5s;
+}
+
+#container-catalog.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+#judul-catalog.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+#text-catalog.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+
+#carousel-catalog.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
 }
 
 /* Style for the "Lihat Semua Produk" button */
@@ -560,14 +621,15 @@ a {
     text-decoration: none;
 }
 
-/* Carousel */
+/* Carousel Product Styles */
 #carousel-catalog {
     position: relative;
-    padding: 20px 0; /* Tambah padding untuk memberi ruang tombol di luar carousel */
+    padding: 20px 0;
+    margin: 0 auto;
 }
+
 #container-catalog-carousel {
-    position: relative;
-    width: 80%;
+    width: 100%;
     margin: 30px auto;
     overflow: hidden;
 }
@@ -575,36 +637,128 @@ a {
 .carousel-track {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    gap: 20px;
-    padding-bottom: 10px;
+    max-width: 650px;
 }
 
 .carousel-slide {
-    min-width: 31.7%;
-    box-sizing: border-box;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Ensures the buttons stay at the bottom */
-    /* padding: 15px; */
+    list-style: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-#carousel-image {
-    width: 100%;
-    height: 200px;
+.carousel-slide.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Box styling for product */
+.box {
+    width: 300px;
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
     overflow: hidden;
+    margin: 25px;
 }
 
-#carousel-image img {
+.slide-img {
+    height: 300px;
+    position: relative;
+}
+
+.slide-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 20px 20px 0 0;
+    box-sizing: border-box;
 }
 
+/* Detail Box and Product Info */
+.detail-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.type {
+    display: flex;
+    flex-direction: column;
+}
+
+.type a {
+    color: #222222;
+    margin: 5px 0px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding-right: 8px;
+}
+
+.type span {
+    color: rgba(26, 26, 26, 0.5);
+}
+
+.price {
+    color: #333333;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Overlay and Buy Button */
+.overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(56, 119, 145, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.buy-btn {
+    width: 160px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #28a745;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.2);
+}
+
+.buy-btn:hover {
+    background-color: #218838;
+    transition: all ease 0.3s;
+}
+
+.slide-img:hover .overlay {
+    visibility: visible;
+    animation: fade 0.5s;
+}
+
+/* Fade Animation */
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Carousel Control Buttons */
 .carousel-control {
     position: absolute;
     top: 50%;
@@ -615,7 +769,7 @@ a {
     padding: 10px;
     cursor: pointer;
     z-index: 10;
-    width: 50px; /* Ukuran diperbesar */
+    width: 50px;
     height: 50px;
     border-radius: 50%;
     display: flex;
@@ -625,65 +779,18 @@ a {
 
 .carousel-control.prev {
     background-color: #006400;
-    left: 50px; /* Sedikit di luar area carousel */
+
+    left: 10%;
+    top: 3.3%;
 }
 
 .carousel-control.next {
     background-color: #006400;
-    right: 50px; /* Sedikit di luar area carousel */
+    left: 20%;
+    top: 20px;
 }
 
-#nama-produk {
-    color: #2f4f2f; /* Dark green to represent nature */
-    text-align: left;
-    padding: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#desc-produk {
-    color: #556b2f; /* Olive green for description */
-    text-align: left;
-    padding: 0 20px 20px 20px;
-    font-size: 16px;
-    line-height: 1.5em; /* Line height set to 1.5 times font size */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Limits to 5 lines */
-    -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    max-height: calc(1.5em * 3); /* Height set to 5 lines */
-    margin-bottom: 30px;
-    flex-grow: 1;
-}
-
-#harga-produk {
-    color: #8b4513; /* Earthy brown to highlight price */
-    text-align: left;
-    padding: 0 0 30px 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* Initial hidden state for animations */
-#judul-catalog,
-#text-catalog,
-#carousel-catalog {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
-
-/* Visible on scroll */
-#judul-catalog.visible,
-#text-catalog.visible,
-#carousel-catalog.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Button container styling */
+/* Additional Button Container and Shop Buttons */
 .button-container {
     display: flex;
     flex-direction: column;
@@ -692,20 +799,18 @@ a {
     padding: 0 20px;
 }
 
-/* Shop buttons (Tokopedia, Shopee) in a row */
 .shop-buttons {
     display: flex;
     justify-content: center;
-    gap: 15px; /* Space between Tokopedia and Shopee buttons */
+    gap: 15px;
     width: 100%;
-    margin-bottom: 15px; /* Space between shop buttons and buy button */
+    margin-bottom: 15px;
 }
 
-/* Style for individual shop buttons */
 .shop-button {
     flex: 1;
     padding: 10px 20px;
-    background-color: #42b549; /* Earthy brown for both buttons */
+    background-color: #42b549;
     color: #fff;
     text-decoration: none;
     border-radius: 999px;
@@ -714,36 +819,16 @@ a {
     text-align: center;
 }
 
-/* Shopee-specific button color */
 .shop-button:nth-child(2) {
-    background-color: #d74327; /* Slightly lighter red for Shopee */
+    background-color: #d74327;
 }
 
-/* Hover effects for shop buttons */
 .shop-button:hover {
-    background-color: #379744; /* Darker brown on hover */
+    background-color: #379744;
 }
 
 .shop-button:nth-child(2):hover {
-    background-color: #b22222; /* Darker red on hover for Shopee */
-}
-
-/* Buy button (Beli Disini) */
-.buy-button {
-    padding: 12px 25px;
-    background-color: #024caa; /* Olive green for Buy button */
-    color: white;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 60%; /* Smaller width for a compact look */
-    transition: background-color 0.3s ease;
-}
-
-/* Hover effect for buy button */
-.buy-button:hover {
-    background-color: #013c88; /* Darker green on hover */
+    background-color: #b22222;
 }
 
 /* Activity */
@@ -777,7 +862,7 @@ a {
 .carousel-slide-act {
     min-width: 100%;
     box-sizing: border-box;
-    height: 500px; /* Pastikan tinggi div slide tetap 400px */
+    height: 650px; /* Pastikan tinggi div slide tetap 400px */
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -811,7 +896,6 @@ a {
     margin-top: 40px;
     text-align: center;
     padding: 20px;
-    background-color: #f3f9f1; /* Light green background */
 }
 
 #text-video {
@@ -820,6 +904,7 @@ a {
     color: #3c6e47; /* Dark green for title */
     margin-bottom: 20px;
 }
+
 #video-container {
     width: 100%;
     max-width: 800px; /* Restrict maximum width for larger screens */
@@ -834,48 +919,19 @@ a {
     border: none;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    #video-container iframe {
-        height: 300px; /* Smaller height for mobile screens */
-    }
-}
-
-/* Video Company */
-#content-video {
-    margin-top: 40px;
-    text-align: center;
-    padding: 20px;
-    background-color: #f3f9f1; /* Light green background */
-}
-
-#text-video {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #3c6e47; /* Dark green for title */
-    margin-bottom: 20px;
-}
-
-/* Video Container */
+#content-video,
+#text-video,
 #video-container {
-    width: 100%;
-    max-width: 800px; /* Restrict maximum width for larger screens */
-    margin: 0 auto;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-#video-container iframe {
-    width: 100%;
-    height: 450px; /* Adjust height as needed */
-    border: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #video-container iframe {
-        height: 300px; /* Smaller height for mobile screens */
-    }
+#content-video.visible,
+#text-video.visible,
+#video-container.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Pimpinan */
@@ -1026,7 +1082,8 @@ a {
 
 #footer-links {
     flex: 1;
-    margin-left: 100px;
+    min-width: 150px;
+    max-width: 200px;
 }
 
 #footer-links ul {
@@ -1055,7 +1112,7 @@ a {
 }
 
 #footer-social a {
-    margin: 10px 0;
+    margin-bottom: 15px;
     display: inline-block;
     transition: transform 0.3s ease;
 }
@@ -1076,87 +1133,698 @@ a {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
+#footer-copyright {
+    background-color: #000; /* Warna latar belakang hitam */
+    color: #ccc; /* Warna teks abu-abu */
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+}
+
 /* Muncul saat discroll ke bawah */
 #container-footer.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Responsive Layout */
-/* Responsif untuk layar kecil (ponsel) */
-@media (max-width: 768px) {
-    #burger-menu {
-        display: block; /* Tampilkan burger button */
+/* Large screens */
+@media (max-width: 1200px) {
+    #background-img {
+        height: 90vh; /* Smaller height */
+    }
+    /* Hide header text */
+    #header-kiri {
+        flex: 1;
     }
 
-    /* Awalnya sembunyikan menu navigasi */
-    .navbar-links {
-        display: none; /* Menu tidak tampil */
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.8);
-        width: 100%;
-        position: absolute;
-        top: 60px; /* Geser menu ke bawah */
-        left: 0;
-        padding: 10px;
+    #logo-company img {
+        width: 65px;
+    }
+
+    #header-teks {
+        display: none;
+    }
+
+    #header-kanan {
+        flex: 2;
+    }
+
+    /* Resp Slogan */
+    #text-slogan {
+        font-size: 1.5rem;
+    }
+    #penjelasan-slogan {
+        font-size: 0.9rem;
+    }
+
+    /* Resp About */
+    #judul-about-us {
+        font-size: 1.8rem;
+    }
+    #about-us {
+        font-size: 0.95rem;
+    }
+
+    .con-visi-misi {
+        height: auto !important;
+    }
+
+    /* VIsi Misi */
+    .container-visi h1,
+    .container-misi h1 {
+        font-size: 1.8rem;
+    }
+    .container-visi p,
+    .container-misi p {
+        font-size: 0.95rem;
+    }
+
+    /* Service */
+    #container-our-service {
+        width: 80%;
+    }
+
+    #judul-our-service {
+        font-size: 1.8rem;
+    }
+
+    #our-service {
+        font-size: 0.95rem;
+        width: 50%;
+    }
+}
+
+/* Medium screens */
+@media (max-width: 992px) {
+    #navbar {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #burger-menu {
+        display: block; /* Tampilkan ikon burger */
+        cursor: pointer;
+        font-size: 30px;
+        color: #fff;
+        margin-left: auto;
+        z-index: 999;
+    }
+
+    #burger-menu.fixed {
+        position: fixed; /* Tetap di tempat saat di-scroll */
+        right: 40px;
+        z-index: 999;
+        top: 25px;
     }
 
     .navbar-links ul {
-        padding-left: 0;
+        display: none; /* Sembunyikan menu horizontal */
     }
 
-    .navbar-links ul li {
-        padding: 15px 0;
-        text-align: center;
-        width: 100%;
-    }
-
-    .navbar-links ul li a {
-        text-decoration: none;
+    .burger-menu-list {
+        position: fixed;
+        background-color: #000;
         color: #fff;
+        height: 100vh; /* Menyesuaikan tinggi dengan layar */
+        width: 50%;
+        top: 0;
+        right: -50%; /* Initial position, hidden off-screen */
+        transition: all 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        /* justify-content: center; */
+        padding-top: 150px;
         font-size: 18px;
+        z-index: 998;
+        overflow-y: auto; /* Tambahkan ini jika isi lebih dari tinggi layar */
     }
 
-    /* Tampilkan menu saat burger diklik */
-    .navbar-links.show {
+    .burger-menu-list a {
+        color: #fff;
+        text-decoration: none;
+        margin: 15px 0;
+    }
+
+    .burger-menu-list a:hover {
+        color: #ccc;
+    }
+
+    .burger-menu-list.show {
+        right: 0; /* Slide in dari kanan */
+    }
+
+    #wrapper-header {
+        flex: none;
+    }
+
+    #header-teks {
+        display: block;
+    }
+
+    #header-atas,
+    #header-bawah {
+        font-size: 20px;
+    }
+
+    #logo-company img {
+        width: 50px;
+    }
+
+    #selamat-datang {
+        font-size: 40px;
+    }
+
+    #text-selamat {
+        font-size: 1.2rem;
+    }
+
+    /* Resp Slogan */
+    #icon-slogan img {
+        width: 70px;
+    }
+    #text-slogan {
+        font-size: 1.4rem;
+        max-width: 70%;
+    }
+    #penjelasan-slogan {
+        font-size: 0.9rem;
+    }
+
+    /* resp About */
+    #content-about-us {
+        border-radius: 0;
+        padding: 100px 0 0 0;
+        margin: 0;
+    }
+    #img-about-us {
+        width: 80%;
+        height: 350px;
+    }
+    #judul-about-us {
+        font-size: 1.7rem;
+    }
+    #about-us {
+        font-size: 0.9rem;
+    }
+
+    /* Visi Misi */
+    .boxes-visi-misi {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container-visi-misi-image {
+        display: none; /* Hide image on screens smaller than 992px */
+    }
+
+    .con-visi-misi {
+        padding: 30px;
+        width: 100%;
+        max-width: 600px; /* Center and limit width */
+        right: 0 !important;
+        top: 0 !important;
+    }
+
+    .container-visi {
+        h1 {
+            text-align: center;
+        }
+    }
+
+    .container-misi {
+        h1 {
+            text-align: center;
+        }
+    }
+
+    .container-visi p,
+    .container-misi p {
+        font-size: 0.9rem;
+    }
+
+    /* Service */
+
+    #judul-our-service {
+        font-size: 1.6rem;
+    }
+
+    #list-our-service {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0;
+        justify-content: center;
+    }
+
+    #our-service {
+        font-size: 0.9rem;
+        width: 80%;
+    }
+
+    .service-card {
+        padding: 20px;
+    }
+
+    .judul-service p {
+        font-size: 1.2rem;
+    }
+
+    .text-service p {
+        font-size: 0.95rem;
+    }
+
+    /* Catalog */
+
+    /* #container-catalog-carousel {
+        width: 90%;
+    } */
+    .carousel-slide {
+        min-width: 50%;
+    }
+
+    .buy-button {
+        padding: 12px 4px;
+    }
+
+    /* .carousel-control.prev {
+        top: 600px;
+        left: 40%;
+    }
+    .carousel-control.next {
+        top: 600px;
+        z-index: 10;
+        right: 40%;
+    } */
+
+    .carousel-control.prev {
+        background-color: #006400;
+
+        left: 10%;
+        top: 3.3%;
+    }
+
+    .carousel-control.next {
+        background-color: #006400;
+        left: 20%;
+        top: 20px;
+    }
+
+    #judul-catalog {
+        font-size: 1.75rem;
+    }
+
+    #all-produk {
+        font-size: 16px;
+    }
+
+    .carousel-slide-act {
+        height: 500px;
+    }
+
+    /* Footer */
+    #company-footer,
+    #footer-links,
+    #footer-social {
+        align-items: center;
+        margin: 15px 0;
+    }
+    #company-footer {
+        flex: 3;
+        flex-direction: row;
+    }
+    #footer-links {
+        flex: 1;
+        padding-left: 40px;
+        margin-left: 0;
+    }
+    #company-name {
+        font-size: 20px;
+    }
+    #company-desc,
+    #footer-links ul li a {
+        font-size: 14px;
+    }
+    #footer-social a img {
+        width: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Small screens */
+    #overlay-welcome {
+        margin: 15% auto 10% auto;
+    }
+
+    #background-img {
+        height: 70vh; /* Smaller height */
+    }
+
+    /* Slogan REsp */
+    #icon-slogan img {
+        width: 60px;
+    }
+    #text-slogan {
+        font-size: 1.25rem;
+        max-width: 80%;
+    }
+    #penjelasan-slogan {
+        font-size: 0.85rem;
+    }
+
+    /* Resp About */
+    #img-about-us {
+        width: 100%;
+        height: 300px;
+    }
+    #judul-about-us {
+        font-size: 1.6rem;
+    }
+    #about-us {
+        font-size: 0.85rem;
+    }
+
+    /* Visi misi */
+    .wrapper-visi-misi {
+        width: 90%;
+    }
+
+    .container-visi h1,
+    .container-misi h1 {
+        font-size: 1.6rem;
+    }
+    .container-visi p,
+    .container-misi p {
+        font-size: 0.85rem;
+    }
+
+    /* Service */
+    #list-our-service {
+        grid-template-columns: 1fr;
+    }
+
+    #judul-our-service {
+        font-size: 1.5rem;
+    }
+
+    #our-service {
+        font-size: 0.9rem;
+    }
+
+    .service-card {
+        padding: 15px;
+        height: 250px;
+        margin: 0 auto;
+        width: 480px;
+    }
+
+    .icon-service img {
+        width: 60px;
+    }
+
+    .judul-service p {
+        font-size: 1.1rem;
+    }
+
+    .text-service p {
+        font-size: 0.9rem;
+    }
+
+    /* Catalog */
+    .carousel-slide-act {
+        /* min-width: 100%; */
+    }
+
+    .buy-button {
+        padding: 12px 4px;
+    }
+
+    /* .carousel-control.prev {
+        top: 600px;
+        left: 40%;
+    }
+    .carousel-control.next {
+        top: 600px;
+        z-index: 10;
+        right: 40%;
+    } */
+
+    .carousel-control.prev {
+        background-color: #006400;
+
+        left: 70%;
+        top: 3.3%;
+    }
+
+    .carousel-control.next {
+        background-color: #006400;
+        left: 85%;
+        top: 20px;
+    }
+
+    #judul-catalog {
+        font-size: 1.5rem;
+    }
+
+    #text-catalog {
+        #catalog-text {
+            display: none;
+        }
+        #all-produk {
+            font-size: 14px;
+        }
+    }
+
+    /* VIdeo */
+    #video-container iframe {
+        height: 400px; /* Smaller height for mobile screens */
+    }
+
+    .carousel-slide-act {
+        height: 400px;
+    }
+
+    /* Footer */
+    #container-footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    #company-footer,
+    #footer-links,
+    #footer-social {
+        align-items: center;
+        margin: 15px 0;
+    }
+    #company-name {
+        flex-direction: row;
+    }
+    #company-desc {
+        font-size: 13px;
+    }
+
+    #footer-links {
+        padding-left: 0;
+        max-width: 400px;
+    }
+
+    #footer-links ul {
+        flex-direction: row;
+    }
+    #footer-links ul li {
+        text-align: center;
+    }
+
+    #footer-social {
+        flex-direction: row;
+
+        a {
+            margin-bottom: 0;
+            padding: 0 10px;
+        }
+    }
+}
+
+/* Small screens */
+@media (max-width: 576px) {
+    #header-atas,
+    #header-bawah {
+        font-size: 16px;
+    }
+
+    #selamat-datang {
+        font-size: 26px;
+    }
+
+    #text-selamat {
+        font-size: 14px;
+
+        #text-selamat-datang {
+            width: 100%;
+        }
+    }
+
+    #header-teks {
+        display: none;
+    }
+
+    #background-img {
+        height: 60vh;
+    }
+
+    /* Resp  Slogan*/
+    #icon-slogan img {
+        width: 50px;
+    }
+    #text-slogan {
+        font-size: 1.1rem;
+        max-width: 90%;
+    }
+    #penjelasan-slogan {
+        font-size: 0.8rem;
+    }
+
+    /* Resp About */
+    #container-about-us {
+        width: 90%;
+    }
+    #content-about-us {
+        padding: 60px 0;
+    }
+    #img-about-us {
+        height: 250px;
+    }
+    #judul-about-us {
+        font-size: 1.5rem;
+    }
+    #about-us {
+        font-size: 0.8rem;
+    }
+
+    /* Visi Misi */
+    .con-visi-misi {
+        padding: 20px;
+    }
+    .container-visi h1,
+    .container-misi h1 {
+        font-size: 1.5rem;
+    }
+    .container-visi p,
+    .container-misi p {
+        font-size: 0.8rem;
+    }
+
+    /* Our Service */
+
+    #judul-our-service {
+        font-size: 1.3rem;
+        padding: 0 10px;
+    }
+
+    #our-service {
+        font-size: 0.85rem;
+        padding: 0 10px 40px 10px;
+    }
+
+    .service-card {
+        padding: 10px;
+        width: auto;
+        height: auto;
+    }
+
+    .icon-service img {
+        width: 50px;
+    }
+
+    .judul-service p {
+        font-size: 1rem;
+    }
+
+    .text-service p {
+        font-size: 0.85rem;
+    }
+
+    /* catalog */
+
+    #container-catalog-carousel {
         display: flex;
     }
-}
 
-/* Responsif untuk tablet (layar sedang) */
-@media (max-width: 1024px) {
-    #navbar {
-        flex-direction: column;
-        align-items: flex-start;
+    .carousel-track {
+        display: flex;
+        width: max-content;
     }
 
-    #header-kiri,
-    #header-kanan {
+    .carousel-slide {
+        flex: 0 0 auto; /* Ensure each product takes its own space */
+        min-width: 100%; /* Adjust width for smaller screens */
+    }
+
+    #judul-catalog {
+        font-size: 14px;
+    }
+
+    #text-catalog {
+        margin: 0 auto;
+    }
+
+    #all-produk {
+        font-size: 10px !important;
+        padding: 8px 10px;
+    }
+
+    .carousel-control.prev {
+        background-color: #006400;
+
+        left: 30%;
+        top: 105%;
+    }
+
+    .carousel-control.next {
+        background-color: #006400;
+        left: 55%;
+        top: 105%;
+    }
+
+    #carousel-catalog {
+        padding: 0;
+    }
+
+    #container-catalog-carousel {
+        margin: 0 auto;
+    }
+
+    #video-container iframe {
+        max-height: 250px; /* Smaller height for mobile screens */
+    }
+
+    #company-name {
+        font-size: 16px;
+    }
+    #company-desc,
+    #footer-links ul li a {
+        font-size: 12px;
+    }
+
+    /* activity */
+
+    .carousel-slide-act {
+        height: 300px;
+    }
+
+    /* Footer */
+    #footer-links ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Two columns */
+        gap: 10px;
+        text-align: center;
+    }
+
+    #footer-links ul li {
         width: 100%;
     }
 
-    #header-kanan ul li {
-        display: inline-block; /* Tampilkan menu secara horizontal */
-        padding: 10px;
-    }
-
-    #text-selamat-datang {
-        width: 80%; /* Sesuaikan lebar teks */
-        font-size: 18px;
-    }
-
-    #selamat-datang {
-        font-size: 30px;
-    }
-}
-
-/* Untuk layar besar (desktop) */
-@media (min-width: 1025px) {
-    #text-selamat-datang {
-        width: 50%; /* Lebar teks tetap di 50% untuk layar besar */
-    }
-
-    #selamat-datang {
-        font-size: 50px; /* Teks yang lebih besar untuk desktop */
+    /* Optional: Center align social media icons if they are also responsive */
+    #footer-social {
+        text-align: center;
+        margin-top: 20px; /* Add spacing from other footer elements */
     }
 }

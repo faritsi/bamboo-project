@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ingpos', function (Blueprint $table) {
             $table->id();
+            $table->String('favicon')->nullable();
+            $table->String('title')->nullable();
             $table->String('image_header')->nullable();
             $table->String('desc_header')->nullable();
             $table->String('slogan')->nullable();

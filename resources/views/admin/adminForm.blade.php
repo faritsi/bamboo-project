@@ -72,6 +72,11 @@
                     </tr>
                     <tr class="details-row">
                         <td colspan="6">
+                            @if ($u->image)
+                                <img src="{{ asset('/storage/' . $u->image) }}" alt="" id="avatar-profile">
+                            @else
+                                <img src="/img/default-img/default.png" alt="" id="avatar-profile">
+                            @endif
                             <div><strong>Nama Admin: </strong> {{ $u->name }}</div>
                             <div><strong>Role: </strong> {{ $u->role->name }}</div>
                             <div><strong>Status : </strong> Aktif</div>
@@ -88,11 +93,18 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <form action="{{ route('admin.store') }}" method="POST">
+      <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
           <div id="head-modul">
             <h1>Tambah Admin</h1>
           </div>
+          <div class="thumbnail">
+            <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail" style="display: block; margin-bottom: 10px; max-width: 100px;">
+            <input type="file" id="thumbnail" name="image" onchange="previewImage(this, 'thumbnail-preview')">
+            @if ($errors->has('image'))
+                <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+            @endif
+        </div>
           <div class="form-group">
               <label for="name">Nama Admin <span class="required">*</span></label>
               <input type="text" id="name" name="name" placeholder="Masukan Nama" value="{{ old('name') }}">
@@ -135,13 +147,20 @@
 <div id="editModal-{{ $u->id }}" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <form action="{{ route('admin.update', $u->id) }}" method="POST">
+      <form action="{{ route('admin.update', $u->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
           <div id="head-modul">
             <h1>Edit Admin</h1>
           </div>
           <input type="hidden" id="edit-id-{{ $u->id }}" name="id" value="{{ $u->id }}">
+          <div class="thumbnail">
+            <img id="edit-thumbnail-preview-{{ $u->id }}" src="{{ $u->image ? asset('/storage/' . $u->image) : 'https://via.placeholder.com/100' }}" alt="Thumbnail" style="display: block; margin-bottom: 10px; max-width: 100px;">
+            <input type="file" id="edit-thumbnail-{{ $u->id }}" name="image" onchange="previewImage(this, 'edit-thumbnail-preview-{{ $u->id }}')">
+            @if ($errors->has('image'))
+                <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+            @endif
+        </div>
           <div class="form-group">
               <label for="edit-name-{{ $u->id }}">Nama Admin <span class="required">*</span></label>
               <input type="text" id="edit-name-{{ $u->id }}" name="name" placeholder="Masukan Nama" value="{{ $u->name }}">
@@ -197,8 +216,40 @@
     </div>
 </div>
 @endforeach
-
 <script>
+    $(document).ready(function () {
+        // Menampilkan baris detail
+        $(".btn-details").on("click", function () {
+            var row = $(this).closest("tr").next(".details-row");
+            row.toggle();
+            var icon = $(this).find(".material-symbols-outlined");
+            icon.text(row.is(":visible") ? "remove" : "add");
+        });
+
+        // Menampilkan dan menyembunyikan modal
+        function showModal(modalId) { $(modalId).show(); }
+        function hideModals() { $(".modal").hide(); }
+
+        $("#myBtn").on("click", function () { showModal("#myModal"); });
+        $(".btn-edit").on("click", function () { showModal("#editModal-" + $(this).data('id')); });
+        $(".btn-delete").on("click", function () { showModal("#deleteModal-" + $(this).data('id')); });
+        $(".close").on("click", function () { hideModals(); });
+        $(window).on("click", function (event) { if ($(event.target).hasClass("modal")) { hideModals(); } });
+    });
+
+    // Pratinjau Gambar
+    function previewImage(input, previewId) {
+        const preview = document.getElementById(previewId);
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) { preview.src = e.target.result; }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            preview.src = "https://via.placeholder.com/100"; // Placeholder jika gambar dihapus
+        }
+    }
+</script>
+{{-- <script>
     $(document).ready(function () {
         $(".btn-details").on("click", function () {
             var row = $(this).closest("tr").next(".details-row");
@@ -252,5 +303,5 @@
             }
         });
     });
-</script>
+</script> --}}
 @endsection

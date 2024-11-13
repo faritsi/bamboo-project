@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Ingpo;
 use GuzzleHttp\Client;
 
 class ProdukController extends Controller
@@ -21,8 +22,12 @@ class ProdukController extends Controller
         $user = Auth::user();
         $produk = Produk::all();
         $kategori = Kategori::all();
+        $ingpo = Ingpo::all();
+
         return view('admin.produk', [
-            'title' => 'Produk'
+            'title' => 'Produk',
+            'ingpo' => $ingpo,
+            'produk' => $produk,
         ], compact('produk', 'user', 'kategori'));
     }
 
@@ -50,17 +55,24 @@ class ProdukController extends Controller
             'kategori_id' => 'required|string',
             // 'jenis_produk' => 'required|string',
             'jumlah_produk' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120', // Validasi gambar
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image1' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image2' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image3' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image4' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
+            'berat' => 'required|integer',
             'tokped' => 'required|string',
             'shopee' => 'required|string',
         ]);
 
-        $imagePath = null;
-        $imageName = $pid . '.' . $request->file('image')->getClientOriginalExtension();
-        if ($request->file('image')) {
-            $imagePath = $request->file('image')->storeAs('produk-images', $imageName, 'public');
+        $images = [];
+        foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $key) {
+            if ($request->file($key)) {
+                $imageName = $pid . "_{$key}." . $request->file($key)->getClientOriginalExtension();
+                $images[$key] = $request->file($key)->storeAs('produk-images', $imageName, 'public');
+            }
         }
 
         // Buat objek model produk dengan data yang sudah divalidasi
@@ -71,9 +83,14 @@ class ProdukController extends Controller
             'kategori_id' => $request->kategori_id,
             // 'jenis_produk' => $request->jenis_produk,
             'jumlah_produk' => $request->jumlah_produk,
-            'image' => $imagePath,
+            'image' => $images['image'] ?? null,
+            'image1' => $images['image1'] ?? null,
+            'image2' => $images['image2'] ?? null,
+            'image3' => $images['image3'] ?? null,
+            'image4' => $images['image4'] ?? null,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
+            'berat' => $request->berat,
             'tokped' => $request->tokped,
             'shopee' => $request->shopee,
         ]);
@@ -84,6 +101,7 @@ class ProdukController extends Controller
         // Redirect ke route produk.index dengan pesan sukses
         return redirect()->route('produk.index')->with('success', 'Produk Berhasil ditambah');
     }
+
     private function generateRandomString1($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -179,8 +197,22 @@ class ProdukController extends Controller
 
         // Ambil data biaya dari response API
         // $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
+        // Remove hyphens from the URL parameter
+        $nama_produk = str_replace('-', ' ', $nama_produk);
+
         $produk = DB::table('produks')->where('nama_produk', $nama_produk)->get();
-        return view('produk_show.index', compact('produk'));
+        if (!$produk) {
+            return redirect()->route('catalog.index')->with('error', 'Produk tidak ditemukan');
+        }
+
+        // Ambil 5 produk lainnya secara acak, kecuali produk yang sedang dilihat
+        $produkLainnya = DB::table('produks')
+            ->where('nama_produk', '!=', $nama_produk)
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
+
+        return view('produk_show.index', compact('produk', 'produkLainnya'));
     }
 
     /**
@@ -200,44 +232,64 @@ class ProdukController extends Controller
             'kode_produk' => 'string',
             'nama_produk' => 'required|string',
             'kategori_id' => 'required|string',
-            // 'jenis_produk' => 'required|string',
             'jumlah_produk' => 'required|integer',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image3' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image4' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
             'tokped' => 'required|string',
             'shopee' => 'required|string',
         ]);
 
-        // $image = $request->oldImage;
-        $produk = DB::table('produks')->where('pid', $pid)->first();
-        $image = null;
-        if ($request->file('image')) {
-            $imageNameEdit = $pid . '.' . $request->file('image')->getClientOriginalExtension();
-            if ($produk->image) {
-                Storage::delete($produk->image);
+        // Ambil data produk berdasarkan pid
+        $produk = Produk::where('pid', $pid)->firstOrFail();
+
+        // Mengelola gambar
+        $images = [];
+        foreach (['image', 'image1', 'image2', 'image4'] as $key) {
+            if ($request->file($key)) {
+                // Nama file baru untuk gambar yang diunggah
+                $imageName = $pid . "_{$key}." . $request->file($key)->getClientOriginalExtension();
+
+                // Hapus gambar lama jika ada dan simpan gambar baru
+                if ($produk->$key) {
+                    Storage::delete('public/' . $produk->$key);
+                }
+                $images[$key] = $request->file($key)->storeAs('produk-images', $imageName, 'public');
+            } else {
+                // Jika tidak ada gambar baru, gunakan gambar lama
+                $images[$key] = $produk->$key;
             }
-            $image = $request->file('image')->storeAs('produk-images', $imageNameEdit, 'public');
         }
 
+        // Update data produk di database
         DB::table('produks')->where('pid', $pid)->update([
             'kode_produk' => $request->kode_produk,
             'nama_produk' => $request->nama_produk,
             // 'jenis_produk' => $request->jenis_produk,
             'kategori_id' => $request->kategori_id,
             'jumlah_produk' => $request->jumlah_produk,
-            'image' => $image ?? $produk->image,
+            'image' => $images['image'] ?? $produk->image,
+            'image1' => $images['image1'] ?? $produk->image1,
+            'image2' => $images['image2'] ?? $produk->image2,
+            'image3' => $images['image3'] ?? $produk->image3,
+            'image4' => $images['image4'] ?? $produk->image4,
             'deskripsi' => $request->deskripsi,
             'harga' => $request->harga,
             'tokped' => $request->tokped,
             'shopee' => $request->shopee,
         ]);
 
+        // Jika ada data keranjang yang perlu diupdate
         if ($request->pid && $request->quantity) {
-            $keranjang = session()->get('keranjang');
-            $keranjang[$request->pid]["quantity"] = $request->quantity;
-            session()->put('keranjang', $keranjang);
-            session()->flash('success', 'keranjang updated successfully');
+            $keranjang = session()->get('keranjang', []);
+            if (isset($keranjang[$request->pid])) {
+                $keranjang[$request->pid]["quantity"] = $request->quantity;
+                session()->put('keranjang', $keranjang);
+            }
         }
 
         return redirect()->route('produk.index')->with('success', 'Produk berhasil diperbarui!');
@@ -248,17 +300,13 @@ class ProdukController extends Controller
      */
     public function destroy($pid)
     {
-        // Retrieve the record
-        $produk = DB::table('produks')->where('pid', $pid)->first();
-
-        // Check if the record exists
+        $produk = Produk::where('pid', $pid)->first();
         if ($produk) {
-            // Delete the image from storage if it exists
-            if ($produk->image) {
-                Storage::delete($produk->image);
+            foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $imageField) {
+                if ($produk->$imageField) {
+                    Storage::delete('public/' . $produk->$imageField);
+                }
             }
-
-            // Delete the record from the database
             DB::table('produks')->where('pid', $pid)->delete();
         }
 
