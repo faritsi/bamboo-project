@@ -1,13 +1,18 @@
 @extends('halaman.admin')
 @section('content')
-<div id="myBtn" class="bg-tambah-data">
-    <div id="bo-tambah-data">
-        <div class="icon-tambah-data">
+
+
+<link rel="stylesheet" href="/css/style-ds-pimpinan.css" />
+<link rel="stylesheet" href="/css/style-tabel-pimpinan.css" />
+
+<div id="myBtn" class="bg-tambah-data-pimpinan">
+    <div id="bo-tambah-data-pimpinan">
+        <div class="icon-tambah-data-pimpinan">
             <span class="material-symbols-outlined">
             add
             </span>                                                        
         </div>
-        <div id="text">
+        <div id="text-pimpinan">
             <strong>Pimpinan</strong>
         </div>
     </div>
@@ -27,8 +32,8 @@
     </div>
 @endif
 
-<div id="bg-isi-content" class="clearfix">
-    <div id="bo-isi-content">
+<div id="bg-isi-content-pimpinan" class="clearfix">
+    <div id="bo-isi-content-pimpinan">
         {{-- Table --}}
         <div id="table-pimpinan">
             <table>
@@ -46,7 +51,7 @@
                     @foreach ($pimpinan as $index => $p)
                     <tr>
                         <td>
-                            <div class="btn-details">
+                            <div class="btn-details-pimpinan">
                                 <span class="material-symbols-outlined">
                                 add
                                 </span>                                                        
@@ -57,13 +62,13 @@
                         <td>{{ $p->jabatan }}</td>
                         <td>{{ $p->deskripsi }}</td>
                         <td>
-                            <div id="btn-cfg">
-                                <div class="btn-edit" data-id="{{ $p->ppid }}">
+                            <div id="btn-cfg-pimpinan">
+                                <div class="btn-edit-pimpinan" data-id="{{ $p->ppid }}">
                                     <span class="material-symbols-outlined">
                                     edit
                                     </span>                                                       
                                 </div>
-                                <div class="btn-delete" data-id="{{ $p->ppid }}">
+                                <div class="btn-delete-pimpinan" data-id="{{ $p->ppid }}">
                                     <span class="material-symbols-outlined">
                                     delete
                                     </span>                                                       
@@ -71,17 +76,31 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="details-row">
+                    <tr class="details-row-pimpinan">
                         <td colspan="6">
                             @if ($p->image)
-                                <img src="{{ asset('/storage/' . $p->image) }}" alt="" id="avatar-profile">
+                                <img src="{{ asset('/storage/' . $p->image) }}" alt="" id="avatar-pimpinan">
                             @else
-                                <img src="/img/default-img/default.png" alt="" id="avatar-profile">
+                                <img src="/img/default-img/default.png" alt="" id="avatar-pimpinan">
                             @endif
                             {{-- <div><img src="{{ asset('/storage/images/' . $p->image) }}" alt=""></div> --}}
                             <div><strong>Nama Pimpinan: </strong> {{ $p->name }}</div>
                             <div><strong>Jabatan: </strong> {{ $p->jabatan }}</div>
-                            <div><strong>Pengalaman : </strong> {{ $p->deskripsi }}</div>
+                            <div><strong>Pengalaman : </strong> <span class="desc-limit">{{ $p->deskripsi }}</span></div>
+                            <div id="btn-cfg-detail">
+                                <div class="btn-edit" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#editModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>
+                                    <p id="edit-text">Edit</p>                                                       
+                                </div>
+                                <div class="btn-delete" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#deleteModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>    
+                                    <p id="delete-text">Delete</p>                                                   
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -206,8 +225,8 @@
 
 <script>
     $(document).ready(function () {
-    $(".btn-details").on("click", function () {
-        var row = $(this).closest("tr").next(".details-row");
+    $(".btn-details-pimpinan").on("click", function () {
+        var row = $(this).closest("tr").next(".details-row-pimpinan");
         row.toggle();
         var icon = $(this).find(".material-symbols-outlined");
         if (row.is(":visible")) {
@@ -265,7 +284,29 @@
         var ppid = $(this).data('id');
         showModal("#deleteModal-" + ppid);
     });
+
+    // Adjust Table 
+        function updateColspan() {
+            const detailsCells = document.querySelectorAll('.details-row-pimpinan td'); // Select all matching elements
+            detailsCells.forEach(detailsCell => {
+                if (window.innerWidth <= 576) {
+                    detailsCell.setAttribute('colspan', '4');
+                } else if (window.innerWidth <= 768) {
+                    detailsCell.setAttribute('colspan', '5');
+                } else {
+                    detailsCell.setAttribute('colspan', '6'); // Default colspan for larger screens
+                }
+            });
+        }
+
+        // Run on initial load
+        updateColspan();
+
+        // Add an event listener for window resizing
+        window.addEventListener('resize', updateColspan);
 });
+
+
 
 </script>
 @endsection

@@ -36,7 +36,7 @@
 
 #table-pimpinan th:nth-child(1),
 #table-pimpinan td:nth-child(1) {
-    width: 22px;
+    width: 25px;
 }
 
 #table-pimpinan th:nth-child(2),
@@ -61,23 +61,23 @@
 
 #table-pimpinan th:nth-child(6),
 #table-pimpinan td:nth-child(6) {
-    width: 100px;
+    width: 75px;
 }
 
-#table-pimpinan .details-row {
+#table-pimpinan .details-row-pimpinan {
     display: none;
 }
 
-#table-pimpinan .details-row div {
+#table-pimpinan .details-row-pimpinan div {
     padding: 10px 0;
     border-bottom: 1px solid #ccc;
 }
 
-#table-pimpinan .details-row div:last-child {
+#table-pimpinan .details-row-pimpinan div:last-child {
     border-bottom: none;
 }
 
-#table-pimpinan .btn-details {
+#table-pimpinan .btn-details-pimpinan {
     cursor: pointer;
     margin: 0;
     padding: 0;
@@ -90,61 +90,60 @@
     background-color: green;
 }
 
-#table-pimpinan .btn-details.red {
+#table-pimpinan .btn-details-pimpinan.red {
     background-color: red;
 }
 
-#table-pimpinan .btn-details .material-symbols-outlined {
+#table-pimpinan .btn-details-pimpinan .material-symbols-outlined {
     color: white;
 }
 
-#btn-cfg {
+#btn-cfg-pimpinan {
     margin-top: auto;
     /* padding: 12px 10px; */
     /* margin-left: -10px; */
     display: flex;
     align-items: center;
-    margin-left: auto;
     /* background: #94df07; */
     border-radius: 50px;
+    justify-content: center;
+    gap: 10px;
 }
 
-#btn-cfg .btn-edit {
+#btn-cfg-pimpinan .btn-edit-pimpinan {
     display: flex;
     align-items: center;
-    padding-left: 15px;
     cursor: pointer;
 }
 
-#btn-cfg .btn-delete {
-    padding-left: 20px;
-    padding-top: 5px;
+#btn-cfg-pimpinan .btn-delete-pimpinan {
+    padding-top: 3px;
     cursor: pointer;
 }
 
-#table-pimpinan .btn-edit .material-symbols-outlined {
+#table-pimpinan .btn-edit-pimpinan .material-symbols-outlined {
     color: blue;
 }
 
-#table-pimpinan .btn-delete .material-symbols-outlined {
+#table-pimpinan .btn-delete-pimpinan .material-symbols-outlined {
     color: red;
 }
 
-#table-pimpinan #btn-edit i {
+#table-pimpinan #btn-edit-pimpinan i {
     font-size: 18px;
     margin-right: 20px;
     cursor: pointer;
 }
 
-#table-pimpinan #btn-edit i:last-child {
+#table-pimpinan #btn-edit-pimpinan i:last-child {
     margin-right: 0;
 }
 
-#table-pimpinan #btn-edit i.fa-pen-to-square {
+#table-pimpinan #btn-edit-pimpinan i.fa-pen-to-square {
     color: blue;
 }
 
-#table-pimpinan #btn-edit i.fa-trash {
+#table-pimpinan #btn-edit-pimpinan i.fa-trash {
     color: red;
 }
 
@@ -157,4 +156,98 @@
 #table-pimpinan td span#btn-edit {
     display: flex;
     align-items: center;
+}
+
+.desc-limit {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+#btn-cfg-detail {
+    display: none;
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    #table-pimpinan {
+        padding-bottom: 0;
+        padding-right: 0;
+    }
+    #bo-isi-content-pimpinan {
+        padding: 20px;
+    }
+
+    #table-pimpinan th:nth-child(1),
+    #table-pimpinan td:nth-child(1) {
+        width: 30px;
+    }
+
+    #table-pimpinan th:nth-child(5),
+    #table-pimpinan td:nth-child(5) {
+        width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    #table-pimpinan th:nth-child(5),
+    #table-pimpinan td:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    #table-pimpinan th:nth-child(6),
+    #table-pimpinan td:nth-child(6) {
+        display: none;
+    }
+
+    #table-pimpinan th:nth-child(4),
+    #table-pimpinan td:nth-child(4) {
+        border-right: none;
+    }
+
+    #btn-cfg-detail {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .btn-edit {
+            flex: 1;
+            background-color: blue;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #edit-text {
+                color: #fff;
+            }
+        }
+
+        .btn-delete {
+            flex: 1;
+            background-color: red;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #delete-text {
+                color: #fff;
+            }
+        }
+    }
 }

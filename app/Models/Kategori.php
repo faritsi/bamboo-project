@@ -17,4 +17,9 @@ class Kategori extends Model
     {
         return $this->hasOne(Transaksi::class);
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'kategori_id');
+    }
 }

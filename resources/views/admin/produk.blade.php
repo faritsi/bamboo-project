@@ -1,22 +1,29 @@
 @extends('halaman.admin')
 @section('content')
-<div id="myKegiatan" class="bg-tambah-data">
-    <div id="bo-tambah-data">
-        <div class="icon-tambah-data">
-            <span class="material-symbols-outlined">add</span>                                                        
-        </div>
-        <div id="text">
-            <strong>Kegiatan</strong>
+
+
+<link rel="stylesheet" href="/css/style-ds-produk.css" />
+<link rel="stylesheet" href="/css/style-tabel-produk.css" />
+
+<div id="buttonInKategori">
+    <div id="myKegiatan" class="bg-tambah-data-kategori">
+        <div id="bo-tambah-data-kategori">
+            <div class="icon-tambah-data-kategori">
+                <span class="material-symbols-outlined">add</span>                                                        
+            </div>
+            <div id="text-kategori">
+                <strong>Kategori</strong>
+            </div>
         </div>
     </div>
-</div>
-<div id="myBtn" class="bg-tambah-data">
-    <div id="bo-tambah-data">
-        <div class="icon-tambah-data">
-            <span class="material-symbols-outlined">add</span>                                                        
-        </div>
-        <div id="text">
-            <strong>Produk</strong>
+    <div id="myBtn" class="bg-tambah-data-produk">
+        <div id="bo-tambah-data-produk">
+            <div class="icon-tambah-data-produk">
+                <span class="material-symbols-outlined">add</span>                                                        
+            </div>
+            <div id="text-produk">
+                <strong>Produk</strong>
+            </div>
         </div>
     </div>
 </div>
@@ -49,9 +56,8 @@
 @endif
 
 
-<div id="bg-isi-content" class="clearfix">
+{{-- <div id="bg-isi-content" class="clearfix">
     <div id="bo-isi-content">
-        {{-- Table --}}
         <div id="table-produk">
             <table>
                 <thead>
@@ -110,6 +116,89 @@
             </table>
         </div>
     </div>
+</div> --}}
+
+<div id="bg-isi-content-produk">
+    <div id="bo-isi-content-produk">
+        <div id="table-produk">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Stok</th>
+                        <th>Berat (g)</th>
+                        <th>Harga</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($produk as $index => $p)
+                    <tr>
+                        <td>
+                            <div class="btn-details-produk">
+                                <span class="material-symbols-outlined">
+                                add
+                                </span>                                                        
+                            </div>
+                        </td>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $p->nama_produk }}</td>
+                        <td>{{ $p->jumlah_produk }}</td>
+                        <td>{{ $p->berat }}</td>
+                        <td>{{$p->harga}}</td>
+                        <td>
+                            <div id="btn-cfg-produk">
+                                <div class="btn-edit" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#editModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>                                                       
+                                </div>
+                                <div class="btn-delete" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#deleteModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>                                                       
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="details-row-produk">
+                        <td colspan="7">
+                            @if ($p->image)
+                            <img src="{{asset('/storage/' .$p->image)}}" alt="Image Produk" id="avatar-produk">
+                            @else
+                            <img src="/img/default-img/default.png" alt="" id="avatar-produk">
+                            @endif
+                            <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
+                            <div><strong>Kategori Produk: </strong> {{ $p->kategori->name}}</div>
+                            <div><strong>Stok: </strong> {{ $p->jumlah_produk}}</div>
+                            <div><strong>Berat: </strong> {{ $p->berat}}</div>
+                            <div><strong>Harga: </strong> {{ $p->harga}}</div>
+                            <div><strong>Deskripsi: </strong> <span class="desc-limit">{{ $p->deskripsi}}</span></div>
+                            <div><strong>Link Tokopedia: </strong> {{ $p->tokped}}</div>
+                            <div><strong>Link Shoppee: </strong> {{ $p->shopee}}</div>
+                            <div id="btn-cfg-detail">
+                                <div class="btn-edit" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#editModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>
+                                    <p id="edit-text">Edit</p>                                                       
+                                </div>
+                                <div class="btn-delete" data-id="{{ $p->pid }}" data-toggle="modal" data-target="#deleteModal-{{ $p->pid }}">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>    
+                                    <p id="delete-text">Delete</p>                                                   
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 {{-- modal kegiatan --}}
@@ -123,7 +212,7 @@
             </div>
             <div class="form-group">
                 <label for="name">Nama Kategori Baru <span class="required">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategiri Baru" value="{{ old('name') }}">
+                <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategori Baru" value="{{ old('name') }}">
                 @if ($errors->has('name'))
                     <p class="alert alert-danger">{{ $errors->first('name') }}</p>
                 @endif
@@ -144,6 +233,10 @@
             <div id="head-modul">
                 <h1>Tambah Produk</h1>
             </div>
+            <div id="text-thumbnail">
+                <label for="image_produk">Thumbnail Produk <span class="required">*</span></label>
+            </div>
+
             <div class="thumbnail">
                 <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
                 <input type="file" id="thumbnail" name="image">
@@ -188,7 +281,7 @@
             </div>
             <div class="form-group">
                 <label for="nama_produk">Nama Produk <span class="required">*</span></label>
-                <input type="text" id="nama_produk" name="nama_produk" placeholder="Masukan Nama Produk" value="{{ old('nama_produk') }}">
+                <textarea id="nama_produk" name="nama_produk" placeholder="Masukan Nama Produk" value="{{ old('nama_produk') }}"></textarea>
                 @if ($errors->has('nama_produk'))
                     <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
                 @endif
@@ -205,28 +298,28 @@
             
             <div class="form-group">
                 <label for="jumlah_produk">Jumlah Produk <span class="required">*</span></label>
-                <input type="text" id="jumlah_produk" name="jumlah_produk" placeholder="Masukan jumlah produk" value="{{ old('jumlah_produk') }}">
+                <input type="number" id="jumlah_produk" name="jumlah_produk" placeholder="Masukan jumlah produk" value="{{ old('jumlah_produk') }}">
                 @if ($errors->has('jumlah_produk'))
                     <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="deskripsi">Deskripsi Produk <span class="required">*</span></label>
-                <input type="text" id="deskripsi" name="deskripsi" placeholder="Masukan deskripsi produk" value="{{ old('deskripsi') }}">
+                <textarea id="deskripsi" name="deskripsi" placeholder="Masukan deskripsi produk" value="{{ old('deskripsi') }}"></textarea>
                 @if ($errors->has('deskripsi'))
                 <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="tokped">Link Tokopedia <span class="required">*</span></label>
-                <input type="text" id="tokped" name="tokped" placeholder="Masukan link tokped" value="{{ old('tokped') }}">
+                <textarea id="tokped" name="tokped" placeholder="Masukan link tokped" value="{{ old('tokped') }}"></textarea>
                 @if ($errors->has('tokped'))
                     <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="shopee">Link Shopee <span class="required">*</span></label>
-                <input type="text" id="shopee" name="shopee" placeholder="Masukan link shopee" value="{{ old('shopee') }}">
+                <textarea id="shopee" name="shopee" placeholder="Masukan link shopee" value="{{ old('shopee') }}"></textarea>
                 @if ($errors->has('shopee'))
                     <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
                 @endif
@@ -239,7 +332,7 @@
                 @endif
             </div>
             <div class="form-group">
-                <label for="berat">Berat Produk <span class="required">*</span></label>
+                <label for="berat">Berat Produk (g) <span class="required">*</span></label>
                 <input type="number" id="berat" name="berat" placeholder="1" value="{{ old('berat') }}">
                 @if ($errors->has('berat'))
                     <p class="alert alert-danger">{{ $errors->first('berat') }}</p>
@@ -395,8 +488,8 @@
 
 <script>
     $(document).ready(function () {
-        $(".btn-details").on("click", function () {
-            var row = $(this).closest("tr").next(".details-row");
+        $(".btn-details-produk").on("click", function () {
+            var row = $(this).closest("tr").next(".details-row-produk");
             row.toggle();
             var icon = $(this).find(".material-symbols-outlined");
             if (row.is(":visible")) {
@@ -501,7 +594,7 @@
             });
         @endforeach
         $(document).ready(function() {
-    // Tampilkan dropdown
+        // Tampilkan dropdown
             $("#dropdownButton").on("click", function(event) {
                 event.preventDefault();
                 $("#dropdownMenu").toggleClass("show");
@@ -523,6 +616,26 @@
                 }
             });
         });
+
+        // Adjust Table 
+        function updateColspan() {
+            const detailsCells = document.querySelectorAll('.details-row-produk td'); // Select all matching elements
+            detailsCells.forEach(detailsCell => {
+                if (window.innerWidth <= 576) {
+                    detailsCell.setAttribute('colspan', '4');
+                } else if (window.innerWidth <= 768) {
+                    detailsCell.setAttribute('colspan', '6');
+                } else {
+                    detailsCell.setAttribute('colspan', '7'); // Default colspan for larger screens
+                }
+            });
+        }
+
+        // Run on initial load
+        updateColspan();
+
+        // Add an event listener for window resizing
+        window.addEventListener('resize', updateColspan);
     });
 </script>
 

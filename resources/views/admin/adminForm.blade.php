@@ -1,13 +1,18 @@
 @extends('halaman.admin')
 @section('content')
-<div id="myBtn" class="bg-tambah-data">
-    <div id="bo-tambah-data">
-        <div class="icon-tambah-data">
+
+
+<link rel="stylesheet" href="/css/style-ds-admin.css" />
+<link rel="stylesheet" href="/css/style-tabel-admin.css" />
+
+<div id="myBtn" class="bg-tambah-data-admin">
+    <div id="bo-tambah-data-admin">
+        <div class="icon-tambah-data-admin">
             <span class="material-symbols-outlined">
             add
             </span>                                                        
         </div>
-        <div id="text">
+        <div id="text-admin">
             <strong>Admin</strong>
         </div>
     </div>
@@ -27,8 +32,8 @@
     </div>
 @endif
 
-<div id="bg-isi-content" class="clearfix">
-    <div id="bo-isi-content">
+<div id="bg-isi-content-admin" class="clearfix">
+    <div id="bo-isi-content-admin">
         <div id="table-admin">
             <table>
                 <thead>
@@ -80,6 +85,20 @@
                             <div><strong>Nama Admin: </strong> {{ $u->name }}</div>
                             <div><strong>Role: </strong> {{ $u->role->name }}</div>
                             <div><strong>Status : </strong> Aktif</div>
+                            <div id="btn-cfg-detail">
+                                <div class="btn-edit" data-id="{{ $u->id }}" data-toggle="modal" data-target="#editModal-{{ $u->id }}">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>
+                                    <p id="edit-text">Edit</p>                                                       
+                                </div>
+                                <div class="btn-delete" data-id="{{ $u->id }}" data-toggle="modal" data-target="#deleteModal-{{ $u->id }}">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>    
+                                    <p id="delete-text">Delete</p>                                                   
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
@@ -248,6 +267,25 @@
             preview.src = "https://via.placeholder.com/100"; // Placeholder jika gambar dihapus
         }
     }
+
+    function updateColspan() {
+    const detailsCells = document.querySelectorAll('.details-row td'); // Select all matching elements
+    detailsCells.forEach(detailsCell => {
+        if (window.innerWidth <= 576) {
+            detailsCell.setAttribute('colspan', '4');
+        } else if (window.innerWidth <= 768) {
+            detailsCell.setAttribute('colspan', '5');
+        } else {
+            detailsCell.setAttribute('colspan', '6'); // Default colspan for larger screens
+        }
+    });
+}
+
+// Run on initial load
+updateColspan();
+
+// Add an event listener for window resizing
+window.addEventListener('resize', updateColspan);
 </script>
 {{-- <script>
     $(document).ready(function () {

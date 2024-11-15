@@ -476,7 +476,7 @@ body {
 
 .qty::-webkit-outer-spin-button,
 .qty::-webkit-inner-spin-button {
-    -webkit-appearance: none; /* Menghilangkan spinner di Chrome */
+    -webkit-appearance: none;
     margin: 0;
 }
 

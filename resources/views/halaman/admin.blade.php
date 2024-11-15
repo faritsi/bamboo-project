@@ -7,16 +7,10 @@
         <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
         <!-- Link -->
-        {{-- <link rel="stylesheet" href="/css/style-ds-modul.css"> --}}
+        <link rel="stylesheet" href="/css/style-ds-modul.css">
         <link rel="stylesheet" href="/css/style-ds-home.css" />
-        {{-- <link rel="stylesheet" href="/css/style-ds-admin.css" /> --}}
-        {{-- <link rel="stylesheet" href="/css/style-tabel-admin.css" /> --}}
-        {{-- <link rel="stylesheet" href="/css/style-ds-produk.css" />
-        <link rel="stylesheet" href="/css/style-tabel-produk.css" />
-        <link rel="stylesheet" href="/css/style-ds-pimpinan.css" />
-        <link rel="stylesheet" href="/css/style-tabel-pimpinan.css" />
         <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
-        <link rel="stylesheet" href="/css/style-ingpo.css" /> --}}
+        <link rel="stylesheet" href="/css/style-ingpo.css" /> 
 
         {{-- JS --}}
         <script src="/js/script-modal.js"></script>
@@ -90,7 +84,7 @@
                     <div id="header" class="clearfix">
                         
                         <div id="judul-header">
-                            <h2>Dashboard</h2>
+                            <h2>{{$title}}</h2>
                         </div>
                         <div id="user-account">
                             <div id="user-profile">

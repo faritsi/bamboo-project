@@ -109,6 +109,12 @@
     border-radius: 50px;
 }
 
+#btn-cfg-detail {
+    display: none;
+    width: 50%;
+    margin: 0 auto;
+}
+
 #btn-cfg .btn-edit {
     display: flex;
     align-items: center;
@@ -157,4 +163,105 @@
 #table-admin td span#btn-edit {
     display: flex;
     align-items: center;
+}
+
+@media (max-width: 1200px) {
+    #table-admin th:nth-child(1),
+    #table-admin td:nth-child(1) {
+        width: 30px;
+    }
+
+    #table-admin th:nth-child(4),
+    #table-admin td:nth-child(4) {
+        width: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    #table-admin {
+        padding-bottom: 0;
+        padding-right: 0;
+    }
+    #bo-isi-content-admin {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #table-admin th:nth-child(1),
+    #table-admin td:nth-child(1) {
+        width: 35px;
+    }
+
+    #table-admin th:nth-child(2),
+    #table-admin td:nth-child(2) {
+        width: 35px;
+    }
+
+    #table-admin th:nth-child(3),
+    #table-admin td:nth-child(3) {
+        width: 100px;
+    }
+
+    #table-admin th:nth-child(4),
+    #table-admin td:nth-child(4) {
+        width: 150px;
+    }
+
+    #table-admin th:nth-child(5),
+    #table-admin td:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    #btn-cfg-detail {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .btn-edit {
+            flex: 1;
+            background-color: blue;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #edit-text {
+                color: #fff;
+            }
+        }
+
+        .btn-delete {
+            flex: 1;
+            background-color: red;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #delete-text {
+                color: #fff;
+            }
+        }
+    }
+
+    #table-admin th:nth-child(4),
+    #table-admin td:nth-child(4) {
+        border-right: none;
+    }
+
+    #table-admin th:nth-child(6),
+    #table-admin td:nth-child(6) {
+        display: none;
+    }
 }
