@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->id();
             $table->string('image_path')->nullable();
+            // Video Path
+            // $table->string('video_path')->nullable();
             $table->timestamps();
         });
     }

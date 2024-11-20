@@ -8,193 +8,296 @@ body {
     box-sizing: border-box;
 }
 
-/* Navbar Styling */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #2980b9; /* Warna latar belakang navbar */
-    z-index: 999; /* Z-index yang tinggi untuk memastikan navbar di atas elemen lain */
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar a {
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.navbar a:hover {
-    background-color: #1e5799;
-}
-
-/* Section Title Styling */
-.section-title {
+.judul-halaman {
+    margin-top: 50px;
     text-align: center;
-    margin-top: 80px; /* Memberi ruang di bawah navbar */
-    margin-bottom: 30px;
 }
 
-.section-title h2 {
-    font-size: 30px;
-    font-weight: bold;
-    color: #2c3e50; /* Warna abu-abu biru yang elegan */
-    letter-spacing: 1.2px;
-}
-
-/* Add Photo Button */
-.add-photo-button {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.add-photo-button .btn {
-    background-color: #2980b9; /* Warna biru tua yang modern */
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 8px;
+.bg-tambah-photo-kegiatan {
+    /* margin-top: auto; */
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    /* display: flex; */
+    padding: 5px;
+    align-items: center;
+    /* margin-left: auto; */
+    background: #94df07;
+    border-radius: 50px;
+    /* margin-right: 35px; */
+    width: 200px;
     transition: background-color 0.3s ease;
-    border: none;
+    cursor: pointer;
+    margin: 30px 35px 0 auto;
+}
+.bg-tambah-photo-kegiatan:hover {
+    background-color: #629405;
 }
 
-.add-photo-button .btn:hover {
-    background-color: #1e5799; /* Warna biru yang lebih tua */
-    transform: translateY(-2px);
+#bo-tambah-photo-kegiatan {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: center;
 }
 
-/* Photo Gallery Grid (Modern Grid Layout) */
-.grid-gallery {
-    width: 90%; /* Mengatur lebar div grid gallery menjadi 90% */
-    margin: 0 auto; /* Menjadikan grid center di halaman */
+.icon-tambah-photo {
+    margin: 0 auto;
+    padding: 0;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#text-kegiatan {
+    margin: 0 auto;
+}
+
+/* Container for the photo cards */
+.container-photo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Card container for each photo */
+.card-photo {
     display: grid;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(250px, 1fr)
-    ); /* Grid yang fleksibel */
-    grid-gap: 15px;
-    justify-content: center; /* Menyusun konten grid agar berada di tengah */
-    z-index: 1; /* Z-index lebih rendah sehingga grid berada di belakang navbar */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    padding: 30px 25px 20px 90px;
 }
 
+/* Styling for each photo card */
 .photo-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-}
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.5);
 
-.photo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Image inside card */
-.photo-image img {
+    /* width: 350px;
+    height: 200px; */
     width: 100%;
     height: 200px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    position: relative;
+    display: inline-block;
 }
 
-.photo-card:hover .photo-image img {
-    transform: scale(1.05);
-}
-
-/* Details inside the card (Edit & Delete Buttons) */
-.photo-details {
-    padding: 15px;
-    text-align: center;
-}
-
-.photo-details button {
-    margin: 5px;
-    padding: 8px 15px;
-    font-size: 14px;
-    width: 45%;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Button styles */
-.photo-details .btn-warning {
-    background-color: #f39c12;
-    color: white;
-}
-
-.photo-details .btn-warning:hover {
-    background-color: #d68910;
-}
-
-.photo-details .btn-danger {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.photo-details .btn-danger:hover {
-    background-color: #c0392b;
-}
-
-/* Modal Styling */
-.modal-header {
-    background-color: #2980b9;
-    color: white;
-    padding: 15px;
-}
-
-.modal-title {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.modal-footer {
-    border-top: none;
-    padding: 15px;
-}
-
-.modal-footer .btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-.modal-footer .btn-secondary {
-    background-color: #7f8c8d;
-    color: white;
-}
-
-.modal-footer .btn-primary {
-    background-color: #2980b9;
-    color: white;
-}
-
-.modal-footer .btn-primary:hover {
-    background-color: #1e5799;
-}
-
-/* Image Preview Styling */
-#imagePreview img {
-    max-width: 100%;
-    height: auto;
+.photo-image {
+    width: 100%;
+    height: 100%;
+    display: block;
     border-radius: 10px;
-    margin-top: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    object-fit: cover;
 }
 
-/* Responsive Design */
+/* Hover effect for the image */
+.photo-card:hover .photo-image {
+    transform: scale(1.1);
+}
+
+/* Overlay for buttons */
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    gap: 5px;
+
+    button.btn-edit {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        color: blue;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-edit:hover {
+        background-color: blue;
+        color: #fff;
+    }
+
+    button.btn-delete {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        color: red;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+    button.btn-delete:hover {
+        background-color: red;
+        color: #fff;
+    }
+}
+
+.bg-tambah-video-kegiatan {
+    /* margin-top: auto; */
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    /* display: flex; */
+    padding: 5px;
+    align-items: center;
+    /* margin-left: auto; */
+    background: #94df07;
+    border-radius: 50px;
+    /* margin-right: 35px; */
+    width: 220px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin: 30px 35px 0 auto;
+}
+.bg-tambah-video-kegiatan:hover {
+    background-color: #629405;
+}
+
+#bo-tambah-video-kegiatan {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    justify-content: center;
+}
+
+.icon-tambah-video {
+    margin: 0 auto;
+    padding: 0;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#text-video {
+    margin: 0 auto;
+}
+
+#video-container {
+    padding: 30px 25px 50px 90px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px; /* Kurangi gap antar elemen */
+}
+
+.wrapper-video {
+    position: relative; /* Supaya overlay bisa diposisikan di atas video */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px; /* Tambahkan border-radius untuk tampilan lebih halus */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Berikan bayangan pada video */
+    background-color: #f9f9f9; /* Tambahkan latar belakang untuk kontras */
+    height: 350px;
+}
+
+.wrapper-video iframe {
+    width: 100%; /* Pastikan iframe menyesuaikan ukuran kontainer */
+    height: 100%; /* Standar tinggi video */
+    border: none; /* Hapus border iframe */
+    border-radius: 10px 10px 0 0; /* Supaya konsisten dengan wrapper */
+}
+
+.video-overlay {
+    padding: 15px;
+
+    button.btn-edit-video {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        color: blue;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-edit-video:hover {
+        background-color: blue;
+        color: #fff;
+    }
+
+    button.btn-delete-video {
+        padding: 5px 8px;
+        font-size: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        color: red;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-delete-video:hover {
+        background-color: red;
+        color: #fff;
+    }
+}
+
+.wrapper-video:hover .video-overlay {
+    opacity: 1; /* Tampilkan overlay saat hover */
+}
+
+/* Responsive for smaller screens */
+@media (min-width: 1600px) {
+    .card-photo {
+        grid-template-columns: repeat(4, 1fr); /* 2 photos per row */
+        max-width: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .card-photo {
+        grid-template-columns: repeat(3, 1fr); /* 2 photos per row */
+        padding: 30px;
+    }
+
+    #video-container {
+        padding: 30px;
+    }
+}
+
 @media (max-width: 768px) {
-    .add-photo-button .btn {
-        width: 100%;
+    .card-photo {
+        grid-template-columns: repeat(2, 1fr); /* 2 photos per row */
+    }
+    .photo-card {
+        max-width: 300px;
+    }
+
+    #video-container {
+        grid-template-columns: repeat(1, 1fr); /* 2 photos per row */
+    }
+
+    .wrapper-video {
+        width: 400px;
+        height: 300px;
+        justify-content: center;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-photo {
+        grid-template-columns: repeat(1, 1fr); /* 2 photos per row */
+    }
+
+    .wrapper-video {
+        width: 300px;
+        height: 200px;
     }
 }

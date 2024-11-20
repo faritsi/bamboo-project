@@ -1,104 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Add Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .chart-container {
-            width: 100%;
-            height: 400px;
-        }
-        .transaction-list {
-            margin-top: 20px;
-            overflow-x: auto;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <!-- Dropdown for time interval -->
-        <div class="row mb-3">
-            <div class="col-md-4">
+@extends('halaman.admin')
+@section('content')
+
+<link rel="stylesheet" href="/css/style-chart-transaksi.css" />
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="filter-section">
+                <h2>Filter</h2>
                 <label for="timeInterval">Pilih Interval:</label>
-                <select id="timeInterval" class="form-control">
+                <select id="timeInterval">
                     <option value="day">Hari Ini</option>
                     <option value="week">Minggu Ini</option>
                     <option value="month">Bulan Ini</option>
                 </select>
-            </div>
-        </div>
 
-        <!-- Date pickers for selecting range -->
-        <div class="row">
-            <div class="col-md-6">
                 <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate" class="form-control">
-            </div>
-            <div class="col-md-6">
+                <input type="date" id="startDate">
+
                 <label for="endDate">End Date:</label>
-                <input type="date" id="endDate" class="form-control">
+                <input type="date" id="endDate">
+            </div>
+
+            <div class="chart-container">
+                <h2>Grafik Transaksi</h2>
+                <canvas id="productQtyChart"></canvas>
             </div>
         </div>
 
-        <!-- Chart container -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="chart-container">
-                    <canvas id="productQtyChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transaction List -->
-        <div class="row mt-4 transaction-list">
-            <div class="col-12">
-                <h1 class="text-center">Transaction List</h1> <!-- Center the title -->
-                <table class="table table-bordered text-center"> <!-- Add text-center for the table -->
-                    <thead>
-                        <tr>
-                            <th class="text-center">Order ID</th>
-                            <th class="text-center">Kategori</th>
-                            <th class="text-center">Nama Produk</th>
-                            <th class="text-center">Jumlah Produk</th>
-                            <th class="text-center">Harga Total</th>
-                            <th class="text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            // Group transactions by order_id
-                            $groupedTransactions = $tf->groupBy('order_id');
-                        @endphp
-
-                        @foreach($groupedTransactions as $order_id => $transactions)
-                            @php
-                                // Calculate rowspan for the first row of this group
-                                $rowspan = count($transactions);
-                            @endphp
-
-                            @foreach($transactions as $index => $t)
-                                <tr>
-                                    @if ($index === 0)
-                                        <!-- Only show Order ID, Total Pembayaran, and Status once -->
-                                        <td rowspan="{{ $rowspan }}" class="align-middle">{{ $t->order_id }}</td>
-                                    @endif
-                                    <td class="align-middle">{{ $t->kategori->name }}</td>
-                                    <td class="align-middle">{{ $t->nama_produk }}</td>
-                                    <td class="align-middle">{{ $t->qty }}</td>
-                                    @if ($index === 0)
-                                        <td rowspan="{{ $rowspan }}" class="align-middle">{{ $t->total_pembayaran }}</td>
-                                        <td rowspan="{{ $rowspan }}" class="align-middle">{{ $t->status }}</td>
-                                    @endif
-                                </tr>
-                            @endforeach
+        <!-- Right Section -->
+        <div class="right-section">
+            <h2>Daftar Transaksi</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Kategori</th>
+                        <th>Nama Produk</th>
+                        <th>Jumlah Produk</th>
+                        <th>Harga Total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        // Group transactions by order_id
+                        $groupedTransactions = $tf->groupBy('order_id');
+                    @endphp
+                    @foreach($groupedTransactions as $order_id => $transactions)
+                        @php $rowspan = count($transactions); @endphp
+                        @foreach($transactions as $index => $t)
+                            <tr>
+                                @if ($index === 0)
+                                    <td rowspan="{{ $rowspan }}">{{ $t->order_id }}</td>
+                                @endif
+                                <td>{{ $t->kategori->name }}</td>
+                                <td>{{ $t->nama_produk }}</td>
+                                <td>{{ $t->qty }}</td>
+                                @if ($index === 0)
+                                    <td rowspan="{{ $rowspan }}">{{ $t->total_pembayaran }}</td>
+                                    <td rowspan="{{ $rowspan }}">{{ $t->status }}</td>
+                                @endif
+                            </tr>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -202,5 +171,4 @@
         setDefaultDate();
         updateDateRange('day');
     </script>
-</body>
-</html>
+@endsection

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Visitor;
+use App\Http\Services\SendMessageWhatsAppService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(SendMessageWhatsAppService::class, function ($app) {
+            return new SendMessageWhatsAppService();
+        });
     }
 
     /**

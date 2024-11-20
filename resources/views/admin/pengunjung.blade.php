@@ -5,40 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visitor Statistics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .summary-box {
-            background-color: white;
-            color: black;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd;
-            width: 250px;
-            margin: 20px auto;
-        }
-        .chart-container {
-            width: 80%;
-            margin: 0 auto;
-        }
-        .summary-container {
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style-pengunjung.css" />
+
 </head>
 <body>
-    <div class="chart-container">
-        <canvas id="visitorChart"></canvas>
-    </div>
-
-    <div class="summary-container">
-        <div class="summary-box">
-            <h4>Visitor Stats</h4>
-            <p>Today: {{ $today }}</p>
-            <p>This Week: {{ $thisWeek }}</p>
-            <p>This Month: {{ $thisMonth }}</p>
-            <p>Total: {{ $totalVisits }}</p>
+    <div class="visitor-container">
+        <!-- Chart Container -->
+        <div class="chart-container">
+            <h2>Jumlah Pengunjung</h2>
+            <canvas id="visitorChart"></canvas>
+        </div>
+    
+        <!-- Summary Container -->
+        <div class="summary-container">
+            <div class="summary-box">
+                <h3>Statistik Pengunjung</h3>
+                <p><strong>Hari Ini:</strong> {{ $today }}</p>
+                <p><strong>Minggu Ini:</strong> {{ $thisWeek }}</p>
+                <p><strong>Bulan Ini:</strong> {{ $thisMonth }}</p>
+                <p><strong>Total:</strong> {{ $totalVisits }}</p>
+            </div>
         </div>
     </div>
+    
 
     <script>
         const ctx = document.getElementById('visitorChart').getContext('2d');

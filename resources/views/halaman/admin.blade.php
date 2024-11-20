@@ -9,8 +9,6 @@
         <!-- Link -->
         <link rel="stylesheet" href="/css/style-ds-modul.css">
         <link rel="stylesheet" href="/css/style-ds-home.css" />
-        <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
-        <link rel="stylesheet" href="/css/style-ingpo.css" /> 
 
         {{-- JS --}}
         <script src="/js/script-modal.js"></script>
@@ -45,7 +43,7 @@
                             </h4>
                             <li><a href="/home"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
                             <li><a href="/visitor"><span class="material-symbols-outlined">monitoring</span> Analytic</a></li>
-                            <li><a href="/pembelian"><span class="material-symbols-outlined">attach_money</span> Pembelian</a></li>
+                            <li><a href="/pembelian"><span class="material-symbols-outlined">attach_money</span> Penjualan</a></li>
                             <h4>
                                 <span>General</span>
                                 <div id="menu-seperate"></div>

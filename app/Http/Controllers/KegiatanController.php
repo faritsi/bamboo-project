@@ -26,16 +26,20 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
+        // dd("TEST before validate");
         $request->validate([
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_path' => 'nullable|url',
+            // Bikin Buat Input Video file jadi gkg cmn URL YT aja
         ]);
 
         // Handle image uploads
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $file) {
+        if ($request->hasFile('image')) {
+            // dd($request->file('image'));
+            foreach ($request->file('image') as $index => $file) {
                 $imageName = 'kegiatan-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
                 $imagePath = $file->storeAs('kegiatan-images', $imageName, 'public');
+
 
                 Kegiatan::create([
                     'image_path' => $imagePath,
@@ -55,7 +59,7 @@ class KegiatanController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Images and video uploaded successfully.');
+        return redirect()->back()->with('success', 'Images or video Uploaded Successfully.');
     }
 
     /**
@@ -87,6 +91,7 @@ class KegiatanController extends Controller
     {
         $kegiatan = Kegiatan::findOrFail($id);
 
+
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_path' => 'nullable|url',
@@ -95,12 +100,13 @@ class KegiatanController extends Controller
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
             if ($kegiatan->image_path) {
-                Storage::delete($kegiatan->image_path);
+                Storage::delete('public/' . $kegiatan->image_path);
             }
 
-            // Handle image upload
             $image = $request->file('image');
-            $imagePath = $image->store('kegiatan_images');
+            // Handle image upload
+            $imageName = 'kegiatan-' . time() . '-' . $kegiatan->id . '.' . $image->getClientOriginalExtension();
+            $imagePath = $image->storeAs('kegiatan-images', $imageName, 'public');
             $kegiatan->image_path = $imagePath;
         }
 
@@ -115,7 +121,7 @@ class KegiatanController extends Controller
 
         $kegiatan->save();
 
-        return redirect()->back()->with('success', 'Kegiatan updated successfully.');
+        return redirect()->back()->with('success', 'Images or video Update Successfully.');
     }
 
     /**
@@ -125,10 +131,16 @@ class KegiatanController extends Controller
     {
         $kegiatan = Kegiatan::findOrFail($id);
         if ($kegiatan->image_path) {
-            Storage::delete($kegiatan->image_path);
+            Storage::delete('public/' . $kegiatan->image_path);
         }
+
+        // Hapus video path
+        if ($kegiatan->video_path) {
+            $kegiatan->video_path = null; // Hapus URL dari database
+        }
+
         $kegiatan->delete();
 
-        return redirect()->back()->with('success', 'Image deleted successfully.');
+        return redirect()->back()->with('success', 'Images or video Delete Successfully.');
     }
 }

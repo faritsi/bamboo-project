@@ -1,5 +1,6 @@
 @extends('halaman.admin')
 @section('content')
+<link rel="stylesheet" href="/css/style-ingpo.css" /> 
 
 <!-- Display success message -->
 @if (session('success'))

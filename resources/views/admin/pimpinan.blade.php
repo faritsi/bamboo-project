@@ -142,7 +142,7 @@
           </div>
           <div class="form-group">
               <label for="deskripsi">Pengalaman <span class="required">*</span></label>
-              <input type="text" id="deskripsi" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi') }}">
+              <textarea id="deskripsi" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi') }}"></textarea>
               @if ($errors->has('deskripsi'))
                   <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
               @endif
@@ -189,7 +189,8 @@
             </div>
             <div class="form-group">
                 <label for="deskripsi-{{ $p->ppid }}">Pengalaman <span class="required">*</span></label>
-                <input type="text" id="deskripsi-{{ $p->ppid }}" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi', $p->deskripsi) }}">
+                {{-- value="{{ old('deskripsi', $p->deskripsi) }}" --}}
+                <textarea id="deskripsi-{{ $p->ppid }}" name="deskripsi" placeholder="Masukan Pengalaman">{{$p->deskripsi}}</textarea>
                 @if ($errors->has('deskripsi'))
                     <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
@@ -274,13 +275,13 @@
     });
 
     // Event listener for Edit button
-    $(".btn-edit").on("click", function () {
+    $(".btn-edit-pimpinan").on("click", function () {
         var ppid = $(this).data('id');
         showModal("#editModal-" + ppid);
     });
 
     // Event listener for Delete button
-    $(".btn-delete").on("click", function () {
+    $(".btn-delete-pimpinan").on("click", function () {
         var ppid = $(this).data('id');
         showModal("#deleteModal-" + ppid);
     });

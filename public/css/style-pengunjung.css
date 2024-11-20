@@ -1,0 +1,79 @@
+* {
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Visitor Container */
+.visitor-container {
+    display: flex;
+    flex-wrap: wrap; /* Responsif untuk layar kecil */
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Chart Container */
+.chart-container {
+    flex: 2;
+    min-width: 300px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.chart-container h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Summary Container */
+.summary-container {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.summary-box {
+    text-align: center;
+}
+
+.summary-box h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.summary-box p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #555;
+}
+
+.summary-box p strong {
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .visitor-container {
+        flex-direction: column;
+    }
+
+    .chart-container,
+    .summary-container {
+        max-width: 100%;
+    }
+}

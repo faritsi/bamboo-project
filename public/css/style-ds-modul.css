@@ -90,6 +90,15 @@
     box-sizing: border-box;
 }
 
+input[type="file"] {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin: 10px 0;
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;

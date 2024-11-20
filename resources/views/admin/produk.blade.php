@@ -55,69 +55,6 @@
     </div>
 @endif
 
-
-{{-- <div id="bg-isi-content" class="clearfix">
-    <div id="bo-isi-content">
-        <div id="table-produk">
-            <table>
-                <thead>
-                    <tr>
-                        <th rowspan="2"></th>
-                        <th rowspan="2">No</th>
-                        <th rowspan="2">Nama Produk</th>
-                        <th colspan="2">Link Produk</th>
-                        <th rowspan="2"></th>
-                    </tr>
-                    <tr>
-                        <th>Tokopedia</th>
-                        <th>Shopee</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($produk as $index => $p)
-                    <tr>
-                        <td>
-                            <div class="btn-details">
-                                <span class="material-symbols-outlined">add</span>                                                  
-                            </div>
-                        </td>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $p->nama_produk }}</td>
-                        <td>{{ $p->tokped }}</td>
-                        <td>{{ $p->shopee }}</td>
-                        <td>
-                            <div id="btn-cfg">
-                                <div class="btn-edit" data-id="{{ $p->pid }}">
-                                    <span class="material-symbols-outlined">edit</span>                                                       
-                                </div>
-                                <div class="btn-delete" data-id="{{ $p->pid }}">
-                                    <span class="material-symbols-outlined">delete</span>                                                       
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="details-row" style="display: none;">
-                        <td colspan="6">
-                            @if ($p->image)
-                                <img src="{{ asset('/storage/' . $p->image) }}" alt="" id="avatar-profile">
-                            @else
-                                <img src="/img/default-img/default.png" alt="" id="avatar-profile">
-                            @endif
-                            <div><strong>Kode Produk: </strong> {{ $p->kode_produk }}</div>
-                            <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
-                            <div><strong>Kategori Produk: </strong> {{ $p->kategori->name }}</div>
-                            <div><strong>Jumlah Produk: </strong>{{ $p->jumlah_produk }}</div>
-                            <div><strong>Harga: </strong> {{ $p->harga }}</div>
-                            <div><strong>Deskripsi: </strong> {{ $p->deskripsi }}</div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> --}}
-
 <div id="bg-isi-content-produk">
     <div id="bo-isi-content-produk">
         <div id="table-produk">
@@ -432,21 +369,21 @@
             </div>
             <div class="form-group">
                 <label for="deskripsi-{{ $p->pid }}">Deskripsi Produk <span class="required">*</span></label>
-                <input type="text" id="deskripsi-{{ $p->pid }}" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi', $p->deskripsi) }}">
+                <textarea id="deskripsi-{{ $p->pid }}" name="deskripsi" placeholder="Masukan Pengalaman">{{$p->deskripsi}}</textarea>
                 @if ($errors->has('deskripsi'))
                 <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="tokped-{{ $p->pid }}">Link Tokopedia <span class="required">*</span></label>
-                <input type="text" id="tokped-{{ $p->pid }}" name="tokped" placeholder="Masukan tokped" value="{{ old('tokped', $p->tokped) }}">
+                <textarea id="tokped-{{ $p->pid }}" name="tokped" placeholder="Masukan tokped">{{$p->tokped}}</textarea>
                 @if ($errors->has('tokped'))
                     <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="shopee-{{ $p->pid }}">Link Shopee <span class="required">*</span></label>
-                <input type="text" id="shopee-{{ $p->pid }}" name="shopee" placeholder="Masukan shopee" value="{{ old('shopee', $p->shopee) }}">
+                <textarea id="shopee-{{ $p->pid }}" name="shopee" placeholder="Masukan shopee">{{$p->shopee}}</textarea>
                 @if ($errors->has('shopee'))
                     <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
                 @endif
