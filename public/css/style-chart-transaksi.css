@@ -11,6 +11,7 @@
     gap: 30px;
     margin: 20px auto;
     max-width: 1200px;
+    padding: 30px 0px 20px 90px;
 }
 
 .top-section {
@@ -29,7 +30,6 @@
 .left-section {
     flex: 1;
     max-width: 30%;
-    border-left: 5px solid #8bc34a;
 }
 
 .chart-container {
@@ -38,6 +38,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#productQtyChart {
+    width: 100%;
+    height: 600px;
 }
 
 .filter-section h2,
@@ -107,7 +112,7 @@ table td {
 }
 
 table th {
-    background-color: #8bc34a;
+    background-color: #004c50;
     color: white;
     font-weight: bold;
 }
@@ -118,4 +123,112 @@ table tr:nth-child(even) {
 
 table tr:hover {
     background-color: #f1f1f1;
+}
+
+/* Responsif untuk layar dengan lebar maksimum 1200px */
+@media (max-width: 1200px) {
+    .top-section {
+        gap: 20px; /* Kurangi jarak antar elemen */
+    }
+
+    .left-section {
+        max-width: 40%; /* Lebar elemen filter diperbesar */
+    }
+
+    .btn-filter {
+        font-size: 14px; /* Ukuran font tombol sedikit diperkecil */
+    }
+
+    .transaction-section h2 {
+        font-size: 18px; /* Judul tabel transaksi lebih kecil */
+    }
+
+    table th:nth-child(1),
+    table td:nth-child(1) {
+        width: 200px;
+    }
+
+    table th:nth-child(3),
+    table td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 20px;
+    }
+
+    table th:nth-child(1),
+    table td:nth-child(1) {
+        width: 150px;
+    }
+
+    table th:nth-child(2),
+    table td:nth-child(2) {
+        width: 100px;
+    }
+
+    table th:nth-child(4),
+    table td:nth-child(4) {
+        width: 150px;
+    }
+
+    /* Sembunyikan kolom jumlah produk */
+    table th:nth-child(5),
+    table td:nth-child(5) {
+        display: none;
+    }
+
+    table th:nth-child(6),
+    table td:nth-child(6) {
+        width: 75px;
+    }
+}
+
+/* Responsif untuk tablet */
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column; /* Ubah dari horizontal ke vertikal */
+    }
+
+    .left-section,
+    .chart-container {
+        max-width: 100%; /* Atur lebar penuh */
+    }
+
+    #productQtyChart {
+        height: 400px; /* Kurangi tinggi grafik di layar lebih kecil */
+    }
+}
+
+/* Responsif untuk ponsel */
+@media (max-width: 576px) {
+    .container {
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .top-section {
+        gap: 20px;
+    }
+
+    .transaction-section h2 {
+        font-size: 18px;
+    }
+
+    table th,
+    table td {
+        font-size: 14px; /* Kurangi ukuran teks */
+        padding: 10px; /* Kurangi padding */
+    }
+
+    table th {
+        font-size: 14px;
+    }
+
+    .btn-filter {
+        font-size: 14px;
+        padding: 8px; /* Kurangi padding tombol */
+    }
 }

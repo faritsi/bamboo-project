@@ -3,7 +3,9 @@
 
 <link rel="stylesheet" href="/css/style-chart-transaksi.css" />
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
+{{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
 
     <div class="container">
         <!-- Top Section -->
@@ -46,8 +48,8 @@
 
             <!-- Chart Section -->
             <div class="chart-container">
-                <h2>Grafik Transaksi</h2>
-                <canvas id="productQtyChart"></canvas>
+                {{-- <h2>Grafik Transaksi</h2> --}}
+                <div id="productQtyChart"></div>
             </div>
         </div>
 
@@ -58,9 +60,10 @@
                 <thead>
                     <tr>
                         <th>Order ID</th>
-                        <th>Kategori</th>
+                        <th>Tanggal Pembelian</th>
+                        <th>Nama Pembeli</th>
                         <th>Nama Produk</th>
-                        <th>Jumlah Produk</th>
+                        {{-- <th>Jumlah Produk</th> --}}
                         <th>Harga Total</th>
                         <th>Status</th>
                     </tr>
@@ -133,35 +136,47 @@
             updateChart();
         }
         // Initialize chart
-        const ctx = document.getElementById('productQtyChart').getContext('2d');
-        let productQtyChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [], // X-axis labels (e.g., product names or order dates)
-                datasets: [{
-                    label: 'Jumlah Produk (Qty)',
-                    data: [], // Y-axis data (e.g., qty sums)
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+        // Data Dummy untuk Grafik
+        const categories = ['Produk A', 'Produk B', 'Produk C', 'Produk D', 'Produk E', 'Produk F', 'Produk G'];
+        const data = [150, 200, 300, 100,40,33,12]; // Jumlah transaksi per produk
+
+        // Inisialisasi Highcharts
+        Highcharts.chart('productQtyChart', {
+            chart: {
+                type: 'line', // Tipe grafik (bar, line, column, etc.)
+                backgroundColor: '#fff',
+                borderRadius: 10,
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            title: {
+                text: 'Jumlah Transaksi per Produk',
+                style: {
+                    color: '#4caf50',
+                    fontSize: '20px',
                 },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return 'Jumlah Produk: ' + tooltipItem.raw;
-                            }
-                        }
-                    }
-                }
-            }
+            },
+            xAxis: {
+                categories: categories, // Kategori pada sumbu X
+                title: {
+                    text: 'Produk',
+                },
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Jumlah Transaksi',
+                },
+            },
+            series: [{
+                name: 'Jumlah Transaksi',
+                data: data, // Data untuk grafik
+                color: '#8bc34a', // Warna batang grafik
+            }],
+            credits: {
+                enabled: false, // Menonaktifkan watermark "Highcharts.com"
+            },
+            tooltip: {
+                valueSuffix: ' transaksi',
+            },
         });
         // Update chart based on date range
         function updateChart() {

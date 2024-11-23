@@ -12,6 +12,7 @@
     <title>{{$produk[0]->nama_produk}}</title>
 </head>
 <body>
+    
    <!-- Button to Open Cart -->
     <div id="bg-navbar">
         <div id="navbar">
@@ -161,9 +162,9 @@
                     </div>
 
                     <div class="quantity-wrapper">
-                        <button class="quantity-btn" onclick="kurangBarangBelanja(this)">−</button>
+                        <button class="quantity-btn" @click="kurangBarangBelanja(this)">−</button>
                         <input type="number" class="qty quantity-input" value="1" min="1" name="qty">
-                        <button class="quantity-btn" onclick="tambahBarangBelanja(this)">+</button>
+                        <button class="quantity-btn" @click="tambahBarangBelanja(this)">+</button>
                     </div>
         
                     <div id="container-total-produk">
@@ -240,9 +241,6 @@
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
                 <input type="hidden" name="modal_total" id="modal_total" value="">
-                <div class="cart-total">
-                    Total Berat: <span x-text="totalWeight + ' Kg'"></span> <!-- Tampilkan total berat -->
-                </div>
                 <input type="hidden" id="total-weight" x-model="totalWeight">
 
                 <div class="form-group">
@@ -562,36 +560,56 @@
                     },
 
                     addToCart(pid, nama_produk, harga, event) {
-                        let qtyElement = event.target.closest('#content').querySelector('.qty');
-                        let qty = parseInt(qtyElement.value, 10); // Get the qty value from the input
-                        let subTotal = qty * harga; // Calculate sub-total for this product
-                        let berat = parseFloat(event.target.closest('#content').querySelector('#berat-barang').textContent);
-                        console.log(berat)
+                        // Ambil elemen terkait di DOM
+                        const qtyElement = event.target.closest('#content').querySelector('.qty');
+                        const beratElement = event.target.closest('#content').querySelector('#berat-barang');
+                        
+                        // Ambil nilai quantity dan berat
+                        const qty = parseInt(qtyElement.value, 10) || 0; // Jika qty kosong, default ke 0
+                        const berat = parseFloat(beratElement.textContent) || 0; // Jika berat kosong, default ke 0
 
-                        // Check if the item already exists in the cartItems array
+                        // Validasi jumlah
+                        if (qty <= 0) {
+                            alert("Jumlah produk harus lebih dari 0.");
+                            return;
+                        }
+
+                        // Hitung sub-total dan total berat
+                        const subTotal = qty * harga;
+                        const totalWeight = qty * berat;
+
+                        // Periksa apakah produk sudah ada di keranjang
                         let product = this.cartItems.find(item => item.pid === pid);
+
                         if (product) {
-                            product.quantity += qty; // Update the quantity
-                            product.subTotal = product.quantity * product.harga; // Recalculate sub-total
+                            // Update produk yang sudah ada
+                            product.quantity += qty;
+                            product.subTotal = product.quantity * product.harga;
                             product.totalWeight = product.quantity * product.berat;
                         } else {
-                            // Add new product to cartItems array
-                            this.cartItems.push({ pid,
-                            nama_produk,
-                            harga,
-                            quantity: qty,
-                            subTotal: subTotal,
-                            berat: berat,
-                            totalWeight: qty * berat
+                            // Tambahkan produk baru ke keranjang
+                            this.cartItems.push({
+                                pid,
+                                nama_produk,
+                                harga,
+                                quantity: qty,
+                                subTotal: subTotal,
+                                berat: berat,
+                                totalWeight: totalWeight,
                             });
                         }
 
-                        // Update the cart and localStorage
+                        // Perbarui keranjang dan localStorage
                         this.updateCartTotal();
                         this.updateTotalWeight();
                         this.saveCartToLocalStorage();
-                        this.updateShippingCost(); 
+                        this.updateShippingCost();
+
+                        // Tampilkan notifikasi sukses
+                        alert(`${nama_produk} berhasil ditambahkan ke keranjang!`);
                     },
+
+
 
                     removeFromCart(pid) {
                         // Find the product index

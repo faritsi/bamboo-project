@@ -13,7 +13,7 @@
             </span>                                                        
         </div>
         <div id="text-admin">
-            <strong>Admin</strong>
+            <p>Admin</p>
         </div>
     </div>
 </div>

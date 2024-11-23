@@ -32,27 +32,77 @@ class VisitorController extends Controller
         ];
     }
 
-    public function showStats()
+    public function showStats(Request $request)
     {
         $user = Auth::user();
         $produk = Produk::all();
         $kategori = Kategori::all();
         $tf = Transaksi::all();
-        // Get the visitor counts for the chart
-        $dailyVisitors = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+
+        // Default date range
+        $startDate = $request->input('startDate')
+            ? Carbon::parse($request->input('startDate'))->startOfDay()
+            : Carbon::now()->subDays(7)->startOfDay();
+
+        $endDate = $request->input('endDate')
+            ? Carbon::parse($request->input('endDate'))->endOfDay()
+            : Carbon::now()->endOfDay();
+
+        // Query data pengunjung berdasarkan rentang tanggal
+        $filteredVisitors = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->groupBy('date')
             ->orderBy('date', 'asc')
-            ->take(7) // Last 7 days for example
             ->get();
 
-        // Total counts (already discussed earlier)
+        // Total counts
         $today = Visitor::whereDate('created_at', Carbon::today())->count();
         $thisWeek = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
         $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
         $totalVisits = Visitor::count();
 
-        return view('admin.pengunjung', ['title' => 'Pengunjung'], compact('dailyVisitors', 'today', 'thisWeek', 'thisMonth', 'totalVisits', 'produk', 'user', 'kategori', 'tf'));
+        // Return data ke view
+        return view('admin.pengunjung', [
+            'title' => 'Pengunjung',
+            'dailyVisitors' => $filteredVisitors, // Gunakan data filtered
+            'today' => $today,
+            'thisWeek' => $thisWeek,
+            'thisMonth' => $thisMonth,
+            'totalVisits' => $totalVisits,
+            'produk' => $produk,
+            'user' => $user,
+            'kategori' => $kategori,
+            'tf' => $tf,
+            'startDate' => $startDate->format('Y-m-d'), // Kirim dalam format Y-m-d
+            'endDate' => $endDate->format('Y-m-d'),
+        ]);
     }
+
+    // public function filterVisitors(Request $request)
+    // {
+    //     $startDate = $request->input('startDate');
+    //     $endDate = $request->input('endDate');
+    //     // dd($startDate, $endDate);
+
+
+
+    //     if (!$startDate || !$endDate) {
+    //         return response()->json(['error' => 'Start date and end date are required.'], 400);
+    //     }
+
+    //     $filteredVisitors = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+    //         ->whereBetween('created_at', [Carbon::parse($startDate)->startOfDay(), Carbon::parse($endDate)->endOfDay()])
+    //         ->groupBy('date')
+    //         ->orderBy('date', 'asc')
+    //         ->get();
+
+    //     // \Log::info("Filtered Visitors: ", $filteredVisitors->toArray()); // Log output
+
+    //     return response()->json($filteredVisitors);
+    // }
+
+
+
 
 
     public function index()

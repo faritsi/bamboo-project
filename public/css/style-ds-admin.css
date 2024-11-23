@@ -42,7 +42,8 @@
     padding: 5px;
     align-items: center;
     margin-left: auto;
-    background: #94df07;
+    background: #4caf50;
+    color: #fff;
     border-radius: 50px;
     margin-right: 35px;
     width: 100px;
@@ -50,7 +51,7 @@
     cursor: pointer;
 }
 .bg-tambah-data-admin:hover {
-    background-color: #629405;
+    background-color: #45a049;
 }
 
 #bo-tambah-data-admin {

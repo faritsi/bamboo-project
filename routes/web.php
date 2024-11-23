@@ -111,7 +111,8 @@ Route::group(['middleware' => ['auth']], function () {
         });
         Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::get('/visitors/count', [VisitorController::class, 'getVisitorCount']);
-        Route::get('/visitor', [VisitorController::class, 'showStats']);
+        // Route::get('/visitors/filter', [VisitorController::class, 'filterVisitor'])->name('visitors.filter');
+        Route::get('/visitor', [VisitorController::class, 'showStats'])->name('visitor.showStats');
         Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::get('/pembelian', [TransaksiController::class, 'view_tf']);
         Route::resource('produk', ProdukController::class);
