@@ -20,8 +20,8 @@ class ServiceController extends Controller
     {
         $user = Auth::user();
         $service = Service::all();
-        return view('admin.service_view.services_view', [
-            'title' => 'service'
+        return view('admin.services_view', [
+            'title' => 'Service'
         ], compact('service', 'user'));
     }
 

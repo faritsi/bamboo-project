@@ -34,25 +34,25 @@ class IngpoController extends Controller
      */
     public function store(Request $request)
     {
-        $iid = $this->generateRandomString(25);
+        // $iid = $this->generateRandomString(25);
 
         // Validasi input
-        $validated = $request->validate([
-            'email' => 'required|string',
-            'nowa' => 'required|string',
-        ]);
+        // $validated = $request->validate([
+        //     'email' => 'required|string',
+        //     'nowa' => 'required|string',
+        // ]);
 
-        $ingpo = new Ingpo([
-            'iid' => $iid,
-            'email' => $validated['email'],
-            'nowa' => $validated['nowa'],
-        ]);
+        // $ingpo = new Ingpo([
+        //     'iid' => $iid,
+        //     'email' => $validated['email'],
+        //     'nowa' => $validated['nowa'],
+        // ]);
 
         // Simpan objek model ke database
-        $ingpo->save();
+        // $ingpo->save();
 
         // Redirect ke route produk.index dengan pesan sukses
-        return redirect()->route('info.index')->with('success', 'Data Berhasil ditambah');
+        // return redirect()->route('info.index')->with('success', 'Data Berhasil ditambah');
     }
 
     private function generateRandomString($length = 10)
@@ -94,21 +94,25 @@ class IngpoController extends Controller
             'image_header' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'desc_header' => 'required|string|max:255',
             'slogan' => 'required|string|max:255',
-            'desc_slogan' => 'required|string|max:255',
+            // 'desc_slogan' => 'required|string|max:255',
+            'desc_slogan' => 'required|string',
             'image_about' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_about' => 'required|string|max:255',
-            'image_visi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_visi' => 'required|string|max:255',
-            'image_misi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_misi' => 'required|string|max:255',
+            'desc_about' => 'required|string',
+            'image_visi_misi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'desc_visi' => 'required|string',
+            // 'image_misi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'desc_misi' => 'required|string',
             'judul_service' => 'required|string|max:255',
             'desc_service' => 'required|string|max:255',
             'judul_produk' => 'required|string|max:255',
             'desc_produk' => 'required|string|max:255',
-            'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'judul_footer' => 'required|string|max:255',
-            'desc_footer' => 'required|string|max:255',
+            'desc_footer' => 'required|string',
+            'nowa' => 'required|string|max:15',
+            'instagram' => 'required|string',
         ]);
+        // dd($request);
 
         // Find the existing layout data
         $ingpo = Ingpo::findOrFail($id);
@@ -118,8 +122,8 @@ class IngpoController extends Controller
             'favicon' => 'favicon',
             'image_header' => 'header',
             'image_about' => 'about',
-            'image_visi' => 'visi',
-            'image_misi' => 'misi',
+            'image_visi_misi' => 'visi',
+            // 'image_misi' => 'misi',
             'logo_footer' => 'footer',
         ];
 
@@ -153,6 +157,8 @@ class IngpoController extends Controller
             'desc_produk' => $request->desc_produk,
             'judul_footer' => $request->judul_footer,
             'desc_footer' => $request->desc_footer,
+            'nowa' => $request->nowa,
+            'instagram' => $request->instagram,
         ]);
 
         // Save the updated layout

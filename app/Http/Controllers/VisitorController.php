@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Auth;
 
 class VisitorController extends Controller
 {
-    
+
     public function getVisitorCount()
-     {
+    {
         $today = Visitor::whereDate('created_at', Carbon::today())->count();
         $thisWeek = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
         $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
@@ -30,9 +30,9 @@ class VisitorController extends Controller
             'thisMonth' => $thisMonth,
             'totalVisits' => $totalVisits,
         ];
-     }
+    }
 
-     public function showStats()
+    public function showStats()
     {
         $user = Auth::user();
         $produk = Produk::all();
@@ -51,7 +51,7 @@ class VisitorController extends Controller
         $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
         $totalVisits = Visitor::count();
 
-        return view('admin.pengunjung', compact('dailyVisitors', 'today', 'thisWeek', 'thisMonth', 'totalVisits','produk', 'user', 'kategori', 'tf'));
+        return view('admin.pengunjung', ['title' => 'Pengunjung'], compact('dailyVisitors', 'today', 'thisWeek', 'thisMonth', 'totalVisits', 'produk', 'user', 'kategori', 'tf'));
     }
 
 

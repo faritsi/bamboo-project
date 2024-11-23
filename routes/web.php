@@ -120,6 +120,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('pimpinan', PimpinanController::class);
         Route::resource('info', IngpoController::class);
         Route::resource('kategori', KategoriController::class);
+        Route::delete('/kegiatan/image/{id}', [KegiatanController::class, 'destroyImage'])->name('kegiatan.destroyImage');
+        Route::delete('/kegiatan/video/{id}', [KegiatanController::class, 'destroyVideo'])->name('kegiatan.destroyVideo');
+        Route::patch('/kegiatan/video/{id}', [KegiatanController::class, 'updateVideo'])->name('kegiatan.updateVideo');
+        Route::patch('/kegiatan/image/{id}', [KegiatanController::class, 'updateImage'])->name('kegiatan.updateImage');
         Route::resource('services', ServiceController::class);
     });
 });

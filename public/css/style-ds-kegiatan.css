@@ -252,6 +252,10 @@ body {
     opacity: 1; /* Tampilkan overlay saat hover */
 }
 
+#co-title {
+    margin: 15px 0;
+}
+
 /* Responsive for smaller screens */
 @media (min-width: 1600px) {
     .card-photo {

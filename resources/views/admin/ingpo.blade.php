@@ -90,8 +90,8 @@
 
         <!-- Image Visi Section -->
         <div class="section">
-            <h2>Image Visi</h2>
-            <input type="file" id="image_visi" name="image_visi" onchange="previewImage(event, 'imageVisiPreview')">
+            <h2>Image Visi Misi</h2>
+            <input type="file" id="image_visi" name="image_visi_misi" onchange="previewImage(event, 'imageVisiPreview')">
             <div class="image-preview">
                 <img id="imageVisiPreview" src="{{ asset('storage/' . $i->image_visi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
             </div>
@@ -101,15 +101,6 @@
         <div class="section">
             <h2>Deskripsi Visi</h2>
             <textarea id="desc_visi" name="desc_visi" rows="5">{{ $i->desc_visi }}</textarea>
-        </div>
-
-        <!-- Image Misi Section -->
-        <div class="section">
-            <h2>Image Misi</h2>
-            <input type="file" id="image_misi" name="image_misi" onchange="previewImage(event, 'imageMisiPreview')">
-            <div class="image-preview">
-                <img id="imageMisiPreview" src="{{ asset('storage/' . $i->image_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-            </div>
         </div>
 
         <!-- Deskripsi Misi -->
@@ -161,6 +152,18 @@
         <div class="section">
             <h2>Deskripsi Footer</h2>
             <textarea id="desc_footer" name="desc_footer" rows="5">{{ $i->desc_footer }}</textarea>
+        </div>
+
+        <!-- WhatsApp  -->
+        <div class="section">
+            <h2>Nomor WhatsApp</h2>
+            <input type="text" id="no_wa" name="nowa" value="{{ $i->nowa }}"></input>
+        </div>
+
+        <!-- Instagram -->
+        <div class="section">
+            <h2>Link Instagram</h2>
+            <input type="text" id="instagram" name="instagram" value="{{ $i->instagram }}" ></input>
         </div>
 
         <!-- Submit Button -->

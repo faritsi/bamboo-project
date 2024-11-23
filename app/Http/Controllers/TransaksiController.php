@@ -36,7 +36,7 @@ class TransaksiController extends Controller
         $kategori = Kategori::all();
         $tf = Transaksi::all();
         return view('admin.transaksi', [
-            'title' => 'Pembelian'
+            'title' => 'Penjualan'
         ], compact('produk', 'user', 'kategori', 'tf'));
     }
 

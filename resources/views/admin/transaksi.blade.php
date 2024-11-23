@@ -3,35 +3,56 @@
 
 <link rel="stylesheet" href="/css/style-chart-transaksi.css" />
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
 
     <div class="container">
-        <!-- Left Section -->
-        <div class="left-section">
-            <div class="filter-section">
-                <h2>Filter</h2>
-                <label for="timeInterval">Pilih Interval:</label>
-                <select id="timeInterval">
-                    <option value="day">Hari Ini</option>
-                    <option value="week">Minggu Ini</option>
-                    <option value="month">Bulan Ini</option>
-                </select>
+        <!-- Top Section -->
+        <div class="top-section">
+            <!-- Left Section -->
+            <div class="left-section">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <h2>Filter</h2>
+                    <form id="filterForm">
+                        <label for="timeInterval">Pilih Interval:</label>
+                        <select id="timeInterval" name="timeInterval">
+                            <option value="day">Hari Ini</option>
+                            <option value="week">Minggu Ini</option>
+                            <option value="month">Bulan Ini</option>
+                        </select>
 
-                <label for="startDate">Start Date:</label>
-                <input type="date" id="startDate">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate">
 
-                <label for="endDate">End Date:</label>
-                <input type="date" id="endDate">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" name="endDate">
+                        
+                        <label for="pilihKategori">Pilih Kategori:</label>
+                        <select id="pilihKategori" name="pilihKategori">
+                            <option value="semuaKategori">Semua Kategori</option>
+                            <option value="">Adjust Kategori dari DB</option>
+                        </select>
+
+                        <label for="pilihProduk">Pilih Produk:</label>
+                        <select id="pilihProduk" name="pilihProduk">
+                            <option value="semuaProduk">Semua Produk</option>
+                            <option value="">Adjust Produk dari DB</option>
+                        </select>
+
+                        <button type="submit" class="btn-filter">Terapkan</button>
+                    </form>
+                </div>
             </div>
 
+            <!-- Chart Section -->
             <div class="chart-container">
                 <h2>Grafik Transaksi</h2>
                 <canvas id="productQtyChart"></canvas>
             </div>
         </div>
 
-        <!-- Right Section -->
-        <div class="right-section">
+        <!-- Transaction Table Section -->
+        <div class="transaction-section">
             <h2>Daftar Transaksi</h2>
             <table>
                 <thead>
@@ -49,9 +70,9 @@
                         // Group transactions by order_id
                         $groupedTransactions = $tf->groupBy('order_id');
                     @endphp
-                    @foreach($groupedTransactions as $order_id => $transactions)
+                    @foreach ($groupedTransactions as $order_id => $transactions)
                         @php $rowspan = count($transactions); @endphp
-                        @foreach($transactions as $index => $t)
+                        @foreach ($transactions as $index => $t)
                             <tr>
                                 @if ($index === 0)
                                     <td rowspan="{{ $rowspan }}">{{ $t->order_id }}</td>
@@ -60,8 +81,8 @@
                                 <td>{{ $t->nama_produk }}</td>
                                 <td>{{ $t->qty }}</td>
                                 @if ($index === 0)
-                                    <td rowspan="{{ $rowspan }}">{{ $t->total_pembayaran }}</td>
-                                    <td rowspan="{{ $rowspan }}">{{ $t->status }}</td>
+                                    <td rowspan="{{ $rowspan }}">{{ number_format($t->total_pembayaran, 0, ',', '.') }}</td>
+                                    <td rowspan="{{ $rowspan }}">{{ ucfirst($t->status) }}</td>
                                 @endif
                             </tr>
                         @endforeach
@@ -70,6 +91,7 @@
             </table>
         </div>
     </div>
+
 
     <script>
         // Sample data - replace this with your actual data

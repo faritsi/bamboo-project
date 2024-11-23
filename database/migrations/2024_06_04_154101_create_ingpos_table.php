@@ -28,18 +28,6 @@ return new class extends Migration
             $table->String('desc_misi')->nullable();
             $table->String('judul_service')->nullable();
             $table->String('desc_service')->nullable();
-            // $table->String('logo_service1')->nullable();
-            // $table->String('judul_service1')->nullable();
-            // $table->String('desc_service1')->nullable();
-            // $table->String('logo_service2')->nullable();
-            // $table->String('judul_service2')->nullable();
-            // $table->String('desc_service2')->nullable();
-            // $table->String('logo_service3')->nullable();
-            // $table->String('judul_service3')->nullable();
-            // $table->String('desc_service3')->nullable();
-            // $table->String('logo_service4')->nullable();
-            // $table->String('judul_service4')->nullable();
-            // $table->String('desc_service4')->nullable();
             $table->String('judul_produk')->nullable();
             $table->String('desc_produk')->nullable();
             $table->String('logo_footer')->nullable();
