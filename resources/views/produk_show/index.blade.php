@@ -606,7 +606,7 @@
                         this.updateShippingCost();
 
                         // Tampilkan notifikasi sukses
-                        alert(`${nama_produk} berhasil ditambahkan ke keranjang!`);
+                        
                     },
 
 
