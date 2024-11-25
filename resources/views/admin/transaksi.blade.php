@@ -15,33 +15,36 @@
                 <!-- Filter Section -->
                 <div class="filter-section">
                     <h2>Filter</h2>
-                    <form id="filterForm">
-                        <label for="timeInterval">Pilih Interval:</label>
-                        <select id="timeInterval" name="timeInterval">
-                            <option value="day">Hari Ini</option>
-                            <option value="week">Minggu Ini</option>
-                            <option value="month">Bulan Ini</option>
-                        </select>
-
+                    <form id="filterForm" action="{{route('pembelian.sales')}}" method="GET">
+                        @csrf
+                        @method('POST')
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate">
+                        <input type="date" id="startDate" name="startDate" value={{$startDate}} >
 
                         <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate">
+                        <input type="date" id="endDate" name="endDate" value={{$endDate}}>
                         
                         <label for="pilihKategori">Pilih Kategori:</label>
                         <select id="pilihKategori" name="pilihKategori">
-                            <option value="semuaKategori">Semua Kategori</option>
-                            <option value="">Adjust Kategori dari DB</option>
+                            <option value="semuaKategori" {{ request('pilihKategori') == 'semuaKategori' ? 'selected' : '' }}>Semua Kategori</option>
+                            @foreach ($kategori as $k)
+                                <option value="{{ $k->name }}" {{ request('pilihKategori') == $k->name ? 'selected' : '' }}>
+                                    {{ $k->name }}
+                                </option>
+                            @endforeach
                         </select>
 
                         <label for="pilihProduk">Pilih Produk:</label>
                         <select id="pilihProduk" name="pilihProduk">
-                            <option value="semuaProduk">Semua Produk</option>
-                            <option value="">Adjust Produk dari DB</option>
+                            <option value="semuaProduk" {{request('pilihProduk') == 'semuaProduk'? 'selected' : ''}}>Semua Produk</option>
+                            @foreach ($produk as $p)
+                                <option value="{{$p->nama_produk}}" {{request('pilihProduk') == $p->nama_produk ? 'selected' : ''}}>
+                                    {{$p->nama_produk}}
+                                </option>
+                            @endforeach
                         </select>
 
-                        <button type="submit" class="btn-filter">Terapkan</button>
+                        <button type="submit" class="btn-filter">Tampilkan Data</button>
                     </form>
                 </div>
             </div>
@@ -49,7 +52,7 @@
             <!-- Chart Section -->
             <div class="chart-container">
                 {{-- <h2>Grafik Transaksi</h2> --}}
-                <div id="productQtyChart"></div>
+                <div id="salesChart"></div>
             </div>
         </div>
 
@@ -59,30 +62,36 @@
             <table>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Order ID</th>
                         <th>Tanggal Pembelian</th>
                         <th>Nama Pembeli</th>
-                        <th>Nama Produk</th>
+                        <th class="nama-produk">Nama Produk</th>
                         {{-- <th>Jumlah Produk</th> --}}
                         <th>Harga Total</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php
-                        // Group transactions by order_id
-                        $groupedTransactions = $tf->groupBy('order_id');
-                    @endphp
                     @foreach ($groupedTransactions as $order_id => $transactions)
                         @php $rowspan = count($transactions); @endphp
                         @foreach ($transactions as $index => $t)
                             <tr>
                                 @if ($index === 0)
-                                    <td rowspan="{{ $rowspan }}">{{ $t->order_id }}</td>
+                                <td rowspan="{{ $rowspan }}">
+                                    <div class="btnInvoice" data-id="{{$t->order_id}}" data-toggle="modal" data-target="showInvoice-{{$t->order_id}}">
+                                        <span class="material-symbols-outlined">
+                                        visibility
+                                        </span>                                                        
+                                    </div>
+                                </td>
                                 @endif
-                                <td>{{ $t->kategori->name }}</td>
-                                <td>{{ $t->nama_produk }}</td>
-                                <td>{{ $t->qty }}</td>
+                                @if ($index === 0)
+                                    <td rowspan="{{ $rowspan }}">{{ $t->order_id }}</td>
+                                    <td rowspan="{{ $rowspan }}">{{ $t->created_at->format('d M Y') }}</td>
+                                    <td rowspan="{{ $rowspan }}">{{ $t->name }}</td> 
+                                @endif
+                                <td class="nama-produk">{{ $t->nama_produk }}</td>
                                 @if ($index === 0)
                                     <td rowspan="{{ $rowspan }}">{{ number_format($t->total_pembayaran, 0, ',', '.') }}</td>
                                     <td rowspan="{{ $rowspan }}">{{ ucfirst($t->status) }}</td>
@@ -95,117 +104,183 @@
         </div>
     </div>
 
+    {{-- Modal Show Invoice --}}
+    @foreach ($groupedTransactions as $order_id => $transactions)
+    <div id="showInvoice-{{ $order_id }}" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="head-modul">
+                <h1>Invoice</h1>
+            </div>
 
-    <script>
-        // Sample data - replace this with your actual data
-        const transactions = @json($tf);
-        // Function to filter transactions by date range
-        function filterTransactionsByDate(startDate, endDate) {
-            return transactions.filter(transaction => {
-                const transactionDate = new Date(transaction.created_at);
-                return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
-            });
-        }
-        // Function to set default date to today
-        function setDefaultDate() {
-            const today = new Date();
-            const startDateInput = document.getElementById('startDate');
-            const endDateInput = document.getElementById('endDate');
-            startDateInput.value = today.toISOString().split('T')[0];
-            endDateInput.value = today.toISOString().split('T')[0];
-        }
-        // Function to update date range based on selected interval
-        function updateDateRange(interval) {
-            const today = new Date();
-            const startDateInput = document.getElementById('startDate');
-            const endDateInput = document.getElementById('endDate');
-            let startDate, endDate;
-            if (interval === 'day') {
-                startDate = today;
-                endDate = today;
-            } else if (interval === 'week') {
-                startDate = new Date(today.setDate(today.getDate() - today.getDay()));
-                endDate = new Date(today.setDate(today.getDate() + 6));
-            } else if (interval === 'month') {
-                startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-                endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-            }
-            startDateInput.value = startDate.toISOString().split('T')[0];
-            endDateInput.value = endDate.toISOString().split('T')[0];
-            // Automatically update the chart when interval changes
-            updateChart();
-        }
-        // Initialize chart
-        // Data Dummy untuk Grafik
-        const categories = ['Produk A', 'Produk B', 'Produk C', 'Produk D', 'Produk E', 'Produk F', 'Produk G'];
-        const data = [150, 200, 300, 100,40,33,12]; // Jumlah transaksi per produk
+            <div id="co-head">
+                <h3>Data Pembeli</h3>
+                <hr id="head">
+            </div>
 
-        // Inisialisasi Highcharts
-        Highcharts.chart('productQtyChart', {
-            chart: {
-                type: 'line', // Tipe grafik (bar, line, column, etc.)
-                backgroundColor: '#fff',
-                borderRadius: 10,
-            },
-            title: {
-                text: 'Jumlah Transaksi per Produk',
-                style: {
-                    color: '#4caf50',
-                    fontSize: '20px',
-                },
-            },
-            xAxis: {
-                categories: categories, // Kategori pada sumbu X
-                title: {
-                    text: 'Produk',
-                },
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Jumlah Transaksi',
-                },
-            },
-            series: [{
-                name: 'Jumlah Transaksi',
-                data: data, // Data untuk grafik
-                color: '#8bc34a', // Warna batang grafik
-            }],
-            credits: {
-                enabled: false, // Menonaktifkan watermark "Highcharts.com"
-            },
-            tooltip: {
-                valueSuffix: ' transaksi',
-            },
-        });
-        // Update chart based on date range
-        function updateChart() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            if (startDate && endDate) {
-                const filteredData = filterTransactionsByDate(startDate, endDate);
-                
-                // Process filtered data to get the sum of qty for each product/category/date, etc.
-                const labels = [...new Set(filteredData.map(t => t.nama_produk))]; // Unique product names
-                const data = labels.map(label => {
-                    return filteredData
-                        .filter(t => t.nama_produk === label)
-                        .reduce((sum, t) => sum + t.qty, 0); // Sum of qty for each product
+            <div class="form-group">
+                <label for="name-{{ $transactions->first()->name }}">Nama Pembeli</label>
+                <input type="text" id="name-{{$transactions->first()->name  }}" name="name" value="{{ $transactions->first()->name }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="alamat-{{ $transactions->first()->alamat }}">Alamat Pembeli</label>
+                <input type="text" id="alamat-{{$transactions->first()->alamat  }}" name="alamat" value="{{ $transactions->first()->alamat }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="pos-{{ $transactions->first()->pos }}">No Pos Pembeli</label>
+                <input type="text" id="pos-{{$transactions->first()->pos  }}" name="pos" value="{{ $transactions->first()->pos }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="city-{{ $transactions->first()->city }}">Kota Pembeli</label>
+                <input type="text" id="city-{{$transactions->first()->city  }}" name="city" value="{{ $transactions->first()->city }}" readonly>
+            </div>
+            
+            <div id="co-head">
+                <h3>Produk</h3>
+                <hr>
+            </div>
+
+            <div class="form-group">
+                <label for="order_id-{{ $t->order_id }}">ORDER ID</label>
+                <input type="text" id="order_id-{{$order_id  }}" name="order_id" value="{{ $order_id }}" readonly>
+            </div>
+
+            @foreach ($transactions as $index => $t)
+                <div class="form-group">
+                    <label for="kategori-{{ $index }}">Kategori</label>
+                    <input type="text" id="kategori-{{ $index }}" name="kategori[]" value="{{ $t->kategori_id }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="kode_produk-{{ $index }}">Kode Produk</label>
+                    <input type="text" id="kode_produk-{{ $index }}" name="kode_produk[]" value="{{ $t->kode_produk }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="nama_produk-{{ $index }}">Nama Produk</label>
+                    <input type="text" id="nama_produk-{{ $index }}" name="nama_produk[]" value="{{ $t->nama_produk }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="qty-{{ $index }}">Jumlah Produk</label>
+                    <input type="text" id="qty-{{ $index }}" name="qty[]" value="{{ $t->qty }}" readonly>
+                </div>
+                <hr id="batas-produk">
+            @endforeach
+
+            {{-- BUAT KURIR --}}
+
+            {{-- <div class="form-group">
+                <label for="total_pembayaran-{{ $t->total_pembayaran }}">Total Harga</label>
+                <input type="text" id="total_pembayaran-{{$t->total_pembayaran  }}" name="total_pembayaran" value="{{ $t->total_pembayaran }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="total_pembayaran-{{ $t->total_pembayaran }}">Total Harga</label>
+                <input type="text" id="total_pembayaran-{{$t->total_pembayaran  }}" name="total_pembayaran" value="{{ $t->total_pembayaran }}" readonly>
+            </div> --}}
+
+            <div class="form-group">
+                <label for="total_pembayaran-{{ $t->total_pembayaran }}">Total Harga</label>
+                <input type="text" id="total_pembayaran-{{$t->total_pembayaran  }}" name="total_pembayaran" value="{{ number_format($t->total_pembayaran, 0, ',', '.') }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="status-{{ $t->status }}">Status Pembelian</label>
+                <input type="text" id="status-{{$t->status  }}" name="status" value="{{ $t->status }}" readonly>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+
+    <script>   
+
+        // Inisialisasi Highchart
+        const salesData = @json($salesData);
+        const renderSalesChart = (data) => {
+                Highcharts.chart('salesChart', {
+                    chart: {
+                        type: 'column', // Vertical line chart
+                        backgroundColor: '#ffffff',
+                        borderRadius: 10
+                    },
+                    title: {
+                        text: 'Penjualan Produk',
+                        style: { color: '#4caf50', fontSize: '18px' }
+                    },
+                    xAxis: {
+                        categories: data.map(item => item.saleDate), // Sale dates on the X-axis
+                        title: { text: 'Tanggal Terjual', style: { color: '#333' } },
+                        tickInterval: 1
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Jumlah Terjual',
+                            style: { color: '#333' }
+                        },
+                        allowDecimals: false,
+                        min: 0
+                    },
+                    series: [{
+                        name: 'Jumlah Terjual',
+                        data: data.map((item) => ({
+                            y: parseInt(item.totalSold), // Quantity sold
+                            product: item.product,      // Product name
+                            date: item.saleDate         // Sale date
+                        })),
+                        color: '#8bc34a',
+                        marker: {
+                            enabled: true,
+                            radius: 5,
+                            symbol: 'circle'
+                        },
+                        lineWidth: 3,
+                        dataLabels: {
+                            enabled: true,
+                            formatter: function () {
+                                return this.point.product; // Display product name above the circle
+                            },
+                            style: {
+                                color: '#333',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    }],
+                    credits: { enabled: false }
                 });
-                // Update chart labels and data
-                productQtyChart.data.labels = labels;
-                productQtyChart.data.datasets[0].data = data;
-                productQtyChart.update();
-            }
+            };
+
+    renderSalesChart(salesData);
+
+    // Modal
+    $(document).ready(function () {
+
+        function showModal(modalId) {
+            $(modalId).show();
         }
-        // Add event listeners to date inputs and interval dropdown
-        document.getElementById('startDate').addEventListener('change', updateChart);
-        document.getElementById('endDate').addEventListener('change', updateChart);
-        document.getElementById('timeInterval').addEventListener('change', function() {
-            updateDateRange(this.value);
+
+        function hideModals() {
+            $(".modal").hide();
+        }
+
+        $(".close").on("click", function () {
+            hideModals();
         });
-        // Set default date to today and default interval to 'Hari Ini'
-        setDefaultDate();
-        updateDateRange('day');
+
+        $(window).on("click", function (event) {
+            if ($(event.target).hasClass("modal")) {
+                hideModals();
+            }
+        });
+
+        $(".btnInvoice").on("click", function () {
+            var order_id = $(this).data('id');
+            showModal("#showInvoice-" + order_id);
+        });
+
+
+    })
+
     </script>
 @endsection

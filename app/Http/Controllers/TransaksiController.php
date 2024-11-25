@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\TransaksiMidtrans;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
+use Carbon\Carbon;
 use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
@@ -29,16 +30,75 @@ class TransaksiController extends Controller
         $this->midtransService = $midtransService;
     }
 
-    public function view_tf()
+    public function view_tf(Request $request)
     {
         $user = Auth::user();
         $produk = Produk::all();
         $kategori = Kategori::all();
-        $tf = Transaksi::all();
+        $transaksi = Transaksi::all();
+
+
+
+        // Default date range: Last 7 days if no input is provided
+        $startDate = $request->input('startDate')
+            ? Carbon::parse($request->input('startDate'))->startOfDay()
+            : Carbon::now()->subDays(7)->startOfDay();
+
+        $endDate = $request->input('endDate')
+            ? Carbon::parse($request->input('endDate'))->endOfDay()
+            : Carbon::now()->endOfDay();
+
+
+
+        // Build the query
+        $tfQuery = Transaksi::query();
+
+        // Filter by date range
+        $tfQuery->whereBetween('created_at', [$startDate, $endDate]);
+
+        // Filter by category if provided
+        if ($request->input('pilihKategori') && $request->input('pilihKategori') != 'semuaKategori') {
+            $selectedKategori = Kategori::where('name', $request->input('pilihKategori'))->first();
+            if ($selectedKategori) {
+                $tfQuery->where('kategori_id', $selectedKategori->id);
+            }
+        }
+
+        // Filter by product if provided
+        if ($request->input('pilihProduk') && $request->input('pilihProduk') != 'semuaProduk') {
+            $tfQuery->where('nama_produk', $request->input('pilihProduk'));
+        }
+
+        // Fetch filtered transactions
+        $tf = $tfQuery->get();
+
+        // Prepare sales data for the chart
+        $sales = $tfQuery->selectRaw('DATE(created_at) as sale_date, nama_produk, SUM(qty) as total_sold')
+            ->groupBy('sale_date', 'nama_produk')
+            ->orderBy('sale_date', 'asc')
+            ->get();
+
+        $salesData = $sales->map(function ($item) {
+            return [
+                'product' => $item->nama_produk,
+                'totalSold' => $item->total_sold,
+                'saleDate' => Carbon::parse($item->sale_date)->format('d M Y'),
+            ];
+        });
+
+        $groupedTransactions = $tf->groupBy('order_id');
+
+
+        // Pass data to the view
         return view('admin.transaksi', [
-            'title' => 'Penjualan'
-        ], compact('produk', 'user', 'kategori', 'tf'));
+            'title' => 'Penjualan',
+            'salesData' => $salesData,
+            'startDate' => $startDate->format('Y-m-d'), // Pass formatted start date
+            'endDate' => $endDate->format('Y-m-d'),    // Pass formatted end date
+        ], compact('produk', 'user', 'kategori', 'tf', 'transaksi', 'groupedTransactions'));
     }
+
+
 
     public function createTransaction(Request $request)
     {

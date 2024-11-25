@@ -83,3 +83,51 @@ input[type="date"],
 .btn-filter:hover {
     background-color: #45a049;
 }
+
+#visitorChart {
+    width: 100%;
+    height: 400px;
+}
+
+@media (max-width: 1200px) {
+    .top-section {
+        gap: 20px; /* Kurangi jarak antar elemen */
+    }
+
+    .left-section {
+        max-width: 40%; /* Lebar elemen filter diperbesar */
+    }
+
+    .btn-filter {
+        font-size: 14px; /* Ukuran font tombol sedikit diperkecil */
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column; /* Ubah dari horizontal ke vertikal */
+    }
+
+    .left-section,
+    .chart-container {
+        max-width: 100%; /* Atur lebar penuh */
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .btn-filter {
+        font-size: 14px;
+        padding: 8px; /* Kurangi padding tombol */
+    }
+}

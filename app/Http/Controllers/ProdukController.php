@@ -112,6 +112,7 @@ class ProdukController extends Controller
         }
         return $randomString;
     }
+
     /**
      * Display the specified resource.
      */

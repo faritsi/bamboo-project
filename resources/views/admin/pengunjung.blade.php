@@ -15,7 +15,6 @@
                 <form id="filterForm" action="{{route('visitor.showStats')}}" method="GET"> 
                     @csrf
                     @method('POST')
-                    <label for="timeInterval">Pilih Interval:</label>
             
                     <label for="startDate">Start Date:</label>
                     <input type="date" id="startDate" name="startDate" value={{$startDate}} required>
@@ -37,6 +36,8 @@
 
 <script>
     // Fungsi untuk merender grafik dengan data dari server
+    // Muat data default dari controller
+    const initialData = @json($dailyVisitors);
     const renderChart = (data) => {
         Highcharts.chart('visitorChart', {
             chart: { type: 'line', backgroundColor: '#ffffff', borderRadius: 10},
@@ -55,8 +56,7 @@
         });
     };
 
-    // Muat data default dari controller
-    const initialData = @json($dailyVisitors);
+    
     // console.log(initialData);
     renderChart(initialData);
 

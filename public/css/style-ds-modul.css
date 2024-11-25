@@ -190,6 +190,10 @@ input[type="number"] {
     background-color: #218838;
 }
 
+#co-head {
+    margin: 20px auto;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .modal-content {

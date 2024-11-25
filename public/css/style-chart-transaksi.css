@@ -40,7 +40,7 @@
     justify-content: center;
 }
 
-#productQtyChart {
+#salesChart {
     width: 100%;
     height: 600px;
 }
@@ -102,6 +102,7 @@ input[type="date"],
 table {
     width: 100%;
     border-collapse: collapse;
+    cursor: pointer;
 }
 
 table th,
@@ -121,8 +122,34 @@ table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 50px;
+}
+
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 50px;
+}
+
+table th:nth-child(5),
+table td:nth-child(5) {
+    width: 200px;
+}
+
+table th:nth-child(7),
+table td:nth-child(7) {
+    width: 50px;
+}
+
 table tr:hover {
     background-color: #f1f1f1;
+}
+
+#batas-produk {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
 }
 
 /* Responsif untuk layar dengan lebar maksimum 1200px */
@@ -143,14 +170,18 @@ table tr:hover {
         font-size: 18px; /* Judul tabel transaksi lebih kecil */
     }
 
-    table th:nth-child(1),
+    /* table th:nth-child(1),
     table td:nth-child(1) {
         width: 200px;
-    }
+    } */
 
     table th:nth-child(3),
     table td:nth-child(3) {
         display: none;
+    }
+
+    .transaction-section {
+        margin: 0 auto;
     }
 }
 
@@ -159,30 +190,34 @@ table tr:hover {
         padding: 20px;
     }
 
-    table th:nth-child(1),
+    /* table th:nth-child(1),
     table td:nth-child(1) {
         width: 150px;
-    }
+    } */
 
     table th:nth-child(2),
     table td:nth-child(2) {
-        width: 100px;
+        width: 200px;
     }
 
     table th:nth-child(4),
     table td:nth-child(4) {
-        width: 150px;
+        width: 200px;
     }
 
     /* Sembunyikan kolom jumlah produk */
-    table th:nth-child(5),
+    /* table th:nth-child(5),
     table td:nth-child(5) {
+        display: none;
+    } */
+
+    .nama-produk {
         display: none;
     }
 
     table th:nth-child(6),
     table td:nth-child(6) {
-        width: 75px;
+        width: 150px;
     }
 }
 
@@ -230,5 +265,9 @@ table tr:hover {
     .btn-filter {
         font-size: 14px;
         padding: 8px; /* Kurangi padding tombol */
+    }
+
+    .transaction-section {
+        padding: 0;
     }
 }

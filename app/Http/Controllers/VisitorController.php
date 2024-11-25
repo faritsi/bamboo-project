@@ -61,6 +61,13 @@ class VisitorController extends Controller
         $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
         $totalVisits = Visitor::count();
 
+        $filteredVisitors = $filteredVisitors->map(function ($visitor) {
+            return [
+                'date' => Carbon::parse($visitor->date)->format('d M Y'), // Format tanggal menjadi 25 Nov 2024
+                'count' => $visitor->count,
+            ];
+        });
+
         // Return data ke view
         return view('admin.pengunjung', [
             'title' => 'Pengunjung',
