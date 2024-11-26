@@ -7,7 +7,9 @@
     <!-- LINK -->
     <link rel="stylesheet" href="{{ asset('css/style-all-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link rel="icon" href="img/logo/favicon/favicon.ico" type="image/x-icon">
+    @foreach ($ingpo as $i)    
+    <link rel="icon" href="{{ asset('/storage/' . $i->favicon) }}" type="image/x-icon">
+    @endforeach
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.js"></script>
 
@@ -16,13 +18,13 @@
 <body>
     <div id="background">
         <div id="bg-navbar">
-            {{-- @foreach ($ingpo as $i) --}}
+            @foreach ($ingpo as $i)
             <div id="navbar">
                 <div id="wrapper-navbar">
                     <a href="dashboard">
                         <div id="header-kiri">
                             <div id="logo-company">
-                                <img src="img/logo/logo.png" alt="Logo">
+                                <img src="{{ asset('/storage/' . $i->favicon) }}" alt="Logo">
                             </div>
                             <div id="header-teks">
                                 <div id="header-atas">
@@ -54,7 +56,7 @@
                     </div>
                 </div>
             </div>  
-            {{-- @endforeach --}}
+            @endforeach
         </div>
 
         <!-- TIPE PRODUK -->

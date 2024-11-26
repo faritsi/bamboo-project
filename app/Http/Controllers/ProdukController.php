@@ -117,31 +117,31 @@ class ProdukController extends Controller
      * Display the specified resource.
      */
 
-    public function getProvinsi()
-    {
-        $client = new Client();
-        try {
-            $response = $client->request(
-                'POST',
-                'https://api.rajaongkir.com/starter/province',
-                array(
-                    'headers' => array(
-                        'key' => '1a14ace5f65a3788c0ccf8115baed896'
-                    )
-                )
-            );
-        } catch (RequestException $e) {
-            var_dump($e->getResponse()->getBody()->getContents());
-        }
-        $json = $response->getBody()->getContents();
-        $array_result = json_decode($json, true);
-        print_r($array_result);
-    }
+    // public function getProvinsi()
+    // {
+    //     $client = new Client();
+    //     try {
+    //         $response = $client->request(
+    //             'POST',
+    //             'https://api.rajaongkir.com/starter/province',
+    //             array(
+    //                 'headers' => array(
+    //                     'key' => '1a14ace5f65a3788c0ccf8115baed896'
+    //                 )
+    //             )
+    //         );
+    //     } catch (RequestException $e) {
+    //         var_dump($e->getResponse()->getBody()->getContents());
+    //     }
+    //     $json = $response->getBody()->getContents();
+    //     $array_result = json_decode($json, true);
+    //     print_r($array_result);
+    // }
 
     public function keranjang()
     {
         $produk = Produk::all();
-        return view('cart_view.cart', compact('produk'));
+        return view('produk_show.index', compact('produk'));
     }
 
     public function TambahKeranjang(Request $request, $pid)
@@ -162,9 +162,11 @@ class ProdukController extends Controller
 
         session()->put('keranjang', $keranjang);
 
+        $totalItems = array_sum(array_column($keranjang, 'quantity'));
+
         return response()->json([
             'message' => 'Produk ditambahkan ke keranjang!',
-            'cart_count' => count($keranjang)
+            'cart_count' => $totalItems
         ]);
     }
 
@@ -202,6 +204,8 @@ class ProdukController extends Controller
         $nama_produk = str_replace('-', ' ', $nama_produk);
 
         $produk = DB::table('produks')->where('nama_produk', $nama_produk)->get();
+        $ingpo = Ingpo::all();
+
         if (!$produk) {
             return redirect()->route('catalog.index')->with('error', 'Produk tidak ditemukan');
         }
@@ -213,7 +217,7 @@ class ProdukController extends Controller
             ->limit(5)
             ->get();
 
-        return view('produk_show.index', compact('produk', 'produkLainnya'));
+        return view('produk_show.index', compact('produk', 'produkLainnya', 'ingpo'));
     }
 
     /**

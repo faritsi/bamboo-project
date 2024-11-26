@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Services\SendMessageWhatsAppService;
 
 class TransaksiController extends Controller
 {
@@ -24,10 +25,12 @@ class TransaksiController extends Controller
      * Display a listing of the resource.
      */
     protected $midtransService;
+    protected $whatsappService;
 
-    public function __construct(MidtransService $midtransService)
+    public function __construct(MidtransService $midtransService, SendMessageWhatsAppService $whatsappService)
     {
         $this->midtransService = $midtransService;
+        $this->whatsappService = $whatsappService;
     }
 
     public function view_tf(Request $request)
@@ -123,6 +126,8 @@ class TransaksiController extends Controller
                 'cost' => 'required|numeric',
                 'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
                 'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
+                'courier' => 'required|string',
+                'courier_service' => 'required|string',
             ]);
 
             // Iterasi melalui setiap produk dan simpan transaksi per produk
@@ -140,6 +145,8 @@ class TransaksiController extends Controller
                     'alamat' => $validated['alamat'],
                     'pos' => $validated['pos'],
                     'city' => $validated['city'],
+                    'courier' => $validated['courier'],
+                    'courier_service' => $validated['courier_service'],
                     'status' => 'capture'
                 ]);
 
@@ -297,6 +304,7 @@ class TransaksiController extends Controller
 
             // Perbarui status setiap transaksi yang terkait dengan order_id
             foreach ($transactions as $transaction) {
+                $transaction->jenis_pembayaran = $notification->payment_type;
                 $transaction->status = $newStatus;
                 $transaction->save();
 
@@ -306,6 +314,7 @@ class TransaksiController extends Controller
                     $produk = \DB::table('produks')->where('kode_produk', $transaction->kode_produk)->first();
 
                     if ($produk) {
+
                         // Kurangi stok produk
                         $stokBaru = $produk->jumlah_produk - $transaction->qty;
 
@@ -318,6 +327,9 @@ class TransaksiController extends Controller
                         \DB::table('produks')->where('kode_produk', $transaction->kode_produk)->update([
                             'jumlah_produk' => $stokBaru
                         ]);
+
+                        $this->sendNotificationMessageWA($transaction->nohp);
+
 
                         Log::info('Stok produk dikurangi: ', [
                             'kode_produk' => $transaction->kode_produk,
@@ -346,6 +358,24 @@ class TransaksiController extends Controller
     }
 
 
+    private function sendNotificationMessageWA($pembeli)
+    {
+        $messageTemplate = "Test"; // Later change this message
+
+        // Send message to buyer
+        $this->whatsappService->sendMessage(
+            $pembeli,
+            $messageTemplate
+        );
+
+        // Send message to Admin
+        $admin = "085859666343";
+        $this->whatsappService->sendMessage(
+            //change this to admin number
+            $admin,
+            $messageTemplate
+        );
+    }
     /**
      * Show the form for creating a new resource.
      */

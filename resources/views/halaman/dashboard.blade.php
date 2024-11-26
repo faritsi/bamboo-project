@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="img/logo/favicon/favicon.ico" type="image/x-icon">
+    @foreach ($ingpo as $i)    
+    <link rel="icon" href="{{ asset('/storage/' . $i->favicon) }}" type="image/x-icon">
+    @endforeach
     <link rel="stylesheet" href="{{ asset('css/style-new-dashboard.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     {{-- <link rel="stylesheet" href="{{ asset('css/lightslider.css') }}"> --}}

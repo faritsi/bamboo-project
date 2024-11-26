@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="/img/logo/favicon/favicon.ico" type="image/x-icon">
+    @foreach($ingpo as $i)
+    <link rel="icon" href="{{ asset('/storage/' . $i->favicon) }}" type="image/x-icon">
+    @endforeach
     <link rel="stylesheet" href="{{ asset('css/style-detail-produk.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -19,7 +21,7 @@
                 <div id="header-kiri">
                     <a href="{{ route('dashboard.index') }}">
                         <div id="logo-company">
-                            <img src="/img/logo/logo.png" alt="Logo">
+                            <img src="{{ asset('/storage/' . $i->favicon) }}" alt="Logo">
                         </div>
                     </a>
                     <div id="header-teks">
@@ -375,6 +377,7 @@
             var city = document.getElementById("city").options[document.getElementById("city").selectedIndex].text;
             var courier = document.getElementById("courier").value;
             var courierService = document.getElementById("courier_service").value;
+
             var cost = document.getElementById("cost").textContent.replace("Rp", "").trim();  // Fix: Use textContent instead of value
             var formData = {
                 nama: document.getElementById("name").value,

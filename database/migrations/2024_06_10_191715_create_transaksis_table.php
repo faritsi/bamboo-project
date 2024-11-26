@@ -25,6 +25,11 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('pos');
             $table->string('city');
+            // 
+            // $table->string('courier');
+            // $table->string('courier_service');
+            // $table->string('jenis_pembayaran');
+            // 
             $table->string('status');
             // $table->timestamp('transaction_time');
             $table->timestamps();

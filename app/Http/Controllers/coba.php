@@ -18,6 +18,7 @@ class coba extends Controller
         ]);
 
         $provinces = json_decode($response->getBody(), true);
+        // \Log::info($provinces);
         return response()->json($provinces['rajaongkir']['results']);
     }
 

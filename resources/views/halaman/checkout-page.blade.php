@@ -56,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var nohp = localStorage.getItem("nohp");
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
-    var courier_service = localStorage.getItem("courier_service");
+    var courier_service = localStorage.getItem("courierService");
+    // console.log("TESTING AJA", courier_service);
 
     // Retrieve cartItems array from localStorage (instead of products)
     var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -115,7 +116,7 @@ document.getElementById('pay-button').onclick = function() {
     var cost = localStorage.getItem("cost");
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
-    var courier_service = localStorage.getItem("courier_service");
+    var courier_service = localStorage.getItem("courierService");
 
     var kode_produk = localStorage.getItem("kode_produk");
     var kategori_id = localStorage.getItem("kategori_id");
