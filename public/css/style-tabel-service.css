@@ -29,7 +29,8 @@
 }
 
 #table-service thead th {
-    background-color: #d9d9d9;
+    background-color: #004c50;
+    color: #fff;
     border-right: 1px solid #ccc;
     text-align: center;
 }
@@ -82,7 +83,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
+    background-color: #4caf50;
 }
 
 #table-service .btn-details-service.red {

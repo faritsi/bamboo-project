@@ -15,9 +15,9 @@
                 <!-- Filter Section -->
                 <div class="filter-section">
                     <h2>Filter</h2>
-                    <form id="filterForm" action="{{route('pembelian.sales')}}" method="GET">
+                    <form id="filterForm" action="{{route('pembelian.sales')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @method('POST')
+                        {{-- @method('POST') --}}
                         <label for="startDate">Start Date:</label>
                         <input type="date" id="startDate" name="startDate" value={{$startDate}} >
 

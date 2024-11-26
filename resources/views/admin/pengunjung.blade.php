@@ -12,10 +12,8 @@
             <!-- Filter Section -->
             <div class="filter-section">
                 <h2>Filter</h2>
-                <form id="filterForm" action="{{route('visitor.showStats')}}" method="GET"> 
-                    @csrf
-                    @method('POST')
-            
+                <form id="filterForm" action="{{route('visitor.showStats')}}" method="POST" enctype="multipart/form-data"> 
+                    @csrf            
                     <label for="startDate">Start Date:</label>
                     <input type="date" id="startDate" name="startDate" value={{$startDate}} required>
 

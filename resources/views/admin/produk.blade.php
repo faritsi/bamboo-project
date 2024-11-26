@@ -12,7 +12,7 @@
                 <span class="material-symbols-outlined">add</span>                                                        
             </div>
             <div id="text-kategori">
-                <strong>Kategori</strong>
+                <p>Kategori</p>
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 <span class="material-symbols-outlined">add</span>                                                        
             </div>
             <div id="text-produk">
-                <strong>Produk</strong>
+                <p>Produk</p>
             </div>
         </div>
     </div>

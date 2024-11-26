@@ -110,34 +110,20 @@
                         <div class="con-visi-misi">
                             <div class="container-visi">
                                 <h1>VISI</h1>
-                                <p class="text-visi">Menjadi pelopor global dalam inovasi dan pemanfaatan bambu berkelanjutan, dengan komitmen untuk melestarikan lingkungan, mendukung kesejahteraan masyarakat, serta menyediakan produk berkualitas tinggi yang ramah lingkungan.</p>
+                                <p class="text-visi">{{$i->desc_visi}}</p>
                             </div>
                             <div class="container-misi">
                                 <h1>MISI</h1>
-                                <p class="text-misi">
-                                    <ol>
-                                        <li>
-                                            Pengelolaan Sumber Daya Alam yang Berkelanjutan
-                                        </li>
-                                        <li>
-                                            Inovasi Produk
-                                        </li>
-                                        <li>
-                                            Pemberdayaan Komunitas Lokal
-                                        </li>
-                                        <li>
-                                            Pengurangan Jejak Karbon
-                                        </li>
-                                        <li>
-                                            Pendidikan dan Kesadaran Lingkungan
-                                        </li>
-                                    </ol>
-                                </p>
+                                <ul class="text-misi">
+                                    @foreach (explode("\n", $i->desc_misi) as $misi)
+                                        <li>{{ $misi }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="container-visi-misi-image">
-                        <img src="img\bambu\bambu_10.jpeg" alt="">
+                        <img src="{{asset('/storage/' . $i->image_visi_misi)}}" alt="Photo Visi Misi">
                     </div>
                 </div>
             </div>
@@ -297,10 +283,10 @@
                         </ul>
                     </div>
                     <div id="footer-social">
-                        <a href="#"><img src="img\social-media\facebook.png" alt="Facebook"></a>
-                        <a href="#"><img src="img\social-media\wa.png" alt="Twitter"></a>
-                        <a href="#"><img src="img\social-media\ig.png" alt="Instagram"></a>
-                        <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
+                        {{-- <a href="#"><img src="img\social-media\facebook.png" alt="Facebook"></a> --}}
+                        <a href="https://wa.me/{{ $i->nowa }}?text=Halo, saya ingin bertanya" target="blank"><img src="img\social-media\wa.png" alt="WhatsApp"></a>
+                        <a href="{{$i->instagram}}"><img src="img\social-media\ig.png" alt="Instagram"></a>
+                        {{-- <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a> --}}
                     </div>
                 </div>
             </div>

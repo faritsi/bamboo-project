@@ -15,7 +15,7 @@
 #container {
     margin: 0 auto;
     padding: 0;
-    background: #fefefe;
+    background: #fafaff;
     width: 100%;
     min-height: 100vh;
 }
@@ -353,6 +353,17 @@
     height: 100px;
 }
 
+#bg-isi-content #cc-content-pengunjung {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 250px;
+    height: 100px;
+}
+
 #cc-content-admin .material-symbols-outlined {
     font-size: 50px;
     color: #000;
@@ -373,10 +384,16 @@
     color: #000;
 }
 
+#cc-content-pengunjung .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
 #cc-detail-admin,
 #cc-detail-pimpinan,
 #cc-detail-produk,
-#cc-detail-penjualan {
+#cc-detail-penjualan,
+#cc-detail-pengunjung {
     margin-left: 10px;
     white-space: nowrap;
     text-align: center;
@@ -385,7 +402,8 @@
 #cc-detail-admin h3,
 #cc-detail-pimpinan h3,
 #cc-detail-produk h3,
-#cc-detail-penjualan h3 {
+#cc-detail-penjualan h3,
+#cc-detail-pengunjung h3 {
     font-size: 24px;
     font-weight: 600;
 }
@@ -393,7 +411,8 @@
 #cc-detail-admin span,
 #cc-detail-pimpinan span,
 #cc-detail-produk span,
-#cc-detail-penjualan span {
+#cc-detail-penjualan span,
+#cc-detail-pengunjung span {
     font-size: 20px;
     font-weight: 600;
 }
@@ -454,7 +473,7 @@
         padding: 0;
     }
 
-    #cc-content-admin {
+    #bg-isi-content #cc-content-admin {
         height: 100px;
         width: 200px;
 
@@ -473,7 +492,7 @@
         }
     }
 
-    #cc-content-pimpinan {
+    #bg-isi-content #cc-content-pimpinan {
         height: 100px;
         width: 200px;
 
@@ -492,7 +511,7 @@
         }
     }
 
-    #cc-content-produk {
+    #bg-isi-content #cc-content-produk {
         height: 100px;
         width: 200px;
 
@@ -501,6 +520,44 @@
         }
 
         #cc-detail-produk {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-penjualan {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-penjualan {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-pengunjung {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-pengunjung {
             h3 {
                 font-size: 20px;
             }
@@ -599,6 +656,24 @@
             }
 
             #cc-detail-penjualan {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-pengunjung {
+            width: 200px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-pengunjung {
                 h3 {
                     font-size: 16px;
                 }

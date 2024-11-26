@@ -13,7 +13,7 @@
             </span>                                                        
         </div>
         <div id="text-pimpinan">
-            <strong>Pimpinan</strong>
+            <p id="t-pimpinan">Pimpinan</p>
         </div>
     </div>
 </div>

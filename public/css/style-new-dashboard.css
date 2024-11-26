@@ -406,6 +406,12 @@ html {
     transform: translateY(0);
 }
 
+.text-misi {
+    list-style-type: none; /* Menghapus tanda titik hitam */
+    padding: 0; /* Menghilangkan padding bawaan */
+    margin: 0; /* Menghilangkan margin bawaan */
+}
+
 /* Our Service */
 #content-our-service {
     margin: 0 auto;
@@ -1107,7 +1113,8 @@ a {
 
 #footer-social {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    gap: 20px;
     align-items: flex-end;
 }
 

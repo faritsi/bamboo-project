@@ -44,7 +44,8 @@
 .bg-tambah-data-kategori {
     padding: 5px;
     align-items: center;
-    background: #94df07;
+    background: #4caf50;
+    color: #fff;
     border-radius: 999px;
     width: 120px;
     transition: background-color 0.3s ease;
@@ -80,7 +81,8 @@
     /* display: flex; */
     padding: 5px;
     align-items: center;
-    background: #94df07;
+    color: #fff;
+    background: #4caf50;
     border-radius: 50px;
     margin-right: 35px;
     width: 100px;
@@ -90,7 +92,7 @@
 
 .bg-tambah-data-produk:hover,
 .bg-tambah-data-kategori:hover {
-    background-color: #629405;
+    background-color: #45a049;
 }
 
 #bo-tambah-data-produk {

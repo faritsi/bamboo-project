@@ -42,7 +42,7 @@
                 </span>
             </div>
             <div id="text-kegiatan">
-                <strong>Foto Kegiatan</strong>
+                <p>Foto Kegiatan</p>
             </div>
         </div>
     </div>
@@ -209,7 +209,7 @@
                 </span>
             </div>
             <div id="text-video">
-                <strong>Video Kegiatan</strong>
+                <p>Video Kegiatan</p>
             </div>
         </div>
     </div>

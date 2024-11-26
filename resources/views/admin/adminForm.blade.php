@@ -242,7 +242,13 @@
             var row = $(this).closest("tr").next(".details-row");
             row.toggle();
             var icon = $(this).find(".material-symbols-outlined");
-            icon.text(row.is(":visible") ? "remove" : "add");
+            if (row.is(":visible")) {
+                icon.text("remove");
+                $(this).addClass("red");
+            } else {
+                icon.text("add");
+                $(this).removeClass("red");
+            }
         });
 
         // Menampilkan dan menyembunyikan modal

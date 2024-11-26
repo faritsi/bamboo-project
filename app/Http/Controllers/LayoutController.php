@@ -12,7 +12,9 @@ use App\Models\Pimpinan;
 use App\Models\Ingpo;
 use App\Models\Kegiatan;
 use App\Models\Service;
+use App\Models\Transaksi;
 use App\Models\videokegiatan;
+use App\Models\visitor;
 
 class LayoutController extends Controller
 {
@@ -30,15 +32,26 @@ class LayoutController extends Controller
     }
     public function index()
     {
-        $user1 = User::count();
-        // return view('halaman.dashboard-admin')->with([
-        //     'title' => 'Dashboard'
-        // ]);
-        return view('admin.beranda')->with([
+        // Hitung jumlah data untuk masing-masing entitas
+        $totalAdmins = User::where('role_id', '2')->count();
+        $totalPimpinan = Pimpinan::count();
+        $totalProduk = Produk::count();
+        $totalPenjualan = Transaksi::count();
+        $totalPengunjung = Visitor::count();
+        $user1 = User::count(); // Total semua pengguna
+
+        // Kirim data ke view
+        return view('admin.beranda', [
             'user' => Auth::user(),
             'ingpo' => Ingpo::all(),
-            'role' => role::all(),
-            'title' => 'Dashboard'
-        ], compact('user1'));
+            'role' => Role::all(),
+            'title' => 'Dashboard',
+            'totalAdmins' => $totalAdmins,
+            'totalPimpinan' => $totalPimpinan,
+            'totalProduk' => $totalProduk,
+            'totalPenjualan' => $totalPenjualan,
+            'totalPengunjung' => $totalPengunjung,
+            'user1' => $user1, // Total pengguna
+        ]);
     }
 }

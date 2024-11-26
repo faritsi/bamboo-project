@@ -16,8 +16,9 @@
 .bg-tambah-data-service {
     padding: 5px;
     align-items: center;
-    background: #94df07;
+    background: #4caf50;
     border-radius: 999px;
+    color: #fff;
     width: 120px;
     transition: background-color 0.3s ease;
     cursor: pointer;
@@ -46,7 +47,7 @@
 }
 
 .bg-tambah-data-service:hover {
-    background-color: #629405;
+    background-color: #45a049;
 }
 
 #bo-isi-content-service {

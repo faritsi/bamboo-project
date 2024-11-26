@@ -19,7 +19,7 @@
                     </span>
                     <div id="cc-detail-admin">
                         <h3>Admin</h3>
-                        <span>2</span>
+                        <span>{{$totalAdmins}}</span>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@
                     </span>
                     <div id="cc-detail-pimpinan">
                         <h3>Pimpinan</h3>
-                        <span>2</span>
+                        <span>{{$totalPimpinan}}</span>
                     </div>
                 </div>
 
@@ -39,7 +39,7 @@
                     </span>
                     <div id="cc-detail-produk">
                         <h3>Produk</h3>
-                        <span>2</span>
+                        <span>{{$totalProduk}}</span>
                     </div>
                 </div>
 
@@ -49,7 +49,17 @@
                     </span>
                     <div id="cc-detail-penjualan">
                         <h3>Penjualan</h3>
-                        <span>2</span>
+                        <span>{{$totalPenjualan}}</span>
+                    </div>
+                </div>
+
+                <div id="cc-content-pengunjung">
+                    <span class="material-symbols-outlined">
+                        monitoring
+                    </span>
+                    <div id="cc-detail-pengunjung">
+                        <h3>Pengunjung</h3>
+                        <span>{{$totalPengunjung}}</span>
                     </div>
                 </div>
             </div>
