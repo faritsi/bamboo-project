@@ -57,10 +57,13 @@ document.addEventListener("DOMContentLoaded", function() {
     var province = localStorage.getItem("province");
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courierService");
-    // console.log("TESTING AJA", courier_service);
+    // var kategori_id = localStorage.getItem("kategori_id");
+    
+    // console.log("TESTING AJA", kategori_id);
 
     // Retrieve cartItems array from localStorage (instead of products)
     var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    // console.log(cartItems)
 
     // Retrieve shipping cost (ongkir) from localStorage
     var cost = parseFloat(localStorage.getItem("cost")) || 0;
@@ -85,13 +88,15 @@ document.addEventListener("DOMContentLoaded", function() {
     cartItems.forEach(function(item) {
         var itemHtml = `
             <div class="order-item">
-                <p><strong>Nama Barang:</strong> ${item.nama_produk}</p>
+                <p><strong>Nama Produk:</strong> ${item.nama_produk}</p>
+                <p hidden><strong>Kategori Produk:</strong> ${item.kategori_id}</p>
                 <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
                 <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
             </div>
         `;
         orderItemsContainer.innerHTML += itemHtml;
     });
+    
 
     // Display the shipping cost (ongkir) and total payment
     document.getElementById("cost").innerText = cost.toFixed(2); // Display ongkir
@@ -119,7 +124,7 @@ document.getElementById('pay-button').onclick = function() {
     var courier_service = localStorage.getItem("courierService");
 
     var kode_produk = localStorage.getItem("kode_produk");
-    var kategori_id = localStorage.getItem("kategori_id");
+    // var kategori_id = localStorage.getItem("kategori_id");
     var nama_produk = localStorage.getItem("nama_produk");
     var qty = localStorage.getItem("modal_qty");
     var harga = localStorage.getItem("modal_harga");
@@ -141,7 +146,7 @@ document.getElementById('pay-button').onclick = function() {
         courier: courier,
         courier_service: courier_service,
         kode_produk: kode_produk,
-        kategori_id: kategori_id,
+        // kategori_id: kategori_id,
         nama_produk: nama_produk,
         qty: qty,
         harga: harga
@@ -153,6 +158,7 @@ document.getElementById('pay-button').onclick = function() {
         formData[`products[${index}][name]`] = item.nama_produk;
         formData[`products[${index}][quantity]`] = item.quantity;
         formData[`products[${index}][price]`] = item.harga;
+        formData[`products[${index}][kategori_id]`] = item.kategori_id;
     });
 
     // Send the AJAX request

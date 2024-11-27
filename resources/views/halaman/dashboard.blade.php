@@ -22,8 +22,10 @@
         <div id="co-background">
             {{-- NAVBAR --}}
             <div id="bg-navbar">
-                <div id="background-img">
-                    <img src="{{ asset('/storage/' . $i->image_header) }}" alt="Background Image">
+                <div class="wrapper-bg">
+                    <div id="background-img">
+                        <img src="{{ asset('/storage/' . $i->image_header) }}" alt="Background Image">
+                    </div>
                 </div>
                 <div id="navbar">
                     <div id="wrapper-header">

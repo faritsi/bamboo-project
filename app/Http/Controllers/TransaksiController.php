@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\SendMessageWhatsAppService;
+use App\Models\Ingpo;
 
 class TransaksiController extends Controller
 {
@@ -106,8 +107,6 @@ class TransaksiController extends Controller
     public function createTransaction(Request $request)
     {
         try {
-            // Log the request data for debugging purposes
-            Log::info('Create Transaction Request Data:', $request->all());
             $gen_id_order = 'ORDER-' . rand();
 
             // Validate the incoming request
@@ -118,6 +117,7 @@ class TransaksiController extends Controller
                 'products.*.name' => 'required|string',
                 'products.*.quantity' => 'required|numeric',
                 'products.*.price' => 'required|numeric',
+                'products.*.kategori_id' => 'required|numeric',
                 'name' => 'required|string',
                 'alamat' => 'required|string',
                 'city' => 'required|string',
@@ -125,17 +125,23 @@ class TransaksiController extends Controller
                 'nohp' => 'required|string',
                 'cost' => 'required|numeric',
                 'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
-                'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
+                // 'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
                 'courier' => 'required|string',
                 'courier_service' => 'required|string',
             ]);
+
+            Log::info('Transaction Status Updated: ', [
+                "PRODUCT" => $validated,
+            ]);
+
+
 
             // Iterasi melalui setiap produk dan simpan transaksi per produk
             foreach ($validated['products'] as $product) {
                 $transaksi = new Transaksi([
                     'order_id' => $gen_id_order,
                     'kode_produk' => $validated['kode_produk'],
-                    'kategori_id' => $validated['kategori_id'],
+                    'kategori_id' => $product['kategori_id'],
                     'total_pembayaran' => $validated['pembayaran'], // Total pembayaran tetap sama untuk semua
                     'nama_produk' => $product['name'], // Nama produk dari array products
                     'qty' => $product['quantity'], // Jumlah dari produk
@@ -225,7 +231,7 @@ class TransaksiController extends Controller
             Log::error('Error creating transaction: ' . $e->getMessage());
 
             // Return error response
-            return response()->json(['error' => 'Something went wrong.'], 500);
+            return response()->json(['error' => 'Something went wrong. TEASDASKDJ'], 500);
         }
     }
 
@@ -276,6 +282,7 @@ class TransaksiController extends Controller
             // Cari transaksi berdasarkan order_id
             $transactions = Transaksi::where('order_id', $orderId)->get();
 
+
             if ($transactions->isEmpty()) {
                 return response()->json(['error' => 'Transaction not found'], 404);
             }
@@ -304,6 +311,7 @@ class TransaksiController extends Controller
 
             // Perbarui status setiap transaksi yang terkait dengan order_id
             foreach ($transactions as $transaction) {
+
                 $transaction->jenis_pembayaran = $notification->payment_type;
                 $transaction->status = $newStatus;
                 $transaction->save();
@@ -328,13 +336,7 @@ class TransaksiController extends Controller
                             'jumlah_produk' => $stokBaru
                         ]);
 
-                        $this->sendNotificationMessageWA($transaction->nohp);
-
-
-                        Log::info('Stok produk dikurangi: ', [
-                            'kode_produk' => $transaction->kode_produk,
-                            'stok_sekarang' => $stokBaru
-                        ]);
+                        $this->sendNotificationMessageWA($transaction);
                     } else {
                         Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
                     }
@@ -358,17 +360,50 @@ class TransaksiController extends Controller
     }
 
 
-    private function sendNotificationMessageWA($pembeli)
+    private function sendNotificationMessageWA($transaction)
     {
-        $messageTemplate = "Test"; // Later change this message
+
+
+        // $messageTemplate = "test";
+        $messageTemplate = " *Invoice Pembelian Anda*\n\n";
+
+        $messageTemplate .= "Halo, {$transaction->name}!\n";
+        $messageTemplate .= "Terima kasih telah berbelanja bersama kami. Berikut adalah detail pembelian Anda:\n\n";
+
+        $messageTemplate .= " *Detail Pesanan:*\n";
+        $messageTemplate .= "- Order ID: {$transaction->order_id}\n";
+        $messageTemplate .= "- Tanggal: {$transaction->created_at->format('d M Y')}\n\n";
+
+        $messageTemplate .= " *Produk yang Dibeli:*\n";
+        $messageTemplate .= "- Nama Produk: {$transaction->nama_produk}\n";
+        $messageTemplate .= "  Jumlah: {$transaction->qty}\n";
+        $messageTemplate .= "------------------------------------\n";
+
+        // $messageTemplate .= "\n *Pengiriman:*\n";
+        $messageTemplate .= "- Nama Penerima: {$transaction->name}\n";
+        $messageTemplate .= "- Alamat: {$transaction->alamat}\n";
+        $messageTemplate .= "- Kota: {$transaction->city}\n";
+        $messageTemplate .= "- Kode Pos: {$transaction->pos}\n";
+        $messageTemplate .= "- Nomor HP: {$transaction->nohp}\n\n";
+
+        $messageTemplate .= " *Telah melakukan pembayaran melalui:*\n";
+        $messageTemplate .= "- Bank: {$transaction->jenis_pembayaran}\n";
+        $messageTemplate .= "- Kurir: {$transaction->courier}\n";
+        $messageTemplate .= "- Layanan Kurir: {$transaction->courier_service}\n";
+        $messageTemplate .= "- Sebesar: *Rp" . number_format($transaction->total_pembayaran, 0, ',', '.') . "\n\n*";
+
+        $messageTemplate .= " Jika ada pertanyaan, hubungi kami di 085859666343.\n\n";
+        $messageTemplate .= "Terima kasih!\n";
+        // Later change this message
 
         // Send message to buyer
         $this->whatsappService->sendMessage(
-            $pembeli,
+            $transaction->nohp,
             $messageTemplate
         );
 
         // Send message to Admin
+        // $admin = "{{$ingpo->nowa}}";
         $admin = "085859666343";
         $this->whatsappService->sendMessage(
             //change this to admin number
@@ -376,6 +411,7 @@ class TransaksiController extends Controller
             $messageTemplate
         );
     }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -140,6 +140,11 @@
                     <div id="nama-produk">
                         <p id="nama">{{$p->nama_produk}}</p>
                     </div>
+
+                    <div id="kategori_id" hidden>
+                        <p id="kategori_id">{{$p->kategori_id}}</p>
+                    </div>
+                    
                     <div id="harga-produk">
                         <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
                     </div>
@@ -179,7 +184,7 @@
                         </div>
                     </div>
         
-                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
+                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->kategori_id }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
                         <div id="container-keranjang">
                             <div class="keranjang">
                                 <span class="material-symbols-outlined">shopping_cart</span>
@@ -239,7 +244,7 @@
                 </div>
                 <!-- Hidden Inputs -->
                 <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
-                <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}">
+                {{-- <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}"> --}}
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
                 <input type="hidden" name="modal_total" id="modal_total" value="">
@@ -562,7 +567,7 @@
                         this.cartVisible = !this.cartVisible;
                     },
 
-                    addToCart(pid, nama_produk, harga, event) {
+                    addToCart(pid, kategori_id, nama_produk, harga, event) {
                         // Ambil elemen terkait di DOM
                         const qtyElement = event.target.closest('#content').querySelector('.qty');
                         const beratElement = event.target.closest('#content').querySelector('#berat-barang');
@@ -593,6 +598,7 @@
                             // Tambahkan produk baru ke keranjang
                             this.cartItems.push({
                                 pid,
+                                kategori_id,
                                 nama_produk,
                                 harga,
                                 quantity: qty,
@@ -601,6 +607,9 @@
                                 totalWeight: totalWeight,
                             });
                         }
+
+                        // console.log(JSON.parse(localStorage.getItem("cartItems")));
+
 
                         // Perbarui keranjang dan localStorage
                         this.updateCartTotal();
@@ -657,6 +666,7 @@
                     },
 
                     saveCartToLocalStorage() {
+                        // console.log("Saving to localStorage:", this.cartItems); // Debug
                         localStorage.setItem("cartItems", JSON.stringify(this.cartItems)); // Save the updated cartItems array to localStorage
                     
                     },

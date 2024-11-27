@@ -12,10 +12,12 @@ class Kategori extends Model
     public function produk()
     {
         return $this->hasOne(Produk::class);
+        // return $this->hasMany(Produk::class)
     }
     public function transaksi()
     {
         return $this->hasOne(Transaksi::class);
+        // return $this->hasMany(Transaksi::class)
     }
 
     public function kategori()
