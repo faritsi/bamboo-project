@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use App\Models\Transaksi;
 use App\Models\Kategori;
 use App\Models\Produk;
@@ -38,6 +39,8 @@ class VisitorController extends Controller
         $produk = Produk::all();
         $kategori = Kategori::all();
         $tf = Transaksi::all();
+        $ingpo = Ingpo::all();
+
 
         // Default date range
         $startDate = $request->input('startDate')
@@ -82,6 +85,7 @@ class VisitorController extends Controller
             'tf' => $tf,
             'startDate' => $startDate->format('Y-m-d'), // Kirim dalam format Y-m-d
             'endDate' => $endDate->format('Y-m-d'),
+            'ingpo' => $ingpo,
         ]);
     }
 
@@ -112,10 +116,7 @@ class VisitorController extends Controller
 
 
 
-    public function index()
-    {
-        //
-    }
+    public function index() {}
 
     /**
      * Show the form for creating a new resource.

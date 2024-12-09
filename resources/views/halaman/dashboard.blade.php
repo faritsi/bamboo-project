@@ -203,6 +203,13 @@
                                         <div class="shop-buttons">
                                             <a href="#" class="buy-btn">Beli Disini</a>
                                         </div>
+
+                                        <div class="slide-img-outter">
+                                            <div class="overlay-outter">
+                                                <a href="https://www.tokopedia.com/your-store-link" class="shop-button" >Tokopedia</a>
+                                                <a href="https://shopee.co.id/your-store-link" class="shop-button" >Shopee</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -233,12 +240,23 @@
                 <p id="text-video">Company Video</p>
                 <div id="video-container">
                     @foreach ($video as $v)
+                         @if ($v->video_link)
+                        <!-- For video URL (e.g., YouTube, Vimeo) -->
                         <iframe
-                        src="{{$v->video_path}}" 
-                        title="Company Video"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                    ></iframe>
+                            src="{{$v->video_link}}" 
+                            title="Company Video"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                        ></iframe>
+                        @elseif ($v->video_path)
+                            <!-- For video file (e.g., MP4, MOV) -->
+                            <iframe 
+                                src="{{ asset('storage/' . $v->video_path) }}" 
+                                title="Company Video"
+                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                            ></iframe>
+                        @endif
                     @endforeach
                 </div>
             </div>

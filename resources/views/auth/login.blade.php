@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @foreach($ingpo as $i)
+    <link rel="icon" href="{{ asset('/storage/' . $i->favicon) }}" type="image/x-icon">
+    @endforeach
     <title>{{ $title }}</title>
     <link rel="stylesheet" href="/css/style-login.css" />
     <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>

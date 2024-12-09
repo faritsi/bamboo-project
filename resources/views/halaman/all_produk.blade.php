@@ -64,26 +64,27 @@
             <div id="container">
                 <div id="title">Catalog Produk</div>
                 <div id="tipe-produk" class="clearfix">
-                    <div id="tipe-semua-produk" class="kategori" data-kategori_id="semua">
+                    
+                    <a id="tipe-semua-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'semua']) }}">
                         <h3>Semua</h3>
-                    </div>
-                    <div id="tipe-toples-produk" class="kategori" data-kategori_id="Awet">
+                    </a>
+                    <a id="tipe-toples-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'toples']) }}">
                         <h3>Toples</h3>
-                    </div>
-                    <div id="tipe-layangan-produk" class="kategori" data-kategori_id="Keripik">
-                        <h3>Layangan</h3>
-                    </div>
-                    <div id="tipe-miniatur-produk" class="kategori" data-kategori_id="miniatur">
-                        <h3>Miniatur</h3>
-                    </div>
-                    <div id="tipe-filter-produk" class="kategori" data-kategori_id="">
+                    </a>
+                    <a id="tipe-layangan-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'mug']) }}">
+                        <h3>Mug</h3>
+                    </a>
+                    <a id="tipe-miniatur-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'tumbler']) }}">
+                        <h3>Tumbler</h3>
+                    </a>
+                    <a id="tipe-filter-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'other']) }}">
                         <h3>Pilih Kategori Lainnya</h3>
-                    </div>
+                    </a>
                 </div>
                 
                 <!-- Content Produk -->
                 <div id="content-produk">
-                    @foreach ($produkItems as $p)
+                    @foreach ($produk as $p)
                     <div id="card-container" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
                         <a href="{{ url('/produk/' . str_replace(' ', '-', $p->nama_produk)) }}">
                         
@@ -108,19 +109,21 @@
                 
 
                 <!-- Pagination Links -->
-                <div class="pagination-links">
-                    <a href="{{ $firstPageUrl }}" class="page-link" rel="prev">&#171;</a>
-                    <a href="{{ $previousPageUrl }}" class="page-link" rel="prev">&#10094;</a>
-
-                    @foreach ($produk->getUrlRange(1, $totalPages) as $page => $url)
-                        <a href="{{ $url }}" class="page-link {{ $page == $currentPage ? 'active' : '' }}">{{ $page }}</a>
-                    @endforeach
-
-                    <a href="{{ $nextPageUrl }}" class="page-link" rel="next">&#10095;</a>
-                    <a href="{{ $lastPageUrl }}" class="page-link" rel="next">&#187;</a>
+                <div class="pagination-section">
+                    <div class="pagination-links">
+                        <a href="{{ $firstPageUrl }}" class="page-link" rel="prev">&#171;</a>
+                        <a href="{{ $previousPageUrl }}" class="page-link" rel="prev">&#10094;</a>
+    
+                        @foreach ($produk->getUrlRange(1, $totalPages) as $page => $url)
+                            <a href="{{ $url }}" class="page-link {{ $page == $currentPage ? 'active' : '' }}">{{ $page }}</a>
+                        @endforeach
+    
+                        <a href="{{ $nextPageUrl }}" class="page-link" rel="next">&#10095;</a>
+                        <a href="{{ $lastPageUrl }}" class="page-link" rel="next">&#187;</a>
+                    </div>
                 </div>
+                
                 <div class="pagination-info">
-                    <p>Page {{ $currentPage }} of {{ $totalPages }}</p>
                 </div>
             </div>
         </div>
@@ -163,7 +166,7 @@
 
 </body>
 
-<script>
+{{-- <script>
     $(document).ready(function(){
         // localStorage.clear();
         // Fungsi untuk menampilkan produk berdasarkan kategori_id
@@ -189,5 +192,5 @@
         // Inisialisasi: tampilkan semua produk pada load pertama
         filterProduk("semua");
     });
-</script>
+</script> --}}
 </html>

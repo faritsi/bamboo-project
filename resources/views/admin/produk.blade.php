@@ -107,8 +107,9 @@
                             @else
                             <img src="/img/default-img/default.png" alt="" id="avatar-produk">
                             @endif
-                            <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
                             <div><strong>Kategori Produk: </strong> {{ $p->kategori->name}}</div>
+                            <div><strong>Kode Produk: </strong> {{ $p->kode_produk}}</div>
+                            <div><strong>Nama Produk: </strong> {{ $p->nama_produk }}</div>
                             <div><strong>Stok: </strong> {{ $p->jumlah_produk}}</div>
                             <div><strong>Berat: </strong> {{ $p->berat}}</div>
                             <div><strong>Harga: </strong> {{ $p->harga}}</div>
@@ -134,6 +135,28 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="pagination-section">
+                <div class="pagination-links">
+                    <a href="{{ $produkPreviousPageUrl }}" class="page-link">&#10094;</a>
+                    <!-- First Page Link -->
+                    @if ($produkCurrentPage > 5)
+                        <a href="{{ $produkFirstPageUrl }}" class="page-link">1</a>
+                        <span class="page-link">...</span>
+                    @endif
+            
+                    <!-- Previous Pages -->
+                    @foreach ($produk->getUrlRange(max(1, $produkCurrentPage - 4), min($produkTotalPages, $produkCurrentPage + 2)) as $page => $url)
+                        <a href="{{ $url }}" class="page-link {{ $page == $produkCurrentPage ? 'active' : '' }}">{{ $page }}</a>
+                    @endforeach
+            
+                    <!-- Next Pages -->
+                    @if ($produkCurrentPage < $produkTotalPages - 3)
+                        <span class="page-link">...</span>
+                        <a href="{{ $produkLastPageUrl }}" class="page-link">{{ $produkTotalPages }}</a>
+                    @endif
+                    <a href="{{ $produkNextPageUrl }}" class="page-link">&#10095;</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -151,7 +174,7 @@
                 <label for="name">Nama Kategori Baru <span class="required">*</span></label>
                 <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategori Baru" value="{{ old('name') }}">
                 @if ($errors->has('name'))
-                    <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -178,49 +201,49 @@
                 <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
                 <input type="file" id="thumbnail" name="image">
                 @if ($errors->has('image'))
-                    <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
                 @endif
             </div>
             <div class="form-group">
-                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <label for="image_produk">Gambar Produk 1</label>
                 <input type="file" id="image1" name="image1">
                 @if ($errors->has('image1'))
-                    <p class="alert alert-danger">{{ $errors->first('image1') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image1') }}</p>
                 @endif
             </div>
             <div class="form-group">
-                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <label for="image_produk">Gambar Produk 2</label>
                 <input type="file" id="image2" name="image2">
                 @if ($errors->has('image2'))
-                    <p class="alert alert-danger">{{ $errors->first('image2') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image2') }}</p>
                 @endif
             </div>
             <div class="form-group">
-                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <label for="image_produk">Gambar Produk 3</label>
                 <input type="file" id="image3" name="image3">
                 @if ($errors->has('image3'))
-                    <p class="alert alert-danger">{{ $errors->first('image3') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image3') }}</p>
                 @endif
             </div>
             <div class="form-group">
-                <label for="image_produk">Gambar Produk <span class="required">*</span></label>
+                <label for="image_produk">Gambar Produk 4</label>
                 <input type="file" id="image4" name="image4">
                 @if ($errors->has('image4'))
-                    <p class="alert alert-danger">{{ $errors->first('image4') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image4') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="kode_produk">Kode Produk <span class="required">*</span></label>
                 <input type="text" id="kode_produk" name="kode_produk" placeholder="EXP-021" value="{{ old('kode_produk') }}">
                 @if ($errors->has('kode_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('kode_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('kode_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="nama_produk">Nama Produk <span class="required">*</span></label>
                 <textarea id="nama_produk" name="nama_produk" placeholder="Masukan Nama Produk" value="{{ old('nama_produk') }}"></textarea>
                 @if ($errors->has('nama_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('nama_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -237,42 +260,42 @@
                 <label for="jumlah_produk">Jumlah Produk <span class="required">*</span></label>
                 <input type="number" id="jumlah_produk" name="jumlah_produk" placeholder="Masukan jumlah produk" value="{{ old('jumlah_produk') }}">
                 @if ($errors->has('jumlah_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('jumlah_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="deskripsi">Deskripsi Produk <span class="required">*</span></label>
-                <textarea id="deskripsi" name="deskripsi" placeholder="Masukan deskripsi produk" value="{{ old('deskripsi') }}"></textarea>
+                <textarea id="deskripsi" name="deskripsi" placeholder="Masukan deskripsi produk" value="{{ old('deskripsi') }}" maxlength="2000"></textarea>
                 @if ($errors->has('deskripsi'))
-                <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="tokped">Link Tokopedia <span class="required">*</span></label>
                 <textarea id="tokped" name="tokped" placeholder="Masukan link tokped" value="{{ old('tokped') }}"></textarea>
                 @if ($errors->has('tokped'))
-                    <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('tokped') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="shopee">Link Shopee <span class="required">*</span></label>
                 <textarea id="shopee" name="shopee" placeholder="Masukan link shopee" value="{{ old('shopee') }}"></textarea>
                 @if ($errors->has('shopee'))
-                    <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('shopee') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="harga">Harga Produk <span class="required">*</span></label>
                 <input type="number" id="harga" name="harga" placeholder="Rp. 9000" value="{{ old('harga') }}">
                 @if ($errors->has('harga'))
-                    <p class="alert alert-danger">{{ $errors->first('harga') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('harga') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="berat">Berat Produk (g) <span class="required">*</span></label>
                 <input type="number" id="berat" name="berat" placeholder="1" value="{{ old('berat') }}">
                 @if ($errors->has('berat'))
-                    <p class="alert alert-danger">{{ $errors->first('berat') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('berat') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -299,7 +322,7 @@
                 <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->pid }}" name="image">
                 @if ($errors->has('image'))
-                    <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
                 @endif
             </div>
             <div class="thumbnail">
@@ -307,7 +330,7 @@
                 <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->pid }}" name="image1">
                 @if ($errors->has('image1'))
-                    <p class="alert alert-danger">{{ $errors->first('image1') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image1') }}</p>
                 @endif
             </div>
             <div class="thumbnail">
@@ -315,7 +338,7 @@
                 <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->pid }}" name="image2">
                 @if ($errors->has('image2'))
-                    <p class="alert alert-danger">{{ $errors->first('image2') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image2') }}</p>
                 @endif
             </div>
             <div class="thumbnail">
@@ -323,7 +346,7 @@
                 <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->pid }}" name="image3">
                 @if ($errors->has('image3'))
-                    <p class="alert alert-danger">{{ $errors->first('image3') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image3') }}</p>
                 @endif
             </div>
             <div class="thumbnail">
@@ -331,21 +354,21 @@
                 <img id="thumbnail-preview-{{ $p->pid }}" src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->pid }}" name="image4">
                 @if ($errors->has('image4'))
-                    <p class="alert alert-danger">{{ $errors->first('image4') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image4') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="kode_produk-{{ $p->pid }}">Kode Produk <span class="required">*</span></label>
                 <input type="text" id="kode_produk-{{ $p->pid }}" name="kode_produk" placeholder="Masukan Nama" value="{{ old('kode_produk', $p->kode_produk) }}">
                 @if ($errors->has('kode_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('kode_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('kode_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="nama_produk-{{ $p->pid }}">Nama Produk <span class="required">*</span></label>
                 <input type="text" id="nama_produk-{{ $p->pid }}" name="nama_produk" placeholder="Masukan Nama" value="{{ old('nama_produk', $p->nama_produk) }}">
                 @if ($errors->has('nama_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('nama_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('nama_produk') }}</p>
                 @endif
             </div>
             <!-- Kategori Dropdown -->
@@ -357,42 +380,42 @@
                     @endforeach
                 </select>
                 @if ($errors->has('kategori_id'))
-                    <p class="alert alert-danger">{{ $errors->first('kategori_id') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('kategori_id') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="jumlah_produk-{{ $p->pid }}">Jumlah Produk <span class="required">*</span></label>
                 <input type="text" id="jumlah_produk-{{ $p->pid }}" name="jumlah_produk" placeholder="Masukan jumlah_produk" value="{{ old('jumlah_produk', $p->jumlah_produk) }}">
                 @if ($errors->has('jumlah_produk'))
-                    <p class="alert alert-danger">{{ $errors->first('jumlah_produk') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('jumlah_produk') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="deskripsi-{{ $p->pid }}">Deskripsi Produk <span class="required">*</span></label>
                 <textarea id="deskripsi-{{ $p->pid }}" name="deskripsi" placeholder="Masukan Pengalaman">{{$p->deskripsi}}</textarea>
                 @if ($errors->has('deskripsi'))
-                <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="tokped-{{ $p->pid }}">Link Tokopedia <span class="required">*</span></label>
                 <textarea id="tokped-{{ $p->pid }}" name="tokped" placeholder="Masukan tokped">{{$p->tokped}}</textarea>
                 @if ($errors->has('tokped'))
-                    <p class="alert alert-danger">{{ $errors->first('tokped') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('tokped') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="shopee-{{ $p->pid }}">Link Shopee <span class="required">*</span></label>
                 <textarea id="shopee-{{ $p->pid }}" name="shopee" placeholder="Masukan shopee">{{$p->shopee}}</textarea>
                 @if ($errors->has('shopee'))
-                    <p class="alert alert-danger">{{ $errors->first('shopee') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('shopee') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="harga-{{ $p->pid }}">Harga Produk <span class="required">*</span></label>
                 <input type="text" id="harga-{{ $p->pid }}" name="harga" placeholder="Masukan harga" value="{{ old('harga', $p->harga) }}">
                 @if ($errors->has('harga'))
-                    <p class="alert alert-danger">{{ $errors->first('harga') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('harga') }}</p>
                 @endif
             </div>
             <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -11,12 +12,14 @@ class AuthController extends Controller
 {
     public function index()
     {
+        $ingpo = Ingpo::all();
+
         if (Auth::user()) {
             return redirect()->intended('/home');
         }
         return view('auth.login', [
             'title' => 'Login'
-        ]);
+        ], compact('ingpo'));
     }
     public function proses(Request $request)
     {

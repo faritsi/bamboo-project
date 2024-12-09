@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\Ingpo;
 use GuzzleHttp\Client;
 
@@ -17,18 +18,38 @@ class ProdukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $user = Auth::user();
-        $produk = Produk::all();
+        $produk = Produk::query();
         $kategori = Kategori::all();
         $ingpo = Ingpo::all();
+
+        // Pagination
+        $produkPagination = $produk->paginate(10);
+        $produkItems = $produkPagination->items();
+        $produkCurrentPage = $produkPagination->currentPage();
+        $produkTotalPages = $produkPagination->lastPage();
+        $produkFirstPageUrl = $produkPagination->url(1);
+        $produkLastPageUrl = $produkPagination->url($produkPagination->lastPage());
+        $produkPreviousPageUrl = $produkPagination->previousPageUrl();
+        $produkNextPageUrl = $produkPagination->nextPageUrl();
+
 
         return view('admin.produk', [
             'title' => 'Produk',
             'ingpo' => $ingpo,
-            'produk' => $produk,
-        ], compact('produk', 'user', 'kategori'));
+            'produk' => $produkPagination,
+            // 'produkPagination' => $produkPagination,
+            'produkItems' => $produkItems,
+            'produkCurrentPage' => $produkCurrentPage,
+            'produkTotalPages' => $produkTotalPages,
+            'produkFirstPageUrl' => $produkFirstPageUrl,
+            'produkLastPageUrl' => $produkLastPageUrl,
+            'produkPreviousPageUrl' => $produkPreviousPageUrl,
+            'produkNextPageUrl' => $produkNextPageUrl,
+        ], compact('produk', 'user', 'kategori', 'ingpo'));
     }
 
     /**
@@ -37,9 +58,11 @@ class ProdukController extends Controller
     public function create()
     {
         $produk = Produk::all();
-        return view('form.add-produk', [
-            'title' => 'Tambah Produk'
-        ], compact('produk'));
+
+
+
+
+        return view('form.add-produk', compact('produk'));
     }
 
     /**
@@ -50,8 +73,8 @@ class ProdukController extends Controller
         $pid = $this->generateRandomString1(25);
         // Validasi input, pastikan 'image' adalah file dengan format yang benar
         $request->validate([
-            'kode_produk' => 'required|string',
-            'nama_produk' => 'required|string',
+            'kode_produk' => 'required|string|unique:produks',
+            'nama_produk' => 'required|string|unique:produks',
             'kategori_id' => 'required|string',
             // 'jenis_produk' => 'required|string',
             'jumlah_produk' => 'required|integer',
@@ -98,7 +121,9 @@ class ProdukController extends Controller
         // Simpan objek model ke database
         $produk->save();
 
-        // Redirect ke route produk.index dengan pesan sukses
+
+
+        // Redirect ke route produk.index dengan pesan sukses dan data pagination
         return redirect()->route('produk.index')->with('success', 'Produk Berhasil ditambah');
     }
 
@@ -148,11 +173,14 @@ class ProdukController extends Controller
     {
         $produk = Produk::find($pid);
 
+        // Get the cart from session or initialize it if it doesn't exist
         $keranjang = session()->get('keranjang', []);
 
+        // If the product already exists in the cart, increase its quantity
         if (isset($keranjang[$pid])) {
             $keranjang[$pid]['quantity']++;
         } else {
+            // Add new product to the cart
             $keranjang[$pid] = [
                 "nama_produk" => $produk->nama_produk,
                 "harga" => $produk->harga,
@@ -160,10 +188,13 @@ class ProdukController extends Controller
             ];
         }
 
+        // Save the updated cart to the session
         session()->put('keranjang', $keranjang);
 
+        // Calculate total items in the cart
         $totalItems = array_sum(array_column($keranjang, 'quantity'));
 
+        // Return the cart count along with a message
         return response()->json([
             'message' => 'Produk ditambahkan ke keranjang!',
             'cart_count' => $totalItems
@@ -178,30 +209,11 @@ class ProdukController extends Controller
     }
 
 
-    public function show($nama_produk)
+    public function show($nama_produk, Request $request)
     {
-        // $client = new Client();
-        // $apiKey = '1a14ace5f65a3788c0ccf8115baed896'; // Ganti dengan API Key Anda
-
-        // $response = $client->request('POST', 'https://api.rajaongkir.com/starter/cost', [
-        //     'headers' => [
-        //         'key' => $apiKey,
-        //         'content-type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => [
-        //         'origin' => 501, // Kode kota asal
-        //         'destination' => 130, // Kode kota tujuan
-        //         'weight' => 1000, // Berat dalam gram
-        //         'courier' => 'jne' // Kurir yang digunakan (jne, pos, tiki)
-        //     ],
-        // ]);
-
-        // $body = json_decode($response->getBody(), true);
-
-        // Ambil data biaya dari response API
-        // $ongkir = $body['rajaongkir']['results'][0]['costs'][0]['cost'][0]['value'];
-        // Remove hyphens from the URL parameter
         $nama_produk = str_replace('-', ' ', $nama_produk);
+        // $kategori = $request->input('kategori', 'semua');
+
 
         $produk = DB::table('produks')->where('nama_produk', $nama_produk)->get();
         $ingpo = Ingpo::all();
@@ -217,8 +229,22 @@ class ProdukController extends Controller
             ->limit(5)
             ->get();
 
+        // if ($kategori == 'semua') {
+
+        //     // Get all products if 'semua' is selected
+        //     // $produk = Produk::all();
+        //     // Paginate as per your requirement
+        // } else {
+        //     // Get products filtered by category
+        //     $produk = DB::table('produks')
+        //         ->where('kategori_id', $kategori);
+        // }
+
+
         return view('produk_show.index', compact('produk', 'produkLainnya', 'ingpo'));
     }
+
+    public function filterProdukCatalog(Request $request) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -254,7 +280,7 @@ class ProdukController extends Controller
 
         // Mengelola gambar
         $images = [];
-        foreach (['image', 'image1', 'image2', 'image4'] as $key) {
+        foreach (['image', 'image1', 'image2', 'image3', 'image4'] as $key) {
             if ($request->file($key)) {
                 // Nama file baru untuk gambar yang diunggah
                 $imageName = $pid . "_{$key}." . $request->file($key)->getClientOriginalExtension();

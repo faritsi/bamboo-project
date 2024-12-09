@@ -14,7 +14,12 @@
     <title>{{$produk[0]->nama_produk}}</title>
 </head>
 <body>
-    
+    <!-- Toast Container -->
+<div id="toast-container">
+    <div id="toast-message" class="toast">
+        Produk telah ditambahkan ke keranjang!
+    </div>
+</div>
    <!-- Button to Open Cart -->
     <div id="bg-navbar">
         <div id="navbar">
@@ -41,6 +46,7 @@
                     {{-- <li>Contact Us</li> --}}
                     <li class="open-cart-btn" @click="toggleCart()">
                         <span class="material-symbols-outlined">shopping_cart</span>
+                        <span id="cart-count" class="cart-count" style="display: none;">0</span> <!-- Hidden until cart count > 0 -->
                     </li>
                 </ul>
                 {{-- Burger Icon --}}
@@ -126,13 +132,25 @@
                         <img id="main-image" src="{{ asset('/storage/' . $p->image) }}" alt="Gambar {{$p->nama_produk}}">
                     </div>
                     <!-- Thumbnails below the main image -->
-                    <div class="thumbnail-images">
-                        <img src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
-                        <img src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
-                        <img src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail 2" onclick="changeMainImage(this)">
-                        <img src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail 3" onclick="changeMainImage(this)">
-                        <img src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail 4" onclick="changeMainImage(this)">
-                    </div>
+                    <div class="thumbnail-carousel">
+                        <div class="thumbnail-images">
+                            @if ($p->image)
+                                <img src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                            @endif
+                            @if ($p->image1)
+                                <img src="{{ asset('/storage/' . $p->image1) }}" alt="Thumbnail 1" onclick="changeMainImage(this)">
+                            @endif
+                            @if ($p->image2)
+                                <img src="{{ asset('/storage/' . $p->image2) }}" alt="Thumbnail 2" onclick="changeMainImage(this)">
+                            @endif
+                            @if ($p->image3)
+                                <img src="{{ asset('/storage/' . $p->image3) }}" alt="Thumbnail 3" onclick="changeMainImage(this)">
+                            @endif
+                            @if ($p->image4)
+                                <img src="{{ asset('/storage/' . $p->image4) }}" alt="Thumbnail 4" onclick="changeMainImage(this)">
+                            @endif
+                        </div>
+                     </div>                    
                 </div>
         
                 <!-- Product Details Section on the Right -->
@@ -144,6 +162,9 @@
                     <div id="kategori_id" hidden>
                         <p id="kategori_id">{{$p->kategori_id}}</p>
                     </div>
+                    <div id="kode_produk" hidden>
+                        <p id="kode_produk">{{$p->kode_produk}}</p>
+                    </div>
                     
                     <div id="harga-produk">
                         <p id="harga" data-harga="{{ $p->harga }}">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
@@ -154,9 +175,10 @@
                     </div>
                     <div id="deskripsi-text">
                         <p id="deskripsi">{{$p->deskripsi}}</p>
+                        <button id="show-more-btn" onclick="toggleDescription()">Lihat Selengkapnya</button>
                     </div>
 
-                    <p id="berat">Berat : <span id="berat-barang">{{$p->berat}}</span><span id="kg"> Kg</span></p>
+                    <p id="berat">Berat : <span id="berat-barang">{{$p->berat}}</span><span id="gram"> Gram</span></p>
         
                     <div id="jumlah-produk">
                         <div id="text-stock">
@@ -169,9 +191,9 @@
                     </div>
 
                     <div class="quantity-wrapper">
-                        <button class="quantity-btn" @click="kurangBarangBelanja(this)">−</button>
+                        <button class="quantity-btn" @click="kurangBarangBelanja($event)">-</button>
                         <input type="number" class="qty quantity-input" value="1" min="1" name="qty">
-                        <button class="quantity-btn" @click="tambahBarangBelanja(this)">+</button>
+                        <button class="quantity-btn" @click="tambahBarangBelanja($event)">+</button>
                     </div>
         
                     <div id="container-total-produk">
@@ -184,7 +206,7 @@
                         </div>
                     </div>
         
-                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->kategori_id }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
+                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->kategori_id }}', '{{ $p->kode_produk }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
                         <div id="container-keranjang">
                             <div class="keranjang">
                                 <span class="material-symbols-outlined">shopping_cart</span>
@@ -243,7 +265,7 @@
                     <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat" required>
                 </div>
                 <!-- Hidden Inputs -->
-                <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}">
+                {{-- <input type="hidden" name="kode_produk" id="kode_produk" value="{{$p->kode_produk}}"> --}}
                 {{-- <input type="hidden" name="kategori_id" id="kategori_id" value="{{$p->kategori_id}}"> --}}
                 <input type="hidden" name="modal_qty" id="modal_qty" value="">
                 <input type="hidden" name="modal_harga" id="modal_harga" value="">
@@ -287,9 +309,9 @@
                         <option value="">Pilih Layanan Kurir</option>
                     </select>
                 </div>
-                <div id="container-ongkir">
-                    <div id="ongkir">Biaya Ongkir: </div>
-                    <div id="cost">Ongkir ?</div>
+                <div id="container-ongkir" hidden>
+                    <div id="ongkir" hidden>Biaya Ongkir: </div>
+                    <div id="cost" hidden>Ongkir ?</div>
                 </div>
                 <div class="form-group">
                     <button type="submit" id="cek" class="submit-btn checkout-button">Tambahkan</button>
@@ -301,6 +323,24 @@
 
 
     <script>
+
+        function toggleDescription() {
+            var descElement = document.getElementById("deskripsi");
+            var btn = document.getElementById("show-more-btn");
+
+            // Expand the description (show full text)
+            if (descElement.style.webkitLineClamp === '5' || descElement.style.webkitLineClamp === '') {
+                descElement.style.webkitLineClamp = 'unset';  // Unset the line clamp to show full text
+                btn.textContent = "Lihat Lebih Sedikit";       // Change button text to "Show Less"
+            } else {
+                // Collapse the description back to 5 lines
+                descElement.style.webkitLineClamp = '5';      // Limit to 5 lines
+                btn.textContent = "Lihat Selengkapnya";       // Change button text to "Show More"
+            }
+        }
+
+
+
         function calculateTotal(qtyElement) {
             var qty = qtyElement.value;
             var harga = qtyElement.closest('#content').querySelector("#harga").getAttribute("data-harga");
@@ -318,24 +358,28 @@
         }
 
         // Fungsi untuk mengurangi kuantitas produk
-        function kurangBarangBelanja(button) {
-            // Dapatkan elemen input kuantitas dari tombol kurang
-            var qtyElement = button.nextElementSibling;
+        function kurangBarangBelanja(event) {
+            var button = event.target;  // Get the clicked button element
+            var qtyElement = button.nextElementSibling;  // Get the input element
             var value = parseInt(qtyElement.value, 10);
+
             if (value > 1) {
                 qtyElement.value = value - 1;
-                calculateTotal(qtyElement); // Update subtotal setelah mengurangi
+                calculateTotal(qtyElement);  // Recalculate total after decreasing
             }
         }
 
-        // Fungsi untuk menambah kuantitas produk
-        function tambahBarangBelanja(button) {
-            // Dapatkan elemen input kuantitas dari tombol tambah
-            var qtyElement = button.previousElementSibling;
+    // Function to increase quantity
+        function tambahBarangBelanja(event) {
+            var button = event.target;  // Get the clicked button element
+            var qtyElement = button.previousElementSibling;  // Get the input element
             var value = parseInt(qtyElement.value, 10);
+
             qtyElement.value = value + 1;
-            calculateTotal(qtyElement); // Update subtotal setelah menambah
+            calculateTotal(qtyElement);  // Recalculate total after increasing
         }
+        
+        
         // Kalkulasi harga total saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll(".qty").forEach(function (element) {
@@ -407,6 +451,7 @@
             }
 
             window.location.href = "/checkout";
+            // console.log(formData);
         });
 
         // Implementing checkForm function
@@ -561,13 +606,14 @@
                         this.updateCartTotal();
                         this.updateTotalWeight();
                         this.updateShippingCost();
+                        this.updateCartCount(); // Update the cart count after changing quantity
                     },
 
                     toggleCart() {
                         this.cartVisible = !this.cartVisible;
                     },
 
-                    addToCart(pid, kategori_id, nama_produk, harga, event) {
+                    addToCart(pid, kategori_id, kode_produk, nama_produk, harga, event) {
                         // Ambil elemen terkait di DOM
                         const qtyElement = event.target.closest('#content').querySelector('.qty');
                         const beratElement = event.target.closest('#content').querySelector('#berat-barang');
@@ -599,6 +645,7 @@
                             this.cartItems.push({
                                 pid,
                                 kategori_id,
+                                kode_produk,
                                 nama_produk,
                                 harga,
                                 quantity: qty,
@@ -616,6 +663,8 @@
                         this.updateTotalWeight();
                         this.saveCartToLocalStorage();
                         this.updateShippingCost();
+                        this.updateCartCount(); // Update the cart count after changing quantity
+                        this.showToast("Produk telah ditambahkan ke keranjang!");
 
                         // Tampilkan notifikasi sukses
                         
@@ -636,6 +685,8 @@
                         this.updateTotalWeight();
                         this.saveCartToLocalStorage();
                         this.updateShippingCost();
+                        this.updateCartCount(); // Update the cart count after changing quantity
+                        this.showToast("Produk telah dihapus dari keranjang!"); // Show toast when item is removed
                     },
 
                     updateQuantity(pid, newQty) {
@@ -652,6 +703,7 @@
                         this.updateTotalWeight();
                         this.saveCartToLocalStorage();
                         this.updateShippingCost();
+                        this.showToast("Jumlah produk diperbarui!");
                     },
 
                     updateCartTotal() {
@@ -703,7 +755,29 @@
                         this.saveCartToLocalStorage();
                         this.updateShippingCost();
                     },
+                    updateCartCount() {
+                        // Count the unique products by checking the length of cartItems
+                        const uniqueProductCount = this.cartItems.length;
 
+                        // If there are unique products in the cart, show the count, else hide it
+                        const cartCountElement = document.getElementById('cart-count');
+                        if (uniqueProductCount > 0) {
+                            cartCountElement.style.display = 'inline';  // Show the cart count
+                            cartCountElement.textContent = uniqueProductCount; // Set the count to the number of unique products
+                        } else {
+                            cartCountElement.style.display = 'none';  // Hide the cart count if empty
+                        }
+                    },
+                    showToast(message) {
+                        const toast = document.getElementById('toast-message');
+                        toast.textContent = message; // Set the toast message
+                        toast.style.display = 'block'; // Show the toast
+
+                        // Hide the toast after 3 seconds
+                        setTimeout(() => {
+                            toast.style.display = 'none';
+                        }, 3000);
+                    },
                     updateShippingCost() {
                         const city_id = $('#city').val();
                         const courier = $('#courier').val();
@@ -741,6 +815,11 @@
                     minimumFractionDigits: 0
                 }).format(amount).replace('IDR', '').trim();
             }
+            // Initialize the cart data on page load
+document.addEventListener('DOMContentLoaded', function () {
+    const cart = cartData();
+    cart.init();  // Call init to ensure cart count is updated
+});
     </script>
 
     <script>

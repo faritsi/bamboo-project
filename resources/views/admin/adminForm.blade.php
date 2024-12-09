@@ -84,7 +84,6 @@
                             @endif
                             <div><strong>Nama Admin: </strong> {{ $u->name }}</div>
                             <div><strong>Role: </strong> {{ $u->role->name }}</div>
-                            <div><strong>Status : </strong> Aktif</div>
                             <div id="btn-cfg-detail">
                                 <div class="btn-edit" data-id="{{ $u->id }}" data-toggle="modal" data-target="#editModal-{{ $u->id }}">
                                     <span class="material-symbols-outlined">
@@ -121,35 +120,35 @@
             <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail" style="display: block; margin-bottom: 10px; max-width: 100px;">
             <input type="file" id="thumbnail" name="image" onchange="previewImage(this, 'thumbnail-preview')">
             @if ($errors->has('image'))
-                <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
             @endif
         </div>
           <div class="form-group">
               <label for="name">Nama Admin <span class="required">*</span></label>
               <input type="text" id="name" name="name" placeholder="Masukan Nama" value="{{ old('name') }}">
               @if ($errors->has('name'))
-                  <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="username">Username <span class="required">*</span></label>
               <input type="text" id="username" name="username" placeholder="Masukan Username" value="{{ old('username') }}">
               @if ($errors->has('username'))
-                  <p class="alert alert-danger">{{ $errors->first('username') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('username') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="password">Password <span class="required">*</span></label>
               <input type="password" id="password" name="password" placeholder="Masukan Password">
               @if ($errors->has('password'))
-                  <p class="alert alert-danger">{{ $errors->first('password') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('password') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="password_confirm">Konfirmasi Password <span class="required">*</span></label>
               <input type="password" name="password_confirm" placeholder="Konfirmasi Password">
               @if ($errors->has('password_confirm'))
-                  <p class="alert alert-danger">{{ $errors->first('password_confirm') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('password_confirm') }}</p>
               @endif
           </div>
           <input type="text" id="role" name="role_id" required value="2" hidden>
@@ -177,35 +176,35 @@
             <img id="edit-thumbnail-preview-{{ $u->id }}" src="{{ $u->image ? asset('/storage/' . $u->image) : 'https://via.placeholder.com/100' }}" alt="Thumbnail" style="display: block; margin-bottom: 10px; max-width: 100px;">
             <input type="file" id="edit-thumbnail-{{ $u->id }}" name="image" onchange="previewImage(this, 'edit-thumbnail-preview-{{ $u->id }}')">
             @if ($errors->has('image'))
-                <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
             @endif
         </div>
           <div class="form-group">
               <label for="edit-name-{{ $u->id }}">Nama Admin <span class="required">*</span></label>
               <input type="text" id="edit-name-{{ $u->id }}" name="name" placeholder="Masukan Nama" value="{{ $u->name }}">
               @if ($errors->has('name'))
-                  <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="edit-username-{{ $u->id }}">Username <span class="required">*</span></label>
               <input type="text" id="edit-username-{{ $u->id }}" name="username" placeholder="Masukan Username" value="{{ $u->username }}" readonly>
               @if ($errors->has('username'))
-                  <p class="alert alert-danger">{{ $errors->first('username') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('username') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="edit-password-{{ $u->id }}">Password <span class="required">*</span></label>
               <input type="password" id="edit-password-{{ $u->id }}" name="password" placeholder="Masukan Password">
               @if ($errors->has('password'))
-                  <p class="alert alert-danger">{{ $errors->first('password') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('password') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="edit-password_confirm-{{ $u->id }}">Konfirmasi Password <span class="required">*</span></label>
               <input type="password" id="edit-password_confirm-{{ $u->id }}" name="password_confirm" placeholder="Konfirmasi Password">
               @if ($errors->has('password_confirm'))
-                  <p class="alert alert-danger">{{ $errors->first('password_confirm') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('password_confirm') }}</p>
               @endif
           </div>
           <input type="text" id="edit-role-{{ $u->id }}" name="role_id" required value="2" hidden>

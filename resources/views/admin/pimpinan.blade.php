@@ -123,28 +123,28 @@
             <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
             <input type="file" id="thumbnail" name="image">
             @if ($errors->has('image'))
-                <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
             @endif
           </div>
           <div class="form-group">
               <label for="name">Nama Pimpinan <span class="required">*</span></label>
               <input type="text" id="name" name="name" placeholder="Masukan Nama" value="{{ old('name') }}">
               @if ($errors->has('name'))
-                  <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="jabatan">Jabatan <span class="required">*</span></label>
               <input type="text" id="jabatan" name="jabatan" placeholder="Masukan Jabatan" value="{{ old('jabatan') }}">
               @if ($errors->has('jabatan'))
-                  <p class="alert alert-danger">{{ $errors->first('jabatan') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('jabatan') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="deskripsi">Pengalaman <span class="required">*</span></label>
               <textarea id="deskripsi" name="deskripsi" placeholder="Masukan Pengalaman" value="{{ old('deskripsi') }}"></textarea>
               @if ($errors->has('deskripsi'))
-                  <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('deskripsi') }}</p>
               @endif
           </div>
           <div class="form-group">
@@ -170,21 +170,21 @@
                 <img id="thumbnail-preview-{{ $p->ppid }}" src="{{ asset('/storage/' . $p->image) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->ppid }}" name="image">
                 @if ($errors->has('image'))
-                    <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="name-{{ $p->ppid }}">Nama Pimpinan <span class="required">*</span></label>
                 <input type="text" id="name-{{ $p->ppid }}" name="name" placeholder="Masukan Nama" value="{{ old('name', $p->name) }}">
                 @if ($errors->has('name'))
-                    <p class="alert alert-danger">{{ $errors->first('name') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="jabatan-{{ $p->ppid }}">Jabatan <span class="required">*</span></label>
                 <input type="text" id="jabatan-{{ $p->ppid }}" name="jabatan" placeholder="Masukan Jabatan" value="{{ old('jabatan', $p->jabatan) }}">
                 @if ($errors->has('jabatan'))
-                    <p class="alert alert-danger">{{ $errors->first('jabatan') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('jabatan') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -192,7 +192,7 @@
                 {{-- value="{{ old('deskripsi', $p->deskripsi) }}" --}}
                 <textarea id="deskripsi-{{ $p->ppid }}" name="deskripsi" placeholder="Masukan Pengalaman">{{$p->deskripsi}}</textarea>
                 @if ($errors->has('deskripsi'))
-                    <p class="alert alert-danger">{{ $errors->first('deskripsi') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('deskripsi') }}</p>
                 @endif
             </div>
             <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,11 @@ class ServiceController extends Controller
     {
         $user = Auth::user();
         $service = Service::all();
+        $ingpo = Ingpo::all();
+
         return view('admin.services_view', [
             'title' => 'Service'
-        ], compact('service', 'user'));
+        ], compact('service', 'user', 'ingpo'));
     }
 
     /**
@@ -120,6 +123,6 @@ class ServiceController extends Controller
             $service->delete();
         }
 
-        return redirect()->route('services.index')->with('success', 'Pimpinan deleted successfully.');
+        return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     }
 }

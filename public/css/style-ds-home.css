@@ -272,6 +272,7 @@
 
 #content {
     width: 100%;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0;
 }
@@ -349,7 +350,7 @@
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
-    width: 250px;
+    width: 280px;
     height: 100px;
 }
 
@@ -361,6 +362,17 @@
     border-radius: 20px;
     box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
     width: 250px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-pendapatan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 280px;
     height: 100px;
 }
 
@@ -389,11 +401,17 @@
     color: #000;
 }
 
+#cc-content-pendapatan .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
 #cc-detail-admin,
 #cc-detail-pimpinan,
 #cc-detail-produk,
 #cc-detail-penjualan,
-#cc-detail-pengunjung {
+#cc-detail-pengunjung,
+#cc-detail-pendapatan {
     margin-left: 10px;
     white-space: nowrap;
     text-align: center;
@@ -403,7 +421,8 @@
 #cc-detail-pimpinan h3,
 #cc-detail-produk h3,
 #cc-detail-penjualan h3,
-#cc-detail-pengunjung h3 {
+#cc-detail-pengunjung h3,
+#cc-detail-pendapatan h3 {
     font-size: 24px;
     font-weight: 600;
 }
@@ -412,7 +431,8 @@
 #cc-detail-pimpinan span,
 #cc-detail-produk span,
 #cc-detail-penjualan span,
-#cc-detail-pengunjung span {
+#cc-detail-pengunjung span,
+#cc-detail-pendapatan span {
     font-size: 20px;
     font-weight: 600;
 }
@@ -532,7 +552,7 @@
 
     #bg-isi-content #cc-content-penjualan {
         height: 100px;
-        width: 200px;
+        width: 250px;
 
         .material-symbols-outlined {
             font-size: 50px;
@@ -567,6 +587,25 @@
             }
         }
     }
+
+    #bg-isi-content #cc-content-pendapatan {
+        height: 100px;
+        width: 250px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-pendapatan {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
 }
 
 /* Optional adjustment for very small mobile screens */
@@ -582,9 +621,6 @@
 
     #user-account {
         display: none;
-    }
-
-    #wrapper-welcome {
     }
 
     #bo-isi-content {
@@ -649,7 +685,7 @@
         }
 
         #cc-content-penjualan {
-            width: 150px;
+            width: 200px;
 
             .material-symbols-outlined {
                 font-size: 30px;
@@ -674,6 +710,24 @@
             }
 
             #cc-detail-pengunjung {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-pendapatan {
+            width: 200px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-pendapatan {
                 h3 {
                     font-size: 16px;
                 }

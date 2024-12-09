@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+    font-family: "Poppins", sans-serif;
+}
+
+.wrapper-bg {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.container {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.invoice-page {
+    margin: 20px;
+    color: #333;
+}
+
+.invoice-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #4caf50;
+}
+
+.invoice-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #4caf50;
+}
+
+.biodata-pembeli,
+.order-summary {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.biodata-pembeli h3,
+.order-summary h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #4caf50;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 5px;
+}
+
+.biodata-display {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.order-items {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+.wrapper-pay-print {
+    display: flex;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    justify-content: space-between;
+}
+
+.total-payment {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4caf50;
+
+    h3 {
+        margin-bottom: 0;
+        color: #000;
+    }
+}
+
+.btn-print {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+.btn-print .material-icons {
+    margin-right: 8px;
+    font-size: 24px;
+}
+
+@media print {
+    /* Sembunyikan tombol print */
+    .btn-print {
+        display: none;
+    }
+
+    /* Hanya tampilkan bagian invoice yang diperlukan */
+    .wrapper-bg,
+    .container,
+    .invoice-page {
+        width: 100%;
+        margin: 0;
+        /* padding: 20px; */
+        background-color: white;
+        border: none;
+    }
+    /* Pastikan bagian lain tidak muncul saat print */
+    .biodata-pembeli,
+    .order-summary {
+        display: block; /* Pastikan bagian ini muncul */
+        margin-bottom: 20px;
+    }
+
+    .wrapper-pay-print {
+        display: flex;
+        justify-content: right;
+    }
+    /* Sembunyikan elemen-elemen tidak penting seperti tombol atau background */
+    .wrapper-bg {
+        display: block;
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use App\Models\Pimpinan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,11 @@ class PimpinanController extends Controller
     {
         $user = Auth::user();
         $pimpinan = Pimpinan::all();
+        $ingpo = Ingpo::all();
+
         return view('admin.pimpinan', [
             'title' => 'Pimpinan'
-        ], compact('pimpinan', 'user'));
+        ], compact('pimpinan', 'user', 'ingpo'));
     }
 
     /**

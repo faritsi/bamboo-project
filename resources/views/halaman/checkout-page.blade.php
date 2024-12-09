@@ -28,14 +28,16 @@
                     <p><strong>Kode Pos:</strong> <span id="pos"></span></p>
                     <p><strong>No. Telepon:</strong> <span id="nohp"></span></p>
                     <p><strong>Kurir:</strong> <span id="courier"></span></p>
+                    <p><strong>Harga Kurir: </strong><span id="cost"></span></p>
+
                 </div>
 
                 <div id="order-summary">
                     <h3>Ringkasan Pesanan</h3>
                     <div id="order-items"></div> <!-- Container for product list -->
                     <div class="order-total">
-                        <p><strong>Ongkir:</strong> Rp <span id="cost"></span></p> <!-- Ongkir display -->
-                        <p><strong>Total Pembayaran:</strong> Rp <span id="pembayaran"></span></p>
+                        {{-- <p><strong>Ongkir:</strong> Rp <span id="cost"></span></p> <!-- Ongkir display --> --}}
+                        <p><strong>Total Pembayaran: </strong><span id="pembayaran"></span></p>
                     </div>
                 </div>
                 {{-- Konfirm Checkout --}}
@@ -48,6 +50,14 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    function formatRupiah(amount) {
+        return '' + new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(amount).replace('IDR', '').trim();
+    }
+
     // Retrieve biodata from localStorage
     var nama = localStorage.getItem("nama");
     var alamat = localStorage.getItem("alamat");
@@ -82,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("nohp").innerText = nohp;
     document.getElementById("province").innerText = province;
     document.getElementById("courier").innerText = courier + ' - ' + courier_service;
+    document.getElementById("cost").innerText = cost;
 
     // Display the cartItems in the order summary
     var orderItemsContainer = document.getElementById("order-items");
@@ -90,17 +101,20 @@ document.addEventListener("DOMContentLoaded", function() {
             <div class="order-item">
                 <p><strong>Nama Produk:</strong> ${item.nama_produk}</p>
                 <p hidden><strong>Kategori Produk:</strong> ${item.kategori_id}</p>
-                <p><strong>Harga:</strong> Rp ${item.harga} x ${item.quantity}</p>
-                <p><strong>Sub Total:</strong> Rp ${item.subTotal}</p>
+                <p><strong>Kode Produk:</strong> ${item.kode_produk}</p>
+                <p><strong>Harga:</strong>  ${formatRupiah(item.harga)} x ${item.quantity}</p>
+                <p><strong>Sub Total:</strong>  ${formatRupiah(item.subTotal)}</p>
             </div>
         `;
         orderItemsContainer.innerHTML += itemHtml;
     });
+
+    
     
 
     // Display the shipping cost (ongkir) and total payment
-    document.getElementById("cost").innerText = cost.toFixed(2); // Display ongkir
-    document.getElementById("pembayaran").innerText = totalPayment.toFixed(2); // Display total payment
+    document.getElementById("cost").innerText = formatRupiah(cost); // Display ongkir
+    document.getElementById("pembayaran").innerText = formatRupiah(totalPayment); // Display total payment
 });
 
 // AJAX setup for payment
@@ -123,7 +137,7 @@ document.getElementById('pay-button').onclick = function() {
     var courier = localStorage.getItem("courier");
     var courier_service = localStorage.getItem("courierService");
 
-    var kode_produk = localStorage.getItem("kode_produk");
+    // var kode_produk = localStorage.getItem("kode_produk");
     // var kategori_id = localStorage.getItem("kategori_id");
     var nama_produk = localStorage.getItem("nama_produk");
     var qty = localStorage.getItem("modal_qty");
@@ -145,7 +159,7 @@ document.getElementById('pay-button').onclick = function() {
         province: province,
         courier: courier,
         courier_service: courier_service,
-        kode_produk: kode_produk,
+        // kode_produk: kode_produk,
         // kategori_id: kategori_id,
         nama_produk: nama_produk,
         qty: qty,
@@ -159,6 +173,7 @@ document.getElementById('pay-button').onclick = function() {
         formData[`products[${index}][quantity]`] = item.quantity;
         formData[`products[${index}][price]`] = item.harga;
         formData[`products[${index}][kategori_id]`] = item.kategori_id;
+        formData[`products[${index}][kode_produk]`] = item.kode_produk;
     });
 
     // Send the AJAX request

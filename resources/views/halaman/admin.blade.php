@@ -4,7 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Dashboard Admin</title>
-        <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+        @foreach($ingpo as $i)
+        <link rel="icon" href="{{ asset('/storage/' . $i->favicon) }}" type="image/x-icon">
+        @endforeach
 
         <!-- Link -->
         <link rel="stylesheet" href="/css/style-ds-modul.css">

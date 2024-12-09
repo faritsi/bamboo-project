@@ -235,6 +235,41 @@
     margin: 0 auto;
 }
 
+.pagination-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-links {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 16px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.page-link.active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
 @media (max-width: 1200px) {
     #table-produk th:nth-child(3),
     #table-produk td:nth-child(3) {

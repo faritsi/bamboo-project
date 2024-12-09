@@ -236,116 +236,39 @@ html {
 }
 
 /* Pagination Info Section */
-.pagination-info {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 16px;
-    color: #2e3d2b; /* Earthy dark green */
-}
-
-.pagination-info p {
-    margin-bottom: 10px;
-}
-
-/* Pagination Buttons Container */
-.pagination-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-/* Pagination Button */
-.pagination-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    font-size: 14px;
-    background-color: #6cbf84; /* Green color */
-    color: #fff;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover Effect */
-.pagination-btn:hover {
-    background-color: #56a76b; /* Slightly darker green for hover */
-    color: #fff;
-}
-
-/* Disabled State */
-.pagination-btn:disabled {
-    background-color: #ccc;
-    color: #888;
-    pointer-events: none;
-}
-
-/* Active Current Page Button */
-.pagination-btn.active {
-    background-color: #4e9d6b; /* A darker green for the active page */
-    color: #fff;
-    font-weight: bold;
-    border-radius: 100%;
-}
-
-/* Pagination Links */
-.pagination-links {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-}
-
-/* Style for individual page links */
-.pagination-links .page-link {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 0 5px;
-    font-size: 16px;
-    background-color: #6cbf84; /* Green color */
-    color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-}
-
-/* Hover effect for page links */
-.pagination-links .page-link:hover {
-    background-color: #56a76b; /* Darker green on hover */
-    color: #fff;
-}
-
-/* Active page link styling */
-.pagination-links .active .page-link {
-    background-color: #4e9d6b; /* Darker green for active page */
-    color: white;
-    font-weight: bold;
-}
-
-/* Right Arrow */
-.pagination-links .page-link[rel="next"] {
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-/* Pagination arrows */
-.pagination-links .page-link[rel="prev"],
-.pagination-links .page-link[rel="next"] {
-    background-color: #6cbf84; /* Green color */
-    padding: 10px 15px;
-    transition: background-color 0.3s ease;
-}
-
-.pagination-links .page-link[rel="prev"]:hover,
-.pagination-links .page-link[rel="next"]:hover {
-    background-color: #56a76b; /* Darker green for hover */
-    color: #fff;
-}
-
-/* Pagination Container */
-.pagination-links {
-    display: flex;
-    justify-content: center;
+.pagination-section {
     margin-top: 20px;
+    text-align: center;
+}
+
+.pagination-links {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.page-link {
+    display: block;
+    padding: 8px 16px;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.page-link.active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 #footer-copyright {

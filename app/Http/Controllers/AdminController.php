@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Ingpo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,10 +22,11 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $role = role::all();
+        $ingpo = Ingpo::all();
         $users = User::all();
         return view('admin.adminForm', [
             'title' => 'Admin'
-        ], compact('user', 'users', 'role'));
+        ], compact('user', 'users', 'role', 'ingpo'));
     }
 
     /**
@@ -46,7 +48,7 @@ class AdminController extends Controller
             'password' => 'required|min:8',
             'password_confirm' => 'required|same:password',
             'role_id' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $imagePath = null;

@@ -120,21 +120,21 @@
             <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
             <input type="file" id="thumbnail" name="img">
             @if ($errors->has('img'))
-                <p class="alert alert-danger">{{ $errors->first('img') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('img') }}</p>
             @endif
           </div>
           <div class="form-group">
               <label for="name">Judul Service <span class="required">*</span></label>
               <input type="text" id="name" name="judul" placeholder="Masukan Judul" value="{{ old('judul') }}">
               @if ($errors->has('judul'))
-                  <p class="alert alert-danger">{{ $errors->first('judul') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('judul') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="desc">Deskripsi <span class="required">*</span></label>
               <textarea id="desc" name="desc" placeholder="Masukan desc" value="{{ old('desc') }}"></textarea>
               @if ($errors->has('desc'))
-                  <p class="alert alert-danger">{{ $errors->first('desc') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('desc') }}</p>
               @endif
           </div>
           <div class="form-group">
@@ -160,14 +160,14 @@
                 <img id="thumbnail-preview-{{ $p->id }}" src="{{ asset('/storage/' . $p->img) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->id }}" name="img">
                 @if ($errors->has('img'))
-                    <p class="alert alert-danger">{{ $errors->first('img') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('img') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="name-{{ $p->id }}">Judul Service <span class="required">*</span></label>
                 <input type="text" id="name-{{ $p->id }}" name="judul" placeholder="Masukan Nama" value="{{ old('judul', $p->judul) }}">
                 @if ($errors->has('judul'))
-                    <p class="alert alert-danger">{{ $errors->first('judul') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('judul') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -175,7 +175,7 @@
                 {{-- value="{{ old('desc', $p->desc) }}" --}}
                 <textarea id="desc-{{ $p->id }}" name="desc" placeholder="Masukan desc" >{{$p->desc}}</textarea>
                 @if ($errors->has('desc'))
-                    <p class="alert alert-danger">{{ $errors->first('desc') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('desc') }}</p>
                 @endif
             </div>
             <div class="form-group">

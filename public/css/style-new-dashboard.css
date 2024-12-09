@@ -46,7 +46,7 @@ html {
     margin: 0 auto;
     padding: 0;
     width: 100%;
-    height: 700px;
+    height: 800px;
     position: absolute;
     top: 0;
     left: 0;
@@ -56,6 +56,7 @@ html {
 
 #background-img {
     overflow: hidden;
+    height: 100%;
 }
 
 #background-img img {
@@ -733,6 +734,20 @@ a {
     padding: 0 10px;
 }
 
+.slide-img-outter {
+    display: none;
+}
+
+.overlay-outter {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+}
+
 .buy-btn {
     width: 160px;
     height: 40px;
@@ -804,7 +819,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 15px;
+    margin: 20px auto;
     padding: 0 20px;
 }
 
@@ -1157,13 +1172,10 @@ a {
     transform: translateY(0);
 }
 
-@media (max-width: 1600px) {
-}
-
 /* Large screens */
 @media (max-width: 1200px) {
     #background-img {
-        height: 90vh; /* Smaller height */
+        height: 90%; /* Smaller height */
     }
     /* Hide header text */
     #header-kiri {
@@ -1407,6 +1419,13 @@ a {
 
     /* Catalog */
 
+    .overlay {
+        display: none;
+    }
+    .slide-img-outter {
+        display: inline-block;
+    }
+
     /* #container-catalog-carousel {
         width: 90%;
     } */
@@ -1488,7 +1507,7 @@ a {
     }
 
     #background-img {
-        height: 70vh; /* Smaller height */
+        height: 70%; /* Smaller height */
     }
 
     /* Slogan REsp */
@@ -1559,11 +1578,6 @@ a {
 
     .text-service p {
         font-size: 0.9rem;
-    }
-
-    /* Catalog */
-    .carousel-slide-act {
-        /* min-width: 100%; */
     }
 
     .buy-button {
@@ -1680,7 +1694,7 @@ a {
     }
 
     #background-img {
-        height: 60vh;
+        height: 50%;
     }
 
     /* Resp  Slogan*/

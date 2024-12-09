@@ -88,6 +88,26 @@ Route::get('/keranjang', [ProdukController::class, 'keranjang']);
 Route::post('/tambah-keranjang/{pid}', [ProdukController::class, 'TambahKeranjang']);
 Route::post('/sync-cart', [ProdukController::class, 'syncCart'])->name('sync.cart');
 
+Route::get('/error-400', function () {
+    abort(400); // Memicu error 404 (Page Not Found)
+});
+
+Route::get('/error-404', function () {
+    abort(404); // Memicu error 404 (Page Not Found)
+});
+
+Route::get('/error-403', function () {
+    abort(403); // Memicu error 403 (Forbidden)
+});
+
+// Route::get('/error-419', function () {
+//     abort(419); // Memicu error 403 (Forbidden)
+// });
+
+Route::get('/error-500', function () {
+    abort(500); // Memicu error 500 (Internal Server Error)
+});
+
 // Route::group(['middleware' => ['auth']], function () {
 //     Route::group(['middleware' => ['CekAuth:1,2']], function () {
 //     Route::resource('home', LayoutController::class);
@@ -115,6 +135,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/visitor', [VisitorController::class, 'showStats'])->name('visitor.showStats');
         Route::get('/visitor', [VisitorController::class, 'showStats'])->name('visitor.showStats');
         Route::get('/transactions', [TransaksiController::class, 'index']);
+        Route::get('/invoice/{orderId}', [TransaksiController::class, 'showInvoice'])->name('invoice.view');
         Route::post('/pembelian', [TransaksiController::class, 'view_tf'])->name('pembelian.sales');
         Route::get('/pembelian', [TransaksiController::class, 'view_tf'])->name('pembelian.sales');
         Route::resource('produk', ProdukController::class);

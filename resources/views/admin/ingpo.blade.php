@@ -133,15 +133,6 @@
             <textarea id="desc_produk" name="desc_produk" rows="5">{{ $i->desc_produk }}</textarea>
         </div>
 
-        <!-- Footer Logo Section -->
-        <div class="section">
-            <h2>Logo Footer</h2>
-            <input type="file" id="logo_footer" name="logo_footer" onchange="previewImage(event, 'logoFooterPreview')">
-            <div class="image-preview">
-                <img id="logoFooterPreview" src="{{ asset('storage/' . $i->logo_footer) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-            </div>
-        </div>
-
         <!-- Judul Footer Section -->
         <div class="section">
             <h2>Judul Footer</h2>

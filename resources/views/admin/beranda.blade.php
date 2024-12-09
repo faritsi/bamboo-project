@@ -45,10 +45,10 @@
 
                 <div id="cc-content-penjualan">
                     <span class="material-symbols-outlined">
-                        attach_money
+                        shopping_bag
                     </span>
                     <div id="cc-detail-penjualan">
-                        <h3>Penjualan</h3>
+                        <h3>Barang Terjual</h3>
                         <span>{{$totalPenjualan}}</span>
                     </div>
                 </div>
@@ -60,6 +60,16 @@
                     <div id="cc-detail-pengunjung">
                         <h3>Pengunjung</h3>
                         <span>{{$totalPengunjung}}</span>
+                    </div>
+                </div>
+
+                <div id="cc-content-pendapatan">
+                    <span class="material-symbols-outlined">
+                        payments
+                    </span>
+                    <div id="cc-detail-pendapatan">
+                        <h3>Pendapatan</h3>
+                        <span>Rp {{ number_format($totalPendapatanValue, 0, ',', '.') }}</span>
                     </div>
                 </div>
             </div>

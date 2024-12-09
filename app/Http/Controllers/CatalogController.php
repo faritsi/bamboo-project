@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Produk;
 use App\Models\Pimpinan;
 use App\Models\Ingpo;
+use App\Models\Kategori;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CatalogController extends Controller
@@ -20,6 +21,9 @@ class CatalogController extends Controller
     public function index(Request $request)
     {
         $query = $request->query("status_code");
+        $catalogFilter = $request->query("kategori");
+        $kategori = Kategori::where("name", $catalogFilter);
+
 
         if ($query) {
             // Redirect to catalog without parameter
@@ -27,8 +31,17 @@ class CatalogController extends Controller
         }
 
         // Paginate produk with a specific limit
-        $produk = QueryBuilder::for(Produk::class)
-            ->paginate(20);
+        // Build the query for Produk
+        $produkQuery = QueryBuilder::for(Produk::class)
+            ->allowedFilters('kategori') // Allow filtering by 'kategori'
+            ->when($catalogFilter && $catalogFilter !== 'semua', function ($query) use ($catalogFilter) {
+                // Apply filter for categories if it's not 'semua'
+                return $query->whereHas('kategori', function ($q) use ($catalogFilter) {
+                    $q->where('name', $catalogFilter); // Filter by category name
+                });
+            });
+        // Paginate the products with a specific limit (20 per page)
+        $produk = $produkQuery->paginate(20);
 
         // Extract pagination data
         $produkItems = $produk->items();
@@ -38,6 +51,7 @@ class CatalogController extends Controller
         $lastPageUrl = $produk->url($produk->lastPage());
         $previousPageUrl = $produk->previousPageUrl();
         $nextPageUrl = $produk->nextPageUrl();
+
 
         return view('halaman/all_produk', [
             'title' => 'Catalog',

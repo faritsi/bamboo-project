@@ -125,18 +125,25 @@ input[type="number"] {
     border-color: #f5c6cb;
     padding: 10px;
     border-radius: 5px;
-    margin-top: 5px;
+    margin: 30px 0px 20px 90px;
+}
+
+.alert-modal.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /* Success message styles */
 .alert.alert-success {
-    margin-top: 20px;
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin: 30px 30px 20px 90px;
 }
 
 /* Thumbnail styles */
@@ -195,6 +202,16 @@ input[type="number"] {
 }
 
 /* Responsive design */
+
+@media (max-width: 992px) {
+    .alert.alert-success {
+        margin: 20px;
+    }
+
+    .alert.alert-danger {
+        margin: 20px;
+    }
+}
 @media (max-width: 768px) {
     .modal-content {
         width: 95%;

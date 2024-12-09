@@ -258,6 +258,11 @@ body {
     margin: 15px 0;
 }
 
+.form-text {
+    font-size: 0.875rem; /* Ukuran font yang lebih kecil */
+    color: #6c757d; /* Warna teks abu-abu */
+}
+
 /* Responsive for smaller screens */
 @media (min-width: 1600px) {
     .card-photo {

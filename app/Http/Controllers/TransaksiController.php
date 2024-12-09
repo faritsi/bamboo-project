@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Services\SendMessageWhatsAppService;
 use App\Models\Ingpo;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+
 
 class TransaksiController extends Controller
 {
@@ -34,51 +37,106 @@ class TransaksiController extends Controller
         $this->whatsappService = $whatsappService;
     }
 
+    public function getFilterRange(Request $request)
+    {
+        $startDate = $request->input('startDate')
+            ? Carbon::parse($request->input('startDate'))->startOfDay()
+            : (session('startDate')
+                ? Carbon::parse(session('startDate'))->startOfDay()
+                : Carbon::now()->subDays(30)->startOfDay());
+
+        $endDate = $request->input('endDate')
+            ? Carbon::parse($request->input('endDate'))->endOfDay()
+            : (session('endDate')
+                ? Carbon::parse(session('endDate'))->endOfDay()
+                : Carbon::now()->endOfDay());
+
+        $pilihKategori = $request->input('pilihKategori') ?? session('pilihKategori', 'semuaKategori');
+        $pilihProduk = $request->input('pilihProduk') ?? session('pilihProduk', 'semuaProduk');
+
+        // \Log::info('Session Data Before Save:', session()->all());
+
+        session([
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'pilihKategori' => $pilihKategori,
+            'pilihProduk' => $pilihProduk,
+        ]);
+
+        session()->save(); // Explicitly save session
+
+        // \Log::info('Session Data After Save:', session()->all());
+
+        return [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'pilihKategori' => $pilihKategori,
+            'pilihProduk' => $pilihProduk,
+        ];
+    }
+
+
     public function view_tf(Request $request)
     {
         $user = Auth::user();
         $produk = Produk::all();
         $kategori = Kategori::all();
         $transaksi = Transaksi::all();
+        $ingpo = Ingpo::all();
 
+        $filterRange = $this->getFilterRange($request);
+        $startDate = $filterRange['startDate'];
+        $endDate = $filterRange['endDate'];
+        $pilihKategori = $filterRange['pilihKategori'];
+        $pilihProduk = $filterRange['pilihProduk'];
 
+        $salesData = $this->getSalesData($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
+        $tableTransactionData = $this->getTableTransaksi($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
 
-        // Default date range: Last 7 days if no input is provided
-        $startDate = $request->input('startDate')
-            ? Carbon::parse($request->input('startDate'))->startOfDay()
-            : Carbon::now()->subDays(7)->startOfDay();
+        // $startDate = session('startDate', Carbon::now()->subDays(7)->format('Y-m-d'));
+        // $endDate = session('endDate', Carbon::now()->format('Y-m-d'));
 
-        $endDate = $request->input('endDate')
-            ? Carbon::parse($request->input('endDate'))->endOfDay()
-            : Carbon::now()->endOfDay();
+        // Pass data to the view
+        return view('admin.transaksi', [
+            'title' => 'Penjualan',
+            'salesData' => $salesData, // Data untuk grafik
+            'tableTransactionData' => $tableTransactionData, // Data untuk tabel transaksi
+            'groupedTransactions' => $tableTransactionData,
+            'produk' => $produk,
+            'user' => $user,
+            'kategori' => $kategori,
+            'transaksi' => $transaksi,
+            'ingpo' => $ingpo,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'pilihKategori' => $pilihKategori,
+            'pilihProduk' => $pilihProduk,
+        ]);
+    }
 
+    // Data Transaksi (Chart)
+    public function getSalesData(Request $request, $startDate, $endDate, $pilihKategori, $pilihProduk)
+    {
 
-
-        // Build the query
         $tfQuery = Transaksi::query();
-
-        // Filter by date range
         $tfQuery->whereBetween('created_at', [$startDate, $endDate]);
 
-        // Filter by category if provided
-        if ($request->input('pilihKategori') && $request->input('pilihKategori') != 'semuaKategori') {
-            $selectedKategori = Kategori::where('name', $request->input('pilihKategori'))->first();
+        if ($pilihKategori && $pilihKategori != 'semuaKategori') {
+            $selectedKategori = Kategori::where('name', $pilihKategori)->first();
+
             if ($selectedKategori) {
                 $tfQuery->where('kategori_id', $selectedKategori->id);
             }
         }
 
-        // Filter by product if provided
-        if ($request->input('pilihProduk') && $request->input('pilihProduk') != 'semuaProduk') {
-            $tfQuery->where('nama_produk', $request->input('pilihProduk'));
+        // Check if a specific product is selected and not 'semuaProduk'
+        if ($pilihProduk && $pilihProduk != 'semuaProduk') {
+            $tfQuery->where('nama_produk', $pilihProduk);
         }
 
-        // Fetch filtered transactions
-        $tf = $tfQuery->get();
-
-        // Prepare sales data for the chart
-        $sales = $tfQuery->selectRaw('DATE(created_at) as sale_date, nama_produk, SUM(qty) as total_sold')
-            ->groupBy('sale_date', 'nama_produk')
+        $sales = $tfQuery
+            ->select(DB::raw('DATE(created_at) as sale_date'), 'nama_produk', DB::raw('SUM(qty) as total_sold'))
+            ->groupBy(DB::raw('DATE(created_at)'), 'nama_produk')
             ->orderBy('sale_date', 'asc')
             ->get();
 
@@ -90,18 +148,83 @@ class TransaksiController extends Controller
             ];
         });
 
-        $groupedTransactions = $tf->groupBy('order_id');
-
-
-        // Pass data to the view
-        return view('admin.transaksi', [
-            'title' => 'Penjualan',
-            'salesData' => $salesData,
-            'startDate' => $startDate->format('Y-m-d'), // Pass formatted start date
-            'endDate' => $endDate->format('Y-m-d'),    // Pass formatted end date
-        ], compact('produk', 'user', 'kategori', 'tf', 'transaksi', 'groupedTransactions'));
+        return $salesData;
     }
 
+    // Data Tabel Transaksi
+    public function getTableTransaksi(Request $request, $startDate, $endDate, $pilihKategori, $pilihProduk)
+    {
+        $tfQuery = Transaksi::query();
+        $tfQuery->orderBy('created_at', 'desc');
+
+        // Apply date range filter
+        $tfQuery->whereBetween('created_at', [$startDate, $endDate]);
+
+        // Check if a specific category is selected and not 'semuaKategori'
+        if ($pilihKategori && $pilihKategori != 'semuaKategori') {
+            $selectedKategori = Kategori::where('name', $pilihKategori)->first();
+
+            if ($selectedKategori) {
+                $tfQuery->where('kategori_id', $selectedKategori->id);
+            }
+        }
+
+        // Check if a specific product is selected and not 'semuaProduk'
+        if ($pilihProduk && $pilihProduk != 'semuaProduk') {
+            $tfQuery->where('nama_produk', $pilihProduk);
+        }
+
+        // Pagination Tabel Produk
+        $tfPagination = $tfQuery->paginate(10);
+
+        $tfItems = $tfPagination->items();
+        $tfCurrentPage = $tfPagination->currentPage();
+        $tfTotalPages = $tfPagination->lastPage();
+        $tfFirstPageUrl = $tfPagination->url(1);
+        $tfLastPageUrl = $tfPagination->url($tfPagination->lastPage());
+        $tfPreviousPageUrl = $tfPagination->previousPageUrl();
+        $tfNextPageUrl = $tfPagination->nextPageUrl();
+
+        // Group Transaksi by OrderID
+        $groupedTransactions = collect($tfItems)->groupBy('order_id');
+
+        return [
+            'tfPagination' => $tfPagination,
+            'tfItems' => $tfItems,
+            'tfCurrentPage' => $tfCurrentPage,
+            'tfTotalPages' => $tfTotalPages,
+            'tfFirstPageUrl' => $tfFirstPageUrl,
+            'tfLastPageUrl' => $tfLastPageUrl,
+            'tfPreviousPageUrl' => $tfPreviousPageUrl,
+            'tfNextPageUrl' => $tfNextPageUrl,
+            'groupedTransactions' => $groupedTransactions,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'pilihKategori' => $pilihKategori,
+            'pilihProduk' => $pilihProduk,
+        ];
+    }
+
+
+
+    public function showInvoice($orderId)
+    {
+        // Ambil transaksi berdasarkan order_id
+        $invoice = Transaksi::where('order_id', $orderId)->first();
+        $ingpo = Ingpo::all();
+
+        // Jika tidak ada invoice yang ditemukan, tampilkan halaman 404
+        if (!$invoice) {
+            return abort(404, 'Invoice tidak ditemukan');
+        }
+        $items = Transaksi::where('order_id', $orderId)->get();
+        // dd($items);
+        // Format tanggal invoice
+        $invoice->formatted_date = Carbon::parse($invoice->created_at)->format('d M Y');
+
+        // Kirimkan data ke view
+        return view('admin.invoice-page', compact('invoice', 'items', 'ingpo'));
+    }
 
 
     public function createTransaction(Request $request)
@@ -118,16 +241,18 @@ class TransaksiController extends Controller
                 'products.*.quantity' => 'required|numeric',
                 'products.*.price' => 'required|numeric',
                 'products.*.kategori_id' => 'required|numeric',
+                'products.*.kode_produk' => 'required|string',
                 'name' => 'required|string',
                 'alamat' => 'required|string',
                 'city' => 'required|string',
                 'pos' => 'required|string',
                 'nohp' => 'required|string',
                 'cost' => 'required|numeric',
-                'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
+                // 'kode_produk' => 'required|exists:produks,kode_produk', // Validasi berdasarkan kode_produk
                 // 'kategori_id' => 'required|exists:kategoris,id', // Memastikan kategori ada
                 'courier' => 'required|string',
                 'courier_service' => 'required|string',
+                'province' => 'required|string',
             ]);
 
             Log::info('Transaction Status Updated: ', [
@@ -140,7 +265,7 @@ class TransaksiController extends Controller
             foreach ($validated['products'] as $product) {
                 $transaksi = new Transaksi([
                     'order_id' => $gen_id_order,
-                    'kode_produk' => $validated['kode_produk'],
+                    'kode_produk' => $product['kode_produk'],
                     'kategori_id' => $product['kategori_id'],
                     'total_pembayaran' => $validated['pembayaran'], // Total pembayaran tetap sama untuk semua
                     'nama_produk' => $product['name'], // Nama produk dari array products
@@ -151,8 +276,10 @@ class TransaksiController extends Controller
                     'alamat' => $validated['alamat'],
                     'pos' => $validated['pos'],
                     'city' => $validated['city'],
+                    'province' => $validated['province'],
                     'courier' => $validated['courier'],
                     'courier_service' => $validated['courier_service'],
+                    'cost' => $validated['cost'],
                     'status' => 'capture'
                 ]);
 
@@ -272,11 +399,13 @@ class TransaksiController extends Controller
             $transactionStatus = $notification->transaction_status;
             $fraudStatus = $notification->fraud_status;
 
+
+
             // Log the notification details for testing
             Log::info('Midtrans Notification Received: ', [
                 'order_id' => $orderId,
                 'transaction_status' => $transactionStatus,
-                'fraud_status' => $fraudStatus
+                'fraud_status' => $fraudStatus,
             ]);
 
             // Cari transaksi berdasarkan order_id
@@ -309,22 +438,34 @@ class TransaksiController extends Controller
                 $newStatus = 'canceled';
             }
 
+            // Declare array to store all product details
+            $productDetails = [];
+            $transactionData = null;
+            $storeName = $notification->store ?? null;
+            // Log::info('Store Name: ' . $storeName);
+            $bank = isset($notification->va_numbers[0]->bank) ? $notification->va_numbers[0]->bank : null;
+
+
             // Perbarui status setiap transaksi yang terkait dengan order_id
             foreach ($transactions as $transaction) {
-
                 $transaction->jenis_pembayaran = $notification->payment_type;
                 $transaction->status = $newStatus;
+                $transaction->bank = $bank;
+                $transaction->store_name = $storeName;
                 $transaction->save();
 
                 // Jika status transaksi adalah 'success', kurangi stok produk
                 if ($newStatus === 'success') {
                     // Cari produk berdasarkan kode_produk
-                    $produk = \DB::table('produks')->where('kode_produk', $transaction->kode_produk)->first();
+                    $produk = \DB::table('produks')
+                        ->where('kode_produk', $transaction->kode_produk)
+                        ->first();
 
                     if ($produk) {
 
                         // Kurangi stok produk
                         $stokBaru = $produk->jumlah_produk - $transaction->qty;
+
 
                         // Pastikan stok tidak menjadi negatif
                         if ($stokBaru < 0) {
@@ -335,14 +476,23 @@ class TransaksiController extends Controller
                         \DB::table('produks')->where('kode_produk', $transaction->kode_produk)->update([
                             'jumlah_produk' => $stokBaru
                         ]);
-
-                        $this->sendNotificationMessageWA($transaction);
+                        $transactionData = $transaction;
+                        $productDetails[] = [
+                            "nama_produk" => $transaction->nama_produk,
+                            "qty" => $transaction->qty,
+                            "harga" => $transaction->harga
+                        ];
                     } else {
                         Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
                     }
                 }
             }
 
+            // Log perubahan status
+            Log::info('Transaction Status Updated: ', [
+                'productDetails' => $productDetails,
+            ]);
+            $this->sendNotificationMessageWA($transactionData, $productDetails);
             // Log perubahan status
             Log::info('Transaction Status Updated: ', [
                 'order_id' => $orderId,
@@ -360,37 +510,43 @@ class TransaksiController extends Controller
     }
 
 
-    private function sendNotificationMessageWA($transaction)
+    private function sendNotificationMessageWA($transaction, $produks)
     {
 
 
         // $messageTemplate = "test";
-        $messageTemplate = " *Invoice Pembelian Anda*\n\n";
+        $messageTemplate = " 📋 *Invoice Pembelian Anda*\n\n";
 
-        $messageTemplate .= "Halo, {$transaction->name}!\n";
+        $messageTemplate .= "Halo, *{$transaction->name}!*\n";
         $messageTemplate .= "Terima kasih telah berbelanja bersama kami. Berikut adalah detail pembelian Anda:\n\n";
 
-        $messageTemplate .= " *Detail Pesanan:*\n";
+        $messageTemplate .= " 📦 *Detail Pesanan:*\n";
         $messageTemplate .= "- Order ID: {$transaction->order_id}\n";
         $messageTemplate .= "- Tanggal: {$transaction->created_at->format('d M Y')}\n\n";
 
-        $messageTemplate .= " *Produk yang Dibeli:*\n";
-        $messageTemplate .= "- Nama Produk: {$transaction->nama_produk}\n";
-        $messageTemplate .= "  Jumlah: {$transaction->qty}\n";
-        $messageTemplate .= "------------------------------------\n";
+        $messageTemplate .= " 🛒 *Produk yang Dibeli:*\n";
 
-        // $messageTemplate .= "\n *Pengiriman:*\n";
+        foreach ($produks as $product) {
+            $messageTemplate .= "- Nama Produk: {$product['nama_produk']}\n";
+            $messageTemplate .= "- Harga Produk: Rp. " . number_format($product['harga'], 0, ',', '.') . "\n";
+            $messageTemplate .= "- Jumlah: {$product['qty']}\n";
+            $messageTemplate .= "------------------------------------\n";
+        }
+
+        $messageTemplate .= " \n🚚 *Pengiriman:*\n";
         $messageTemplate .= "- Nama Penerima: {$transaction->name}\n";
+        $messageTemplate .= "- Nomor HP: {$transaction->nohp}\n";
         $messageTemplate .= "- Alamat: {$transaction->alamat}\n";
         $messageTemplate .= "- Kota: {$transaction->city}\n";
         $messageTemplate .= "- Kode Pos: {$transaction->pos}\n";
-        $messageTemplate .= "- Nomor HP: {$transaction->nohp}\n\n";
+        $messageTemplate .= "- Provinsi: {$transaction->province}\n";
 
-        $messageTemplate .= " *Telah melakukan pembayaran melalui:*\n";
-        $messageTemplate .= "- Bank: {$transaction->jenis_pembayaran}\n";
+        $messageTemplate .= " \n📌 *Telah melakukan pembayaran melalui:*\n";
+        $messageTemplate .= "- Metode Pembayaran: " . ($transaction->bank ?? $transaction->store_name) . "\n";
         $messageTemplate .= "- Kurir: {$transaction->courier}\n";
         $messageTemplate .= "- Layanan Kurir: {$transaction->courier_service}\n";
-        $messageTemplate .= "- Sebesar: *Rp" . number_format($transaction->total_pembayaran, 0, ',', '.') . "\n\n*";
+        $messageTemplate .= "- Ongkos Kirim: Rp " . number_format($transaction->cost, 0, ',', '.') . "\n\n";
+        $messageTemplate .= "- Total Pembayaran: *Rp" . number_format($transaction->total_pembayaran, 0, ',', '.') . "*\n\n";
 
         $messageTemplate .= " Jika ada pertanyaan, hubungi kami di 085859666343.\n\n";
         $messageTemplate .= "Terima kasih!\n";
@@ -404,7 +560,7 @@ class TransaksiController extends Controller
 
         // Send message to Admin
         // $admin = "{{$ingpo->nowa}}";
-        $admin = "085859666343";
+        $admin = "087716068691";
         $this->whatsappService->sendMessage(
             //change this to admin number
             $admin,

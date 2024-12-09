@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use App\Models\Kegiatan;
 use App\Models\videokegiatan;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,9 @@ class KegiatanController extends Controller
         $user = Auth::user();
         $kegiatan = Kegiatan::all();
         $video = videokegiatan::all();
-        return view('admin.kegiatan', ['title' => 'Kegiatan'], compact('kegiatan', 'user', 'video'));
+        $ingpo = Ingpo::all();
+
+        return view('admin.kegiatan', ['title' => 'Kegiatan'], compact('kegiatan', 'user', 'video', 'ingpo'));
     }
 
     /**
@@ -31,7 +34,7 @@ class KegiatanController extends Controller
         $request->validate([
             'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_link' => 'nullable|url',
-            'video_path' => 'nullable|mimes:mov,mp4,avi,mkv|max:51200', //50MB
+            'video_path' => 'nullable|mimes:mov,mp4,avi,mkv|max:20480', //200mb
         ]);
 
         // Handle image uploads

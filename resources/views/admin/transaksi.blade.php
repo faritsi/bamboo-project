@@ -19,10 +19,10 @@
                         @csrf
                         {{-- @method('POST') --}}
                         <label for="startDate">Start Date:</label>
-                        <input type="date" id="startDate" name="startDate" value={{$startDate}} >
+                        <input type="date" id="startDate" name="startDate" value={{$groupedTransactions['startDate']}} >
 
                         <label for="endDate">End Date:</label>
-                        <input type="date" id="endDate" name="endDate" value={{$endDate}}>
+                        <input type="date" id="endDate" name="endDate" value={{$groupedTransactions['endDate']}}>
                         
                         <label for="pilihKategori">Pilih Kategori:</label>
                         <select id="pilihKategori" name="pilihKategori">
@@ -73,17 +73,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($groupedTransactions as $order_id => $transactions)
+                    @foreach ($groupedTransactions["groupedTransactions"] as $order_id => $transactions)
+                    
                         @php $rowspan = count($transactions); @endphp
                         @foreach ($transactions as $index => $t)
                             <tr>
                                 @if ($index === 0)
                                 <td rowspan="{{ $rowspan }}">
-                                    <div class="btnInvoice" data-id="{{$t->order_id}}" data-toggle="modal" data-target="showInvoice-{{$t->order_id}}">
+                                    <a href="{{ route('invoice.view', ['orderId' => $t->order_id]) }}" class="btnInvoice">
                                         <span class="material-symbols-outlined">
-                                        visibility
-                                        </span>                                                        
-                                    </div>
+                                            visibility
+                                        </span>
+                                    </a>
                                 </td>
                                 @endif
                                 @if ($index === 0)
@@ -102,10 +103,28 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="pagination-section">
+            <div class="pagination-links">
+                <a href="{{$groupedTransactions["tfFirstPageUrl"]}}" class="page-link">&#171;</a>
+                <a href="{{$groupedTransactions["tfPreviousPageUrl"]}}" class="page-link">&#10094;</a>
+
+                @foreach ($groupedTransactions['tfPagination']->getUrlRange(1, $groupedTransactions['tfTotalPages']) as $page => $url)
+                <a 
+                    href="{{ $url }}" 
+                    class="page-link {{ $page == $groupedTransactions['tfCurrentPage'] ? 'active' : '' }}">
+                    {{ $page }}
+                </a>
+                @endforeach
+
+                <a href="{{$groupedTransactions["tfNextPageUrl"]}}" class="page-link">&#10095;</a>
+                <a href="{{$groupedTransactions["tfLastPageUrl"]}}" class="page-link">&#187;</a>
+            </div>
+        </div> 
     </div>
 
     {{-- Modal Show Invoice --}}
-    @foreach ($groupedTransactions as $order_id => $transactions)
+    @foreach ($groupedTransactions["groupedTransactions"] as $order_id => $transactions)
     <div id="showInvoice-{{ $order_id }}" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -198,58 +217,77 @@
 
         // Inisialisasi Highchart
         const salesData = @json($salesData);
+        // console.log(salesData);
         const renderSalesChart = (data) => {
-                Highcharts.chart('salesChart', {
-                    chart: {
-                        type: 'column', // Vertical line chart
-                        backgroundColor: '#ffffff',
-                        borderRadius: 10
-                    },
+            Highcharts.chart('salesChart', {
+                chart: {
+                    type: 'column', // Vertical column chart
+                    backgroundColor: '#ffffff',
+                    borderRadius: 10
+                },
+                title: {
+                    text: 'Penjualan Produk',
+                    style: { color: '#4caf50', fontSize: '18px' }
+                },
+                xAxis: {
+                    categories: data.map(item => item.saleDate), // Sale dates on the X-axis
+                    title: { text: 'Tanggal Terjual', style: { color: '#333' } },
+                    tickInterval: 1
+                },
+                yAxis: {
                     title: {
-                        text: 'Penjualan Produk',
-                        style: { color: '#4caf50', fontSize: '18px' }
+                        text: 'Jumlah Terjual',
+                        style: { color: '#333' }
                     },
-                    xAxis: {
-                        categories: data.map(item => item.saleDate), // Sale dates on the X-axis
-                        title: { text: 'Tanggal Terjual', style: { color: '#333' } },
-                        tickInterval: 1
+                    allowDecimals: false,
+                    min: 0
+                },
+                series: [{
+                    name: 'Jumlah Terjual', // Series name is just one string
+                    data: data.map((item) => ({
+                        y: parseInt(item.totalSold), // Quantity sold
+                        name: item.product,          // Product name
+                        date: item.saleDate,         // Sale date
+                    })),
+                    color: '#8bc34a',
+                    marker: {
+                        enabled: true,
+                        radius: 8,  // Size of the green circle
+                        symbol: 'circle'
                     },
-                    yAxis: {
-                        title: {
-                            text: 'Jumlah Terjual',
-                            style: { color: '#333' }
+                    lineWidth: 3,
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function () {
+                            return this.point.y; // Display number of sales inside the circle
                         },
-                        allowDecimals: false,
-                        min: 0
-                    },
-                    series: [{
-                        name: 'Jumlah Terjual',
-                        data: data.map((item) => ({
-                            y: parseInt(item.totalSold), // Quantity sold
-                            product: item.product,      // Product name
-                            date: item.saleDate         // Sale date
-                        })),
-                        color: '#8bc34a',
-                        marker: {
-                            enabled: true,
-                            radius: 5,
-                            symbol: 'circle'
+                        style: {
+                            fontSize: '14px', // Size of the text for the number of sales
+                            fontWeight: 'bold',
+                            color: '#fff' // White color for better contrast with the green circle
                         },
-                        lineWidth: 3,
-                        dataLabels: {
-                            enabled: true,
-                            formatter: function () {
-                                return this.point.product; // Display product name above the circle
-                            },
-                            style: {
-                                color: '#333',
-                                fontWeight: 'bold'
-                            }
-                        }
-                    }],
-                    credits: { enabled: false }
-                });
-            };
+                        verticalAlign: 'middle',
+                        y: 5 // Position of the number inside the circle
+                    },
+                    // Add dataLabels for product name below the "Jumlah Terjual" bar
+                    // stackLabels: {
+                    //     enabled: true,
+                    //     style: {
+                    //         fontWeight: 'bold',
+                    //         color: '#333',
+                    //         fontSize: '14px'
+                    //     },
+                    //     formatter: function () {
+                    //         return this.point.name; // Display product name below the column
+                    //     },
+                    //     verticalAlign: 'bottom', // Position product name below the bar
+                    //     y: 20 // Adjust the vertical position of the product name
+                    // }
+                }],
+                credits: { enabled: false }
+            });
+        };
+
 
     renderSalesChart(salesData);
 

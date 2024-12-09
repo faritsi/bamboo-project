@@ -209,6 +209,31 @@ body {
     align-items: center;
     margin-top: 5px;
 }
+/* Toast Container */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Toast Message */
+#toast-message {
+    display: none;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+#cart-count {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0 5px;
+    font-size: 12px;
+    position: relative;
+}
 
 /* CSS untuk div tombol minus, plus, dan delete */
 .cart-item-quantity .quantity-control,
@@ -378,10 +403,19 @@ body {
     }
 }
 
+.thumbnail-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
 .thumbnail-images {
     display: flex;
     gap: 10px;
-    justify-content: center;
+    transition: transform 0.3s ease;
+    width: max-content; /* Ensures the container is wide enough for all images */
 }
 
 .thumbnail-images img {
@@ -423,13 +457,32 @@ body {
     line-height: 1.6;
     color: #4d4d4d;
     margin: 0 auto;
+    display: -webkit-box; /* Create a flex container */
+    -webkit-box-orient: vertical; /* Set the box to be oriented vertically */
+    -webkit-line-clamp: 5; /* Limit to 5 lines */
+    overflow: hidden; /* Hide any overflow text */
+    text-overflow: ellipsis; /* Optional: Add ellipsis at the end of the text */
+}
+
+#show-more-btn {
+    display: block;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #1a7f44; /* Blue color */
+    background-color: transparent; /* No background color */
+    border: none; /* Remove border */
+    font-size: 1rem; /* Font size */
+    text-decoration: none;
+    padding: 5px 0; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold;
 }
 
 #berat {
     font-weight: bold;
 
     #berat-barang,
-    #kg {
+    #gram {
         font-weight: normal;
     }
 }
@@ -911,13 +964,7 @@ body {
 
     #content {
         flex-direction: column;
-        /* align-items: center; */
-    }
-
-    #image-produk {
-        width: 100%;
-        height: 500px;
-        overflow: hidden;
+        align-items: center;
     }
 
     #keterangan-produk {
@@ -964,9 +1011,19 @@ body {
     }
 
     #image-produk {
-        height: 500px;
+        height: 350px;
         width: 100%;
         overflow: hidden;
+    }
+
+    .thumbnail-images img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        border: 1px solid #8b5d33; /* Dark bamboo border */
     }
 
     #btnBeli {
@@ -1081,6 +1138,25 @@ body {
 
     #deskripsi-produk p {
         font-size: 14px;
+    }
+
+    .thumbnail-carousel {
+        width: 100%; /* Full width of the container */
+    }
+
+    .thumbnail-images {
+        display: flex;
+        gap: 5px; /* Reduced gap for small screens */
+    }
+
+    .thumbnail-images img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        border: 1px solid #8b5d33; /* Dark bamboo border */
     }
 
     .open-cart-btn {

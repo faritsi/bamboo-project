@@ -91,8 +91,11 @@
                         style="display: block; margin-bottom: 10px; max-width: 100px;">
                     <input type="file" id="thumbnail" name="image[]" onchange="previewImage(this, 'thumbnail-preview')"
                         multiple>
+                    <small class="form-text text-muted">
+                        Maksimal 10 Photo Dalam Sekali Upload
+                    </small>
                     @if ($errors->has('image'))
-                        <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                        <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
                     @endif
                 </div>
                 <div class="form-group">
@@ -121,7 +124,7 @@
                         <input type="file" id="edit-thumbnail-{{ $i->id }}" name="image"
                             onchange="previewImage(this, 'edit-thumbnail-preview-{{ $i->id }}')">
                         @if ($errors->has('image'))
-                            <p class="alert alert-danger">{{ $errors->first('image') }}</p>
+                            <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
                         @endif
                     </div>
                     <div class="form-group">
@@ -268,10 +271,19 @@
                 <div class="form-group">
                     <label for="image_produk">Link Youtube</label>
                     <textarea id="video_link" name="video_link"></textarea>
+                    @if ($errors->has('video_link'))
+                            <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <label for="video_path">Unggah Video</label>
                     <input type="file" id="video_path" name="video_path" accept="video/*">
+                    <small class="form-text text-muted">
+                        Max ukuran file 20MB, format yang diterima: .mov, .mp4, .avi, .mkv.
+                    </small>
+                    @if ($errors->has('video_path'))
+                            <p class="alert-modal alert-danger">{{ $errors->first('image') }}</p>
+                    @endif
                 </div>
                 <div class="form-group">
                     <button type="submit" class="submit-btn">Submit</button>

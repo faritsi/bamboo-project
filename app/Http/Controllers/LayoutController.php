@@ -38,6 +38,15 @@ class LayoutController extends Controller
         $totalProduk = Produk::count();
         $totalPenjualan = Transaksi::count();
         $totalPengunjung = Visitor::count();
+        $totalPendapatan = Transaksi::select(DB::raw('sum(qty * harga) as total_pembayaran'))
+            ->groupBy('order_id')
+            ->get();
+
+        // Hitung total pendapatan keseluruhan
+        // \Log::info('Hasil Query Total Pendapatan: ', $totalPendapatan->toArray());
+
+        $totalPendapatanValue = $totalPendapatan->sum('total_pembayaran') ?? 0; // Menjumlahkan semua total_pembayaran
+
         $user1 = User::count(); // Total semua pengguna
 
         // Kirim data ke view
@@ -51,6 +60,7 @@ class LayoutController extends Controller
             'totalProduk' => $totalProduk,
             'totalPenjualan' => $totalPenjualan,
             'totalPengunjung' => $totalPengunjung,
+            'totalPendapatanValue' => $totalPendapatanValue,
             'user1' => $user1, // Total pengguna
         ]);
     }
