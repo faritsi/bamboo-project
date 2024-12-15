@@ -15,14 +15,14 @@ class UserData extends Seeder
     {
         $user = [
             [
-                'role_id' => 2,
+                'role_id' => 1,
                 'name' => 'Jeki',
                 'username' => 'superadmin',
                 'password' => bcrypt('superadmin'),
                 'image' => 'dddd',
             ],
             [
-                'role_id' => 1,
+                'role_id' => 2,
                 'name' => 'Jeki 2',
                 'username' => 'admin@gmail.com',
                 'password' => bcrypt('admin'),

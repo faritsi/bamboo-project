@@ -12,6 +12,11 @@ html {
     scroll-behavior: smooth;
 }
 
+.url-produk {
+    position: relative;
+    z-index: 999;
+}
+
 #background {
     margin: 0 auto;
     padding: 0;
@@ -710,6 +715,13 @@ a {
     color: rgba(26, 26, 26, 0.5);
 }
 
+span.product_name {
+    color: #28a745;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
 .price {
     color: #333333;
     font-weight: 600;
@@ -1170,6 +1182,14 @@ a {
 #container-footer.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+@media (min-width: 1600px) {
+    #overlay-welcome {
+        margin: 220px auto 100px auto;
+        padding: 0;
+        width: 100%;
+    }
 }
 
 /* Large screens */

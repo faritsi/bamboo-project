@@ -22,22 +22,32 @@ class CatalogController extends Controller
     {
         $query = $request->query("status_code");
         $catalogFilter = $request->query("kategori");
-        $kategori = Kategori::where("name", $catalogFilter);
-
+        $kategori = Kategori::all();
 
         if ($query) {
             // Redirect to catalog without parameter
             return redirect('/catalog');
         }
 
-        // Paginate produk with a specific limit
-        // Build the query for Produk
+        $selectedCount = 0;
+
+        // Cek apakah input berasal dari modal (array)
+        if ($catalogFilter && is_array($catalogFilter)) {
+            // Jika input dari modal (kategori berupa array)
+            $selectedCount = count($catalogFilter); // Hitung jumlah kategori yang dipilih
+        } elseif (is_string($catalogFilter)) {
+            // Jika input dari luar modal, ubah menjadi array untuk filter
+            $catalogFilter = explode(',', $catalogFilter);
+        } else {
+            $catalogFilter = []; // Jika tidak ada input, set ke array kosong
+        }
+
+        // Query produk berdasarkan filter kategori
         $produkQuery = QueryBuilder::for(Produk::class)
-            ->allowedFilters('kategori') // Allow filtering by 'kategori'
-            ->when($catalogFilter && $catalogFilter !== 'semua', function ($query) use ($catalogFilter) {
-                // Apply filter for categories if it's not 'semua'
+            ->allowedFilters('kategori')
+            ->when(!empty($catalogFilter) && $catalogFilter !== ['semua'], function ($query) use ($catalogFilter) {
                 return $query->whereHas('kategori', function ($q) use ($catalogFilter) {
-                    $q->where('name', $catalogFilter); // Filter by category name
+                    $q->whereIn('name', $catalogFilter); // Filter dengan kategori yang dipilih
                 });
             });
         // Paginate the products with a specific limit (20 per page)
@@ -56,6 +66,8 @@ class CatalogController extends Controller
         return view('halaman/all_produk', [
             'title' => 'Catalog',
             'ingpo' => Ingpo::all(),
+            'kategori' => $kategori,
+            'selectedCount' => $selectedCount,
             'produkItems' => $produkItems,
             'currentPage' => $currentPage,
             'totalPages' => $totalPages,

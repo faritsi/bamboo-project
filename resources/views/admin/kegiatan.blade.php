@@ -18,21 +18,9 @@
             {{ session('success') }}
         </div>
     @endif
-
-    <!-- Section Title -->
-    {{-- <div class="section-title">
-    <h2>Galeri Foto Kegiatan</h2>
-</div> --}}
     <div class="judul-halaman">
         <h2>Foto Kegiatan</h2>
     </div>
-
-    <!-- Button to Add Image -->
-    {{-- <div class="add-photo-button    ">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPhotoModal">
-        Tambah Foto Kegiatan
-    </button>
-</div> --}}
 
     <div class="bg-tambah-photo-kegiatan" id="myBtn">
         <div id="bo-tambah-photo-kegiatan">
@@ -46,36 +34,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal for Adding New Photo -->
-    {{-- <div class="modal fade" id="addPhotoModal" tabindex="-1" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPhotoModalLabel">Upload Foto Kegiatan</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="photoForm" action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Pilih Gambar</label>
-                        <input class="form-control" type="file" id="image" name="images[]" accept="image/*" multiple required>
-                        <div id="imagePreview" class="mt-3"></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="video_path" class="form-label">Link Video</label>
-                        <input class="form-control" type="url" id="video_path" name="video_path" placeholder="https://youtube.com/your-video-link">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> --}}
 
     {{-- Add Kegiatan --}}
     <div id="myModal" class="modal">
@@ -153,27 +111,6 @@
         </div>
     @endforeach
 
-
-    {{-- <div class="photo-gallery mt-5">
-    <div class="grid-gallery">
-        @foreach ($kegiatan as $i)
-            <div class="photo-card">
-                <div class="photo-image">
-                    <img src="{{ asset('storage/' . $i->image_path) }}" alt="Foto Kegiatan" class="img-fluid">
-                </div>
-                <div class="photo-details">
-                    <button class="btn btn-warning btn-sm" onclick="editImage({{ $i->id }})">Edit</button>
-                    <form action="{{ route('kegiatan.destroy', $i->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div> --}}
-
     {{-- Display Photo Kegiatan --}}
     <div class="container-photo">
         <div class="card-photo">
@@ -220,29 +157,31 @@
     <div id="video-container">
         @foreach ($video as $v)
             <div class="wrapper-video">
-                @if ($v->video_path)
+                <div class="video-card">
+                    @if ($v->video_path)
                     <iframe src="{{ asset('/storage/' . $v->video_path) }}" title="Company Video"
                         allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen auto></iframe>
-                @endif
-                @if ($v->video_link)
-                    <iframe src="{{ $v->video_link }}" title="Company Video"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-                @endif
-                <div class="video-overlay">
-                    <button class="btn-edit-video" data-id="{{ $v->id }}" data-toggle="modal"
-                        data-target="#editModal-{{ $v->id }}">
-                        <span class="material-symbols-outlined">
-                            edit
-                        </span>
-                    </button>
-                    <button class="btn-delete-video" data-id="{{ $v->id }}" data-toggle="modal"
-                        data-target="#deleteModal-{{ $v->id }}">
-                        <span class="material-symbols-outlined">
-                            delete
-                        </span>
-                    </button>
+                    @endif
+                    @if ($v->video_link)
+                        <iframe src="{{ $v->video_link }}" title="Company Video"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    @endif
+                    <div class="video-overlay">
+                        <button class="btn-edit-video" data-id="{{ $v->id }}" data-toggle="modal"
+                            data-target="#editModal-{{ $v->id }}">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                        <button class="btn-delete-video" data-id="{{ $v->id }}" data-toggle="modal"
+                            data-target="#deleteModal-{{ $v->id }}">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -305,7 +244,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image_produk">Link Youtube</label>
-                        <textarea id="video_link" name="video_link"></textarea>
+                        <textarea id="video_link" name="video_link">{{$v->video_link}}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="image_produk">Upload Video</label>

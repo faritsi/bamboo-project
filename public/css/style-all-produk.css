@@ -167,16 +167,27 @@ html {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.kategori.active,
 .kategori:hover {
-    background-color: #1b5e20; /* Darker green on hover/active */
+    background-color: #1b5e20; /* Darker green on hover */
+}
+
+.kategori.active {
+    background-color: #1b5e20; /* Darker green */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add a more prominent shadow */
+    color: #ffffff; /* Ensure text color stays white */
+}
+
+#counter {
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: 5px;
 }
 
 /* Product Content Styling */
 #content-produk {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for products */
-    gap: 30px; /* More spacing between products */
+    grid-template-columns: repeat(4, 1fr); /* 3 columns for products */
+    gap: 20px; /* More spacing between products */
     margin-top: 30px;
 }
 
@@ -194,9 +205,17 @@ html {
     border-color: #2e7d32; /* Green border on hover */
 }
 
+#card-image {
+    width: 100%; /* Lebar penuh container */
+    height: 250px; /* Tinggi tetap */
+    overflow: hidden;
+    border-radius: 8px 8px 0 0; /* Membulatkan sudut atas */
+    background-color: #f8f8f8; /* Latar belakang abu-abu terang */
+}
+
 #card-image img {
     width: 100%;
-    height: 220px;
+    height: 100%;
     object-fit: cover;
     border-bottom: 3px solid #2e7d32; /* Green bottom border for product image */
 }
@@ -228,6 +247,10 @@ html {
     font-weight: bold;
     color: #2e7d32; /* Vibrant green for product name */
     margin-bottom: 10px;
+    white-space: nowrap; /* Pastikan teks dalam 1 baris */
+    overflow: hidden; /* Sembunyikan teks yang kelebihan */
+    text-overflow: ellipsis; /* Tambahkan "..." jika teks terlalu panjang */
+    max-width: 100%;
 }
 
 #harga-produk {
@@ -286,6 +309,107 @@ html {
     transform: translateY(0);
 }
 
+/* Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Prevent scrolling */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 90%; /* Default width */
+    max-width: 600px; /* Max width */
+    max-height: 80%; /* Max height for content */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    overflow-y: auto; /* Enable scrolling within modal content */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: start;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #e7f7e7;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #d1e7d1;
+    cursor: pointer;
+}
+
+.form-check:hover {
+    background-color: #d4ecd4;
+    border-color: #b5d7b5;
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+
+.form-check-label {
+    white-space: nowrap;
+}
+
+/* Submit button styles */
+.submit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @media (max-width: 1200px) {
     #logo-company img {
         width: 65px;
@@ -309,7 +433,7 @@ html {
 
     #content-produk {
         grid-template-columns: repeat(
-            2,
+            3,
             1fr
         ); /* 2 columns for medium screens */
     }
@@ -317,15 +441,30 @@ html {
 
 @media (max-width: 768px) {
     #content-produk {
-        grid-template-columns: 2, 1fr; /* 1 column for small screens */
+        display: grid;
+        margin: 0;
+        grid-template-columns: repeat(2, 1fr); /* 1 column for small screens */
     }
 
     #header-teks {
         display: none;
     }
+
+    #tipe-layangan-produk,
+    #tipe-tumbler-produk,
+    #tipe-toples-produk {
+        display: none;
+    }
 }
 
 @media (max-width: 576px) {
+    #tipe-produk {
+        margin: 20px 0;
+    }
+    #tipe-semua-produk {
+        display: none;
+    }
+
     #header-atas,
     #header-bawah {
         font-size: 16px;
@@ -335,7 +474,52 @@ html {
         display: none;
     }
 
-    #content-produk {
-        grid-template-columns: 1fr; /* 1 column for small screens */
+    #card-container {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
     }
+
+    #card-image {
+        width: 100%;
+        height: 150px; /* Tinggi tetap untuk gambar */
+        overflow: hidden; /* Hindari gambar keluar dari container */
+    }
+
+    #card-image img {
+        width: 100%; /* Gambar memenuhi lebar container */
+        height: 100%; /* Tinggi tetap */
+        object-fit: cover; /* Menjaga aspek rasio gambar tanpa distorsi */
+    }
+
+    /* Text Section */
+    #card-text {
+        margin-top: 5px;
+    }
+
+    #nama-produk {
+        font-size: 14px; /* Ukuran font nama produk */
+        font-weight: bold;
+        margin: 5px 0;
+    }
+
+    #harga-produk {
+        font-size: 12px; /* Ukuran font harga */
+        color: #888;
+        margin: 0;
+    }
+
+    /* Stock Section */
+    /* #card-stok {
+        padding: 3px 5px;
+        border-radius: 4px;
+        font-size: 12px;
+        text-align: center;
+        margin-bottom: 5px;
+    } */
 }

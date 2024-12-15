@@ -39,8 +39,10 @@ class LayoutController extends Controller
         $totalPenjualan = Transaksi::count();
         $totalPengunjung = Visitor::count();
         $totalPendapatan = Transaksi::select(DB::raw('sum(qty * harga) as total_pembayaran'))
+            ->where('status', 'success')
             ->groupBy('order_id')
             ->get();
+
 
         // Hitung total pendapatan keseluruhan
         // \Log::info('Hasil Query Total Pendapatan: ', $totalPendapatan->toArray());

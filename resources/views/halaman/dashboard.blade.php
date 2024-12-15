@@ -183,25 +183,27 @@
                                     <div class="slide-img">
                                         <img src="{{ asset('storage/' . $p->image) }}" alt="Product Image">
                                         <div class="overlay">
-                                            <a href="https://www.tokopedia.com/your-store-link" class="shop-button" target="_blank">Tokopedia</a>
-                                            <a href="https://shopee.co.id/your-store-link" class="shop-button" target="_blank">Shopee</a>
+                                            <a href={{$p->tokped}} class="shop-button" target="_blank">Tokopedia</a>
+                                            <a href={{$p->shopee}} class="shop-button" target="_blank">Shopee</a>
                                         </div>
                                     </div>
                 
                                     <!-- Product details -->
-                                    <div class="detail-box">
-                                        <div class="type">
-                                            <a href="#">{{ $p->nama_produk }}</a>
-                                            {{-- <span>{{ $p->deskripsi }}</span> --}}
-                                        <p class="price">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
-
+                                    <a class="url-produk" href="{{url('/produk/' . str_replace(' ', '-', $p->nama_produk))}}">
+                                        <div class="detail-box">
+                                            <div class="type">
+                                                <span class="product_name">{{ $p->nama_produk }}</span>
+                                                {{-- <span>{{ $p->deskripsi }}</span> --}}
+                                                <p class="price">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
+                                    
                 
                                     <!-- Shop buttons -->
                                     <div class="button-container">
                                         <div class="shop-buttons">
-                                            <a href="#" class="buy-btn">Beli Disini</a>
+                                            <a href="{{url('/produk/' . str_replace(' ', '-', $p->nama_produk))}}" class="buy-btn">Beli Disini</a>
                                         </div>
 
                                         <div class="slide-img-outter">
@@ -298,9 +300,9 @@
                     <div id="footer-links">
                         <ul>
                             <li><a href="#navbar">Home</a></li>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#products">Products</a></li>
+                            <li><a href="#content-about-us">About Us</a></li>
+                            <li><a href="#content-our-service">Services</a></li>
+                            <li><a href="#container-catalog">Products</a></li>
                             <li><a href="#contact">Contact Us</a></li>
                         </ul>
                     </div>

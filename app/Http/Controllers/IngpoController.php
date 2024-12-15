@@ -122,7 +122,7 @@ class IngpoController extends Controller
             'favicon' => 'favicon',
             'image_header' => 'header',
             'image_about' => 'about',
-            'image_visi_misi' => 'visi',
+            'image_visi_misi' => 'image_visi_misi',
             // 'image_misi' => 'misi',
             'logo_footer' => 'footer',
         ];
@@ -149,6 +149,7 @@ class IngpoController extends Controller
             'slogan' => $request->slogan,
             'desc_slogan' => $request->desc_slogan,
             'desc_about' => $request->desc_about,
+            'image_visi_misi' => $imageName,
             'desc_visi' => $request->desc_visi,
             'desc_misi' => $request->desc_misi,
             'judul_service' => $request->judul_service,

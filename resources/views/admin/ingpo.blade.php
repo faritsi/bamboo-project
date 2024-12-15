@@ -93,7 +93,7 @@
             <h2>Image Visi Misi</h2>
             <input type="file" id="image_visi" name="image_visi_misi" onchange="previewImage(event, 'imageVisiPreview')">
             <div class="image-preview">
-                <img id="imageVisiPreview" src="{{ asset('storage/' . $i->image_visi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
+                <img id="imageVisiPreview" src="{{ asset('storage/ingpo-images/' . $i->image_visi_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
             </div>
         </div>
 

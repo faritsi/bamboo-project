@@ -93,6 +93,23 @@ class TransaksiController extends Controller
         $salesData = $this->getSalesData($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
         $tableTransactionData = $this->getTableTransaksi($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
 
+
+        // Filter products based on selected category and product
+        if ($pilihProduk !== 'semuaProduk') {
+            // If a specific product is selected, filter by product name
+            $produkByCategory = Produk::where('name', $pilihProduk)->get();
+        } else {
+            // If 'semuaProduk' is selected, filter products by the selected category
+            if ($pilihKategori !== 'semuaKategori') {
+                $produkByCategory = Produk::whereHas('kategori', function ($query) use ($pilihKategori) {
+                    $query->where('name', $pilihKategori); // Filter by category name
+                })->get();
+            } else {
+                // If 'semuaKategori' is selected, return all products
+                $produkByCategory = Produk::all();
+            }
+        }
+
         // $startDate = session('startDate', Carbon::now()->subDays(7)->format('Y-m-d'));
         // $endDate = session('endDate', Carbon::now()->format('Y-m-d'));
 
@@ -110,7 +127,7 @@ class TransaksiController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'pilihKategori' => $pilihKategori,
-            'pilihProduk' => $pilihProduk,
+            'pilihProduk' => $produkByCategory,
         ]);
     }
 
@@ -384,6 +401,136 @@ class TransaksiController extends Controller
         return view('admin.transaksi', compact('transactions'));
     }
 
+    // public function notificationHandler(Request $request)
+    // {
+    //     try {
+    //         // Konfigurasi Midtrans
+    //         Config::$serverKey = env('MIDTRANS_SERVER_KEY', 'SB-Mid-server-9zcBME8uz3JAPNkLONOYiCEa');
+    //         Config::$isProduction = false; // Ubah ke true jika menggunakan mode produksi
+
+    //         // Instantiate Midtrans notification object
+    //         $notification = new Notification();
+
+    //         // Retrieve order_id and transaction status from notification
+    //         $orderId = $notification->order_id;
+    //         $transactionStatus = $notification->transaction_status;
+    //         $fraudStatus = $notification->fraud_status;
+
+
+
+    //         // Log the notification details for testing
+    //         Log::info('Midtrans Notification Received: ', [
+    //             'order_id' => $orderId,
+    //             'transaction_status' => $transactionStatus,
+    //             'fraud_status' => $fraudStatus,
+    //         ]);
+
+    //         // Cari transaksi berdasarkan order_id
+    //         $transactions = Transaksi::where('order_id', $orderId)->get();
+
+
+    //         if ($transactions->isEmpty()) {
+    //             return response()->json(['error' => 'Transaction not found'], 404);
+    //         }
+
+    //         // Initialize the new status variable
+    //         $newStatus = null;
+
+    //         // Tentukan status baru berdasarkan status dari Midtrans
+    //         if ($transactionStatus == 'capture') {
+    //             if ($fraudStatus == 'challenge') {
+    //                 $newStatus = 'challenge';
+    //             } else {
+    //                 $newStatus = 'success';
+    //             }
+    //         } elseif ($transactionStatus == 'settlement') {
+    //             $newStatus = 'success';
+    //         } elseif ($transactionStatus == 'pending') {
+    //             $newStatus = 'pending';
+    //         } elseif ($transactionStatus == 'deny') {
+    //             $newStatus = 'denied';
+    //         } elseif ($transactionStatus == 'expire') {
+    //             $newStatus = 'expired';
+    //         } elseif ($transactionStatus == 'cancel') {
+    //             $newStatus = 'canceled';
+    //         }
+
+    //         // Declare array to store all product details
+    //         $productDetails = [];
+    //         $transactionData = null;
+    //         $storeName = $notification->store ?? null;
+    //         // Log::info('Store Name: ' . $storeName);
+    //         $bank = isset($notification->va_numbers[0]->bank) ? $notification->va_numbers[0]->bank : null;
+    //         // Perbarui status setiap transaksi yang terkait dengan order_id
+    //         foreach ($transactions as $transaction) {
+    //             $transaction->jenis_pembayaran = $notification->payment_type;
+    //             $transaction->status = $newStatus;
+    //             $transaction->bank = $bank;
+    //             $transaction->store_name = $storeName;
+    //             $transaction->save();
+
+    //             // Jika status transaksi adalah 'success', kurangi stok produk
+    //             if ($newStatus === 'success' && $transaction->isChecked) {
+    //                 // Cari produk berdasarkan kode_produk
+    //                 $produk = \DB::table('produks')
+    //                     ->where('kode_produk', $transaction->kode_produk)
+    //                     ->first();
+    //                 if ($produk) {
+
+    //                     // Kurangi stok produk
+    //                     $stokBaru = $produk->jumlah_produk - $transaction->qty;
+
+
+    //                     // Pastikan stok tidak menjadi negatif
+    //                     if ($stokBaru < 0) {
+    //                         $stokBaru = 0;
+    //                     }
+
+    //                     // Update stok produk di database
+    //                     \DB::table('produks')->where('kode_produk', $transaction->kode_produk)->update([
+    //                         'jumlah_produk' => $stokBaru
+    //                     ]);
+    //                     $transactionData = $transaction;
+    //                     $productDetails[] = [
+    //                         "nama_produk" => $transaction->nama_produk,
+    //                         "qty" => $transaction->qty,
+    //                         "harga" => $transaction->harga
+    //                     ];
+    //                 } else {
+    //                     Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
+    //                 }
+    //             }
+    //         }
+    //         if ($transaction->isChecked) {
+    //             $this->sendNotificationMessageWA($transactionData, $productDetails);
+    //         }
+    //         if ($newStatus === 'success' && $fraudStatus === 'accept') {
+    //             foreach ($transactions as $transaction) {
+    //                 $transaction->isChecked = true;
+    //                 $transaction->save();
+    //             }
+    //         }
+
+    //         // Log perubahan status
+    //         Log::info('Transaction Status Updated: ', [
+    //             'productDetails' => $productDetails,
+    //         ]);
+    //         // Log perubahan status
+    //         Log::info('Transaction Status Updated: ', [
+    //             'order_id' => $orderId,
+    //             'new_status' => $newStatus
+    //         ]);
+
+    //         return response()->json(['message' => 'Notification received and status updated, stock adjusted'], 200);
+    //     } catch (\Exception $e) {
+    //         // Log the error
+    //         Log::error('Error handling Midtrans notification: ' . $e->getMessage());
+
+    //         // Return error response
+    //         return response()->json(['error' => 'Failed to process notification'], 500);
+    //     }
+    // }
+
     public function notificationHandler(Request $request)
     {
         try {
@@ -397,20 +544,15 @@ class TransaksiController extends Controller
             // Retrieve order_id and transaction status from notification
             $orderId = $notification->order_id;
             $transactionStatus = $notification->transaction_status;
-            $fraudStatus = $notification->fraud_status;
-
-
 
             // Log the notification details for testing
             Log::info('Midtrans Notification Received: ', [
                 'order_id' => $orderId,
                 'transaction_status' => $transactionStatus,
-                'fraud_status' => $fraudStatus,
             ]);
 
             // Cari transaksi berdasarkan order_id
             $transactions = Transaksi::where('order_id', $orderId)->get();
-
 
             if ($transactions->isEmpty()) {
                 return response()->json(['error' => 'Transaction not found'], 404);
@@ -421,11 +563,7 @@ class TransaksiController extends Controller
 
             // Tentukan status baru berdasarkan status dari Midtrans
             if ($transactionStatus == 'capture') {
-                if ($fraudStatus == 'challenge') {
-                    $newStatus = 'challenge';
-                } else {
-                    $newStatus = 'success';
-                }
+                $newStatus = 'success';  // Jika transaksi capture, anggap berhasil
             } elseif ($transactionStatus == 'settlement') {
                 $newStatus = 'success';
             } elseif ($transactionStatus == 'pending') {
@@ -442,9 +580,7 @@ class TransaksiController extends Controller
             $productDetails = [];
             $transactionData = null;
             $storeName = $notification->store ?? null;
-            // Log::info('Store Name: ' . $storeName);
             $bank = isset($notification->va_numbers[0]->bank) ? $notification->va_numbers[0]->bank : null;
-
 
             // Perbarui status setiap transaksi yang terkait dengan order_id
             foreach ($transactions as $transaction) {
@@ -454,18 +590,16 @@ class TransaksiController extends Controller
                 $transaction->store_name = $storeName;
                 $transaction->save();
 
-                // Jika status transaksi adalah 'success', kurangi stok produk
-                if ($newStatus === 'success') {
+                // Jika status transaksi adalah 'success' dan belum terproses (isChecked == false), kurangi stok produk
+                if ($newStatus === 'success' && !$transaction->isChecked) {
                     // Cari produk berdasarkan kode_produk
                     $produk = \DB::table('produks')
                         ->where('kode_produk', $transaction->kode_produk)
                         ->first();
 
                     if ($produk) {
-
                         // Kurangi stok produk
                         $stokBaru = $produk->jumlah_produk - $transaction->qty;
-
 
                         // Pastikan stok tidak menjadi negatif
                         if ($stokBaru < 0) {
@@ -482,17 +616,25 @@ class TransaksiController extends Controller
                             "qty" => $transaction->qty,
                             "harga" => $transaction->harga
                         ];
+
+                        // Mark transaction as checked to avoid reducing stock twice
+                        $transaction->isChecked = true;
+                        $transaction->save();
                     } else {
                         Log::warning('Produk tidak ditemukan: ', ['kode_produk' => $transaction->kode_produk]);
                     }
                 }
             }
 
-            // Log perubahan status
-            Log::info('Transaction Status Updated: ', [
-                'productDetails' => $productDetails,
-            ]);
-            $this->sendNotificationMessageWA($transactionData, $productDetails);
+            // Send messages only if the status is 'success'
+            if ($newStatus === 'success') {
+                // Log perubahan status
+                Log::info('Transaction Status Updated: ', [
+                    'productDetails' => $productDetails,
+                ]);
+                $this->sendNotificationMessageWA($transactionData, $productDetails);
+            }
+
             // Log perubahan status
             Log::info('Transaction Status Updated: ', [
                 'order_id' => $orderId,
@@ -508,6 +650,7 @@ class TransaksiController extends Controller
             return response()->json(['error' => 'Failed to process notification'], 500);
         }
     }
+
 
 
     private function sendNotificationMessageWA($transaction, $produks)
@@ -527,7 +670,7 @@ class TransaksiController extends Controller
         $messageTemplate .= " 🛒 *Produk yang Dibeli:*\n";
 
         foreach ($produks as $product) {
-            $messageTemplate .= "- Nama Produk: {$product['nama_produk']}\n";
+            $messageTemplate .= "- Nama Produk: *{$product['nama_produk']}*\n";
             $messageTemplate .= "- Harga Produk: Rp. " . number_format($product['harga'], 0, ',', '.') . "\n";
             $messageTemplate .= "- Jumlah: {$product['qty']}\n";
             $messageTemplate .= "------------------------------------\n";
@@ -550,14 +693,19 @@ class TransaksiController extends Controller
 
         $messageTemplate .= " Jika ada pertanyaan, hubungi kami di 085859666343.\n\n";
         $messageTemplate .= "Terima kasih!\n";
-        // Later change this message
 
+
+        Log::info('Update WA: ', [
+            'WA' => $transaction->nohp,
+        ]);
         // Send message to buyer
-        $this->whatsappService->sendMessage(
+        $result = $this->whatsappService->sendMessage(
             $transaction->nohp,
             $messageTemplate
         );
-
+        Log::info('Update WA: ', [
+            'response wa' => $result,
+        ]);
         // Send message to Admin
         // $admin = "{{$ingpo->nowa}}";
         $admin = "087716068691";

@@ -25,10 +25,14 @@
                         <input type="date" id="endDate" name="endDate" value={{$groupedTransactions['endDate']}}>
                         
                         <label for="pilihKategori">Pilih Kategori:</label>
-                        <select id="pilihKategori" name="pilihKategori">
-                            <option value="semuaKategori" {{ request('pilihKategori') == 'semuaKategori' ? 'selected' : '' }}>Semua Kategori</option>
+                        <select id="pilihKategori" name="pilihKategori" onchange="this.form.submit()">
+                            <option value="semuaKategori" 
+                                {{ (request('pilihKategori') == 'semuaKategori' || session('pilihKategori') == 'semuaKategori') ? 'selected' : '' }}>
+                                Semua Kategori
+                            </option>
                             @foreach ($kategori as $k)
-                                <option value="{{ $k->name }}" {{ request('pilihKategori') == $k->name ? 'selected' : '' }}>
+                                <option value="{{ $k->name }}" 
+                                    {{ (request('pilihKategori') == $k->name || session('pilihKategori') == $k->name) ? 'selected' : '' }}>
                                     {{ $k->name }}
                                 </option>
                             @endforeach
@@ -36,14 +40,19 @@
 
                         <label for="pilihProduk">Pilih Produk:</label>
                         <select id="pilihProduk" name="pilihProduk">
-                            <option value="semuaProduk" {{request('pilihProduk') == 'semuaProduk'? 'selected' : ''}}>Semua Produk</option>
+                            <option value="semuaProduk" 
+                                {{ request('pilihProduk') == 'semuaProduk' || session('pilihProduk') == 'semuaProduk' ? 'selected' : '' }}>
+                                Semua Produk
+                            </option>
                             @foreach ($produk as $p)
-                                <option value="{{$p->nama_produk}}" {{request('pilihProduk') == $p->nama_produk ? 'selected' : ''}}>
-                                    {{$p->nama_produk}}
-                                </option>
+                                @if ($pilihKategori == 'semuaKategori' || $p->kategori->name == $pilihKategori)
+                                    <option value="{{ $p->nama_produk }}" 
+                                        {{ (request('pilihProduk') == $p->nama_produk || session('pilihProduk') == $p->nama_produk) ? 'selected' : '' }}>
+                                        {{ $p->nama_produk }}
+                                    </option>
+                                @endif
                             @endforeach
                         </select>
-
                         <button type="submit" class="btn-filter">Tampilkan Data</button>
                     </form>
                 </div>

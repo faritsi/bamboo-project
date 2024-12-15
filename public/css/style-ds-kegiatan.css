@@ -186,72 +186,86 @@ body {
     margin: 0 auto;
 }
 
+/* Video Container */
 #video-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Wrapper Video */
+.wrapper-video {
     padding: 30px 25px 50px 90px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px; /* Kurangi gap antar elemen */
-}
-
-.wrapper-video {
-    position: relative; /* Supaya overlay bisa diposisikan di atas video */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    /* position: relative;
     overflow: hidden;
-    border-radius: 10px; /* Tambahkan border-radius untuk tampilan lebih halus */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Berikan bayangan pada video */
-    background-color: #f9f9f9; /* Tambahkan latar belakang untuk kontras */
-    height: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+    aspect-ratio: 16 / 9; Menjaga proporsi 16:9 */
 }
 
+.video-card {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0, 0.5);
+    width: 100%;
+    height: 300px;
+    position: relative;
+    display: inline-block;
+    aspect-ratio: 16/9;
+}
+
+/* Iframe Video */
 .wrapper-video iframe {
-    width: 100%; /* Pastikan iframe menyesuaikan ukuran kontainer */
-    height: 100%; /* Standar tinggi video */
-    border: none; /* Hapus border iframe */
-    border-radius: 10px 10px 0 0; /* Supaya konsisten dengan wrapper */
+    width: 100%; /* Lebar penuh */
+    height: 100%; /* Tinggi menyesuaikan aspect ratio */
+    object-fit: cover; /* Menjaga aspek rasio gambar/video */
+    border: none;
 }
 
+/* Video Overlay */
 .video-overlay {
-    padding: 15px;
-
-    button.btn-edit-video {
-        padding: 5px 8px;
-        font-size: 12px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-color: #fff;
-        color: blue;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    }
-
-    button.btn-edit-video:hover {
-        background-color: blue;
-        color: #fff;
-    }
-
-    button.btn-delete-video {
-        padding: 5px 8px;
-        font-size: 12px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-color: #fff;
-        color: red;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    }
-
-    button.btn-delete-video:hover {
-        background-color: red;
-        color: #fff;
-    }
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px; /* Jarak antar tombol */
 }
 
-.wrapper-video:hover .video-overlay {
-    opacity: 1; /* Tampilkan overlay saat hover */
+/* Button Edit Video */
+button.btn-edit-video,
+button.btn-delete-video {
+    padding: 5px 8px;
+    font-size: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-edit-video {
+    color: blue;
+}
+
+button.btn-edit-video:hover {
+    background-color: blue;
+    color: #fff;
+}
+
+button.btn-delete-video {
+    color: red;
+}
+
+button.btn-delete-video:hover {
+    background-color: red;
+    color: #fff;
 }
 
 #co-title {
@@ -277,8 +291,73 @@ body {
         padding: 30px;
     }
 
-    #video-container {
-        padding: 30px;
+    .wrapper-video {
+        padding: 30px; /* Kurangi padding pada grid */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+        gap: 15px; /* Kurangi jarak antar elemen */
+        max-width: 100%; /* Pastikan lebar maksimal mengikuti kontainer */
+    }
+
+    .video-card {
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan lembut */
+        width: 100%;
+        height: 250px; /* Tinggi video card lebih kecil */
+        position: relative;
+        display: inline-block;
+        aspect-ratio: 16/9; /* Menjaga proporsi 16:9 */
+        background-color: #f9f9f9; /* Warna latar */
+    }
+
+    /* Iframe Video */
+    .wrapper-video iframe {
+        width: 100%; /* Lebar penuh */
+        height: 100%; /* Tinggi mengikuti card */
+        object-fit: cover; /* Menjaga aspek rasio video */
+        border: none;
+    }
+
+    /* Video Overlay */
+    .video-overlay {
+        position: absolute;
+        top: 8px; /* Jarak dari atas */
+        right: 8px; /* Jarak dari kanan */
+        display: flex;
+        gap: 8px; /* Jarak antar tombol */
+        z-index: 10; /* Pastikan overlay berada di atas */
+    }
+
+    /* Tombol Edit dan Delete */
+    button.btn-edit-video,
+    button.btn-delete-video {
+        padding: 5px 10px;
+        font-size: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-edit-video {
+        color: blue;
+    }
+
+    button.btn-edit-video:hover {
+        background-color: blue;
+        color: #fff;
+    }
+
+    button.btn-delete-video {
+        color: red;
+    }
+
+    button.btn-delete-video:hover {
+        background-color: red;
+        color: #fff;
     }
 }
 
@@ -290,25 +369,144 @@ body {
         max-width: 300px;
     }
 
-    #video-container {
-        grid-template-columns: repeat(1, 1fr); /* 2 photos per row */
+    .wrapper-video {
+        display: grid;
+        grid-template-columns: 1fr; /* 1 kolom */
+        gap: 15px; /* Jarak antar elemen video */
+        max-width: 100%; /* Pastikan lebar penuh */
     }
 
-    .wrapper-video {
-        width: 400px;
-        height: 300px;
-        justify-content: center;
-        margin: 0 auto;
+    .video-card {
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Bayangan lembut */
+        width: 100%;
+        height: 220px; /* Tinggi video card lebih kecil */
+        position: relative;
+        display: inline-block;
+        aspect-ratio: 16/9; /* Menjaga proporsi 16:9 */
+        background-color: #f9f9f9; /* Latar belakang */
+    }
+
+    /* Iframe Video */
+    .wrapper-video iframe {
+        width: 100%; /* Lebar penuh */
+        height: 100%; /* Tinggi mengikuti card */
+        object-fit: cover; /* Menjaga aspek rasio video */
+        border: none;
+    }
+
+    /* Video Overlay */
+    .video-overlay {
+        position: absolute;
+        top: 8px; /* Jarak dari atas */
+        right: 8px; /* Jarak dari kanan */
+        display: flex;
+        gap: 8px; /* Jarak antar tombol */
+        z-index: 10; /* Pastikan overlay berada di atas */
+    }
+
+    /* Tombol Edit dan Delete */
+    button.btn-edit-video,
+    button.btn-delete-video {
+        padding: 4px 8px; /* Ukuran tombol lebih kecil */
+        font-size: 11px; /* Ukuran font lebih kecil */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-edit-video {
+        color: blue;
+    }
+
+    button.btn-edit-video:hover {
+        background-color: blue;
+        color: #fff;
+    }
+
+    button.btn-delete-video {
+        color: red;
+    }
+
+    button.btn-delete-video:hover {
+        background-color: red;
+        color: #fff;
     }
 }
 
 @media (max-width: 576px) {
     .card-photo {
-        grid-template-columns: repeat(1, 1fr); /* 2 photos per row */
+        grid-template-columns: repeat(2, 1fr); /* 2 photos per row */
     }
 
     .wrapper-video {
-        width: 300px;
-        height: 200px;
+        display: grid;
+        grid-template-columns: 1fr; /* Satu kolom */
+        gap: 10px; /* Jarak antar elemen video */
+        max-width: 100%; /* Pastikan lebar penuh */
+    }
+
+    .video-card {
+        overflow: hidden;
+        border-radius: 10px; /* Sudut membulat */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan lembut */
+        width: 100%; /* Lebar penuh */
+        height: 200px; /* Tinggi video lebih kecil */
+        position: relative;
+        aspect-ratio: 16/9; /* Menjaga proporsi 16:9 */
+        background-color: #f9f9f9; /* Latar belakang */
+    }
+
+    /* Iframe Video */
+    .wrapper-video iframe {
+        width: 100%; /* Lebar penuh */
+        height: 100%; /* Tinggi mengikuti card */
+        object-fit: cover; /* Menjaga proporsi video */
+        border: none; /* Hilangkan border */
+    }
+
+    /* Video Overlay */
+    .video-overlay {
+        position: absolute;
+        top: 5px; /* Jarak lebih kecil dari atas */
+        right: 5px; /* Jarak lebih kecil dari kanan */
+        display: flex;
+        gap: 5px; /* Jarak antar tombol lebih kecil */
+        z-index: 10; /* Pastikan overlay berada di atas */
+    }
+
+    /* Tombol Edit dan Delete */
+    button.btn-edit-video,
+    button.btn-delete-video {
+        padding: 3px 6px; /* Ukuran tombol lebih kecil */
+        font-size: 10px; /* Font lebih kecil */
+        border: none;
+        border-radius: 5px; /* Sudut tombol membulat */
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    button.btn-edit-video {
+        color: blue;
+    }
+
+    button.btn-edit-video:hover {
+        background-color: blue;
+        color: #fff;
+    }
+
+    button.btn-delete-video {
+        color: red;
+    }
+
+    button.btn-delete-video:hover {
+        background-color: red;
+        color: #fff;
     }
 }

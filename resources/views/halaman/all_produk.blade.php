@@ -64,22 +64,68 @@
             <div id="container">
                 <div id="title">Catalog Produk</div>
                 <div id="tipe-produk" class="clearfix">
-                    
-                    <a id="tipe-semua-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'semua']) }}">
+                    <a id="tipe-semua-produk" 
+                    class="kategori {{ request('kategori') == 'semua' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'semua']) }}">
                         <h3>Semua</h3>
                     </a>
-                    <a id="tipe-toples-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'toples']) }}">
+
+                    <a id="tipe-toples-produk" 
+                    class="kategori {{ request('kategori') == 'toples' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'toples']) }}">
                         <h3>Toples</h3>
                     </a>
-                    <a id="tipe-layangan-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'mug']) }}">
+
+                    <a id="tipe-layangan-produk" 
+                    class="kategori {{ request('kategori') == 'mug' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'mug']) }}">
                         <h3>Mug</h3>
                     </a>
-                    <a id="tipe-miniatur-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'tumbler']) }}">
+
+                    <a id="tipe-tumbler-produk" 
+                    class="kategori {{ request('kategori') == 'tumbler' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'tumbler']) }}">
                         <h3>Tumbler</h3>
                     </a>
-                    <a id="tipe-filter-produk" class="kategori" href="{{ route('catalog.index', ['kategori' => 'other']) }}">
-                        <h3>Pilih Kategori Lainnya</h3>
-                    </a>
+                    <div id="myBtn" 
+                        class="kategori {{ is_array(request()->query('kategori')) ? 'active' : '' }}">
+                        <div class="container-filter-produk">
+                            <div class="btn-filter-produk">
+                                <h3>Pilih Kategori Lainnya <span id="counter">({{ $selectedCount }})</span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- MODAL --}}
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <form action="{{ route('catalog.index') }}" method="GET" enctype="multipart/form-data">
+                                {{-- @csrf --}}
+                                <div id="head-modul">
+                                    <h1>Pilih Kategori</h1>
+                                </div>
+                                <div class="form-group">
+                                    @foreach($kategori as $k)
+                                        <div class="form-check">
+                                            <input 
+                                                class="form-check-input" 
+                                                type="checkbox" 
+                                                name="kategori[]" 
+                                                id="kategori_{{ $k->id }}"
+                                                value="{{ $k->name }}"
+                                                {{ is_array(request()->query('kategori')) && in_array($k->name, request()->query('kategori')) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="kategori_{{ $k->id }}">
+                                                {{ $k->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                
+                                <button type="submit" class="submit-btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Content Produk -->
@@ -104,10 +150,6 @@
                     </div>
                     @endforeach
                 </div>
-                <!-- Pagination Info -->
-                <!-- Pagination Info Section -->
-                
-
                 <!-- Pagination Links -->
                 <div class="pagination-section">
                     <div class="pagination-links">
@@ -127,70 +169,37 @@
                 </div>
             </div>
         </div>
-
-        {{-- Footer --}}
-        {{-- <div id="content-footer">
-            <div id="container-footer">
-                @foreach ($ingpo as $i)
-                    
-                <div id="company-footer">
-                    <div id="logo-company">
-                        <img src="{{ asset('/storage/' . $i->logo_footer) }}" alt="Logo">
-                    </div>
-                    <div id="company-details">
-                        <div id="company-name">{{$i->judul_footer}}</div>
-                        <div id="company-desc">{{$i->desc_footer}}</div>
-                    </div>
-                </div>
-                    @endforeach
-                <div id="footer-links">
-                    <ul>
-                        <li><a href="#navbar">Home</a></li>
-                        <li><a href="catalog">Catalog</a></li>
-                    </ul>
-                </div>
-                <div id="footer-social">
-                    <a href="#"><img src="img\social-media\facebook.png" alt="Facebook"></a>
-                    <a href="#"><img src="img\social-media\wa.png" alt="Twitter"></a>
-                    <a href="#"><img src="img\social-media\ig.png" alt="Instagram"></a>
-                    <a href="#"><img src="img\social-media\linkedin.png" alt="LinkedIn"></a>
-                </div>
-            </div>
-        </div> --}}
-
         <div id="footer-copyright">
             <p>&copy; {{ date('Y') }} ITENAS</p>
         </div>
     </div>
     <script src="/js/burger.js"></script>
 
-</body>
-
-{{-- <script>
-    $(document).ready(function(){
-        // localStorage.clear();
-        // Fungsi untuk menampilkan produk berdasarkan kategori_id
-        function filterProduk(kategori_id) {
-            if (kategori_id === "semua") {
-                $(".content-produk").show(); // Tampilkan semua produk
-            } else {
-                $(".content-produk").hide(); // Sembunyikan semua produk
-                $('.content-produk[data-kategori_id="'+kategori_id+'"]').show(); // Tampilkan produk berdasarkan kategori_id
-            }
+    <script>
+        function showModal(modalId) {
+            $(modalId).show();
         }
 
-        // Event listener untuk klik pada kategori
-        $(".kategori").on("click", function(){
-            var kategori_id = $(this).data("kategori_id");
-            filterProduk(kategori_id);
+        function hideModals() {
+            $(".modal").hide();
+        }
 
-            // Menambahkan kelas aktif pada kategori yang dipilih
-            $(".kategori").removeClass("active");
-            $(this).addClass("active");
+        $("#myBtn").on("click", function () {
+            showModal("#myModal");
         });
 
-        // Inisialisasi: tampilkan semua produk pada load pertama
-        filterProduk("semua");
-    });
-</script> --}}
+        $(".close").on("click", function () {
+            hideModals();
+        });
+
+        $(window).on("click", function (event) {
+            if ($(event.target).hasClass("modal")) {
+                hideModals();
+            }
+        });
+
+        
+    </script>
+
+</body>
 </html>
