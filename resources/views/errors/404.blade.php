@@ -33,6 +33,7 @@
 <body>
     <h1>ERROR 404</h1>
     <p>Halaman yang Anda cari tidak dapat ditemukan.</p>
-    <a href="{{ url('/') }}">Kembali ke Halaman Utama</a>
+    <a href="{{ url()->previous() }}">Go Back</a> | <a href="dashboard">Home</a>
+
 </body>
 </html>

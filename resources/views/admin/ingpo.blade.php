@@ -93,7 +93,7 @@
             <h2>Image Visi Misi</h2>
             <input type="file" id="image_visi" name="image_visi_misi" onchange="previewImage(event, 'imageVisiPreview')">
             <div class="image-preview">
-                <img id="imageVisiPreview" src="{{ asset('storage/ingpo-images/' . $i->image_visi_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
+                <img id="imageVisiPreview" src="{{ asset('storage/' . $i->image_visi_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
             </div>
         </div>
 
@@ -148,13 +148,16 @@
         <!-- WhatsApp  -->
         <div class="section">
             <h2>Nomor WhatsApp</h2>
-            <input type="text" id="no_wa" name="nowa" value="{{ $i->nowa }}"></input>
+            <input type="text" id="no_wa" name="nowa" value="{{ $i->nowa }}" placeholder="+6281234567890"></input>
+            <small class="form-text text-muted">
+                Mohon Gunakan Kode Area Untuk Nomor WhatsApp (+62)
+            </small>
         </div>
 
         <!-- Instagram -->
         <div class="section">
             <h2>Link Instagram</h2>
-            <input type="text" id="instagram" name="instagram" value="{{ $i->instagram }}" ></input>
+            <input type="text" id="instagram" name="instagram" value="{{ $i->instagram }}" placeholder="https://www.instagram.com/Himaryy/"></input>
         </div>
 
         <!-- Submit Button -->

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('ppid');
             $table->String('name');
             $table->String('jabatan');
-            $table->String('deskripsi');
+            $table->text('deskripsi');
             $table->String('image')->nullable();
             $table->timestamps();
         });

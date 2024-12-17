@@ -46,6 +46,7 @@
                             <li><a href="/home"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
                             <li><a href="/visitor"><span class="material-symbols-outlined">monitoring</span> Pengunjung</a></li>
                             <li><a href="/pembelian"><span class="material-symbols-outlined">attach_money</span> Penjualan</a></li>
+                            <li><a href="/integrasi"><span class="material-symbols-outlined">hub</span> Integrasi</a></li>
                             <h4>
                                 <span>General</span>
                                 <div id="menu-seperate"></div>

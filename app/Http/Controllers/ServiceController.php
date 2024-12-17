@@ -43,8 +43,8 @@ class ServiceController extends Controller
     {
         $request->validate([
             'img' => 'required|max:5120',
-            'judul' => 'required',
-            'desc' => 'required',
+            'judul' => 'required|string|max:255',
+            'desc' => 'required|string|max:5000',
         ]);
 
         $imagePath = null;

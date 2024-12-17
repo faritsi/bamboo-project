@@ -12,6 +12,7 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\coba;
+use App\Http\Controllers\IntegrasiController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TransaksiMidtrans;
 use App\Http\Controllers\VisitorController;
@@ -104,9 +105,9 @@ Route::get('/error-403', function () {
 //     abort(419); // Memicu error 403 (Forbidden)
 // });
 
-Route::get('/error-500', function () {
-    abort(500); // Memicu error 500 (Internal Server Error)
-});
+// Route::get('/error-500', function () {
+//     abort(500); // Memicu error 500 (Internal Server Error)
+// });
 
 // Route::group(['middleware' => ['auth']], function () {
 //     Route::group(['middleware' => ['CekAuth:1,2']], function () {
@@ -128,7 +129,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(LayoutController::class)->group(function () {
             Route::get('home', 'index');
             Route::get('sidebar', 'sidebar');
+            // Route::get('/integrasi', [IntegrasiController::class, 'index'])->name('integrasi.index');
         });
+        Route::get('/integrasi', [IntegrasiController::class, 'index'])->name('integrasi.index');
         Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::get('/visitors/count', [VisitorController::class, 'getVisitorCount']);
         // Route::get('/visitors/filter', [VisitorController::class, 'filterVisitor'])->name('visitors.filter');

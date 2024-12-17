@@ -127,7 +127,7 @@
                         </div>
                     </div>
                     <div class="container-visi-misi-image">
-                        <img src="{{asset('/storage/' . $i->image_visi_misi)}}" alt="Photo Visi Misi">
+                        <img src="{{ asset('/storage/' . $i->image_visi_misi) }}" alt="Photo Visi Misi">
                     </div>
                 </div>
             </div>
@@ -242,24 +242,23 @@
                 <p id="text-video">Company Video</p>
                 <div id="video-container">
                     @foreach ($video as $v)
-                         @if ($v->video_link)
-                        <!-- For video URL (e.g., YouTube, Vimeo) -->
-                        <iframe
-                            src="{{$v->video_link}}" 
-                            title="Company Video"
-                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen
-                        ></iframe>
-                        @elseif ($v->video_path)
-                            <!-- For video file (e.g., MP4, MOV) -->
-                            <iframe 
-                                src="{{ asset('storage/' . $v->video_path) }}" 
-                                title="Company Video"
-                                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                            ></iframe>
-                        @endif
+                        <div class="video-item">
+                            @if ($v->video_link)
+                            <!-- For video URL (e.g., YouTube, Vimeo) -->
+                                <iframe
+                                    src="{{$v->video_link}}" 
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                ></iframe>
+                            @elseif ($v->video_path)
+                                <video controls width="100%">
+                                    <source src="{{ asset('storage/' . $v->video_path) }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @endif
+                        </div>
                     @endforeach
+
                 </div>
             </div>
 

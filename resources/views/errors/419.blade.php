@@ -40,7 +40,7 @@
     <div class="container">
         <h1>419 | Page Expired</h1>
         <p>The page has expired. Please refresh the page or try again.</p>
-        <a href="{{ url()->previous() }}">Go Back</a> | <a href="{{ url('/') }}">Home</a>
+        <a href="{{ url()->previous() }}">Go Back</a> | <a href="dashboard">Home</a>
     </div>
 </body>
 </html>

@@ -516,6 +516,10 @@ body {
     width: fit-content;
 }
 
+#quantity-wrapper[style*="pointer-events: none;"] {
+    cursor: not-allowed; /* Kursor tidak aktif */
+}
+
 .qty {
     width: 40px;
     text-align: center;
@@ -543,11 +547,6 @@ body {
 
 .quantity-btn:focus {
     outline: none;
-}
-
-.quantity-btn:disabled {
-    color: #ddd;
-    cursor: not-allowed;
 }
 
 /* Subtotal Section */
@@ -605,6 +604,10 @@ body {
 
 #text-button {
     font-weight: bold;
+}
+
+#btnAddCart[style*="pointer-events: none;"] {
+    cursor: not-allowed; /* Kursor tidak aktif */
 }
 
 .keranjang .material-symbols-outlined {
@@ -874,6 +877,11 @@ body {
     padding: 10px 0;
     font-size: 14px;
     margin-top: auto;
+}
+
+.form-text {
+    font-size: 0.875rem; /* Ukuran font yang lebih kecil */
+    color: #6c757d; /* Warna teks abu-abu */
 }
 
 /* Responsive Media Queries */

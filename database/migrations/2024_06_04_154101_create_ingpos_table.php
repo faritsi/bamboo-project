@@ -18,22 +18,22 @@ return new class extends Migration
             $table->String('image_header')->nullable();
             $table->String('desc_header')->nullable();
             $table->String('slogan')->nullable();
-            $table->String('desc_slogan')->nullable();
+            $table->text('desc_slogan')->nullable();
             $table->String('image_about')->nullable();
             $table->String('judul_about')->nullable();
-            $table->String('desc_about')->nullable();
+            $table->text('desc_about')->nullable();
             // $table->String('image_visi')->nullable();
             // $table->String('image_misi')->nullable();
 
             // From Edit migrate
             $table->String('image_visi_misi')->nullable();
             // 
-            $table->String('desc_visi')->nullable();
-            $table->String('desc_misi')->nullable();
+            $table->text('desc_visi')->nullable();
+            $table->text('desc_misi')->nullable();
             $table->String('judul_service')->nullable();
-            $table->String('desc_service')->nullable();
+            $table->text('desc_service')->nullable();
             $table->String('judul_produk')->nullable();
-            $table->String('desc_produk')->nullable();
+            $table->text('desc_produk')->nullable();
             $table->String('logo_footer')->nullable();
             $table->String('judul_footer')->nullable();
             $table->String('desc_footer')->nullable();

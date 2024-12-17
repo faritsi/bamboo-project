@@ -190,10 +190,23 @@
                         <p id="atur-produk">Masukan Jumlah Produk Yang Ingin Dibeli!</p>
                     </div>
 
-                    <div class="quantity-wrapper">
-                        <button class="quantity-btn" @click="kurangBarangBelanja($event)">-</button>
-                        <input type="number" class="qty quantity-input" value="1" min="1" name="qty">
-                        <button class="quantity-btn" @click="tambahBarangBelanja($event)">+</button>
+                    <div class="quantity-wrapper" style="{{ $p->jumlah_produk <= 0 ? 'pointer-events: none; opacity: 0.6;' : '' }}">
+                        <button 
+                            class="quantity-btn" 
+                            @click="kurangBarangBelanja($event)">
+                            -
+                        </button>
+                        <input 
+                            type="number" 
+                            class="qty quantity-input" 
+                            value="1" 
+                            min="1" 
+                            name="qty" readonly>
+                        <button 
+                            class="quantity-btn" 
+                            @click="tambahBarangBelanja($event, {{ $p->jumlah_produk }})">
+                            +
+                        </button>
                     </div>
         
                     <div id="container-total-produk">
@@ -206,12 +219,12 @@
                         </div>
                     </div>
         
-                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->kategori_id }}', '{{ $p->kode_produk }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)">
-                        <div id="container-keranjang">
+                    <div id="btnAddCart" @click="addToCart('{{ $p->pid }}', '{{ $p->kategori_id }}', '{{ $p->kode_produk }}', '{{ $p->nama_produk }}', {{ $p->harga }}, $event)" style="{{ $p->jumlah_produk <= 0 ? 'pointer-events: none; opacity: 0.6;' : '' }}">
+                        <div id="container-keranjang" >
                             <div class="keranjang">
                                 <span class="material-symbols-outlined">shopping_cart</span>
                             </div>
-                            <div id="text-button">
+                            <div id="text-button" >
                                 <p>Tambah ke Keranjang</p>
                             </div>
                         </div>
@@ -279,6 +292,9 @@
                 <div class="form-group">
                     <label for="nohp">Nomor HP <span class="required">*</span></label>
                     <input type="text" name="nohp" id="nohp" placeholder="Masukan Nomor HP" required>
+                    <small class="form-text text-muted">
+                        Harap gunakan nomor WhatsApp Anda, karena invoice akan dikirim melalui WhatsApp.
+                    </small>
                 </div>
                 <H3>PILIHAN PENGIRIMAN</H3>
                 <div class="form-group">
@@ -370,13 +386,15 @@
         }
 
     // Function to increase quantity
-        function tambahBarangBelanja(event) {
+        function tambahBarangBelanja(event, maxStok) {
             var button = event.target;  // Get the clicked button element
             var qtyElement = button.previousElementSibling;  // Get the input element
             var value = parseInt(qtyElement.value, 10);
 
-            qtyElement.value = value + 1;
-            calculateTotal(qtyElement);  // Recalculate total after increasing
+            if (value < maxStok) {
+                qtyElement.value = value + 1;
+                calculateTotal(qtyElement);  // Recalculate total after decreasing
+            } // Recalculate total after increasing
         }
         
         

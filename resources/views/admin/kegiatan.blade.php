@@ -155,18 +155,22 @@
     </div>
 
     <div id="video-container">
-        @foreach ($video as $v)
             <div class="wrapper-video">
+                @foreach ($video as $v)
                 <div class="video-card">
                     @if ($v->video_path)
-                    <iframe src="{{ asset('/storage/' . $v->video_path) }}" title="Company Video"
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen auto></iframe>
+                        <video controls width="100%">
+                            <source src="{{ asset('storage/' . $v->video_path) }}" >
+                            Your browser does not support the video tag.
+                        </video>
                     @endif
                     @if ($v->video_link)
-                        <iframe src="{{ $v->video_link }}" title="Company Video"
+                        <iframe 
+                            src="{{ $v->video_link }}" 
+                            title="Company Video"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                            allowfullscreen>
+                        </iframe>
                     @endif
                     <div class="video-overlay">
                         <button class="btn-edit-video" data-id="{{ $v->id }}" data-toggle="modal"
@@ -183,8 +187,9 @@
                         </button>
                     </div>
                 </div>
+                @endforeach
+
             </div>
-        @endforeach
     </div>
 
     {{-- Add Video --}}
@@ -249,6 +254,9 @@
                     <div class="form-group">
                         <label for="image_produk">Upload Video</label>
                         <input type="file" id="video_path" name="video_path" accept="video/*">
+                        <small class="form-text text-muted">
+                            Max ukuran file 20MB, format yang diterima: .mov, .mp4, .avi, .mkv.
+                        </small>
                     </div>
                     {{-- </div> --}}
                     <div class="form-group">

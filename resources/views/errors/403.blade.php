@@ -33,6 +33,6 @@
 <body>
     <h1>403</h1>
     <p>Akses Anda ditolak. Anda tidak memiliki izin untuk melihat halaman ini.</p>
-    <a href="{{ url('/') }}">Kembali ke Halaman Utama</a>
+    <a href="dashboard">Kembali ke Halaman Utama</a>
 </body>
 </html>

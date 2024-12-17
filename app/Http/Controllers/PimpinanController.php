@@ -46,9 +46,9 @@ class PimpinanController extends Controller
         // Validasi input, pastikan 'image' adalah file dengan format yang benar
         $request->validate([
             // 'ppid' => $ppid,
-            'name' => 'required',
-            'jabatan' => 'required',
-            'deskripsi' => 'required',
+            'name' => 'required|string|max:5000',
+            'jabatan' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:5000',
             'image' => 'image|max:5120'
         ]);
 

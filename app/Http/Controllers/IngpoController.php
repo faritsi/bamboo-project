@@ -95,22 +95,22 @@ class IngpoController extends Controller
             'desc_header' => 'required|string|max:255',
             'slogan' => 'required|string|max:255',
             // 'desc_slogan' => 'required|string|max:255',
-            'desc_slogan' => 'required|string',
+            'desc_slogan' => 'required|string|max:5000',
             'image_about' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_about' => 'required|string',
+            'desc_about' => 'required|string|max:5000',
             'image_visi_misi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_visi' => 'required|string',
+            'desc_visi' => 'required|string|max:5000',
             // 'image_misi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'desc_misi' => 'required|string',
+            'desc_misi' => 'required|string|max:5000',
             'judul_service' => 'required|string|max:255',
-            'desc_service' => 'required|string|max:255',
+            'desc_service' => 'required|string|max:5000',
             'judul_produk' => 'required|string|max:255',
-            'desc_produk' => 'required|string|max:255',
+            'desc_produk' => 'required|string|max:5000',
             // 'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'judul_footer' => 'required|string|max:255',
-            'desc_footer' => 'required|string',
+            'desc_footer' => 'required|string|max:255',
             'nowa' => 'required|string|max:15',
-            'instagram' => 'required|string',
+            'instagram' => 'required|string|max:255',
         ]);
         // dd($request);
 
@@ -130,15 +130,19 @@ class IngpoController extends Controller
         // Loop to handle file uploads
         foreach ($fileFields as $field => $suffix) {
             if ($request->hasFile($field)) {
-                $imageName = $id . "_{$suffix}_" . time() . '.' . $request->file($field)->getClientOriginalExtension();
+                $file = $request->file($field);
 
-                // Delete old image if exists
+                // Nama file baru
+                $imageName = "{$id}_{$suffix}_" . time() . '.' . $file->getClientOriginalExtension();
+
+                // Hapus file lama jika ada
                 if ($ingpo->$field && Storage::exists('public/' . $ingpo->$field)) {
                     Storage::delete('public/' . $ingpo->$field);
                 }
 
-                // Store new image and update path
-                $ingpo->$field = $request->file($field)->storeAs('ingpo-images', $imageName, 'public');
+                // Simpan file baru dan update kolom database
+                $filePath = $file->storeAs('ingpo-images', $imageName, 'public');
+                $ingpo->$field = $filePath;
             }
         }
 
@@ -149,7 +153,6 @@ class IngpoController extends Controller
             'slogan' => $request->slogan,
             'desc_slogan' => $request->desc_slogan,
             'desc_about' => $request->desc_about,
-            'image_visi_misi' => $imageName,
             'desc_visi' => $request->desc_visi,
             'desc_misi' => $request->desc_misi,
             'judul_service' => $request->judul_service,
@@ -166,7 +169,7 @@ class IngpoController extends Controller
         $ingpo->save();
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Layout updated successfully!');
+        return redirect()->back()->with('success', 'Data updated successfully!');
     }
 
 

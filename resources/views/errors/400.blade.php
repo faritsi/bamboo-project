@@ -40,7 +40,7 @@
     <div class="container">
         <h1>400 | Bad Request</h1>
         <p>Something went wrong with your request. Please check and try again.</p>
-        <a href="{{ url()->previous() }}">Go Back</a> | <a href="{{ url('/') }}">Home</a>
+        <a href="{{ url()->previous() }}">Go Back</a> | <a href="dashboard">Home</a>
     </div>
 </body>
 </html>

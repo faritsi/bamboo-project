@@ -83,11 +83,11 @@ class ProdukController extends Controller
             'image2' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
             'image3' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
             'image4' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'required|string|max:5000',
             'harga' => 'required|integer',
             'berat' => 'required|integer',
-            'tokped' => 'required|string',
-            'shopee' => 'required|string',
+            'tokped' => 'required|string|max:5000',
+            'shopee' => 'required|string|max:5000',
         ]);
 
         $images = [];

@@ -262,7 +262,8 @@
     /* z-index: 2; */
     /* background: #d2d2d2; */
     width: 100%;
-    /* min-height: 83vh; */
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 #bo-content {
