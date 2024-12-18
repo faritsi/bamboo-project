@@ -30,59 +30,65 @@ class KegiatanController extends Controller
      */
     public function store(Request $request)
     {
-        // dd("TEST before validate");
         $request->validate([
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_link' => 'nullable|url',
-            'video_path' => 'nullable|mimes:mov,mp4,avi,mkv|max:20480', //20mb
+            'video_path' => 'nullable|mimes:mov,mp4,avi,mkv|max:20480',
         ]);
 
         $videoPath = null;
         $embedUrl = null;
 
-        // Handle image uploads
+        // Pesan sukses awal
+        $imageSuccess = false;
+        $videoSuccess = false;
+
+        // Proses upload gambar jika ada
         if ($request->hasFile('image')) {
-            // dd($request->file('image'));
             foreach ($request->file('image') as $index => $file) {
                 $imageName = 'kegiatan-' . time() . '-' . $index . '.' . $file->getClientOriginalExtension();
                 $imagePath = $file->storeAs('kegiatan-images', $imageName, 'public');
-
 
                 Kegiatan::create([
                     'image_path' => $imagePath,
                 ]);
             }
+            $imageSuccess = true;
         }
-        // Proses file video dan link YouTube
 
+        // Proses upload video file jika ada
         if ($request->hasFile('video_path')) {
-            // Simpan video ke folder kegiatan-videos
             $videoFile = $request->file('video_path');
             $videoName = 'kegiatan-' . time() . '.' . $videoFile->getClientOriginalExtension();
             $videoPath = $videoFile->storeAs('kegiatan-videos', $videoName, 'public');
+
+            $videoSuccess = true;
         }
 
-        // Handle YouTube video link
+        // Proses YouTube link jika ada
         if ($request->filled('video_link')) {
             $embedUrl = $this->convertYoutubeLinkToEmbed($request->video_link);
             if (!$embedUrl) {
                 return redirect()->back()->withErrors(['video_link' => 'Invalid YouTube URL.']);
             }
+            VideoKegiatan::create([
+                'video_link' => $embedUrl,
+            ]);
+            $videoSuccess = true;
         }
 
-        // Jika tidak ada video file atau link, kembalikan error
-        if (!$videoPath && !$embedUrl) {
-            return redirect()->back()->withErrors(['video_path' => 'Please provide a valid video file or YouTube URL.']);
+        // Menyiapkan pesan sukses berdasarkan hasil
+        if ($imageSuccess) {
+            session()->flash('success_image', 'Images uploaded successfully!');
+        }
+        if ($videoSuccess) {
+            session()->flash('success_video', 'Video uploaded successfully!');
         }
 
-        // Simpan ke database
-        VideoKegiatan::create([
-            'video_link' => $embedUrl, // URL video YouTube yang sudah dikonversi
-            'video_path' => $videoPath, // Path ke video yang disimpan di folder
-        ]);
-
-        return redirect()->back()->with('success', 'Images or video Uploaded Successfully.');
+        return redirect()->back();
     }
+
+
 
     /**
      * Convert a YouTube link to an embeddable URL.
@@ -161,7 +167,7 @@ class KegiatanController extends Controller
 
         $kegiatan->save();
 
-        return redirect()->back()->with('success', 'Images or video Update Successfully.');
+        return redirect()->back()->with('success', 'Images Update Successfully.');
     }
 
     public function updateVideo(Request $request, $id)
@@ -231,7 +237,7 @@ class KegiatanController extends Controller
 
         $kegiatan->delete();
 
-        return redirect()->back()->with('success', 'Images or video Delete Successfully.');
+        return redirect()->back()->with('success', 'Images Delete Successfully.');
     }
 
     public function destroyVideo($id)

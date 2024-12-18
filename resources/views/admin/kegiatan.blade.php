@@ -2,9 +2,6 @@
 @section('content')
     <link rel="stylesheet" href="/css/style-ds-kegiatan.css" />
 
-    <!-- <meta name="csrf-token" content="{{ csrf_token() }}"> -->
-
-
     @if ($errors->any())
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -13,11 +10,19 @@
         </script>
     @endif
 
-    @if (session('success'))
+    @if (session('success_image'))
         <div class="alert alert-success">
-            {{ session('success') }}
+            {{ session('success_image') }}
         </div>
     @endif
+
+    {{-- Pesan sukses untuk video --}}
+    @if (session('success_video'))
+        <div class="alert alert-success">
+            {{ session('success_video') }}
+        </div>
+    @endif
+    
     <div class="judul-halaman">
         <h2>Foto Kegiatan</h2>
     </div>
