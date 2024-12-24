@@ -41,7 +41,7 @@
                         <span class="material-symbols-outlined">
                             passkey
                         </span>
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Email" name="username">
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Username" name="username">
                     </div>
                     
                     <div class="input-group">

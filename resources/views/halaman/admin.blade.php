@@ -117,5 +117,23 @@
         document.getElementById('sidebar-toggle').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
         });
+
+        // Ambil semua elemen <a> di sidebar
+        const sidebarLinks = document.querySelectorAll("#sidebar-links li a");
+
+        // Dapatkan URL saat ini
+        const currentPath = window.location.pathname;
+
+        // Loop melalui setiap link
+        sidebarLinks.forEach(link => {
+            // Hapus class 'active' dari semua link
+            link.classList.remove("active");
+            
+            // Jika href dari link cocok dengan URL saat ini, tambahkan class 'active'
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("active");
+            }
+        });
+
     </script>
 </html>

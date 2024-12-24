@@ -136,6 +136,14 @@
     margin-right: 10px;
 }
 
+#sidebar-links li a.active {
+    background: #ffffff2d;
+    color: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 200px;
+}
+
 #logout a {
     color: #dbd4d4e3;
     display: flex;
