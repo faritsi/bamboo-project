@@ -928,9 +928,8 @@ span.product_name {
 }
 
 #content-video {
-    margin-top: 40px;
     text-align: center;
-    padding: 20px;
+    padding: 100px 0 0 0;
 }
 
 #text-video {
@@ -946,7 +945,8 @@ span.product_name {
     justify-content: center; /* Center videos horizontally */
     gap: 20px; /* Spacing between videos */
     margin: 0 auto;
-    max-width: 100%; /* Ensure the container takes full width */
+    max-width: 1600px; /* Ensure the container takes full width */
+    width: 90%;
 }
 
 .video-item {
@@ -961,7 +961,7 @@ span.product_name {
 .video-item iframe,
 .video-item video {
     width: 100%; /* Full width of the container */
-    height: 300px; /* Fixed height for consistency */
+    height: 350px; /* Fixed height for consistency */
     display: block;
     background-color: #000; /* Black background for videos */
     border: none;

@@ -255,6 +255,9 @@
                     <div class="form-group">
                         <label for="image_produk">Link Youtube</label>
                         <textarea id="video_link" name="video_link">{{$v->video_link}}</textarea>
+                        @if ($errors->has('video_link'))
+                            <p class="alert-modal alert-danger">{{ $errors->first('video_link') }}</p>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="image_produk">Upload Video</label>
@@ -262,6 +265,9 @@
                         <small class="form-text text-muted">
                             Max ukuran file 20MB, format yang diterima: .mov, .mp4, .avi, .mkv.
                         </small>
+                        @if ($errors->has('video_path'))
+                            <p class="alert-modal alert-danger">{{ $errors->first('video_path') }}</p>
+                        @endif
                     </div>
                     {{-- </div> --}}
                     <div class="form-group">
@@ -343,6 +349,14 @@
                     hideModals();
                 }
             });
+
+            const modalWithErrors = $(".modal").filter(function() {
+                return $(this).find(".alert-danger").length > 0;
+            });
+
+            if (modalWithErrors.length > 0) {
+                modalWithErrors.show();
+            }
         });
 
         // Pratinjau Gambar

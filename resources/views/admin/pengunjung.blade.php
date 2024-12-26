@@ -20,7 +20,6 @@
                     <label for="endDate">End Date:</label>
                     <input type="date" id="endDate" name="endDate" value={{$endDate}} required>
 
-                    <button type="submit" class="btn-filter">Tampilkan Data</button>
                 </form>
             </div>
         </div>
@@ -33,15 +32,20 @@
 </div>
 
 <script>
-    // Fungsi untuk merender grafik dengan data dari server
-    // Muat data default dari controller
-    const initialData = @json($dailyVisitors);
+    // Render Chart Function
     const renderChart = (data) => {
         Highcharts.chart('visitorChart', {
-            chart: { type: 'line', backgroundColor: '#ffffff', borderRadius: 10},
+            chart: { type: 'line', backgroundColor: '#ffffff', borderRadius: 10 },
             title: { text: 'Pengunjung Harian', style: { color: '#4caf50', fontSize: '18px' } },
-            xAxis: { categories: data.map(item => item.date), title: { text: 'Tanggal', style: { color: '#333' } } },
-            yAxis: { title: { text: 'Jumlah Pengunjung', style: { color: '#333' } }, allowDecimals: false, min: 0 },
+            xAxis: { 
+                categories: data.map(item => item.date), 
+                title: { text: 'Tanggal', style: { color: '#333' } } 
+            },
+            yAxis: { 
+                title: { text: 'Jumlah Pengunjung', style: { color: '#333' } }, 
+                allowDecimals: false, 
+                min: 0 
+            },
             series: [{
                 name: 'Pengunjung',
                 data: data.map(item => item.count),
@@ -49,16 +53,40 @@
                 lineWidth: 3,
                 marker: { enabled: true, radius: 5, fillColor: '#4caf50' }
             }],
+            legend: {
+                enabled: false // Hides the legend
+            },
             tooltip: { valueSuffix: ' pengunjung', backgroundColor: '#ffffff', borderColor: '#8bc34a', style: { color: '#333' } },
             credits: { enabled: false }
         });
     };
 
-    
-    // console.log(initialData);
-    renderChart(initialData);
+    // Load initial data
+    document.addEventListener('DOMContentLoaded', () => {
+        const initialData = @json($dailyVisitors);
+        renderChart(initialData);
 
-    // Handle filter form submission
-   
+        document.getElementById('filterForm').addEventListener('change', function (event) {
+
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => { data[key] = value; });
+
+            fetch("{{ route('get.visitor.stats') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                renderChart(data.dailyVisitors); // Update chart
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        });
+    });
 </script>
+
 @endsection

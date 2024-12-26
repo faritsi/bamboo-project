@@ -22,12 +22,14 @@ class LayoutController extends Controller
     {
         return view('halaman.dashboard')->with([
             'title' => 'Halaman Utama',
-            'produk' => produk::orderBy('created_at')->take(5)->get(),
-            'pimpinan' => Pimpinan::take(4)->get(),
+            'produk' => produk::orderBy('created_at')->take(20)->get(),
+            // 'pimpinan' => Pimpinan::take(4)->get(),
+            'pimpinan' => Pimpinan::all(),
             'ingpo' => Ingpo::all(),
             'service' => Service::all(),
             'video' => videokegiatan::all(),
-            'kegiatan' => Kegiatan::orderBy('created_at')->take(5)->get(),
+            // 'kegiatan' => Kegiatan::orderBy('created_at')->take(10)->get(),
+            'kegiatan' => Kegiatan::all(),
         ]);
     }
     public function index()

@@ -75,6 +75,43 @@ class TransaksiController extends Controller
         ];
     }
 
+    public function getFilteredData(Request $request)
+    {
+        // Use the getFilterRange function to get filter values
+        $filterRange = $this->getFilterRange($request);
+        $startDate = $filterRange['startDate'];
+        $endDate = $filterRange['endDate'];
+        $pilihKategori = $filterRange['pilihKategori'];
+        $pilihProduk = $filterRange['pilihProduk'];
+
+        // Fetch products based on the selected category
+        $produk = $pilihKategori !== 'semuaKategori'
+            ? Produk::whereHas('kategori', function ($query) use ($pilihKategori) {
+                $query->where('name', $pilihKategori);
+            })->get()
+            : Produk::all();
+
+        // Fetch sales data
+        $salesData = $this->getSalesData($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
+
+        // Fetch table transaction data
+        $tableTransaksi = $this->getTableTransaksi($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
+
+        // Return the data as JSON
+        return response()->json([
+            'produk' => $produk->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'nama_produk' => $item->nama_produk,
+                ];
+            }),
+            'salesData' => $salesData,
+            'tableTransaksi' => [
+                'pagination' => $tableTransaksi['tfPagination'],
+                'transactions' => $tableTransaksi['tfItems'],
+            ],
+        ]);
+    }
 
     public function view_tf(Request $request)
     {
@@ -90,28 +127,28 @@ class TransaksiController extends Controller
         $pilihKategori = $filterRange['pilihKategori'];
         $pilihProduk = $filterRange['pilihProduk'];
 
-        $salesData = $this->getSalesData($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
-        $tableTransactionData = $this->getTableTransaksi($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
-
-
-        // Filter products based on selected category and product
-        if ($pilihProduk !== 'semuaProduk') {
-            // If a specific product is selected, filter by product name
-            $produkByCategory = Produk::where('name', $pilihProduk)->get();
-        } else {
-            // If 'semuaProduk' is selected, filter products by the selected category
-            if ($pilihKategori !== 'semuaKategori') {
-                $produkByCategory = Produk::whereHas('kategori', function ($query) use ($pilihKategori) {
-                    $query->where('name', $pilihKategori); // Filter by category name
-                })->get();
-            } else {
-                // If 'semuaKategori' is selected, return all products
-                $produkByCategory = Produk::all();
-            }
+        // Reset 'pilihProduk' if 'pilihKategori' changes
+        if ($request->has('pilihKategori') && session('pilihKategori') !== $pilihKategori) {
+            $pilihProduk = 'semuaProduk'; // Reset product filter to 'semuaProduk'
+            session(['pilihProduk' => $pilihProduk]); // Update session
         }
 
-        // $startDate = session('startDate', Carbon::now()->subDays(7)->format('Y-m-d'));
-        // $endDate = session('endDate', Carbon::now()->format('Y-m-d'));
+        // Fetch products based on the selected category
+        $produk = $pilihKategori !== 'semuaKategori'
+            ? Produk::whereHas('kategori', function ($query) use ($pilihKategori) {
+                $query->where('id', $pilihKategori);
+            })->get()
+            : Produk::all();
+
+        session([
+            'pilihKategori' => $pilihKategori,
+            'pilihProduk' => $pilihProduk,
+        ]);
+        \Log::info(session()->all());
+
+        $salesData = $this->getSalesData($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
+        $tableTransactionData = $this->getTableTransaksi($request, $startDate, $endDate, $pilihKategori, $pilihProduk);
+        // \Log::info('Session Values:', session()->all());
 
         // Pass data to the view
         return view('admin.transaksi', [
@@ -127,7 +164,7 @@ class TransaksiController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'pilihKategori' => $pilihKategori,
-            'pilihProduk' => $produkByCategory,
+            // 'pilihProduk' => $produkByCategory,
         ]);
     }
 
@@ -221,8 +258,6 @@ class TransaksiController extends Controller
             'pilihProduk' => $pilihProduk,
         ];
     }
-
-
 
     public function showInvoice($orderId)
     {

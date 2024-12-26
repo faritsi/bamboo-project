@@ -357,26 +357,35 @@ html {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: start;
+    padding: 15px 0;
 }
 
 .form-check {
     display: flex;
     align-items: center;
     gap: 5px;
-    background-color: #e7f7e7;
+    background-color: #6cbf84;
+    color: #ffffff;
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1px solid #d1e7d1;
+    border: 1px solid #57a96c;
     cursor: pointer;
 }
 
 .form-check:hover {
-    background-color: #d4ecd4;
-    border-color: #b5d7b5;
+    background-color: #4caf50; /* Slight hover effect */
+    border-color: #388e3c; /* Match hover border */
+}
+
+.form-check.active {
+    background-color: #1b5e20; /* Active state color */
+    border-color: #144b1a; /* Darker border for active state */
+    color: #ffffff; /* White text for contrast */
 }
 
 .form-check-input {
     cursor: pointer;
+    display: none;
 }
 
 .form-check-label {

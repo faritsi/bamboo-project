@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
+            // $table->unique('name')->change(); // Ensure name is unique
+            // $table->string('slug', 50)->unique()->after('name'); // Add slug column
+            // $table->text('description')->nullable()->after('slug'); // Add description column
             $table->timestamps();
         });
     }

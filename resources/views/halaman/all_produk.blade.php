@@ -71,20 +71,20 @@
                     </a>
 
                     <a id="tipe-toples-produk" 
-                    class="kategori {{ request('kategori') == 'toples' ? 'active' : '' }}" 
-                    href="{{ route('catalog.index', ['kategori' => 'toples']) }}">
+                    class="kategori {{ request('kategori') == 'Toples' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'Toples']) }}">
                         <h3>Toples</h3>
                     </a>
 
                     <a id="tipe-layangan-produk" 
-                    class="kategori {{ request('kategori') == 'mug' ? 'active' : '' }}" 
-                    href="{{ route('catalog.index', ['kategori' => 'mug']) }}">
+                    class="kategori {{ request('kategori') == 'Mug' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'Mug']) }}">
                         <h3>Mug</h3>
                     </a>
 
                     <a id="tipe-tumbler-produk" 
-                    class="kategori {{ request('kategori') == 'tumbler' ? 'active' : '' }}" 
-                    href="{{ route('catalog.index', ['kategori' => 'tumbler']) }}">
+                    class="kategori {{ request('kategori') == 'Tumbler' ? 'active' : '' }}" 
+                    href="{{ route('catalog.index', ['kategori' => 'Tumbler']) }}">
                         <h3>Tumbler</h3>
                     </a>
                     <div id="myBtn" 
@@ -114,7 +114,7 @@
                                                 name="kategori[]" 
                                                 id="kategori_{{ $k->id }}"
                                                 value="{{ $k->name }}"
-                                                {{ is_array(request()->query('kategori')) && in_array($k->name, request()->query('kategori')) ? 'checked' : '' }}>
+                                                {{ is_array(request()->query('kategori')) && in_array($k->name, request()->query('kategori')) ? 'checked' : '' }} >
                                             <label class="form-check-label" for="kategori_{{ $k->id }}">
                                                 {{ $k->name }}
                                             </label>
@@ -196,6 +196,33 @@
             if ($(event.target).hasClass("modal")) {
                 hideModals();
             }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const formChecks = document.querySelectorAll('.form-check');
+
+            formChecks.forEach(formCheck => {
+                formCheck.addEventListener('click', function () {
+                    const checkbox = this.querySelector('.form-check-input');
+
+                    // Toggle checkbox state
+                    checkbox.checked = !checkbox.checked;
+
+                    // Add or remove the active class based on the checkbox state
+                    if (checkbox.checked) {
+                        this.classList.add('active');
+                    } else {
+                        this.classList.remove('active');
+                    }
+                });
+
+                // Initialize state based on the checkbox value (for page reloads)
+                const checkbox = formCheck.querySelector('.form-check-input');
+                if (checkbox.checked) {
+                    formCheck.classList.add('active');
+                }
+            });
         });
 
         

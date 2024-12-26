@@ -18,18 +18,42 @@ use Illuminate\Support\Facades\Auth;
 class VisitorController extends Controller
 {
 
-    public function getVisitorCount()
+    public function getVisitorStats(Request $request)
     {
-        $today = Visitor::whereDate('created_at', Carbon::today())->count();
-        $thisWeek = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
-        $totalVisits = Visitor::count();
+        // Default date range
+        $startDate = $request->input('startDate')
+            ? Carbon::parse($request->input('startDate'))->startOfDay()
+            : (session('startDate')
+                ? Carbon::parse(session('startDate'))->startOfDay()
+                : Carbon::now()->subDays(7)->startOfDay());
+
+        $endDate = $request->input('endDate')
+            ? Carbon::parse($request->input('endDate'))->endOfDay()
+            : (session('endDate')
+                ? Carbon::parse(session('endDate'))->endOfDay()
+                : Carbon::now()->endOfDay());
+
+        // Save the dates to the session
+        session(['startDate' => $startDate, 'endDate' => $endDate]);
+
+        // Query visitor data based on date range
+        $filteredVisitors = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get()
+            ->map(function ($visitor) {
+                return [
+                    'date' => Carbon::parse($visitor->date)->format('d M Y'),
+                    'count' => $visitor->count,
+                ];
+            });
+
 
         return [
-            'today' => $today,
-            'thisWeek' => $thisWeek,
-            'thisMonth' => $thisMonth,
-            'totalVisits' => $totalVisits,
+            'dailyVisitors' => $filteredVisitors,
+            'startDate' => $startDate->format('Y-m-d'), // Pass as Y-m-d for frontend compatibility
+            'endDate' => $endDate->format('Y-m-d'),
         ];
     }
 
@@ -41,50 +65,20 @@ class VisitorController extends Controller
         $tf = Transaksi::all();
         $ingpo = Ingpo::all();
 
-
-        // Default date range
-        $startDate = $request->input('startDate')
-            ? Carbon::parse($request->input('startDate'))->startOfDay()
-            : Carbon::now()->subDays(7)->startOfDay();
-
-        $endDate = $request->input('endDate')
-            ? Carbon::parse($request->input('endDate'))->endOfDay()
-            : Carbon::now()->endOfDay();
-
         // Query data pengunjung berdasarkan rentang tanggal
-        $filteredVisitors = Visitor::selectRaw('DATE(created_at) as date, COUNT(*) as count')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->groupBy('date')
-            ->orderBy('date', 'asc')
-            ->get();
+        $visitorStats = $this->getVisitorStats($request);
 
-        // Total counts
-        $today = Visitor::whereDate('created_at', Carbon::today())->count();
-        $thisWeek = Visitor::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
-        $thisMonth = Visitor::whereMonth('created_at', Carbon::now()->month)->count();
-        $totalVisits = Visitor::count();
-
-        $filteredVisitors = $filteredVisitors->map(function ($visitor) {
-            return [
-                'date' => Carbon::parse($visitor->date)->format('d M Y'), // Format tanggal menjadi 25 Nov 2024
-                'count' => $visitor->count,
-            ];
-        });
 
         // Return data ke view
         return view('admin.pengunjung', [
             'title' => 'Pengunjung',
-            'dailyVisitors' => $filteredVisitors, // Gunakan data filtered
-            'today' => $today,
-            'thisWeek' => $thisWeek,
-            'thisMonth' => $thisMonth,
-            'totalVisits' => $totalVisits,
-            'produk' => $produk,
+            'dailyVisitors' => $visitorStats['dailyVisitors'],
+            'startDate' => $visitorStats['startDate'], // Pass formatted startDate
+            'endDate' => $visitorStats['endDate'],
             'user' => $user,
+            'produk' => $produk,
             'kategori' => $kategori,
             'tf' => $tf,
-            'startDate' => $startDate->format('Y-m-d'), // Kirim dalam format Y-m-d
-            'endDate' => $endDate->format('Y-m-d'),
             'ingpo' => $ingpo,
         ]);
     }

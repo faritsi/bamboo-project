@@ -34,14 +34,25 @@ class KategoriController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
+
+        // Check if a category with the same name already exists
+        $existingCategory = Kategori::where('name', $request->name)->first();
+
+        if ($existingCategory) {
+            return redirect()->back()->withErrors(['name' => 'Kategori dengan nama tersebut sudah ada.'])->withInput();
+        }
+
+        // If not, create a new category
         $kategori = new Kategori([
             'name' => $request->name,
         ]);
-        // dd($kategori);
-        // Simpan objek model ke database
+
+        // Save the new category to the database
         $kategori->save();
+
         return redirect()->route('produk.index')->with('success', 'Kategori baru berhasil ditambah!');
     }
+
 
     /**
      * Display the specified resource.

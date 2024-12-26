@@ -5,18 +5,24 @@
 <link rel="stylesheet" href="/css/style-ds-admin.css" />
 <link rel="stylesheet" href="/css/style-tabel-admin.css" />
 
-<div id="myBtn" class="bg-tambah-data-admin">
-    <div id="bo-tambah-data-admin">
-        <div class="icon-tambah-data-admin">
-            <span class="material-symbols-outlined">
-            add
-            </span>                                                        
+@auth
+    @if (Auth::user()->role && Auth::user()->role->slug === 'superadmin') 
+        {{-- Display the button only if the user is a Superadmin --}}
+        <div id="myBtn" class="bg-tambah-data-admin">
+            <div id="bo-tambah-data-admin">
+                <div class="icon-tambah-data-admin">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>                                                        
+                </div>
+                <div id="text-admin">
+                    <p>Admin</p>
+                </div>
+            </div>
         </div>
-        <div id="text-admin">
-            <p>Admin</p>
-        </div>
-    </div>
-</div>
+    @endif
+@endauth
+
 
 @if ($errors->any())
 <script>
@@ -42,7 +48,6 @@
                         <th>No</th>
                         <th>Nama</th>
                         <th>Username</th>
-                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -59,21 +64,26 @@
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $u->name }}</td>
                         <td>{{ $u->username }}</td>
-                        <td>aktif</td>
                         <td>
-                            <div id="btn-cfg">
-                                <div class="btn-edit" data-id="{{ $u->id }}" data-toggle="modal" data-target="#editModal-{{ $u->id }}">
-                                    <span class="material-symbols-outlined">
-                                    edit
-                                    </span>                                                       
-                                </div>
-                                <div class="btn-delete" data-id="{{ $u->id }}" data-toggle="modal" data-target="#deleteModal-{{ $u->id }}">
-                                    <span class="material-symbols-outlined">
-                                    delete
-                                    </span>                                                       
-                                </div>
-                            </div>
+                            @auth
+                                @if (Auth::user()->role && Auth::user()->role->slug === 'superadmin') 
+                                    {{-- Display the buttons only if the user is a Superadmin --}}
+                                    <div id="btn-cfg">
+                                        <div class="btn-edit" data-id="{{ $u->id }}" data-toggle="modal" data-target="#editModal-{{ $u->id }}">
+                                            <span class="material-symbols-outlined">
+                                                edit
+                                            </span>                                                       
+                                        </div>
+                                        <div class="btn-delete" data-id="{{ $u->id }}" data-toggle="modal" data-target="#deleteModal-{{ $u->id }}">
+                                            <span class="material-symbols-outlined">
+                                                delete
+                                            </span>                                                       
+                                        </div>
+                                    </div>
+                                @endif
+                            @endauth
                         </td>
+                        
                     </tr>
                     <tr class="details-row">
                         <td colspan="6">
@@ -151,8 +161,6 @@
                   <p class="alert-modal alert-danger">{{ $errors->first('password_confirm') }}</p>
               @endif
           </div>
-          <input type="text" id="role" name="role_id" required value="2" hidden>
-          <input type="text" id="status" name="status" value="aktif" hidden>
           <div class="form-group">
             <button type="submit" class="submit-btn">Submit</button>
           </div>
@@ -277,11 +285,11 @@
     const detailsCells = document.querySelectorAll('.details-row td'); // Select all matching elements
     detailsCells.forEach(detailsCell => {
         if (window.innerWidth <= 576) {
-            detailsCell.setAttribute('colspan', '4');
+            detailsCell.setAttribute('colspan', '3');
         } else if (window.innerWidth <= 768) {
-            detailsCell.setAttribute('colspan', '5');
+            detailsCell.setAttribute('colspan', '4');
         } else {
-            detailsCell.setAttribute('colspan', '6'); // Default colspan for larger screens
+            detailsCell.setAttribute('colspan', '5'); // Default colspan for larger screens
         }
     });
 }

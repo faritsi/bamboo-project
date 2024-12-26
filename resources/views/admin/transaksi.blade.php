@@ -25,7 +25,7 @@
                         <input type="date" id="endDate" name="endDate" value={{$groupedTransactions['endDate']}}>
                         
                         <label for="pilihKategori">Pilih Kategori:</label>
-                        <select id="pilihKategori" name="pilihKategori" onchange="this.form.submit()">
+                        <select id="pilihKategori" name="pilihKategori" >
                             <option value="semuaKategori" 
                                 {{ (request('pilihKategori') == 'semuaKategori' || session('pilihKategori') == 'semuaKategori') ? 'selected' : '' }}>
                                 Semua Kategori
@@ -41,19 +41,20 @@
                         <label for="pilihProduk">Pilih Produk:</label>
                         <select id="pilihProduk" name="pilihProduk">
                             <option value="semuaProduk" 
-                                {{ request('pilihProduk') == 'semuaProduk' || session('pilihProduk') == 'semuaProduk' ? 'selected' : '' }}>
+                                {{ session('pilihProduk') == 'semuaProduk' ? 'selected' : '' }}>
                                 Semua Produk
                             </option>
                             @foreach ($produk as $p)
-                                @if ($pilihKategori == 'semuaKategori' || $p->kategori->name == $pilihKategori)
+                                @if ($pilihKategori == 'semuaKategori' || $p->kategori->id == $pilihKategori)
                                     <option value="{{ $p->nama_produk }}" 
-                                        {{ (request('pilihProduk') == $p->nama_produk || session('pilihProduk') == $p->nama_produk) ? 'selected' : '' }}>
+                                        {{ session('pilihProduk') == $p->nama_produk ? 'selected' : '' }}>
                                         {{ $p->nama_produk }}
                                     </option>
                                 @endif
                             @endforeach
                         </select>
-                        <button type="submit" class="btn-filter">Tampilkan Data</button>
+                        
+                        {{-- <button type="submit" class="btn-filter">Tampilkan Data</button> --}}
                     </form>
                 </div>
             </div>
@@ -224,82 +225,6 @@
 
     <script>   
 
-        // Inisialisasi Highchart
-        const salesData = @json($salesData);
-        // console.log(salesData);
-        const renderSalesChart = (data) => {
-            Highcharts.chart('salesChart', {
-                chart: {
-                    type: 'column', // Vertical column chart
-                    backgroundColor: '#ffffff',
-                    borderRadius: 10
-                },
-                title: {
-                    text: 'Penjualan Produk',
-                    style: { color: '#4caf50', fontSize: '18px' }
-                },
-                xAxis: {
-                    categories: data.map(item => item.saleDate), // Sale dates on the X-axis
-                    title: { text: 'Tanggal Terjual', style: { color: '#333' } },
-                    tickInterval: 1
-                },
-                yAxis: {
-                    title: {
-                        text: 'Jumlah Terjual',
-                        style: { color: '#333' }
-                    },
-                    allowDecimals: false,
-                    min: 0
-                },
-                series: [{
-                    name: 'Jumlah Terjual', // Series name is just one string
-                    data: data.map((item) => ({
-                        y: parseInt(item.totalSold), // Quantity sold
-                        name: item.product,          // Product name
-                        date: item.saleDate,         // Sale date
-                    })),
-                    color: '#8bc34a',
-                    marker: {
-                        enabled: true,
-                        radius: 8,  // Size of the green circle
-                        symbol: 'circle'
-                    },
-                    lineWidth: 3,
-                    dataLabels: {
-                        enabled: true,
-                        formatter: function () {
-                            return this.point.y; // Display number of sales inside the circle
-                        },
-                        style: {
-                            fontSize: '14px', // Size of the text for the number of sales
-                            fontWeight: 'bold',
-                            color: '#fff' // White color for better contrast with the green circle
-                        },
-                        verticalAlign: 'middle',
-                        y: 5 // Position of the number inside the circle
-                    },
-                    // Add dataLabels for product name below the "Jumlah Terjual" bar
-                    // stackLabels: {
-                    //     enabled: true,
-                    //     style: {
-                    //         fontWeight: 'bold',
-                    //         color: '#333',
-                    //         fontSize: '14px'
-                    //     },
-                    //     formatter: function () {
-                    //         return this.point.name; // Display product name below the column
-                    //     },
-                    //     verticalAlign: 'bottom', // Position product name below the bar
-                    //     y: 20 // Adjust the vertical position of the product name
-                    // }
-                }],
-                credits: { enabled: false }
-            });
-        };
-
-
-    renderSalesChart(salesData);
-
     // Modal
     $(document).ready(function () {
 
@@ -328,6 +253,175 @@
 
 
     })
+
+    // Function to update the sales chart
+    function updateSalesData(data) {
+        Highcharts.chart('salesChart', {
+            chart: {
+                type: 'column',
+                backgroundColor: '#ffffff',
+                borderRadius: 10
+            },
+            title: {
+                text: 'Penjualan Produk',
+                style: { color: '#4caf50', fontSize: '18px' }
+            },
+            xAxis: {
+                categories: data.map(item => item.saleDate),
+                title: { text: 'Tanggal Terjual', style: { color: '#333' } },
+                tickInterval: 1
+            },
+            yAxis: {
+                title: {
+                    text: 'Jumlah Terjual',
+                    style: { color: '#333' }
+                },
+                allowDecimals: false,
+                min: 0
+            },
+            series: [{
+                name: 'Jumlah Terjual',
+                data: data.map(item => ({
+                    y: parseInt(item.totalSold),
+                    name: item.product,
+                    date: item.saleDate
+                })),
+                color: '#8bc34a',
+                marker: {
+                    enabled: true,
+                    radius: 8,
+                    symbol: 'circle'
+                },
+                lineWidth: 3,
+                dataLabels: {
+                    enabled: true,
+                    formatter: function () {
+                        return this.point.y;
+                    },
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        color: '#fff'
+                    },
+                    verticalAlign: 'middle',
+                    y: 5
+                },
+                
+            }],
+            legend: {
+                enabled: false // Hides the legend
+            },
+            credits: { enabled: false }
+        });
+    }
+
+    // Function to update the transaction table
+    function updateTransactionTable(transactions) {
+        const tableBody = document.querySelector('.transaction-section tbody');
+        if (!tableBody) {
+            console.error('Transaction table body not found!');
+            return;
+        }
+
+        tableBody.innerHTML = ''; // Clear the table
+
+        if (transactions.length === 0) {
+            const emptyRow = document.createElement('tr');
+            emptyRow.innerHTML = `
+                <td colspan="7" class="text-center">No transactions found for the selected filters.</td>
+            `;
+            tableBody.appendChild(emptyRow);
+        } else {
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <a href="/invoice/${transaction.order_id}" class="btnInvoice">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </a>
+                    </td>
+                    <td>${transaction.order_id}</td>
+                    <td>${new Date(transaction.created_at).toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                    })}</td>
+                    <td>${transaction.name}</td>
+                    <td>${transaction.nama_produk}</td>
+                    <td>${new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'
+                    }).format(transaction.total_pembayaran)}</td>
+                    <td>${transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    }
+
+
+    // Load initial data
+    document.addEventListener('DOMContentLoaded', function () {
+        const initialSalesData = @json($salesData);
+        const initialTableData = @json($tableTransactionData['tfItems']);
+
+        updateSalesData(initialSalesData);
+        updateTransactionTable(initialTableData);
+        
+    });
+
+
+    // AJAX logic for filter changes
+    document.querySelectorAll('#filterForm input, #filterForm select').forEach(element => {
+        element.addEventListener('change', function () {
+            const formData = new FormData(document.getElementById('filterForm'));
+
+            // Convert FormData to JSON
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch("{{ route('get.filtered.data') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Track the currently selected product
+                const selectedValue = document.getElementById('pilihProduk').value;
+
+                // Update the product dropdown
+                const produkDropdown = document.getElementById('pilihProduk');
+                produkDropdown.innerHTML = '<option value="semuaProduk">Semua Produk</option>';
+                data.produk.forEach(produk => {
+                    const option = document.createElement('option');
+                    option.value = produk.nama_produk;
+                    option.textContent = produk.nama_produk;
+                    produkDropdown.appendChild(option);
+                });
+
+                // Restore the selected value if it exists in the new options
+                const restoredOption = Array.from(produkDropdown.options).find(option => option.value === selectedValue);
+                if (restoredOption) {
+                    produkDropdown.value = selectedValue;
+                } else {
+                    produkDropdown.value = 'semuaProduk'; // Default to 'Semua Produk' if the value is not available
+                }
+
+                // Update charts and tables
+                updateSalesData(data.salesData);
+                updateTransactionTable(data.tableTransaksi.transactions);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+
+
 
     </script>
 @endsection

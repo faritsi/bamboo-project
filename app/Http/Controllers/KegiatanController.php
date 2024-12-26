@@ -62,6 +62,10 @@ class KegiatanController extends Controller
             $videoName = 'kegiatan-' . time() . '.' . $videoFile->getClientOriginalExtension();
             $videoPath = $videoFile->storeAs('kegiatan-videos', $videoName, 'public');
 
+            videoKegiatan::create([
+                'video_path' => $videoPath,
+            ]);
+
             $videoSuccess = true;
         }
 
@@ -219,6 +223,14 @@ class KegiatanController extends Controller
 
         // Simpan perubahan ke database
         $video->save();
+
+        // Check if both fields are empty
+        if (!$request->filled('video_link') && !$request->hasFile('video_path')) {
+            return back()->withErrors([
+                'video_link' => 'At least one field (YouTube link or uploaded video) is required.',
+                'video_path' => 'At least one field (YouTube link or uploaded video) is required.',
+            ])->withInput();
+        }
 
         return redirect()->back()->with('success', 'Video updated successfully.');
     }

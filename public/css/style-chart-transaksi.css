@@ -8,7 +8,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     margin: 20px auto;
     max-width: 1200px;
     padding: 30px 0px 20px 90px;
@@ -30,6 +30,7 @@
 .left-section {
     flex: 1;
     max-width: 30%;
+    height: max-content;
 }
 
 .chart-container {
@@ -42,7 +43,7 @@
 
 #salesChart {
     width: 100%;
-    height: 600px;
+    height: 450px;
 }
 
 .filter-section h2,
@@ -158,7 +159,6 @@ table tr:hover {
 }
 
 .pagination-section {
-    margin-top: 20px;
     text-align: center;
 }
 

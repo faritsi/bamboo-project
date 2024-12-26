@@ -133,14 +133,19 @@ Route::group(['middleware' => ['auth']], function () {
         });
         Route::get('/integrasi', [IntegrasiController::class, 'index'])->name('integrasi.index');
         Route::get('/transactions', [TransaksiController::class, 'index']);
+
         Route::get('/visitors/count', [VisitorController::class, 'getVisitorCount']);
         // Route::get('/visitors/filter', [VisitorController::class, 'filterVisitor'])->name('visitors.filter');
         Route::post('/visitor', [VisitorController::class, 'showStats'])->name('visitor.showStats');
         Route::get('/visitor', [VisitorController::class, 'showStats'])->name('visitor.showStats');
+        Route::post('/get-visitor-stats', [VisitorController::class, 'getVisitorStats'])->name('get.visitor.stats');
+
         Route::get('/transactions', [TransaksiController::class, 'index']);
         Route::get('/invoice/{orderId}', [TransaksiController::class, 'showInvoice'])->name('invoice.view');
         Route::post('/pembelian', [TransaksiController::class, 'view_tf'])->name('pembelian.sales');
         Route::get('/pembelian', [TransaksiController::class, 'view_tf'])->name('pembelian.sales');
+        Route::post('/get-filtered-data', [TransaksiController::class, 'getFilteredData'])->name('get.filtered.data');
+
         Route::resource('produk', ProdukController::class);
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('admin', AdminController::class);

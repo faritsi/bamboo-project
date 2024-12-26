@@ -28,6 +28,7 @@
 .left-section {
     flex: 1;
     max-width: 30%;
+    height: max-content;
 }
 
 .chart-container {

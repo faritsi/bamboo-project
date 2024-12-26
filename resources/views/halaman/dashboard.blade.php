@@ -301,7 +301,7 @@
                             <li><a href="#navbar">Home</a></li>
                             <li><a href="#content-about-us">About Us</a></li>
                             <li><a href="#content-our-service">Services</a></li>
-                            <li><a href="#container-catalog">Products</a></li>
+                            <li><a href="/catalog">Catalog</a></li>
                             <li><a href="#contact">Contact Us</a></li>
                         </ul>
                     </div>

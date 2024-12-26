@@ -11,8 +11,8 @@ class Kategori extends Model
     protected $guarded = ['id'];
     public function produk()
     {
-        return $this->hasOne(Produk::class);
-        // return $this->hasMany(Produk::class)
+        // return $this->hasOne(Produk::class);
+        return $this->hasMany(Produk::class);
     }
     public function transaksi()
     {

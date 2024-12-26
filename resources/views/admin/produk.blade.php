@@ -161,7 +161,7 @@
     </div>
 </div>
 
-{{-- modal kegiatan --}}
+{{-- modal kategori --}}
 <div id="myActivity" class="modal" style="display: none;">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -172,7 +172,7 @@
             </div>
             <div class="form-group">
                 <label for="name">Nama Kategori Baru <span class="required">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategori Baru" value="{{ old('name') }}">
+                <input type="text" id="name" name="name" placeholder="Masukkan Nama Kategori Baru" value="{{ old('name') }}" class="capitalize-input">
                 @if ($errors->has('name'))
                     <p class="alert-modal alert-danger">{{ $errors->first('name') }}</p>
                 @endif
@@ -248,7 +248,7 @@
             </div>
             <div class="form-group">
                 <label for="kategori_id">Kategori <span class="required">*</span></label>
-                <select id="kategori_id" name="kategori_id" class="form-control">
+                <select id="kategori_id" name="kategori_id" class="form-control scrollable-dropdown">
                     <option value="" disabled selected>Pilih Kategori</option>
                     @foreach ($kategori as $p)
                     <option value="{{$p->id}}">{{$p->name}}</option>
@@ -447,6 +447,24 @@
 @endforeach
 
 <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all inputs with the class 'capitalize-input'
+        const capitalizeInputs = document.querySelectorAll('.capitalize-input');
+        
+        // Add an event listener to each input
+        capitalizeInputs.forEach(input => {
+            input.addEventListener('input', function () {
+                // Only capitalize if the field is not empty
+                if (input.value.length > 0) {
+                    input.value = input.value
+                        .charAt(0)
+                        .toUpperCase() + input.value.slice(1);
+                }
+            });
+        });
+    });
+
     $(document).ready(function () {
         $(".btn-details-produk").on("click", function () {
             var row = $(this).closest("tr").next(".details-row-produk");

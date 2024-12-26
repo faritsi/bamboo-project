@@ -63,9 +63,9 @@ class Handler extends ExceptionHandler
             return response()->view('errors.404', [], 404);
         }
 
-        if ($exception instanceof ErrorException) {
-            return response()->view('errors.500', [], 500);
-        }
+        // if ($exception instanceof ErrorException) {
+        //     return response()->view('errors.500', [], 500);
+        // }
 
         if ($exception instanceof AccessDeniedHttpException) {
             return response()->view('errors.403', [], 403);

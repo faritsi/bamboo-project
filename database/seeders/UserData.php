@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserData extends Seeder
 {
@@ -32,5 +34,27 @@ class UserData extends Seeder
         foreach ($user as $key => $value) {
             User::create($value);
         }
+
+        // $users = [
+        //     [
+        //         'role_id' => Role::where('slug', 'superadmin')->first()->id, // Fetch role_id dynamically
+        //         'name' => 'Jeki',
+        //         'username' => 'superadmin',
+        //         'password' => Hash::make('superadmin'), // Use Hash facade for security
+        //         'image' => 'superadmin-image.jpg', // Replace with actual image if necessary
+        //     ],
+        //     [
+        //         'role_id' => Role::where('slug', 'admin')->first()->id, // Fetch role_id dynamically
+        //         'name' => 'Jeki 2',
+        //         'username' => 'admin@gmail.com',
+        //         'password' => Hash::make('admin'),
+        //         'image' => 'admin-image.jpg', // Replace with actual image if necessary
+        //     ],
+        // ];
+
+        // // Insert user data
+        // foreach ($users as $user) {
+        //     User::create($user);
+        // }
     }
 }

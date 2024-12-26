@@ -40,40 +40,85 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+
+    //     $request->validate([
+    //         'name' => 'required|string',
+    //         'username' => 'required|string|unique:users,username',
+    //         'password' => 'required|min:8',
+    //         'password_confirm' => 'required|same:password',
+    //         'role_id' => 'required|string',
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+    //     ]);
+
+    //     $imagePath = null;
+    //     if ($request->file('image')) {
+    //         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+    //         $imagePath = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+    //     }
+
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'username' => $request->username,
+    //         'password' => Hash::make($request->password),
+    //         'role_id' => $request->role_id,
+    //         'image' => $imagePath,
+    //     ]);
+    //     // dd($user);
+    //     // Save the model to the database
+    //     // $user->save();
+
+    //     // Redirect to the admin index route with a success message
+    //     return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
+    //     return back()->withErrors([
+    //         'username' => 'Username telah terdaftar!',
+    //         'password' => 'Password tidak cocok',
+    //     ]);
+    // }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required|same:password',
-            'role_id' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
-        ]);
+        try {
+            // Validate the incoming request data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|unique:users,username|max:255',
+                'password' => 'required|string|min:8',
+                'password_confirm' => 'required|same:password',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            ]);
 
-        $imagePath = null;
-        if ($request->file('image')) {
-            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $imagePath = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+            // Handle image upload
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+                $imagePath = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+            }
+
+            // Force role_id to "Admin"
+            $roleId = Role::where('slug', 'admin')->first()->id; // Fetch the admin role dynamically
+
+            // Create the new user
+            User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'role_id' => $roleId, // Assign role_id as Admin
+                'image' => $imagePath,
+            ]);
+
+            // Redirect with success message
+            return redirect()->route('admin.index')->with('success', 'Admin berhasil ditambahkan!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors and return them
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            // Log unexpected errors for debugging
+            // \Log::error('Error creating admin: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan admin. Silakan coba lagi.')->withInput();
         }
-
-        $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-            'image' => $imagePath,
-        ]);
-        // dd($user);
-        // Save the model to the database
-        // $user->save();
-
-        // Redirect to the admin index route with a success message
-        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
-        return back()->withErrors([
-            'username' => 'Username telah terdaftar!',
-            'password' => 'Password tidak cocok',
-        ]);
     }
 
     /**

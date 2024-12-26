@@ -48,11 +48,15 @@
                         <span class="material-symbols-outlined">
                             lock
                         </span>
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" name="password">
+                    
                     </div>
 
                     @error('username')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                    @error('password')
+                        <div class="invalid-feedback"> {{ $message }}</div>
                     @enderror
 
                     <button type="submit" class="btn-submit">LOGIN</button>
