@@ -90,12 +90,6 @@
     box-sizing: border-box;
 }
 
-.form-group select {
-    max-height: 50px;
-    display: block;
-    overflow-y: auto;
-}
-
 input[type="file"] {
     padding: 10px;
     border-radius: 5px;
