@@ -12,6 +12,9 @@ use App\Models\Pimpinan;
 use App\Models\Ingpo;
 use App\Models\Kegiatan;
 use App\Models\Service;
+use App\Models\Transaksi;
+use App\Models\videokegiatan;
+use App\Models\visitor;
 
 class LayoutController extends Controller
 {
@@ -19,23 +22,50 @@ class LayoutController extends Controller
     {
         return view('halaman.dashboard')->with([
             'title' => 'Halaman Utama',
-            'produk' => produk::orderBy('created_at')->take(5)->get(),
-            'pimpinan' => Pimpinan::take(4)->get(),
+            'produk' => produk::orderBy('created_at')->take(20)->get(),
+            // 'pimpinan' => Pimpinan::take(4)->get(),
+            'pimpinan' => Pimpinan::all(),
             'ingpo' => Ingpo::all(),
             'service' => Service::all(),
-            'kegiatan' => Kegiatan::orderBy('created_at')->take(5)->get(),
+            'video' => videokegiatan::all(),
+            // 'kegiatan' => Kegiatan::orderBy('created_at')->take(10)->get(),
+            'kegiatan' => Kegiatan::all(),
         ]);
     }
     public function index()
     {
-        $user1 = User::count();
-        // return view('halaman.dashboard-admin')->with([
-        //     'title' => 'Dashboard'
-        // ]);
-        return view('admin.beranda')->with([
+        // Hitung jumlah data untuk masing-masing entitas
+        $totalAdmins = User::where('role_id', '2')->count();
+        $totalPimpinan = Pimpinan::count();
+        $totalProduk = Produk::count();
+        $totalPenjualan = Transaksi::count();
+        $totalPengunjung = Visitor::count();
+        $totalPendapatan = Transaksi::select(DB::raw('sum(qty * harga) as total_pembayaran'))
+            ->where('status', 'success')
+            ->groupBy('order_id')
+            ->get();
+
+
+        // Hitung total pendapatan keseluruhan
+        // \Log::info('Hasil Query Total Pendapatan: ', $totalPendapatan->toArray());
+
+        $totalPendapatanValue = $totalPendapatan->sum('total_pembayaran') ?? 0; // Menjumlahkan semua total_pembayaran
+
+        $user1 = User::count(); // Total semua pengguna
+
+        // Kirim data ke view
+        return view('admin.beranda', [
             'user' => Auth::user(),
-            'role' => role::all(),
-            'title' => 'Dashboard'
-        ], compact('user1'));
+            'ingpo' => Ingpo::all(),
+            'role' => Role::all(),
+            'title' => 'Dashboard',
+            'totalAdmins' => $totalAdmins,
+            'totalPimpinan' => $totalPimpinan,
+            'totalProduk' => $totalProduk,
+            'totalPenjualan' => $totalPenjualan,
+            'totalPengunjung' => $totalPengunjung,
+            'totalPendapatanValue' => $totalPendapatanValue,
+            'user1' => $user1, // Total pengguna
+        ]);
     }
 }

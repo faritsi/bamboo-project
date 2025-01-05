@@ -9,5 +9,5 @@ class Kegiatan extends Model
 {
     use HasFactory;
     // protected $guarded = ['id'];
-    protected $fillable = ['image_path'];
+    protected $fillable = ['image_path', 'video_path'];
 }

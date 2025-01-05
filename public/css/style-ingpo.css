@@ -1,6 +1,5 @@
 /* Container Background and Layout */
 #bg-info {
-    background-color: #f4f7fa;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -37,7 +36,6 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 12px 15px;
-    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -70,7 +68,7 @@ textarea:focus {
 
 /* Submit Button Styling */
 button[type="submit"] {
-    background-color: #28a745;
+    background-color: #4caf50;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -83,7 +81,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #45a049;
 }
 
 /* Alert Message Styling */
@@ -102,6 +100,11 @@ button[type="submit"]:hover {
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+.form-text {
+    font-size: 0.875rem; /* Ukuran font yang lebih kecil */
+    color: #6c757d; /* Warna teks abu-abu */
 }
 
 /* Responsive Design */

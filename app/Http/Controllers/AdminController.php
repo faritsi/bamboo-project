@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Ingpo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Role;
 
@@ -20,10 +22,11 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $role = role::all();
+        $ingpo = Ingpo::all();
         $users = User::all();
-        return view('admin.adminForm',[
+        return view('admin.adminForm', [
             'title' => 'Admin'
-        ],compact('user','users', 'role'));
+        ], compact('user', 'users', 'role', 'ingpo'));
     }
 
     /**
@@ -37,33 +40,85 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request)
+    // {
+
+    //     $request->validate([
+    //         'name' => 'required|string',
+    //         'username' => 'required|string|unique:users,username',
+    //         'password' => 'required|min:8',
+    //         'password_confirm' => 'required|same:password',
+    //         'role_id' => 'required|string',
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+    //     ]);
+
+    //     $imagePath = null;
+    //     if ($request->file('image')) {
+    //         $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+    //         $imagePath = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+    //     }
+
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'username' => $request->username,
+    //         'password' => Hash::make($request->password),
+    //         'role_id' => $request->role_id,
+    //         'image' => $imagePath,
+    //     ]);
+    //     // dd($user);
+    //     // Save the model to the database
+    //     // $user->save();
+
+    //     // Redirect to the admin index route with a success message
+    //     return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
+    //     return back()->withErrors([
+    //         'username' => 'Username telah terdaftar!',
+    //         'password' => 'Password tidak cocok',
+    //     ]);
+    // }
+
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string|unique:users,username',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required|same:password',
-            'role_id' => 'required|string',
-        ]);
+        try {
+            // Validate the incoming request data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|unique:users,username|max:255',
+                'password' => 'required|string|min:8',
+                'password_confirm' => 'required|same:password',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            ]);
 
-        $user = new User([
-            'name' => $request->name,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-            // 'status' => $request->status ?? 'aktif', // Default value if not provided
-        ]);
-        // dd($user);
-        // Save the model to the database
-        $user->save();
+            // Handle image upload
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+                $imagePath = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+            }
 
-        // Redirect to the admin index route with a success message
-        return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Ditambah');
-        return back()->withErrors([
-            'username' => 'Username telah terdaftar!',
-            'password' => 'Password tidak cocok',
-        ]);
+            // Force role_id to "Admin"
+            $roleId = Role::where('slug', 'admin')->first()->id; // Fetch the admin role dynamically
+
+            // Create the new user
+            User::create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'password' => Hash::make($request->password),
+                'role_id' => $roleId, // Assign role_id as Admin
+                'image' => $imagePath,
+            ]);
+
+            // Redirect with success message
+            return redirect()->route('admin.index')->with('success', 'Admin berhasil ditambahkan!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Handle validation errors and return them
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            // Log unexpected errors for debugging
+            // \Log::error('Error creating admin: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan admin. Silakan coba lagi.')->withInput();
+        }
     }
 
     /**
@@ -87,22 +142,45 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+
+        // Validasi input
         $request->validate([
-            'name' => 'required|string',
-            'username' => 'required|string',
-            'password' => 'required|min:8',
-            'password_confirm' => 'required|same:password',
-            'role_id' => 'required|string',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $id,
+            'role_id' => 'required|integer|exists:roles,id',
+            'password' => 'nullable|min:8',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
-        $admin = User::find($id);
-        $admin->update([
+
+        // Data yang akan diperbarui
+        $data = [
             'name' => $request->name,
             'username' => $request->username,
-            'password' => Hash::make($request->password),
-            // 'password_confirm' => Hash::make($request->password),
             'role_id' => $request->role_id,
-        ]);
-        // dd($admin);
+        ];
+
+        // Jika password diisi, maka masukkan dalam array data
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        // Proses gambar baru jika ada
+        if ($request->file('image')) {
+            $imageName = $id . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Hapus gambar lama jika ada
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
+            }
+
+            // Simpan gambar baru dan tambahkan ke array data
+            $data['image'] = $request->file('image')->storeAs('admin-images', $imageName, 'public');
+        }
+
+        // Update data pengguna
+        $user->update($data);
+
         return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Diubah');
     }
 
@@ -111,8 +189,13 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $admin = User::find($id);
-        $admin->delete();
+        $user = User::findOrFail($id);
+        if ($user) {
+            if ($user->image) {
+                Storage::delete($user->image);
+            }
+            $user->delete();
+        }
         return redirect()->route('admin.index')->with('success', 'Data Admin Berhasil Dihapus');
     }
 }

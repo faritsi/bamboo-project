@@ -14,4 +14,8 @@ class Transaksi extends Model
     //     // 'kode_produk'
     // ];
     protected $guarded = ['id'];
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
 }

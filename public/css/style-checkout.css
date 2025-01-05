@@ -70,6 +70,10 @@
     padding-top: 10px;
     border-top: 1px solid #ddd;
     color: #4caf50;
+
+    #pembayaran {
+        color: #000;
+    }
 }
 
 #confirm-checkout {
@@ -87,4 +91,30 @@
 
 #confirm-checkout:hover {
     background-color: #45a049;
+}
+
+/* Styling untuk div yang berperan sebagai button */
+.checkout-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #45a049; /* Warna hijau */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Memberi jarak di atas tombol */
+}
+
+/* Hover effect untuk tampilan interaktif */
+.checkout-button:hover {
+    background-color: #397d3b; /* Warna hijau lebih gelap untuk efek hover */
+}
+
+/* Active state untuk memberikan efek klik */
+.checkout-button:active {
+    background-color: #2e6330; /* Warna lebih gelap saat ditekan */
+    transform: scale(0.98); /* Sedikit memperkecil tombol saat ditekan */
 }

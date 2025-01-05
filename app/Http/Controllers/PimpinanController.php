@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingpo;
 use App\Models\Pimpinan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,11 @@ class PimpinanController extends Controller
     {
         $user = Auth::user();
         $pimpinan = Pimpinan::all();
+        $ingpo = Ingpo::all();
+
         return view('admin.pimpinan', [
             'title' => 'Pimpinan'
-        ], compact('pimpinan', 'user'));
+        ], compact('pimpinan', 'user', 'ingpo'));
     }
 
     /**
@@ -43,9 +46,9 @@ class PimpinanController extends Controller
         // Validasi input, pastikan 'image' adalah file dengan format yang benar
         $request->validate([
             // 'ppid' => $ppid,
-            'name' => 'required',
-            'jabatan' => 'required',
-            'deskripsi' => 'required',
+            'name' => 'required|string|max:5000',
+            'jabatan' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:5000',
             'image' => 'image|max:5120'
         ]);
 

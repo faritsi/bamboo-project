@@ -52,6 +52,17 @@
     cursor: pointer;
 }
 
+#text-thumbnail label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+
+    .required {
+        color: red;
+    }
+}
+
 /* Form styles */
 .form-group {
     margin-bottom: 20px;
@@ -65,6 +76,7 @@
 }
 
 .form-group input[type="text"],
+.form-group input[type="number"],
 .form-group input[type="password"],
 .form-group input[type="date"],
 .form-group select,
@@ -76,6 +88,25 @@
     border-radius: 5px;
     font-size: 14px;
     box-sizing: border-box;
+}
+
+input[type="file"] {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin: 10px 0;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 .form-group textarea {
@@ -94,18 +125,25 @@
     border-color: #f5c6cb;
     padding: 10px;
     border-radius: 5px;
-    margin-top: 5px;
+    margin: 30px 0px 20px 90px;
+}
+
+.alert-modal.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /* Success message styles */
 .alert.alert-success {
-    margin-top: 20px;
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin: 30px 30px 20px 90px;
 }
 
 /* Thumbnail styles */
@@ -159,7 +197,21 @@
     background-color: #218838;
 }
 
+#co-head {
+    margin: 20px auto;
+}
+
 /* Responsive design */
+
+@media (max-width: 992px) {
+    .alert.alert-success {
+        margin: 20px;
+    }
+
+    .alert.alert-danger {
+        margin: 20px;
+    }
+}
 @media (max-width: 768px) {
     .modal-content {
         width: 95%;

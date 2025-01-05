@@ -1,14 +1,18 @@
 @extends('halaman.admin')
 @section('content')
-<div id="myBtn" class="bg-tambah-data">
-    <div id="bo-tambah-data">
-        <div class="icon-tambah-data">
+
+<link rel="stylesheet" href="/css/style-ds-service.css">
+<link rel="stylesheet" href="/css/style-tabel-service.css">
+
+<div id="myBtn" class="bg-tambah-data-service">
+    <div id="bo-tambah-data-service">
+        <div class="icon-tambah-data-service">
             <span class="material-symbols-outlined">
             add
             </span>                                                        
         </div>
-        <div id="text">
-            <strong>Services</strong>
+        <div id="text-service">
+            <p>Services</p>
         </div>
     </div>
 </div>
@@ -27,17 +31,16 @@
     </div>
 @endif
 
-<div id="bg-isi-content" class="clearfix">
-    <div id="bo-isi-content">
+<div id="bg-isi-content-service" class="clearfix">
+    <div id="bo-isi-content-service">
         {{-- Table --}}
-        <div id="table-pimpinan">
+        <div id="table-service">
             <table>
                 <thead>
                     <tr>
                         <th></th>
                         <th>No</th>
-                        <th>Image</th>
-                        <th>Nama</th>
+                        <th>Service</th>
                         <th>Deskripsi</th>
                         <th></th>
                     </tr>
@@ -46,18 +49,18 @@
                     @foreach ($service as $index => $p)
                     <tr>
                         <td>
-                            <div class="btn-details">
+                            <div class="btn-details-service">
                                 <span class="material-symbols-outlined">
                                 add
                                 </span>                                                        
                             </div>
                         </td>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ asset('/storage/' . $p->img) }}</td>
+                        {{-- <td>{{ asset('/storage/' . $p->img) }}</td> --}}
                         <td>{{ $p->judul }}</td>
                         <td>{{ $p->desc }}</td>
                         <td>
-                            <div id="btn-cfg">
+                            <div id="btn-cfg-service">
                                 <div class="btn-edit" data-id="{{ $p->id }}">
                                     <span class="material-symbols-outlined">
                                     edit
@@ -67,6 +70,31 @@
                                     <span class="material-symbols-outlined">
                                     delete
                                     </span>                                                       
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="details-row-service">
+                        <td colspan="5">
+                            @if ($p->img)
+                                <img src="{{ asset('/storage/' . $p->img) }}" alt="" id="avatar-service">
+                            @else
+                                <img src="/img/default-img/default.png" alt="" id="avatar-service">
+                            @endif
+                            <div><strong>Judul Service: </strong> {{ $p->judul }}</div>
+                            <div><strong>Deskripsi Service: </strong> <span class="desc-limit">{{ $p->desc }}</span></div>
+                            <div id="btn-cfg-detail">
+                                <div class="btn-edit" data-id="{{ $p->id }}" data-toggle="modal" data-target="#editModal-{{ $p->id }}">
+                                    <span class="material-symbols-outlined">
+                                    edit
+                                    </span>
+                                    <p id="edit-text">Edit</p>                                                       
+                                </div>
+                                <div class="btn-delete" data-id="{{ $p->id }}" data-toggle="modal" data-target="#deleteModal-{{ $p->id }}">
+                                    <span class="material-symbols-outlined">
+                                    delete
+                                    </span>    
+                                    <p id="delete-text">Delete</p>                                                   
                                 </div>
                             </div>
                         </td>
@@ -92,21 +120,21 @@
             <img id="thumbnail-preview" src="https://via.placeholder.com/100" alt="Thumbnail">
             <input type="file" id="thumbnail" name="img">
             @if ($errors->has('img'))
-                <p class="alert alert-danger">{{ $errors->first('img') }}</p>
+                <p class="alert-modal alert-danger">{{ $errors->first('img') }}</p>
             @endif
           </div>
           <div class="form-group">
               <label for="name">Judul Service <span class="required">*</span></label>
               <input type="text" id="name" name="judul" placeholder="Masukan Judul" value="{{ old('judul') }}">
               @if ($errors->has('judul'))
-                  <p class="alert alert-danger">{{ $errors->first('judul') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('judul') }}</p>
               @endif
           </div>
           <div class="form-group">
               <label for="desc">Deskripsi <span class="required">*</span></label>
-              <input type="text" id="desc" name="desc" placeholder="Masukan desc" value="{{ old('desc') }}">
+              <textarea id="desc" name="desc" placeholder="Masukan desc" value="{{ old('desc') }}"></textarea>
               @if ($errors->has('desc'))
-                  <p class="alert alert-danger">{{ $errors->first('desc') }}</p>
+                  <p class="alert-modal alert-danger">{{ $errors->first('desc') }}</p>
               @endif
           </div>
           <div class="form-group">
@@ -132,21 +160,22 @@
                 <img id="thumbnail-preview-{{ $p->id }}" src="{{ asset('/storage/' . $p->img) }}" alt="Thumbnail">
                 <input type="file" id="thumbnail-{{ $p->id }}" name="img">
                 @if ($errors->has('img'))
-                    <p class="alert alert-danger">{{ $errors->first('img') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('img') }}</p>
                 @endif
             </div>
             <div class="form-group">
                 <label for="name-{{ $p->id }}">Judul Service <span class="required">*</span></label>
                 <input type="text" id="name-{{ $p->id }}" name="judul" placeholder="Masukan Nama" value="{{ old('judul', $p->judul) }}">
                 @if ($errors->has('judul'))
-                    <p class="alert alert-danger">{{ $errors->first('judul') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('judul') }}</p>
                 @endif
             </div>
             <div class="form-group">
-                <label for="desc-{{ $p->id }}">desc <span class="required">*</span></label>
-                <input type="text" id="desc-{{ $p->id }}" name="desc" placeholder="Masukan desc" value="{{ old('desc', $p->desc) }}">
+                <label for="desc-{{ $p->id }}">Deskripsi <span class="required">*</span></label>
+                {{-- value="{{ old('desc', $p->desc) }}" --}}
+                <textarea id="desc-{{ $p->id }}" name="desc" placeholder="Masukan desc" >{{$p->desc}}</textarea>
                 @if ($errors->has('desc'))
-                    <p class="alert alert-danger">{{ $errors->first('desc') }}</p>
+                    <p class="alert-modal alert-danger">{{ $errors->first('desc') }}</p>
                 @endif
             </div>
             <div class="form-group">
@@ -180,8 +209,8 @@
 
 <script>
     $(document).ready(function () {
-    $(".btn-details").on("click", function () {
-        var row = $(this).closest("tr").next(".details-row");
+    $(".btn-details-service").on("click", function () {
+        var row = $(this).closest("tr").next(".details-row-service");
         row.toggle();
         var icon = $(this).find(".material-symbols-outlined");
         if (row.is(":visible")) {
@@ -239,6 +268,26 @@
         var ppid = $(this).data('id');
         showModal("#deleteModal-" + ppid);
     });
+
+    function updateColspan() {
+        const detailsCells = document.querySelectorAll('.details-row-service td'); // Select all matching elements
+        detailsCells.forEach(detailsCell => {
+            if (window.innerWidth <= 576) {
+                detailsCell.setAttribute('colspan', '3');
+            } else if (window.innerWidth <= 768) {
+                detailsCell.setAttribute('colspan', '4');
+            } else {
+                detailsCell.setAttribute('colspan', '5'); // Default colspan for larger screens
+            }
+        });
+    }
+
+    // Run on initial load
+    updateColspan();
+
+    // Add an event listener for window resizing
+    window.addEventListener('resize', updateColspan);
+
 });
 
 </script>

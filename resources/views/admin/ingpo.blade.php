@@ -1,5 +1,6 @@
 @extends('halaman.admin')
 @section('content')
+<link rel="stylesheet" href="/css/style-ingpo.css" /> 
 
 <!-- Display success message -->
 @if (session('success'))
@@ -30,6 +31,19 @@
             <h1>Layout</h1>
             <p>Edit layout dashboard</p>
             <hr>
+        </div>
+
+        <div class="section">
+            <h2>Logo</h2>
+            <input type="file" id="favicon" name="favicon">
+            <div class="image-preview">
+                <img id="imageHeaderPreview1" src="{{ asset('storage/' . $i->favicon) }}" style="max-width: 200px; max-height: 150px;">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Title</h2>
+            <textarea id="title" name="title" rows="5">{{ $i->title }}</textarea>
         </div>
 
         <!-- Background Header Section -->
@@ -76,10 +90,10 @@
 
         <!-- Image Visi Section -->
         <div class="section">
-            <h2>Image Visi</h2>
-            <input type="file" id="image_visi" name="image_visi" onchange="previewImage(event, 'imageVisiPreview')">
+            <h2>Image Visi Misi</h2>
+            <input type="file" id="image_visi" name="image_visi_misi" onchange="previewImage(event, 'imageVisiPreview')">
             <div class="image-preview">
-                <img id="imageVisiPreview" src="{{ asset('storage/' . $i->image_visi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
+                <img id="imageVisiPreview" src="{{ asset('storage/' . $i->image_visi_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
             </div>
         </div>
 
@@ -87,15 +101,6 @@
         <div class="section">
             <h2>Deskripsi Visi</h2>
             <textarea id="desc_visi" name="desc_visi" rows="5">{{ $i->desc_visi }}</textarea>
-        </div>
-
-        <!-- Image Misi Section -->
-        <div class="section">
-            <h2>Image Misi</h2>
-            <input type="file" id="image_misi" name="image_misi" onchange="previewImage(event, 'imageMisiPreview')">
-            <div class="image-preview">
-                <img id="imageMisiPreview" src="{{ asset('storage/' . $i->image_misi) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-            </div>
         </div>
 
         <!-- Deskripsi Misi -->
@@ -128,13 +133,10 @@
             <textarea id="desc_produk" name="desc_produk" rows="5">{{ $i->desc_produk }}</textarea>
         </div>
 
-        <!-- Footer Logo Section -->
+        <!-- Judul Footer Section -->
         <div class="section">
-            <h2>Logo Footer</h2>
-            <input type="file" id="logo_footer" name="logo_footer" onchange="previewImage(event, 'logoFooterPreview')">
-            <div class="image-preview">
-                <img id="logoFooterPreview" src="{{ asset('storage/' . $i->logo_footer) }}" alt="Image Preview" style="max-width: 200px; max-height: 150px;">
-            </div>
+            <h2>Judul Footer</h2>
+            <input type="text" id="judul_footer" name="judul_footer" value="{{ $i->judul_footer }}">
         </div>
 
         <!-- Judul Footer Section -->
@@ -147,6 +149,21 @@
         <div class="section">
             <h2>Deskripsi Footer</h2>
             <textarea id="desc_footer" name="desc_footer" rows="5">{{ $i->desc_footer }}</textarea>
+        </div>
+
+        <!-- WhatsApp  -->
+        <div class="section">
+            <h2>Nomor WhatsApp</h2>
+            <input type="text" id="no_wa" name="nowa" value="{{ $i->nowa }}" placeholder="+6281234567890"></input>
+            <small class="form-text text-muted">
+                Mohon Gunakan Kode Area Untuk Nomor WhatsApp (+62)
+            </small>
+        </div>
+
+        <!-- Instagram -->
+        <div class="section">
+            <h2>Link Instagram</h2>
+            <input type="text" id="instagram" name="instagram" value="{{ $i->instagram }}" placeholder="https://www.instagram.com/Himaryy/"></input>
         </div>
 
         <!-- Submit Button -->

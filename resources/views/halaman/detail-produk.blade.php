@@ -73,7 +73,7 @@
                     <div id="modal-biodata" class="modal">
                         <div class="modal-content">
                             <span class="close">&times;</span>
-                            <form action="" method="POST" enctype="multipart/form-data">
+                            <form action="" method="POST" enctype="multipart/form-data" id="form-biodata">
                                 @csrf
                                 <div id="header-modul">
                                     <h2>Pengisian Biodata</h2>
@@ -81,22 +81,27 @@
                                 <div class="form-group">
                                     <label for="nama-lengkap">Nama Lengkap <span class="required">*</span></label>
                                     <input type="text" name="nama-lengkap" id="nama-lengkap" placeholder="Masukan Nama Lengkap" required>
+                                    <small class="error-message" >Nama lengkap wajib diisi.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="alamat">Alamat <span class="required">*</span></label>
-                                    <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat" required>
+                                    <input type="text" name="alamat" id="alamat" placeholder="Masukan Alamat">
+                                    <small class="error-message" >Alamat wajib diisi.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="kota">Kota <span class="required">*</span></label>
-                                    <input type="text" name="kota" id="kota" placeholder="Masukan Kota" required>
+                                    <input type="text" name="kota" id="kota" placeholder="Masukan Kota">
+                                    <small class="error-message" >Kota wajib diisi.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="kode-pos">Kode Pos <span class="required">*</span></label>
-                                    <input type="text" name="kode-pos" id="kode-pos" placeholder="Masukan Kode Pos" required>
+                                    <input type="text" name="kode-pos" id="kode-pos" placeholder="Masukan Kode Pos">
+                                    <small class="error-message" >Kode pos wajib diisi.</small>
                                 </div>
                                 <div class="form-group">
                                     <label for="no-telepon">Nomor WhatsApp <span class="required">*</span></label>
-                                    <input type="text" name="no-telepon" id="no-telepon" placeholder="Masukan Nomor WhatsApp" required>
+                                    <input type="text" name="no-telepon" id="no-telepon" placeholder="Masukan Nomor WhatsApp">
+                                    <small class="error-message">Nomor WhatsApp wajib diisi.</small>
                                 </div>
                                 <div class="info-message">
                                     <p>Harap Pastikan Dengan Benar Nomor WhatsApp Karena Informasi mengenai pengiriman dan resi akan dikirimkan oleh admin melalui WhatsApp.</p>
@@ -139,6 +144,37 @@
                 modal.style.display = "none";
             }
         }
+
+        function validateForm(event) {
+            event.preventDefault(); // Mencegah pengiriman form sementara
+
+            let isValid = true; // Flag validasi
+            const form = document.getElementById('form-biodata');
+            const inputs = form.querySelectorAll('input');
+            
+            inputs.forEach(input => {
+            const errorMessage = input.nextElementSibling; // Elemen <small> setelah input
+
+            if (input.value.trim() === '') {
+                // Tampilkan pesan error jika input kosong
+                errorMessage.style.display = 'block';
+                input.style.borderColor = 'red';
+                isValid = false;
+            } else {
+                // Sembunyikan pesan error jika input terisi
+                errorMessage.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            });
+
+            if (isValid) {
+            // alert('Form berhasil disubmit!');
+            form.submit(); // Kirim formulir jika valid
+            }
+        }
+
+        // Tambahkan event listener pada tombol submit
+        document.getElementById('form-biodata').addEventListener('submit', validateForm);
 
     </script>
 </body>

@@ -25,6 +25,19 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('pos');
             $table->string('city');
+            $table->string('province');
+
+
+            // Edit from migrte
+            $table->string('courier');
+            $table->string('courier_service');
+            $table->integer('cost');
+            $table->string('jenis_pembayaran')->nullable();
+            $table->string('store_name')->nullable();
+            $table->string('bank')->nullable();
+            $table->boolean('isChecked')->default(false);
+            // 
+
             $table->string('status');
             // $table->timestamp('transaction_time');
             $table->timestamps();
