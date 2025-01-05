@@ -690,7 +690,7 @@ class TransaksiController extends Controller
 
     private function sendNotificationMessageWA($transaction, $produks)
     {
-
+        $ingpo = Ingpo::all();
 
         // $messageTemplate = "test";
         $messageTemplate = " 📋 *Invoice Pembelian Anda*\n\n";
@@ -726,7 +726,7 @@ class TransaksiController extends Controller
         $messageTemplate .= "- Ongkos Kirim: Rp " . number_format($transaction->cost, 0, ',', '.') . "\n\n";
         $messageTemplate .= "- Total Pembayaran: *Rp" . number_format($transaction->total_pembayaran, 0, ',', '.') . "*\n\n";
 
-        $messageTemplate .= " Jika ada pertanyaan, hubungi kami di 085859666343.\n\n";
+        $messageTemplate .= " Jika ada pertanyaan, hubungi kami di " . $ingpo->nowa . "\n\n";
         $messageTemplate .= "Terima kasih!\n";
 
 
@@ -742,8 +742,10 @@ class TransaksiController extends Controller
             'response wa' => $result,
         ]);
         // Send message to Admin
-        // $admin = "{{$ingpo->nowa}}";
-        $admin = "087716068691";
+        foreach ($ingpo as $i) {
+            $admin = "{{$i->nowa}}";
+        }
+        // $admin = "087716068691";
         $this->whatsappService->sendMessage(
             //change this to admin number
             $admin,

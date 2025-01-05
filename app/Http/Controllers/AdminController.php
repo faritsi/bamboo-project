@@ -150,6 +150,7 @@ class AdminController extends Controller
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'role_id' => 'required|integer|exists:roles,id',
             'password' => 'nullable|min:8',
+            'password_confirm' => 'nullable|same:password',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120'
         ]);
 
