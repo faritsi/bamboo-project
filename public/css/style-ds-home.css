@@ -1,0 +1,750 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* body {
+    background: #d2d2d2;
+    min-height: 100vh;
+} */
+
+#container {
+    margin: 0 auto;
+    padding: 0;
+    background: #fafaff;
+    width: 100%;
+    min-height: 100vh;
+}
+
+#bg-sidebar {
+    margin: 0 auto;
+    padding: 0;
+    /* background: #d2d2d2; */
+    width: 100%;
+    /* min-height: 100vh; */
+}
+
+#bo-sidebar {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #004c50;
+    padding: 25px 20px;
+    transition: all 0.4s ease;
+    box-shadow: 0 12px 20px rgb(0, 0, 0, 0.75);
+    z-index: 999;
+}
+
+#sidebar:hover {
+    width: 260px;
+}
+
+#sidebar-header {
+    display: flex;
+    align-items: center;
+}
+
+#sidebar-header img {
+    width: 38px;
+    /* height: auto; */
+    border-radius: 50%;
+}
+
+#sidebar-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    margin-left: 23px;
+}
+
+#sidebar-links {
+    list-style: none;
+    margin-top: 20px;
+    height: 80%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    /* scrollbar-width: none; */
+}
+
+#sidebar:hover #sidebar-links {
+    overflow-y: auto;
+    /* transition: all 1s ease; */
+}
+
+#sidebar-links::-webkit-scrollbar {
+    width: 12px; /* Lebar scrollbar */
+}
+
+#sidebar-links::-webkit-scrollbar-track {
+    background: transparent;
+    /* background: #f1f1f1; Warna background track scrollbar */
+}
+
+#sidebar-links::-webkit-scrollbar-thumb {
+    background-color: #dbd4d4e3; /* Warna scrollbar */
+    border-radius: 10px; /* Membuat scrollbar berbentuk bulat */
+    border: 3px solid #f1f1f1; /* Membuat jarak antara scrollbar dan track */
+}
+
+#sidebar-links h4 {
+    color: #fff;
+    font-weight: 500;
+    margin: 10px 0;
+    white-space: nowrap;
+    position: relative;
+}
+
+#sidebar-links h4 span {
+    opacity: 0;
+}
+
+#sidebar:hover #sidebar-links h4 span {
+    opacity: 1;
+    transition-duration: 0.2s;
+}
+
+#sidebar-links li a {
+    color: #dbd4d4e3;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    font-weight: 500;
+    padding: 15px 5px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#sidebar-links li a:hover {
+    background: #ffffff2d;
+    color: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#sidebar-links li a.active {
+    background: #ffffff2d;
+    color: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 200px;
+}
+
+#logout a {
+    color: #dbd4d4e3;
+    display: flex;
+    align-items: center;
+    gap: 0 20px;
+    font-weight: 500;
+    padding: 15px 5px;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+#logout {
+    margin-top: 20px;
+}
+
+#logout a:hover {
+    background: #e94040da;
+    color: #fff;
+    border-radius: 4px;
+}
+
+#user-account-navbar {
+    display: none;
+}
+
+#sidebar-links #menu-seperate {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(1);
+    transform: translateY(-50%);
+    background-color: #fff;
+    transform-origin: right;
+    transition-duration: 0.2s;
+}
+
+#sidebar:hover #sidebar-links #menu-seperate {
+    transform: scaleX(0);
+    transition-delay: 0s;
+}
+
+/* Header */
+#bg-header {
+    /* position: relative; */
+    /* z-index: 2; */
+    width: 100%;
+    /* background: #fff; */
+    padding: 20px 90px;
+    background: #004c50;
+}
+
+.material-symbols-outlined.menu-icon {
+    display: none;
+    padding-left: 40px;
+    color: #fff;
+}
+
+/*  */
+
+#bo-header {
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Header Layout */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Title */
+#judul-header h2 {
+    color: #ffffff;
+    font-size: 1.8em;
+    font-weight: bold;
+    border-bottom: 2px solid #ffffff;
+    padding-bottom: 5px;
+}
+
+/* User Account Styling */
+#user-account {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* User Profile Section */
+#user-profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Profile Image */
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* User Details */
+#user-detail h3 {
+    font-size: 1.1em;
+    color: #ffffff;
+    font-weight: 600;
+    margin: 0;
+}
+
+#user-detail span {
+    font-size: 0.9em;
+    color: #e0e0e0;
+}
+
+/* Content */
+#bg-content {
+    /* position: relative; */
+    /* z-index: 2; */
+    /* background: #d2d2d2; */
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+#bo-content {
+    margin: 0 auto;
+    width: 100%;
+}
+
+#content {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#wrapper-welcome {
+    margin: 0 auto;
+    padding: 30px 90px;
+
+    h3 {
+        font-weight: 500;
+    }
+}
+
+#bg-isi-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+#bo-isi-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 30px 90px;
+}
+
+#bg-isi-content {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    width: 100%;
+    /* border-radius: 50px; */
+    /* justify-content: space-between; */
+}
+#bg-isi-content #cc-content-admin {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 200px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-pimpinan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 250px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-produk {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 200px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-penjualan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 280px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-pengunjung {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 250px;
+    height: 100px;
+}
+
+#bg-isi-content #cc-content-pendapatan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 6px 16px rgba(75, 75, 75, 0.5);
+    width: 280px;
+    height: 100px;
+}
+
+#cc-content-admin .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
+#cc-content-pimpinan .material-symbols-outlined {
+    font-size: 60px;
+    color: #000;
+}
+
+#cc-content-produk .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
+#cc-content-penjualan .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
+#cc-content-pengunjung .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
+#cc-content-pendapatan .material-symbols-outlined {
+    font-size: 50px;
+    color: #000;
+}
+
+#cc-detail-admin,
+#cc-detail-pimpinan,
+#cc-detail-produk,
+#cc-detail-penjualan,
+#cc-detail-pengunjung,
+#cc-detail-pendapatan {
+    margin-left: 10px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#cc-detail-admin h3,
+#cc-detail-pimpinan h3,
+#cc-detail-produk h3,
+#cc-detail-penjualan h3,
+#cc-detail-pengunjung h3,
+#cc-detail-pendapatan h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+#cc-detail-admin span,
+#cc-detail-pimpinan span,
+#cc-detail-produk span,
+#cc-detail-penjualan span,
+#cc-detail-pengunjung span,
+#cc-detail-pendapatan span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 992px) {
+    /* Show the menu icon only on tablet and mobile screens */
+    #bg-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        padding: 20px;
+    }
+
+    #wrapper-welcome {
+        padding: 20px;
+    }
+
+    .material-symbols-outlined.menu-icon {
+        display: inline-block;
+        color: #fff;
+        font-size: 24px;
+        padding-bottom: 20px;
+        padding-left: 0;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    /* Sidebar starts hidden off-screen */
+    #sidebar {
+        left: -260px; /* Hide off-screen */
+        width: 260px;
+    }
+
+    /* Show sidebar when .active is added */
+    #sidebar.active {
+        transform: translateX(260px);
+    }
+
+    #bo-isi-content {
+        width: 80%;
+        padding: 20px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    #wrapper-welcome {
+        h2 {
+            font-size: 20px;
+        }
+
+        h3 {
+            font-size: 14px;
+        }
+    }
+
+    #bo-isi-content {
+        padding: 0;
+    }
+
+    #bg-isi-content #cc-content-admin {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-admin {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-pimpinan {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-pimpinan {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-produk {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-produk {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-penjualan {
+        height: 100px;
+        width: 250px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-penjualan {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-pengunjung {
+        height: 100px;
+        width: 200px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-pengunjung {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #bg-isi-content #cc-content-pendapatan {
+        height: 100px;
+        width: 250px;
+
+        .material-symbols-outlined {
+            font-size: 50px;
+        }
+
+        #cc-detail-pendapatan {
+            h3 {
+                font-size: 20px;
+            }
+
+            span {
+                font-size: 18px;
+            }
+        }
+    }
+}
+
+/* Optional adjustment for very small mobile screens */
+@media (max-width: 576px) {
+    #sidebar {
+        width: 220px; /* Smaller sidebar for very small screens */
+    }
+
+    #user-account-navbar {
+        padding-top: 20px;
+        display: block;
+    }
+
+    #user-account {
+        display: none;
+    }
+
+    #bo-isi-content {
+        padding: 0;
+        gap: 10px;
+        width: 90%;
+    }
+    #bg-isi-content {
+        #cc-content-admin {
+            padding: 10px;
+            width: 130px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-admin {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-pimpinan {
+            width: 150px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-pimpinan {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-produk {
+            width: 130px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-produk {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-penjualan {
+            width: 200px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-penjualan {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-pengunjung {
+            width: 200px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-pengunjung {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        #cc-content-pendapatan {
+            width: 200px;
+
+            .material-symbols-outlined {
+                font-size: 30px;
+            }
+
+            #cc-detail-pendapatan {
+                h3 {
+                    font-size: 16px;
+                }
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}

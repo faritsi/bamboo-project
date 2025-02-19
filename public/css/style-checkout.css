@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+    font-family: "Poppins", sans-serif;
+}
+
+#background {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#co-background {
+    width: 80%;
+    padding: 0;
+    margin: 0 auto;
+}
+
+#checkout-page {
+    margin: 20px;
+    font-family: "Arial", sans-serif;
+    color: #333;
+}
+
+#checkout-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #4caf50;
+}
+
+#biodata-display,
+#order-summary {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#biodata-display h3,
+#order-summary h3 {
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #4caf50;
+    border-bottom: 2px solid #4caf50;
+    padding-bottom: 5px;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.order-item p {
+    margin: 5px 0;
+}
+
+.order-total {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    color: #4caf50;
+
+    #pembayaran {
+        color: #000;
+    }
+}
+
+#confirm-checkout {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#confirm-checkout:hover {
+    background-color: #45a049;
+}
+
+/* Styling untuk div yang berperan sebagai button */
+.checkout-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #45a049; /* Warna hijau */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Memberi jarak di atas tombol */
+}
+
+/* Hover effect untuk tampilan interaktif */
+.checkout-button:hover {
+    background-color: #397d3b; /* Warna hijau lebih gelap untuk efek hover */
+}
+
+/* Active state untuk memberikan efek klik */
+.checkout-button:active {
+    background-color: #2e6330; /* Warna lebih gelap saat ditekan */
+    transform: scale(0.98); /* Sedikit memperkecil tombol saat ditekan */
+}

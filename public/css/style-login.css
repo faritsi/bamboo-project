@@ -1,0 +1,255 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body,
+html {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f4f7;
+}
+
+.login-container {
+    display: flex;
+    width: 90vw;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.left-section {
+    flex: 1;
+    background-color: #f5f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+lottie-player {
+    width: 600px;
+    height: 600px;
+    max-width: 100%;
+}
+
+/* Right Section */
+.right-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container to align the logo and text block */
+.header-container {
+    display: flex;
+    align-items: center; /* Aligns logo and text in the middle */
+    gap: 20px; /* Space between logo and text */
+    justify-content: center;
+}
+
+/* Styling for the login header */
+.login-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-title {
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    border-bottom: 2px solid #4caf50;
+}
+
+.header-welcome {
+    padding-bottom: 30px;
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #555;
+    margin: 10px 0 5px;
+}
+
+.instruction {
+    font-size: 1em;
+    color: #888;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Login Form */
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.logo {
+    width: 70px;
+}
+
+.login-form h2 {
+    font-size: 1.8em;
+    color: #333;
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Active Style on Focus */
+.input-group:focus-within {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #4caf50;
+}
+
+/* Input Icon */
+.input-icon {
+    margin-right: 10px;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+/* Change Icon Color on Active */
+.input-group:focus-within .input-icon {
+    color: #4caf50;
+}
+
+/* Input Field */
+.input-group input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Button Submit */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Button Hover */
+.btn-submit:hover {
+    background-color: #45a049;
+}
+
+.invalid-feedback {
+    color: #d9534f;
+    font-size: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .left-section lottie-player {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .left-section lottie-player {
+        width: 300px;
+        height: 300px;
+    }
+
+    .login-header h2 {
+        font-size: 1.3em;
+    }
+
+    .welcome-message {
+        font-size: 1.1em;
+    }
+
+    .instruction {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        border-radius: 0;
+    }
+
+    .left-section {
+        display: none;
+    }
+
+    .left-section,
+    .right-section {
+        padding: 20px;
+    }
+
+    .left-section lottie-player {
+        width: 300px;
+        height: 300px;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .main-title {
+        font-size: 1.6em;
+    }
+
+    .welcome-message {
+        font-size: 1.1em;
+    }
+
+    .instruction {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 1.4em;
+    }
+
+    .welcome-message {
+        font-size: 1em;
+    }
+
+    .instruction {
+        font-size: 0.8em;
+    }
+
+    .btn-submit {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

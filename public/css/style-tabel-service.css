@@ -1,0 +1,281 @@
+/* Tabel Admin */
+#table-service {
+    /* width: 95%; */
+    padding-bottom: 20px;
+    padding-right: 25px;
+    margin: 0 auto;
+}
+
+#table-service table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+#table-service th,
+#table-service td {
+    padding: 10px 0px 10px 5px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#table-service th:last-child,
+#table-service td:last-child {
+    border-right: none;
+}
+
+#table-service thead th {
+    background-color: #004c50;
+    color: #fff;
+    border-right: 1px solid #ccc;
+    text-align: center;
+}
+
+#table-service th:nth-child(1),
+#table-service td:nth-child(1) {
+    width: 22px;
+}
+
+#table-service th:nth-child(2),
+#table-service td:nth-child(2) {
+    width: 25px;
+}
+
+#table-service th:nth-child(3),
+#table-service td:nth-child(3) {
+    width: 150px;
+}
+
+#table-service th:nth-child(4),
+#table-service td:nth-child(4) {
+    width: 300px;
+}
+
+#table-service th:nth-child(5),
+#table-service td:nth-child(5) {
+    width: 100px;
+}
+
+#table-service .details-row-service {
+    display: none;
+}
+
+#table-service .details-row-service div {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#table-service .details-row-service div:last-child {
+    border-bottom: none;
+}
+
+#table-service .btn-details-service {
+    cursor: pointer;
+    margin: 0 auto;
+    padding: 0;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #4caf50;
+}
+
+#table-service .btn-details-service.red {
+    background-color: red;
+}
+
+#table-service .btn-details-service .material-symbols-outlined {
+    color: white;
+}
+
+#btn-cfg-service {
+    margin-top: auto;
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    display: flex;
+    align-items: center;
+    /* background: #94df07; */
+    justify-content: center;
+    gap: 20px;
+}
+
+#btn-cfg-detail {
+    display: none;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#btn-cfg-service .btn-edit {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#btn-cfg-service .btn-delete {
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.desc-limit {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+#table-service .btn-edit .material-symbols-outlined {
+    color: blue;
+}
+
+#table-service .btn-delete .material-symbols-outlined {
+    color: red;
+}
+
+#table-service #btn-edit i {
+    font-size: 18px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#table-service #btn-edit i:last-child {
+    margin-right: 0;
+}
+
+#table-service #btn-edit i.fa-pen-to-square {
+    color: blue;
+}
+
+#table-service #btn-edit i.fa-trash {
+    color: red;
+}
+
+#table-service .btn-toggle .fa {
+    margin: 0;
+    padding: 0;
+}
+
+#table-service td span.btn-toggle,
+#table-service td span#btn-edit {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1200px) {
+    #table-service th:nth-child(1),
+    #table-service td:nth-child(1) {
+        width: 30px;
+    }
+
+    #table-service th:nth-child(4),
+    #table-service td:nth-child(4) {
+        width: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    #table-service {
+        padding-bottom: 0;
+        padding-right: 0;
+    }
+    #bo-isi-content-service {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #btn-cfg-detail {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+
+        .btn-edit {
+            flex: 1;
+            background-color: blue;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #edit-text {
+                color: #fff;
+            }
+        }
+
+        .btn-delete {
+            flex: 1;
+            background-color: red;
+            border-radius: 999px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            .material-symbols-outlined {
+                color: #fff;
+            }
+
+            #delete-text {
+                color: #fff;
+            }
+        }
+    }
+
+    #table-service th:nth-child(1),
+    #table-service td:nth-child(1) {
+        width: 35px;
+    }
+
+    #table-service th:nth-child(2),
+    #table-service td:nth-child(2) {
+        width: 35px;
+    }
+
+    #table-service th:nth-child(3),
+    #table-service td:nth-child(3) {
+        width: 100px;
+    }
+
+    #table-service th:nth-child(4),
+    #table-service td:nth-child(4) {
+        width: 150px;
+        border-right: none;
+    }
+
+    #table-service th:nth-child(5),
+    #table-service td:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    #table-service th:nth-child(1),
+    #table-service td:nth-child(1) {
+        width: 20px;
+    }
+
+    #table-service th:nth-child(2),
+    #table-service td:nth-child(2) {
+        width: 15px;
+    }
+
+    #table-service th:nth-child(3),
+    #table-service td:nth-child(3) {
+        border-right: none;
+    }
+
+    #table-service th:nth-child(4),
+    #table-service td:nth-child(4) {
+        display: none;
+    }
+}

@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+#content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Btn Tambah Admin */
+.bg-tambah-data-pimpinan {
+    margin-top: 50px;
+    /* margin-top: auto; */
+    /* padding: 12px 10px; */
+    /* margin-left: -10px; */
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    background: #4caf50;
+    color: #fff;
+    border-radius: 999px;
+    width: 120px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 35px;
+}
+
+.bg-tambah-data-pimpinan:hover {
+    background-color: #45a049;
+}
+
+#bo-tambah-data-pimpinan {
+    display: flex;
+    align-items: center;
+    /* padding: 0 20px; */
+    justify-content: center;
+}
+
+.icon-tambah-data-pimpinan {
+    margin: 0 auto;
+    padding: 0;
+    width: 25px;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#text-pimpinan {
+    margin: 0 auto;
+}
+
+#bo-isi-content-pimpinan {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 30px 0px 20px 90px;
+    gap: 30px;
+}
+
+#bg-isi-content-pimpinan {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    /* border-radius: 50px; */
+    /* justify-content: space-between; */
+}
+
+#avatar-pimpinan {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+}

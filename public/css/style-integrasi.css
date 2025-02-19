@@ -1,0 +1,70 @@
+/* Container Utama */
+.integrasi-container {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 1000px;
+    text-align: center;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Card Container */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 kolom */
+    gap: 20px; /* Jarak antar card */
+}
+
+.card-integrasi {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 8px 8px 15px #d1d1d1, -8px -8px 15px #ffffff;
+    padding: 20px;
+    text-align: center;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.card-integrasi h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.card-integrasi .material-symbols-outlined {
+    font-size: 2.5rem;
+    color: #3c6e47; /* Warna ikon */
+    margin-bottom: 10px;
+}
+
+.card-integrasi:hover {
+    box-shadow: inset 8px 8px 15px #d1d1d1, inset -8px -8px 15px #ffffff;
+    transform: translateY(-5px);
+    color: #2b4d32;
+}
+
+.card-integrasi:active {
+    transform: scale(0.98);
+}
+
+/* Responsif untuk Layar Kecil */
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: repeat(2, 1fr); /* 1 kolom */
+    }
+}
