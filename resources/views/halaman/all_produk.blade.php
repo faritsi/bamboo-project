@@ -132,24 +132,45 @@
                 <div id="content-produk">
                     @foreach ($produk as $p)
                     <div id="card-container" class="content-produk" data-kategori_id="{{$p->kategori_id}}">
-                        <a href="{{ url('/produk/' . str_replace(' ', '-', $p->nama_produk)) }}">
-                        
-                            <div id="card-produk">
-                                <div id="card-stok">
-                                    <p id="stok-produk">Stock : {{$p->jumlah_produk}}</p>
-                                </div>
-                                <div id="card-image">
-                                    <img src="{{ asset('/storage/' . $p->image) }}" alt="Produk Image" id="image-produk">
+                        <!-- Card Product Section -->
+                        <div id="card-produk">
+                            <!-- Image and overlay section -->
+                            <div class="slide-img">
+                                <img src="{{ asset('storage/' . $p->image) }}" alt="Product Image">
+                                <div class="overlay">
+                                    <a href="{{$p->tokped}}" class="shop-button" target="_blank">
+                                        <img src="{{ asset('img\social-media\tokped.svg') }}" alt="Tokopedia" class="shop-logo">
+                                    </a>
+                                    <a href="{{$p->shopee}}" class="shop-button" target="_blank">
+                                        <img src="{{ asset('img\social-media\shopee.svg') }}" alt="Tokopedia" class="shop-logo">
+                                    </a>
                                 </div>
                             </div>
+
+                            <!-- Stock Section -->
+                            <div id="card-stok">
+                                <p id="stok-produk">Stock : {{$p->jumlah_produk}}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Text Section with Link -->
+                        <a href="{{ url('/produk/' . str_replace(' ', '-', $p->nama_produk)) }}">
+                            <div id="card-text">
+                                <h4 id="nama-produk">{{$p->nama_produk}}</h4>
+                                <p id="harga-produk">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+                            </div>
                         </a>
-                        <div id="card-text">
-                            <h4 id="nama-produk">{{$p->nama_produk}}</h4>
-                            <p id="harga-produk">Rp {{ number_format($p->harga, 0, ',', '.') }}</p>
+
+                        <!-- Shop buttons -->
+                        <div class="button-container">
+                            <div class="shop-buttons">
+                                <a href="{{url('/produk/' . str_replace(' ', '-', $p->nama_produk))}}" class="buy-btn">Beli Disini</a>
+                            </div>
                         </div>
                     </div>
                     @endforeach
                 </div>
+
                 <!-- Pagination Links -->
                 <div class="pagination-section">
                     <div class="pagination-links">
@@ -169,9 +190,9 @@
                 </div>
             </div>
         </div>
-        <div id="footer-copyright">
+        <!-- <div id="footer-copyright">
             <p>&copy; {{ date('Y') }} ITENAS</p>
-        </div>
+        </div> -->
     </div>
     <script src="/js/burger.js"></script>
 

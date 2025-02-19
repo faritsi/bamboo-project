@@ -229,6 +229,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Check Other Platform -->
+                    <div class="slide-img-outter">
+                        <div class="other-platform">
+                            <p class="text-other-platform">Produk Ini Tersedia Juga Di</p>
+                        </div>
+                        <div class="overlay-outter">
+                            <a href="{{$p->tokped}}" class="shop-button" target="_blank">
+                                <img src="{{ asset('img\social-media\tokped.svg') }}" alt="Tokopedia" class="shop-logo">
+                            </a>
+                            <a href="{{$p->shopee}}" class="shop-button" target="_blank">
+                                <img src="{{ asset('img\social-media\shopee.svg') }}" alt="Tokopedia" class="shop-logo">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -256,9 +271,9 @@
         </div>
     </div>
 
-    <div id="footer-copyright">
+    <!-- <div id="footer-copyright">
         <p>&copy; {{ date('Y') }} ITENAS</p>
-    </div>
+    </div> -->
 
     <!-- MODAL -->
     <div id="modal-biodata" class="modal">

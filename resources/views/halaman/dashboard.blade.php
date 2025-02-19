@@ -183,8 +183,12 @@
                                     <div class="slide-img">
                                         <img src="{{ asset('storage/' . $p->image) }}" alt="Product Image">
                                         <div class="overlay">
-                                            <a href={{$p->tokped}} class="shop-button" target="_blank">Tokopedia</a>
-                                            <a href={{$p->shopee}} class="shop-button" target="_blank">Shopee</a>
+                                            <a href="{{$p->tokped}}" class="shop-button" target="_blank">
+                                                <img src="{{ asset('img\social-media\tokped.svg') }}" alt="Tokopedia" class="shop-logo">
+                                            </a>
+                                            <a href="{{$p->shopee}}" class="shop-button" target="_blank">
+                                                <img src="{{ asset('img\social-media\shopee.svg') }}" alt="Tokopedia" class="shop-logo">
+                                            </a>
                                         </div>
                                     </div>
                 
@@ -208,8 +212,12 @@
 
                                         <div class="slide-img-outter">
                                             <div class="overlay-outter">
-                                                <a href="https://www.tokopedia.com/your-store-link" class="shop-button" >Tokopedia</a>
-                                                <a href="https://shopee.co.id/your-store-link" class="shop-button" >Shopee</a>
+                                                <a href="{{$p->tokped}}" class="shop-button" target="_blank">
+                                                    <img src="{{ asset('img\social-media\tokped.svg') }}" alt="Tokopedia" class="shop-logo">
+                                                </a>
+                                                <a href="{{$p->shopee}}" class="shop-button" target="_blank">
+                                                    <img src="{{ asset('img\social-media\shopee.svg') }}" alt="Tokopedia" class="shop-logo">
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -328,9 +336,9 @@
                 </div>
             </div>
             
-            <div id="footer-copyright">
+            <!-- <div id="footer-copyright">
                 <p>&copy; {{ date('Y') }} ITENAS</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
